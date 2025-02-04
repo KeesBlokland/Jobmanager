@@ -9,26 +9,31 @@
         border: none;
         cursor: pointer;
         color: white;
+        border-radius: 4px;
     }
     .start-btn, .resume-btn { background: #4CAF50; }
     .stop-btn { background: #f44336; }
     .pause-btn { background: #FFC107; }
-    .timer.paused {
-        color: #666;
+    .timer.paused { color: #666; }
+    @keyframes pulse {
+        0% { opacity: 1; }
+        50% { opacity: 0.5; }
+        100% { opacity: 1; }
+    }
+    tbody tr:first-child span[style*="background-color: #4CAF50"] {
+        animation: pulse 2s infinite;
     }
 </style>
 
 <div>
-    
     <table style="width: 100%; border-collapse: collapse;">
         <thead>
             <tr style="background: #f5f5f5;">
                 <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Customer</th>
                 <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Description</th>
-                <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Status</th>
-                <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Time</th>
-                <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Rate</th>
+                <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Status & Controls</th>
                 <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Actions</th>
+                <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Time</th>
             </tr>
         </thead>
         <tbody>
@@ -39,69 +44,58 @@
                 <td style="padding: 10px; border: 1px solid #ddd;">
                     <span style="
                         padding: 3px 8px;
-                        border-radius: 3px;
+                        border-radius: 4px;
                         {% if job.status == 'Active' %}
                             background-color: #4CAF50;
+                            {% if loop.first %}animation: pulse 2s infinite;{% endif %}
                         {% elif job.status == 'Pending' %}
                             background-color: #FFC107;
                         {% else %}
                             background-color: #9E9E9E;
                         {% endif %}
                         color: white;
+                        margin-right: 10px;
                     ">{{ job.status }}</span>
-                </td>
-                <!-- Part of job_list.html where we display the time -->
-                <td style="padding: 10px; border: 1px solid #ddd;">
-                    <div class="timer-container">
+                    <div class="timer-container" style="display: inline-block;">
                         {% if job.active_timer_id %}
-                            <span class="timer" id="timer-{{ job.id }}"
-                                data-start="{{ job.timer_start }}"
-                                data-accumulated="{{ job.accumulated_hours }}"
-                                data-paused="false">
-                                {{ "%d:%02d"|format(job.accumulated_hours|int, 
-                                ((job.accumulated_hours % 1) * 60)|round|int) }}
-                            </span>
                             <button onclick="stopTimer({{ job.id }})" class="stop-btn">Stop</button>
                             <button onclick="pauseTimer({{ job.id }})" class="pause-btn">Pause</button>
                             <button onclick="resumeTimer({{ job.id }})" class="resume-btn" style="display: none;">Resume</button>
                         {% elif job.status == 'Active' %}
-                            <span class="timer" id="timer-{{ job.id }}"
-                                data-accumulated="{{ job.accumulated_hours }}">
-                                {{ "%d:%02d"|format(job.accumulated_hours|int, 
-                                ((job.accumulated_hours % 1) * 60)|round|int) }}
-                            </span>
                             <button onclick="startTimer({{ job.id }})" class="start-btn">Start</button>
-                        {% else %}
-                            <!-- For inactive jobs -->
-                            <span>
-                                {{ "%d:%02d"|format(job.accumulated_hours|int, 
-                                ((job.accumulated_hours % 1) * 60)|round|int) }}
-                            </span>
-                        {% endif %}
-
-                        {% if job.estimated_hours %}
-                            <span class="estimated-hours">
-                                / {{ "%d:%02d"|format(job.estimated_hours|int, 
-                                    ((job.estimated_hours % 1) * 60)|round|int) }}
-                            </span>
-                        {% else %}
-                            <span class="estimated-hours">/ -</span>
                         {% endif %}
                     </div>
                 </td>
-                </td>
-                <td style="padding: 10px; border: 1px solid #ddd;">{{ "€%.2f"|format(job.base_rate) if job.base_rate else '-' }}</td>
                 <td style="padding: 10px; border: 1px solid #ddd;">
                     <a href="{{ url_for('main.edit_job', id=job.id) }}" 
-                       style="display: inline-block; padding: 5px 10px; background: #2196F3; color: white; text-decoration: none; margin-right: 5px;">
+                       style="display: inline-block; padding: 5px 10px; border-radius: 4px; background: #2196F3; color: white; text-decoration: none; margin-right: 5px;">
                         Edit
                     </a>
                     <form action="{{ url_for('main.delete_job', id=job.id) }}" method="post" style="display: inline;">
                         <button type="submit" onclick="return confirm('Are you sure you want to delete this job?');"
-                                style="padding: 5px 10px; background: #f44336; color: white; border: none; cursor: pointer;">
+                                style="padding: 5px 10px; border-radius: 4px; background: #f44336; color: white; border: none; cursor: pointer;">
                             Delete
                         </button>
                     </form>
+                </td>
+                <td style="padding: 10px; border: 1px solid #ddd;">
+                    <span class="timer" id="timer-{{ job.id }}"
+                        {% if job.active_timer_id %}
+                            data-start="{{ job.timer_start }}"
+                            data-paused="false"
+                        {% endif %}
+                        data-accumulated="{{ job.accumulated_hours }}">
+                        {{ "%d:%02d"|format(job.accumulated_hours|int, 
+                        ((job.accumulated_hours % 1) * 60)|round|int) }}
+                    </span>
+                    {% if job.estimated_hours %}
+                        <span class="estimated-hours">
+                            / {{ "%d:%02d"|format(job.estimated_hours|int, 
+                                ((job.estimated_hours % 1) * 60)|round|int) }}
+                        </span>
+                    {% else %}
+                        <span class="estimated-hours">/ -</span>
+                    {% endif %}
                 </td>
             </tr>
             {% endfor %}
@@ -114,7 +108,6 @@
         function formatTime(hours) {
             if (isNaN(hours) || hours === null) hours = 0;
             let wholeHours = Math.floor(hours);
-            // Round to nearest 5 minutes
             let minutes = Math.round((hours * 60 % 60) / 5) * 5;
             if (minutes === 60) {
                 wholeHours += 1;
@@ -127,7 +120,6 @@
             const startTime = timerElement.dataset.start;
             const accumulated = parseFloat(timerElement.dataset.accumulated) || 0;
             
-            // If there's no active timer, just show accumulated time
             if (!startTime) {
                 timerElement.textContent = formatTime(accumulated);
                 return;
@@ -147,7 +139,6 @@
                 const elapsedHours = (now - start) / (1000 * 60 * 60) + accumulated;
                 timerElement.textContent = formatTime(elapsedHours);
                 
-                // Update totals every 5 minutes
                 const minutes = now.getMinutes();
                 if (minutes % 5 === 0 && now.getSeconds() === 0) {
                     const jobId = timerElement.id.replace('timer-', '');
@@ -157,7 +148,7 @@
             
             update();
             clearInterval(timerIntervals[timerElement.id]);
-            timerIntervals[timerElement.id] = setInterval(update, 1000); // Check every second for minute changes
+            timerIntervals[timerElement.id] = setInterval(update, 1000);
         }
 
         function updateJobTotal(jobId) {
@@ -166,9 +157,8 @@
             }).then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // Update the hours display in the table
                     const row = document.getElementById(`job-${jobId}`);
-                    const hoursCell = row.querySelector('td:nth-child(6)');
+                    const hoursCell = row.querySelector('td:nth-child(5)');
                     const estHours = hoursCell.textContent.split('/')[1].trim();
                     hoursCell.textContent = `${formatTime(data.total_hours)} / ${estHours}`;
                 }
@@ -235,7 +225,6 @@
                 updateTimer(timer);
             });
 
-            // Initialize any active timers
             document.querySelectorAll('.active-timer').forEach(row => {
                 const timer = row.querySelector('.timer');
                 if (timer) {
