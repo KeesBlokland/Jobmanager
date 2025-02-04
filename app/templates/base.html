@@ -16,9 +16,9 @@
         .header-nav {
             display: flex;
             align-items: center;
-            margin-bottom: 30px;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
+            margin-bottom: 5px;
+            padding-bottom: 1px;
+            border-radius: 4px;
         }
         .header-nav h1 {
             margin: 0;
@@ -27,15 +27,15 @@
         .nav-menu {
             display: flex;
             align-items: center;
-            margin-bottom: 30px;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-radius: 4px;
         }
         .nav-menu a {
             display: inline-block;
             padding: 8px 16px;
             margin-right: 10px;
-            background: #2196F3;
+            background: #6fbcfc;
             color: white;
             text-decoration: none;
             border-radius: 4px;
@@ -50,8 +50,8 @@
 </head>
 <body>
     <div class="header-nav">
-        <h1>Job Manager</h1>
         <div class="nav-menu">
+            <h1>Job Manager</h1>
             <a href="{{ url_for('main.index') }}" {% if request.endpoint == 'main.index' %}class="active"{% endif %}>Customers</a>
             <a href="{{ url_for('main.job_list') }}" {% if request.endpoint == 'main.job_list' %}class="active"{% endif %}>Jobs</a>
             <a href="{{ url_for('main.add_customer') }}" {% if request.endpoint == 'main.add_customer' %}class="active"{% endif %}>Add Customer</a>

@@ -1,0 +1,2478 @@
+Directory structure:
+└── ./Jobmanager/
+    ├── app/
+    │   ├── routes.py
+    │   ├── __init__.py
+    │   ├── templates/
+    │   │   ├── customer_form.html
+    │   │   ├── job_form.html
+    │   │   ├── customer_list.html
+    │   │   ├── base.html
+    │   │   └── job_list.html
+    │   ├── init_db.py
+    │   ├── schema.sql
+    │   └── __pycache__/
+    ├── instance/
+    ├── gitback.sh
+    ├── DS-01.md
+    ├── jobmgr-0204-1811.txt
+    ├── run.py
+    ├── LICENSE
+    ├── updated-jobmanager-doc.md
+    ├── README.md
+    └── requirements.txt
+
+================================================
+File: /app/routes.py
+================================================
+# app/routes.py
+from flask import Blueprint, render_template, current_app, g, request, redirect, url_for, flash
+from datetime import datetime, timezone
+import json
+import sqlite3
+
+bp = Blueprint('main', __name__)
+
+def get_db():
+    if 'db' not in g:
+        g.db = sqlite3.connect(
+            current_app.config['DATABASE'],
+            detect_types=sqlite3.PARSE_DECLTYPES
+        )
+        g.db.row_factory = sqlite3.Row
+    return g.db
+
+@bp.teardown_app_request
+def close_db(e=None):
+    db = g.pop('db', None)
+    if db is not None:
+        db.close()
+
+# app/routes.py
+@bp.route('/')
+def index():
+    db = get_db()
+    customers = db.execute(
+        'SELECT * FROM customer ORDER BY name'
+    ).fetchall()
+    return render_template('customer_list.html', customers=customers)
+
+@bp.route('/customer/add', methods=['GET', 'POST'])
+def add_customer():
+    if request.method == 'POST':
+        db = get_db()
+        db.execute(
+            'INSERT INTO customer (name, email, phone, street, city, postal_code, country, vat_number, payment_terms, notes)'
+            ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            (request.form['name'], request.form['email'], request.form['phone'],
+             request.form['street'], request.form['city'], request.form['postal_code'],
+             request.form['country'], request.form['vat_number'], request.form['payment_terms'],
+             request.form['notes'])
+        )
+        db.commit()
+        return redirect(url_for('main.index'))
+    return render_template('customer_form.html')
+
+@bp.route('/customer/<int:id>/edit', methods=['GET', 'POST'])
+def edit_customer(id):
+    db = get_db()
+    customer = db.execute('SELECT * FROM customer WHERE id = ?', (id,)).fetchone()
+    
+    if request.method == 'POST':
+        db.execute(
+            'UPDATE customer SET name=?, email=?, phone=?, street=?, city=?, postal_code=?, '
+            'country=?, vat_number=?, payment_terms=?, notes=? WHERE id=?',
+            (request.form['name'], request.form['email'], request.form['phone'],
+             request.form['street'], request.form['city'], request.form['postal_code'],
+             request.form['country'], request.form['vat_number'], request.form['payment_terms'],
+             request.form['notes'], id)
+        )
+        db.commit()
+        return redirect(url_for('main.index'))
+    
+    return render_template('customer_form.html', customer=customer)
+
+@bp.route('/customer/<int:id>/delete', methods=['POST'])
+def delete_customer(id):
+    db = get_db()
+    db.execute('DELETE FROM customer WHERE id = ?', (id,))
+    db.commit()
+    return redirect(url_for('main.index'))
+
+# In routes.py, update the job_list query:
+# In routes.py
+@bp.route('/jobs')
+def job_list():
+    db = get_db()
+    jobs = db.execute('''
+        WITH job_hours AS (
+            SELECT 
+                job_id,
+                SUM((julianday(COALESCE(end_time, datetime('now'))) - julianday(start_time)) * 24) as hours
+            FROM time_entry
+            GROUP BY job_id
+        )
+        SELECT 
+            job.*,
+            customer.name as customer_name,
+            te_active.id as active_timer_id,
+            te_active.start_time as timer_start,
+            COALESCE(job_hours.hours, 0) as accumulated_hours
+        FROM job 
+        JOIN customer ON job.customer_id = customer.id 
+        LEFT JOIN time_entry te_active ON job.id = te_active.job_id 
+            AND te_active.end_time IS NULL
+        LEFT JOIN job_hours ON job_hours.job_id = job.id
+        ORDER BY 
+            te_active.id IS NOT NULL DESC,
+            CASE job.status
+                WHEN 'Active' THEN 1
+                WHEN 'Pending' THEN 2
+                WHEN 'Completed' THEN 3
+            END,
+            job.last_active DESC NULLS LAST,
+            job.creation_date DESC
+    ''').fetchall()
+    return render_template('job_list.html', jobs=jobs)
+
+
+@bp.route('/customer/<int:customer_id>/add_job', methods=['GET', 'POST'])
+def add_job(customer_id):
+    db = get_db()
+    customer = db.execute('SELECT * FROM customer WHERE id = ?', (customer_id,)).fetchone()
+    
+    if request.method == 'POST':
+        db.execute(
+            'INSERT INTO job (customer_id, description, status, creation_date, base_rate, estimated_hours)'
+            ' VALUES (?, ?, ?, ?, ?, ?)',
+            (customer_id, request.form['description'], request.form['status'],
+             datetime.now().isoformat(), 
+             float(request.form['base_rate']) if request.form['base_rate'] else None,
+             float(request.form['estimated_hours']) if request.form['estimated_hours'] else None)
+        )
+        db.commit()
+        return redirect(url_for('main.job_list'))
+    
+    return render_template('job_form.html', customer=customer)
+
+@bp.route('/job/<int:id>/edit', methods=['GET', 'POST'])
+def edit_job(id):
+    db = get_db()
+    job = db.execute('''
+        SELECT job.*, customer.name as customer_name 
+        FROM job 
+        JOIN customer ON job.customer_id = customer.id 
+        WHERE job.id = ?
+    ''', (id,)).fetchone()
+    
+    if request.method == 'POST':
+        db.execute(
+            'UPDATE job SET description=?, status=?, base_rate=?, estimated_hours=? WHERE id=?',
+            (request.form['description'], request.form['status'],
+             float(request.form['base_rate']) if request.form['base_rate'] else None,
+             float(request.form['estimated_hours']) if request.form['estimated_hours'] else None,
+             id)
+        )
+        db.commit()
+        return redirect(url_for('main.job_list'))
+    
+    return render_template('job_form.html', job=job)
+
+@bp.route('/job/<int:id>/delete', methods=['POST'])
+def delete_job(id):
+    db = get_db()
+    db.execute('DELETE FROM job WHERE id = ?', (id,))
+    db.commit()
+    return redirect(url_for('main.job_list'))
+
+@bp.route('/job/<int:id>/start_timer', methods=['POST'])
+def start_timer(id):
+    db = get_db()
+    now = datetime.now(timezone.utc).isoformat()
+    
+    # Find any currently running timer and which job it belongs to
+    active_timer = db.execute('''
+        SELECT time_entry.*, job.id as job_id
+        FROM time_entry 
+        JOIN job ON time_entry.job_id = job.id
+        WHERE time_entry.end_time IS NULL
+    ''').fetchone()
+    
+    if active_timer:
+        # Stop the timer for the specific job
+        db.execute('''
+            UPDATE time_entry 
+            SET end_time = ?
+            WHERE id = ? AND job_id = ?
+        ''', (now, active_timer['id'], active_timer['job_id']))
+        
+        # Update the last_active time for that job
+        db.execute('UPDATE job SET last_active = ? WHERE id = ?',
+                  (now, active_timer['job_id']))
+    
+    # Check if the requested job already has accumulated time
+    has_time = db.execute('''
+        SELECT EXISTS (
+            SELECT 1 FROM time_entry 
+            WHERE job_id = ?
+        ) as has_entries
+    ''', (id,)).fetchone()['has_entries']
+    
+    if not has_time:
+        # Only create a new time entry if this is the first time
+        db.execute(
+            'INSERT INTO time_entry (job_id, start_time, entry_type) VALUES (?, ?, ?)',
+            (id, now, 'auto')
+        )
+    else:
+        # Otherwise, just resume the last entry
+        db.execute(
+            'INSERT INTO time_entry (job_id, start_time, entry_type) VALUES (?, ?, ?)',
+            (id, now, 'resume')
+        )
+    
+    # Update the requested job's last_active time
+    db.execute('UPDATE job SET last_active = ? WHERE id = ?', 
+               (now, id))
+    
+    db.commit()
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+@bp.route('/job/<int:id>/stop_timer', methods=['POST'])
+def stop_timer(id):
+    db = get_db()
+    now = datetime.now(timezone.utc).isoformat()
+    
+    # Find and stop active timer for this job
+    db.execute('''
+        UPDATE time_entry 
+        SET end_time = ? 
+        WHERE job_id = ? AND end_time IS NULL
+    ''', (now, id))
+    
+    db.commit()
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+@bp.route('/job/<int:id>/pause_timer', methods=['POST'])
+def pause_timer(id):
+    db = get_db()
+    now = datetime.now(timezone.utc).isoformat()
+    
+    # Just stop the current timer but don't change job status
+    db.execute('''
+        UPDATE time_entry 
+        SET end_time = ? 
+        WHERE job_id = ? AND end_time IS NULL
+    ''', (now, id))
+    
+    db.commit()
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+@bp.route('/job/<int:id>/resume_timer', methods=['POST'])
+def resume_timer(id):
+    db = get_db()
+    now = datetime.now(timezone.utc).isoformat()
+    
+    # Create new time entry but don't change job status
+    db.execute(
+        'INSERT INTO time_entry (job_id, start_time, entry_type) VALUES (?, ?, ?)',
+        (id, now, 'auto')
+    )
+    db.commit()
+    
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+# Add to routes.py
+@bp.route('/job/<int:id>/update_total', methods=['POST'])
+def update_job_total(id):
+    db = get_db()
+    now = datetime.now(timezone.utc).isoformat()
+    
+    # Calculate total hours including current running timer
+    total = db.execute('''
+        SELECT COALESCE(
+            (
+                SELECT SUM(
+                    CASE 
+                        WHEN end_time IS NOT NULL 
+                        THEN (julianday(end_time) - julianday(start_time)) * 24
+                        ELSE (julianday(?) - julianday(start_time)) * 24
+                    END
+                )
+                FROM time_entry 
+                WHERE job_id = ?
+            ), 
+            0
+        ) as total_hours
+    ''', (now, id)).fetchone()['total_hours']
+    
+    # Update the job's total_hours
+    db.execute('UPDATE job SET total_hours = ? WHERE id = ?', 
+               (total, id))
+    db.commit()
+    
+    return json.dumps({
+        'success': True, 
+        'total_hours': total
+    }), 200, {'ContentType': 'application/json'}
+
+
+@bp.route('/job/<int:job_id>/add_note', methods=['POST'])
+def add_note(job_id):
+    db = get_db()
+    now = datetime.now(timezone.utc).isoformat()
+    db.execute(
+        'INSERT INTO job_note (job_id, note, timestamp) VALUES (?, ?, ?)',
+        (job_id, request.form['note'], now)
+    )
+    db.commit()
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+@bp.route('/job/<int:job_id>/add_material', methods=['POST'])
+def add_material(job_id):
+    db = get_db()
+    now = datetime.now(timezone.utc).isoformat()
+    db.execute(
+        'INSERT INTO job_material (job_id, material, quantity, unit, timestamp) VALUES (?, ?, ?, ?, ?)',
+        (job_id, request.form['material'], float(request.form['quantity']), request.form['unit'], now)
+    )
+    db.commit()
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+
+
+================================================
+File: /app/__init__.py
+================================================
+# app/__init__.py
+from flask import Flask
+import sqlite3
+import os
+
+def create_app():
+    app = Flask(__name__)
+    app.config['DATABASE'] = os.path.join(app.instance_path, 'jobmanager.db')
+    
+    # Ensure instance folder exists
+    try:
+        os.makedirs(app.instance_path)
+    except OSError:
+        pass
+        
+    from . import routes
+    app.register_blueprint(routes.bp)
+    
+    return app
+
+# Add to app/__init__.py after creating app
+def init_db():
+    with app.app_context():
+        db = get_db()
+        with app.open_resource('schema.sql', mode='r') as f:
+            db.executescript(f.read().decode('utf8'))
+
+================================================
+File: /app/templates/customer_form.html
+================================================
+<!-- app/templates/customer_form.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+    <h2>{% if customer %}Edit{% else %}Add{% endif %} Customer</h2>
+    <form method="post" style="max-width: 600px;">
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">Name *</label>
+            <input type="text" name="name" required style="width: 100%; padding: 8px;" 
+                   value="{{ customer.name if customer else '' }}">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">Email</label>
+            <input type="email" name="email" style="width: 100%; padding: 8px;"
+                   value="{{ customer.email if customer else '' }}">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">Phone</label>
+            <input type="tel" name="phone" style="width: 100%; padding: 8px;"
+                   value="{{ customer.phone if customer else '' }}">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">Street</label>
+            <input type="text" name="street" style="width: 100%; padding: 8px;"
+                   value="{{ customer.street if customer else '' }}">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">City</label>
+            <input type="text" name="city" style="width: 100%; padding: 8px;"
+                   value="{{ customer.city if customer else '' }}">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">Postal Code</label>
+            <input type="text" name="postal_code" style="width: 100%; padding: 8px;"
+                   value="{{ customer.postal_code if customer else '' }}">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">Country</label>
+            <input type="text" name="country" style="width: 100%; padding: 8px;"
+                   value="{{ customer.country if customer else '' }}">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">VAT Number</label>
+            <input type="text" name="vat_number" style="width: 100%; padding: 8px;"
+                   value="{{ customer.vat_number if customer else '' }}">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">Payment Terms</label>
+            <input type="text" name="payment_terms" style="width: 100%; padding: 8px;"
+                   value="{{ customer.payment_terms if customer else '' }}">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">Notes</label>
+            <textarea name="notes" style="width: 100%; padding: 8px; height: 100px;">{{ customer.notes if customer else '' }}</textarea>
+        </div>
+        
+        <button type="submit" style="background: #4CAF50; color: white; padding: 10px 20px; border: none; cursor: pointer;">
+            {% if customer %}Save Changes{% else %}Save Customer{% endif %}
+        </button>
+        <a href="{{ url_for('main.index') }}" style="display: inline-block; padding: 10px 20px; background: #f5f5f5; text-decoration: none; color: black; margin-left: 10px;">Cancel</a>
+    </form>
+</div>
+{% endblock %}
+
+================================================
+File: /app/templates/job_form.html
+================================================
+<!-- app/templates/job_form.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+    <h2>{% if job %}Edit Job{% else %}Add Job for {{ customer.name }}{% endif %}</h2>
+    <form method="post" style="max-width: 600px;">
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">Description *</label>
+            <textarea name="description" required style="width: 100%; padding: 8px; height: 100px;">{{ job.description if job else '' }}</textarea>
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">Status *</label>
+            <select name="status" required style="width: 100%; padding: 8px;">
+                <option value="Active" {% if job and job.status == 'Active' %}selected{% endif %}>Active</option>
+                <option value="Pending" {% if job and job.status == 'Pending' %}selected{% endif %}>Pending</option>
+                <option value="Completed" {% if job and job.status == 'Completed' %}selected{% endif %}>Completed</option>
+            </select>
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">Base Rate (€/hour)</label>
+            <input type="number" step="0.01" name="base_rate" style="width: 100%; padding: 8px;"
+                   value="{{ "%.2f"|format(job.base_rate) if job and job.base_rate else '' }}">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">Estimated Hours</label>
+            <input type="number" step="0.5" name="estimated_hours" style="width: 100%; padding: 8px;"
+                   value="{{ "%.1f"|format(job.estimated_hours) if job and job.estimated_hours else '' }}">
+        </div>
+        
+        <button type="submit" style="background: #4CAF50; color: white; padding: 10px 20px; border: none; cursor: pointer;">
+            {% if job %}Save Changes{% else %}Create Job{% endif %}
+        </button>
+        <a href="{{ url_for('main.job_list') }}" style="display: inline-block; padding: 10px 20px; background: #f5f5f5; text-decoration: none; color: black; margin-left: 10px;">Cancel</a>
+    </form>
+</div>
+{% endblock %}
+
+================================================
+File: /app/templates/customer_list.html
+================================================
+<!-- app/templates/customer_list.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+    
+    <!-- <h2>Customers</h2> -->
+    <!-- <a href="{{ url_for('main.add_customer') }}" style="display: inline-block; padding: 10px; background: #4CAF50; color: white; text-decoration: none; margin-bottom: 20px;">Add Customer</a>
+-->
+    <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr style="background: #f5f5f5;">
+                <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Name</th>
+                <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Contact</th>
+                <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Location</th>
+                <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for customer in customers %}
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd;">{{ customer.name }}</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">
+                    {% if customer.email %}Email: {{ customer.email }}<br>{% endif %}
+                    {% if customer.phone %}Phone: {{ customer.phone }}{% endif %}
+                </td>
+                <td style="padding: 10px; border: 1px solid #ddd;">
+                    {% if customer.city %}{{ customer.city }}{% endif %}
+                    {% if customer.country %}, {{ customer.country }}{% endif %}
+                </td>
+                <td style="padding: 10px; border: 1px solid #ddd;">
+                    <a href="{{ url_for('main.edit_customer', id=customer.id) }}" 
+                       style="display: inline-block; padding: 5px 10px;border-radius: 4px; background: #2196F3; color: white; text-decoration: none; margin-right: 5px;">
+                        Edit
+                    </a>
+                    <a href="{{ url_for('main.add_job', customer_id=customer.id) }}"
+                        style="display: inline-block; padding: 5px 10px; border-radius: 4px;background: #4CAF50; color: white; text-decoration: none; margin-right: 5px;">
+                        Create Job
+                    </a>
+                    <form action="{{ url_for('main.delete_customer', id=customer.id) }}" method="post" style="display: inline;">
+                        <button type="submit" onclick="return confirm('Are you sure you want to delete this customer?');"
+                                style="padding: 5px 10px;border-radius: 4px; background: #f44336; color: white; border: none; cursor: pointer;">
+                            Delete
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+================================================
+File: /app/templates/base.html
+================================================
+<!-- app/templates/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jobs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header-nav {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+            padding-bottom: 1px;
+            border-radius: 4px;
+        }
+        .header-nav h1 {
+            margin: 0;
+            margin-right: 20px;
+        }
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-radius: 4px;
+        }
+        .nav-menu a {
+            display: inline-block;
+            padding: 8px 16px;
+            margin-right: 10px;
+            background: #6fbcfc;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        .nav-menu a.active {
+            background: #1976D2;
+        }
+        .nav-menu a:hover {
+            background: #1976D2;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-nav">
+        <div class="nav-menu">
+            <h1>Job Manager</h1>
+            <a href="{{ url_for('main.index') }}" {% if request.endpoint == 'main.index' %}class="active"{% endif %}>Customers</a>
+            <a href="{{ url_for('main.job_list') }}" {% if request.endpoint == 'main.job_list' %}class="active"{% endif %}>Jobs</a>
+            <a href="{{ url_for('main.add_customer') }}" {% if request.endpoint == 'main.add_customer' %}class="active"{% endif %}>Add Customer</a>
+            <a href="{{ url_for('main.job_list') }}" {% if request.endpoint == 'main.add_customer' %}class="active"{% endif %}>Invoice</a>
+        </div>
+    </div>
+    {% block content %}{% endblock %}
+
+</body>
+</html>
+
+================================================
+File: /app/templates/job_list.html
+================================================
+<!-- app/templates/job_list.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .timer-container button {
+        padding: 5px 10px;
+        margin: 0 2px;
+        border: none;
+        cursor: pointer;
+        color: white;
+        border-radius: 4px;
+    }
+    .start-btn, .resume-btn { background: #38977b; }
+    .stop-btn { background: #f44336; }
+    .pause-btn { background: #ff8b07; }
+    .timer.paused { color: #666; }
+    @keyframes pulse {
+        0% { opacity: 1; }
+        50% { opacity: 0.5; }
+        100% { opacity: 1; }
+    }
+    tr[data-timer-active="true"] span.status-active {
+        animation: pulse 2s infinite;
+    }
+    tr[data-timer-paused="true"] span.status-active {
+        animation: none;
+    }
+</style>
+
+<div>
+    <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr style="background: #f5f5f5;">
+                <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Customer</th>
+                <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Description</th>
+                <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Status & Controls</th>
+                <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Actions</th>
+                <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for job in jobs %}
+            <tr id="job-{{ job.id }}" {% if job.active_timer_id %}
+                    data-timer-active="true"
+                    data-timer-paused="false"
+                {% endif %}>
+                <td style="padding: 10px; border: 1px solid #ddd;">{{ job.customer_name }}</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">{{ job.description }}</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">
+                    <span class="status-active" style="
+                        padding: 3px 8px;
+                        border-radius: 4px;
+                        {% if job.status == 'Active' %}
+                            background-color: #4CAF50;
+                        {% elif job.status == 'Pending' %}
+                            background-color: #FFC107;
+                        {% else %}
+                            background-color: #9E9E9E;
+                        {% endif %}
+                        color: white;
+                        margin-right: 10px;
+                    ">{{ job.status }}</span>
+                    <div class="timer-container" style="display: inline-block;">
+                        {% if job.active_timer_id %}
+                            <button onclick="stopTimer({{ job.id }})" class="stop-btn">Stop</button>
+                            <button onclick="pauseTimer({{ job.id }})" class="pause-btn">Pause</button>
+                            <button onclick="resumeTimer({{ job.id }})" class="resume-btn" style="display: none;">Resume</button>
+                        {% elif job.status == 'Active' %}
+                            <button onclick="startTimer({{ job.id }})" class="start-btn">Start</button>
+                        {% endif %}
+                    </div>
+                </td>
+                <td style="padding: 10px; border: 1px solid #ddd;">
+                    <a href="{{ url_for('main.edit_job', id=job.id) }}" 
+                       style="display: inline-block; padding: 5px 10px; border-radius: 4px; background: #2196F3; color: white; text-decoration: none; margin-right: 5px;">
+                        Edit
+                    </a>
+                    <form action="{{ url_for('main.delete_job', id=job.id) }}" method="post" style="display: inline;">
+                        <button type="submit" onclick="return confirm('Are you sure you want to delete this job?');"
+                                style="padding: 5px 10px; border-radius: 4px; background: #f44336; color: white; border: none; cursor: pointer;">
+                            Delete
+                        </button>
+                    </form>
+                </td>
+                <td style="padding: 10px; border: 1px solid #ddd;">
+                    <span class="timer" id="timer-{{ job.id }}"
+                        {% if job.active_timer_id %}
+                            data-start="{{ job.timer_start }}"
+                            data-paused="false"
+                        {% endif %}
+                        data-accumulated="{{ job.accumulated_hours }}">
+                        {{ "%d:%02d"|format(job.accumulated_hours|int, 
+                        ((job.accumulated_hours % 1) * 60)|round|int) }}
+                    </span>
+                    {% if job.estimated_hours %}
+                        <span class="estimated-hours">
+                            / {{ "%d:%02d"|format(job.estimated_hours|int, 
+                                ((job.estimated_hours % 1) * 60)|round|int) }}
+                        </span>
+                    {% else %}
+                        <span class="estimated-hours">/ -</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        let timerIntervals = {};
+
+        function formatTime(hours) {
+            if (isNaN(hours) || hours === null) hours = 0;
+            let wholeHours = Math.floor(hours);
+            let minutes = Math.round((hours * 60 % 60) / 5) * 5;
+            if (minutes === 60) {
+                wholeHours += 1;
+                minutes = 0;
+            }
+            return `${wholeHours}:${String(minutes).padStart(2, '0')}`;
+        }
+
+        function updateTimer(timerElement) {
+            const startTime = timerElement.dataset.start;
+            const accumulated = parseFloat(timerElement.dataset.accumulated) || 0;
+            
+            if (!startTime) {
+                timerElement.textContent = formatTime(accumulated);
+                return;
+            }
+            
+            const start = new Date(startTime);
+            const isPaused = timerElement.dataset.paused === 'true';
+            
+            if (isPaused) {
+                timerElement.textContent = formatTime(accumulated);
+                clearInterval(timerIntervals[timerElement.id]);
+                return;
+            }
+            
+            function update() {
+                const now = new Date();
+                const elapsedHours = (now - start) / (1000 * 60 * 60) + accumulated;
+                timerElement.textContent = formatTime(elapsedHours);
+                
+                const minutes = now.getMinutes();
+                if (minutes % 5 === 0 && now.getSeconds() === 0) {
+                    const jobId = timerElement.id.replace('timer-', '');
+                    updateJobTotal(jobId);
+                }
+            }
+            
+            update();
+            clearInterval(timerIntervals[timerElement.id]);
+            timerIntervals[timerElement.id] = setInterval(update, 1000);
+        }
+
+        function updateJobTotal(jobId) {
+            fetch(`/job/${jobId}/update_total`, {
+                method: 'POST',
+            }).then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const row = document.getElementById(`job-${jobId}`);
+                    const hoursCell = row.querySelector('td:nth-child(5)');
+                    const estHours = hoursCell.textContent.split('/')[1].trim();
+                    hoursCell.textContent = `${formatTime(data.total_hours)} / ${estHours}`;
+                }
+            });
+        }
+
+        function startTimer(jobId) {
+            fetch(`/job/${jobId}/start_timer`, {
+                method: 'POST',
+            }).then(response => {
+                if (response.ok) {
+                    window.location.reload();
+                }
+            });
+        }
+
+        function stopTimer(jobId) {
+            fetch(`/job/${jobId}/stop_timer`, {
+                method: 'POST',
+            }).then(response => {
+                if (response.ok) {
+                    window.location.reload();
+                }
+            });
+        }
+
+        function pauseTimer(jobId) {
+            fetch(`/job/${jobId}/pause_timer`, {
+                method: 'POST',
+            }).then(response => {
+                if (response.ok) {
+                    const row = document.getElementById(`job-${jobId}`);
+                    row.dataset.timerPaused = 'true';
+                    row.dataset.timerActive = 'false';
+                    
+                    const timer = document.getElementById(`timer-${jobId}`);
+                    timer.dataset.paused = 'true';
+                    
+                    const container = row.querySelector('.timer-container');
+                    container.querySelector('.pause-btn').style.display = 'none';
+                    container.querySelector('.resume-btn').style.display = 'inline';
+                }
+            });
+        }
+
+        function resumeTimer(jobId) {
+            fetch(`/job/${jobId}/resume_timer`, {
+                method: 'POST',
+            }).then(response => {
+                if (response.ok) {
+                    const row = document.getElementById(`job-${jobId}`);
+                    row.dataset.timerPaused = 'false';
+                    row.dataset.timerActive = 'true';
+                    
+                    const timer = document.getElementById(`timer-${jobId}`);
+                    timer.dataset.paused = 'false';
+                    
+                    const container = row.querySelector('.timer-container');
+                    container.querySelector('.pause-btn').style.display = 'inline';
+                    container.querySelector('.resume-btn').style.display = 'none';
+                    
+                    updateTimer(timer);
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.timer').forEach(timer => {
+                updateTimer(timer);
+            });
+
+            document.querySelectorAll('.active-timer').forEach(row => {
+                const timer = row.querySelector('.timer');
+                if (timer) {
+                    updateTimer(timer);
+                }
+            });
+        });
+    </script>
+</div>
+{% endblock %}
+
+================================================
+File: /app/init_db.py
+================================================
+# app/init_db.py
+from app import create_app
+
+app = create_app()
+
+def init_db():
+    with app.app_context():
+        from app.routes import get_db
+        db = get_db()
+        with app.open_resource('schema.sql', mode='r') as f:
+            db.executescript(f.read())  # Remove the decode() since it's already a string
+        print("Database initialized successfully!")
+
+if __name__ == '__main__':
+    init_db()
+
+================================================
+File: /app/schema.sql
+================================================
+-- app/schema.sql
+CREATE TABLE IF NOT EXISTS customer (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    email TEXT,
+    phone TEXT,
+    street TEXT,
+    city TEXT,
+    postal_code TEXT,
+    country TEXT,
+    vat_number TEXT,
+    payment_terms TEXT,
+    notes TEXT
+);
+
+CREATE TABLE IF NOT EXISTS job (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    customer_id INTEGER NOT NULL,
+    description TEXT NOT NULL,
+    status TEXT NOT NULL,
+    creation_date TEXT NOT NULL,
+    deadline TEXT,
+    base_rate REAL,
+    custom_rate REAL,
+    estimated_hours REAL,
+    total_hours REAL DEFAULT 0,
+    last_active TEXT,
+    FOREIGN KEY (customer_id) REFERENCES customer (id)
+);
+
+CREATE TABLE IF NOT EXISTS time_entry (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    job_id INTEGER NOT NULL,
+    start_time TEXT NOT NULL,
+    end_time TEXT,
+    entry_type TEXT NOT NULL,
+    notes TEXT,
+    materials_used TEXT,
+    adjusted_by TEXT,
+    adjustment_reason TEXT,
+    location TEXT,
+    break_duration INTEGER DEFAULT 0,
+    FOREIGN KEY (job_id) REFERENCES job (id)
+);
+
+CREATE TABLE IF NOT EXISTS job_note (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    job_id INTEGER NOT NULL,
+    note TEXT NOT NULL,
+    timestamp TEXT NOT NULL,
+    FOREIGN KEY (job_id) REFERENCES job (id)
+);
+
+CREATE TABLE IF NOT EXISTS job_material (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    job_id INTEGER NOT NULL,
+    material TEXT NOT NULL, 
+    quantity REAL,
+    unit TEXT,
+    timestamp TEXT NOT NULL,
+    FOREIGN KEY (job_id) REFERENCES job (id)
+);
+
+================================================
+File: /gitback.sh
+================================================
+#!/bin/sh
+# root_gitbackup.sh v3
+# Location: /root/root_gitbackup.sh
+cd /home/Jobmanager
+# rm job*.txt
+cd /home/
+HOUR=`date +%-H`
+HOUR=$((HOUR + 1))
+if [ $HOUR -eq 24 ]; then
+    HOUR=00
+fi
+DATE=$(date +"%m%d-")${HOUR}$(date +%M)
+gitingest ./Jobmanager -e /static -e /backups -e /db -e /README.txt -e /export -e *.db -e /utils -o /home/Jobmanager/jobmgr-${DATE}.txt
+
+
+================================================
+File: /DS-01.md
+================================================
+### DeepSeek thinks:
+
+
+### 1. **Directory Structure**
+- **Good**: The structure is logical and follows Flask conventions.
+- **Improvement**: Consider separating concerns further by creating additional directories for `models`, `services`, and `static` files (CSS, JS, images).
+
+### 2. **Code Organization**
+- **Good**: The use of Blueprints (`bp`) is excellent for modularity.
+- **Improvement**: Move database-related functions (e.g., `get_db`, `close_db`) to a separate module like `db.py` to keep `routes.py` focused on routing logic.
+
+### 3. **Database Management**
+- **Good**: The use of SQLite is appropriate for a lightweight, offline application.
+- **Improvement**: Consider using an ORM like SQLAlchemy for better database abstraction and easier maintenance.
+
+### 4. **Error Handling**
+- **Good**: Basic error handling is present (e.g., `try-except` for directory creation).
+- **Improvement**: Add more comprehensive error handling, especially for database operations and form submissions.
+
+### 5. **Security**
+- **Good**: Basic security practices are followed (e.g., using `POST` for deletions).
+- **Improvement**: Implement CSRF protection for forms and validate/sanitize all user inputs to prevent SQL injection and XSS attacks.
+
+### 6. **Code Duplication**
+- **Good**: The code is relatively DRY (Don't Repeat Yourself).
+- **Improvement**: Refactor repeated database query patterns into helper functions.
+
+### 7. **Frontend Enhancements**
+- **Good**: The use of templates and inheritance (`base.html`) is well done.
+- **Improvement**: Consider using a CSS framework like Bootstrap for more consistent and responsive designs.
+
+### 8. **JavaScript Enhancements**
+- **Good**: Basic JavaScript for timer functionality is implemented.
+- **Improvement**: Move JavaScript code to separate files and consider using a modern framework like Vue.js or React for more dynamic interactions.
+
+### 9. **Documentation**
+- **Good**: The `updated-jobmanager-doc.md` provides a comprehensive overview.
+- **Improvement**: Add inline comments and docstrings to the code for better maintainability.
+
+### 10. **Testing**
+- **Good**: The project is set up for development.
+- **Improvement**: Add unit and integration tests to ensure reliability.
+
+### 11. **Backup Script**
+- **Good**: The `gitback.sh` script provides a simple backup solution.
+- **Improvement**: Consider adding error handling and logging to the backup script.
+
+### 12. **Configuration Management**
+- **Good**: Basic configuration is handled via `app.config`.
+- **Improvement**: Use environment variables for sensitive data and different configurations (development, production).
+
+### 13. **Performance**
+- **Good**: The application is lightweight and suitable for a Raspberry Pi.
+- **Improvement**: Optimize database queries and consider indexing frequently queried columns.
+
+### 14. **User Experience**
+- **Good**: The interface is functional and straightforward.
+- **Improvement**: Add more interactive elements (e.g., AJAX for form submissions) to improve user experience.
+
+### 15. **Future-Proofing**
+- **Good**: The design considers future needs (e.g., RFID integration).
+- **Improvement**: Plan for scalability by modularizing the codebase and considering microservices if the application grows.
+
+### Summary
+Your project is well on its way to being a robust and maintainable application. By addressing the above points, you can further enhance its structure, security, and user experience. Keep up the good work!
+
+================================================
+File: /jobmgr-0204-1811.txt
+================================================
+Directory structure:
+└── ./Jobmanager/
+    ├── app/
+    │   ├── routes.py
+    │   ├── __init__.py
+    │   ├── templates/
+    │   │   ├── customer_form.html
+    │   │   ├── job_form.html
+    │   │   ├── customer_list.html
+    │   │   ├── base.html
+    │   │   └── job_list.html
+    │   ├── init_db.py
+    │   ├── schema.sql
+    │   └── __pycache__/
+    ├── instance/
+    ├── gitback.sh
+    ├── run.py
+    ├── LICENSE
+    ├── updated-jobmanager-doc.md
+    ├── README.md
+    └── requirements.txt
+
+================================================
+File: /app/routes.py
+================================================
+# app/routes.py
+from flask import Blueprint, render_template, current_app, g, request, redirect, url_for, flash
+from datetime import datetime, timezone
+import json
+import sqlite3
+
+bp = Blueprint('main', __name__)
+
+def get_db():
+    if 'db' not in g:
+        g.db = sqlite3.connect(
+            current_app.config['DATABASE'],
+            detect_types=sqlite3.PARSE_DECLTYPES
+        )
+        g.db.row_factory = sqlite3.Row
+    return g.db
+
+@bp.teardown_app_request
+def close_db(e=None):
+    db = g.pop('db', None)
+    if db is not None:
+        db.close()
+
+# app/routes.py
+@bp.route('/')
+def index():
+    db = get_db()
+    customers = db.execute(
+        'SELECT * FROM customer ORDER BY name'
+    ).fetchall()
+    return render_template('customer_list.html', customers=customers)
+
+@bp.route('/customer/add', methods=['GET', 'POST'])
+def add_customer():
+    if request.method == 'POST':
+        db = get_db()
+        db.execute(
+            'INSERT INTO customer (name, email, phone, street, city, postal_code, country, vat_number, payment_terms, notes)'
+            ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            (request.form['name'], request.form['email'], request.form['phone'],
+             request.form['street'], request.form['city'], request.form['postal_code'],
+             request.form['country'], request.form['vat_number'], request.form['payment_terms'],
+             request.form['notes'])
+        )
+        db.commit()
+        return redirect(url_for('main.index'))
+    return render_template('customer_form.html')
+
+@bp.route('/customer/<int:id>/edit', methods=['GET', 'POST'])
+def edit_customer(id):
+    db = get_db()
+    customer = db.execute('SELECT * FROM customer WHERE id = ?', (id,)).fetchone()
+    
+    if request.method == 'POST':
+        db.execute(
+            'UPDATE customer SET name=?, email=?, phone=?, street=?, city=?, postal_code=?, '
+            'country=?, vat_number=?, payment_terms=?, notes=? WHERE id=?',
+            (request.form['name'], request.form['email'], request.form['phone'],
+             request.form['street'], request.form['city'], request.form['postal_code'],
+             request.form['country'], request.form['vat_number'], request.form['payment_terms'],
+             request.form['notes'], id)
+        )
+        db.commit()
+        return redirect(url_for('main.index'))
+    
+    return render_template('customer_form.html', customer=customer)
+
+@bp.route('/customer/<int:id>/delete', methods=['POST'])
+def delete_customer(id):
+    db = get_db()
+    db.execute('DELETE FROM customer WHERE id = ?', (id,))
+    db.commit()
+    return redirect(url_for('main.index'))
+
+# In routes.py, update the job_list query:
+# In routes.py
+@bp.route('/jobs')
+def job_list():
+    db = get_db()
+    jobs = db.execute('''
+        WITH job_hours AS (
+            SELECT 
+                job_id,
+                SUM((julianday(COALESCE(end_time, datetime('now'))) - julianday(start_time)) * 24) as hours
+            FROM time_entry
+            GROUP BY job_id
+        )
+        SELECT 
+            job.*,
+            customer.name as customer_name,
+            te_active.id as active_timer_id,
+            te_active.start_time as timer_start,
+            COALESCE(job_hours.hours, 0) as accumulated_hours
+        FROM job 
+        JOIN customer ON job.customer_id = customer.id 
+        LEFT JOIN time_entry te_active ON job.id = te_active.job_id 
+            AND te_active.end_time IS NULL
+        LEFT JOIN job_hours ON job_hours.job_id = job.id
+        ORDER BY 
+            te_active.id IS NOT NULL DESC,
+            CASE job.status
+                WHEN 'Active' THEN 1
+                WHEN 'Pending' THEN 2
+                WHEN 'Completed' THEN 3
+            END,
+            job.last_active DESC NULLS LAST,
+            job.creation_date DESC
+    ''').fetchall()
+    return render_template('job_list.html', jobs=jobs)
+
+
+@bp.route('/customer/<int:customer_id>/add_job', methods=['GET', 'POST'])
+def add_job(customer_id):
+    db = get_db()
+    customer = db.execute('SELECT * FROM customer WHERE id = ?', (customer_id,)).fetchone()
+    
+    if request.method == 'POST':
+        db.execute(
+            'INSERT INTO job (customer_id, description, status, creation_date, base_rate, estimated_hours)'
+            ' VALUES (?, ?, ?, ?, ?, ?)',
+            (customer_id, request.form['description'], request.form['status'],
+             datetime.now().isoformat(), 
+             float(request.form['base_rate']) if request.form['base_rate'] else None,
+             float(request.form['estimated_hours']) if request.form['estimated_hours'] else None)
+        )
+        db.commit()
+        return redirect(url_for('main.job_list'))
+    
+    return render_template('job_form.html', customer=customer)
+
+@bp.route('/job/<int:id>/edit', methods=['GET', 'POST'])
+def edit_job(id):
+    db = get_db()
+    job = db.execute('''
+        SELECT job.*, customer.name as customer_name 
+        FROM job 
+        JOIN customer ON job.customer_id = customer.id 
+        WHERE job.id = ?
+    ''', (id,)).fetchone()
+    
+    if request.method == 'POST':
+        db.execute(
+            'UPDATE job SET description=?, status=?, base_rate=?, estimated_hours=? WHERE id=?',
+            (request.form['description'], request.form['status'],
+             float(request.form['base_rate']) if request.form['base_rate'] else None,
+             float(request.form['estimated_hours']) if request.form['estimated_hours'] else None,
+             id)
+        )
+        db.commit()
+        return redirect(url_for('main.job_list'))
+    
+    return render_template('job_form.html', job=job)
+
+@bp.route('/job/<int:id>/delete', methods=['POST'])
+def delete_job(id):
+    db = get_db()
+    db.execute('DELETE FROM job WHERE id = ?', (id,))
+    db.commit()
+    return redirect(url_for('main.job_list'))
+
+@bp.route('/job/<int:id>/start_timer', methods=['POST'])
+def start_timer(id):
+    db = get_db()
+    now = datetime.now(timezone.utc).isoformat()
+    
+    # Find any currently running timer and which job it belongs to
+    active_timer = db.execute('''
+        SELECT time_entry.*, job.id as job_id
+        FROM time_entry 
+        JOIN job ON time_entry.job_id = job.id
+        WHERE time_entry.end_time IS NULL
+    ''').fetchone()
+    
+    if active_timer:
+        # Stop the timer for the specific job
+        db.execute('''
+            UPDATE time_entry 
+            SET end_time = ?
+            WHERE id = ? AND job_id = ?
+        ''', (now, active_timer['id'], active_timer['job_id']))
+        
+        # Update the last_active time for that job
+        db.execute('UPDATE job SET last_active = ? WHERE id = ?',
+                  (now, active_timer['job_id']))
+    
+    # Check if the requested job already has accumulated time
+    has_time = db.execute('''
+        SELECT EXISTS (
+            SELECT 1 FROM time_entry 
+            WHERE job_id = ?
+        ) as has_entries
+    ''', (id,)).fetchone()['has_entries']
+    
+    if not has_time:
+        # Only create a new time entry if this is the first time
+        db.execute(
+            'INSERT INTO time_entry (job_id, start_time, entry_type) VALUES (?, ?, ?)',
+            (id, now, 'auto')
+        )
+    else:
+        # Otherwise, just resume the last entry
+        db.execute(
+            'INSERT INTO time_entry (job_id, start_time, entry_type) VALUES (?, ?, ?)',
+            (id, now, 'resume')
+        )
+    
+    # Update the requested job's last_active time
+    db.execute('UPDATE job SET last_active = ? WHERE id = ?', 
+               (now, id))
+    
+    db.commit()
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+@bp.route('/job/<int:id>/stop_timer', methods=['POST'])
+def stop_timer(id):
+    db = get_db()
+    now = datetime.now(timezone.utc).isoformat()
+    
+    # Find and stop active timer for this job
+    db.execute('''
+        UPDATE time_entry 
+        SET end_time = ? 
+        WHERE job_id = ? AND end_time IS NULL
+    ''', (now, id))
+    
+    db.commit()
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+@bp.route('/job/<int:id>/pause_timer', methods=['POST'])
+def pause_timer(id):
+    db = get_db()
+    now = datetime.now(timezone.utc).isoformat()
+    
+    # Just stop the current timer but don't change job status
+    db.execute('''
+        UPDATE time_entry 
+        SET end_time = ? 
+        WHERE job_id = ? AND end_time IS NULL
+    ''', (now, id))
+    
+    db.commit()
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+@bp.route('/job/<int:id>/resume_timer', methods=['POST'])
+def resume_timer(id):
+    db = get_db()
+    now = datetime.now(timezone.utc).isoformat()
+    
+    # Create new time entry but don't change job status
+    db.execute(
+        'INSERT INTO time_entry (job_id, start_time, entry_type) VALUES (?, ?, ?)',
+        (id, now, 'auto')
+    )
+    db.commit()
+    
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+# Add to routes.py
+@bp.route('/job/<int:id>/update_total', methods=['POST'])
+def update_job_total(id):
+    db = get_db()
+    now = datetime.now(timezone.utc).isoformat()
+    
+    # Calculate total hours including current running timer
+    total = db.execute('''
+        SELECT COALESCE(
+            (
+                SELECT SUM(
+                    CASE 
+                        WHEN end_time IS NOT NULL 
+                        THEN (julianday(end_time) - julianday(start_time)) * 24
+                        ELSE (julianday(?) - julianday(start_time)) * 24
+                    END
+                )
+                FROM time_entry 
+                WHERE job_id = ?
+            ), 
+            0
+        ) as total_hours
+    ''', (now, id)).fetchone()['total_hours']
+    
+    # Update the job's total_hours
+    db.execute('UPDATE job SET total_hours = ? WHERE id = ?', 
+               (total, id))
+    db.commit()
+    
+    return json.dumps({
+        'success': True, 
+        'total_hours': total
+    }), 200, {'ContentType': 'application/json'}
+
+
+@bp.route('/job/<int:job_id>/add_note', methods=['POST'])
+def add_note(job_id):
+    db = get_db()
+    now = datetime.now(timezone.utc).isoformat()
+    db.execute(
+        'INSERT INTO job_note (job_id, note, timestamp) VALUES (?, ?, ?)',
+        (job_id, request.form['note'], now)
+    )
+    db.commit()
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+@bp.route('/job/<int:job_id>/add_material', methods=['POST'])
+def add_material(job_id):
+    db = get_db()
+    now = datetime.now(timezone.utc).isoformat()
+    db.execute(
+        'INSERT INTO job_material (job_id, material, quantity, unit, timestamp) VALUES (?, ?, ?, ?, ?)',
+        (job_id, request.form['material'], float(request.form['quantity']), request.form['unit'], now)
+    )
+    db.commit()
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+
+
+================================================
+File: /app/__init__.py
+================================================
+# app/__init__.py
+from flask import Flask
+import sqlite3
+import os
+
+def create_app():
+    app = Flask(__name__)
+    app.config['DATABASE'] = os.path.join(app.instance_path, 'jobmanager.db')
+    
+    # Ensure instance folder exists
+    try:
+        os.makedirs(app.instance_path)
+    except OSError:
+        pass
+        
+    from . import routes
+    app.register_blueprint(routes.bp)
+    
+    return app
+
+# Add to app/__init__.py after creating app
+def init_db():
+    with app.app_context():
+        db = get_db()
+        with app.open_resource('schema.sql', mode='r') as f:
+            db.executescript(f.read().decode('utf8'))
+
+================================================
+File: /app/templates/customer_form.html
+================================================
+<!-- app/templates/customer_form.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+    <h2>{% if customer %}Edit{% else %}Add{% endif %} Customer</h2>
+    <form method="post" style="max-width: 600px;">
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">Name *</label>
+            <input type="text" name="name" required style="width: 100%; padding: 8px;" 
+                   value="{{ customer.name if customer else '' }}">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">Email</label>
+            <input type="email" name="email" style="width: 100%; padding: 8px;"
+                   value="{{ customer.email if customer else '' }}">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">Phone</label>
+            <input type="tel" name="phone" style="width: 100%; padding: 8px;"
+                   value="{{ customer.phone if customer else '' }}">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">Street</label>
+            <input type="text" name="street" style="width: 100%; padding: 8px;"
+                   value="{{ customer.street if customer else '' }}">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">City</label>
+            <input type="text" name="city" style="width: 100%; padding: 8px;"
+                   value="{{ customer.city if customer else '' }}">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">Postal Code</label>
+            <input type="text" name="postal_code" style="width: 100%; padding: 8px;"
+                   value="{{ customer.postal_code if customer else '' }}">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">Country</label>
+            <input type="text" name="country" style="width: 100%; padding: 8px;"
+                   value="{{ customer.country if customer else '' }}">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">VAT Number</label>
+            <input type="text" name="vat_number" style="width: 100%; padding: 8px;"
+                   value="{{ customer.vat_number if customer else '' }}">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">Payment Terms</label>
+            <input type="text" name="payment_terms" style="width: 100%; padding: 8px;"
+                   value="{{ customer.payment_terms if customer else '' }}">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">Notes</label>
+            <textarea name="notes" style="width: 100%; padding: 8px; height: 100px;">{{ customer.notes if customer else '' }}</textarea>
+        </div>
+        
+        <button type="submit" style="background: #4CAF50; color: white; padding: 10px 20px; border: none; cursor: pointer;">
+            {% if customer %}Save Changes{% else %}Save Customer{% endif %}
+        </button>
+        <a href="{{ url_for('main.index') }}" style="display: inline-block; padding: 10px 20px; background: #f5f5f5; text-decoration: none; color: black; margin-left: 10px;">Cancel</a>
+    </form>
+</div>
+{% endblock %}
+
+================================================
+File: /app/templates/job_form.html
+================================================
+<!-- app/templates/job_form.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+    <h2>{% if job %}Edit Job{% else %}Add Job for {{ customer.name }}{% endif %}</h2>
+    <form method="post" style="max-width: 600px;">
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">Description *</label>
+            <textarea name="description" required style="width: 100%; padding: 8px; height: 100px;">{{ job.description if job else '' }}</textarea>
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">Status *</label>
+            <select name="status" required style="width: 100%; padding: 8px;">
+                <option value="Active" {% if job and job.status == 'Active' %}selected{% endif %}>Active</option>
+                <option value="Pending" {% if job and job.status == 'Pending' %}selected{% endif %}>Pending</option>
+                <option value="Completed" {% if job and job.status == 'Completed' %}selected{% endif %}>Completed</option>
+            </select>
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">Base Rate (€/hour)</label>
+            <input type="number" step="0.01" name="base_rate" style="width: 100%; padding: 8px;"
+                   value="{{ "%.2f"|format(job.base_rate) if job and job.base_rate else '' }}">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">Estimated Hours</label>
+            <input type="number" step="0.5" name="estimated_hours" style="width: 100%; padding: 8px;"
+                   value="{{ "%.1f"|format(job.estimated_hours) if job and job.estimated_hours else '' }}">
+        </div>
+        
+        <button type="submit" style="background: #4CAF50; color: white; padding: 10px 20px; border: none; cursor: pointer;">
+            {% if job %}Save Changes{% else %}Create Job{% endif %}
+        </button>
+        <a href="{{ url_for('main.job_list') }}" style="display: inline-block; padding: 10px 20px; background: #f5f5f5; text-decoration: none; color: black; margin-left: 10px;">Cancel</a>
+    </form>
+</div>
+{% endblock %}
+
+================================================
+File: /app/templates/customer_list.html
+================================================
+<!-- app/templates/customer_list.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+    
+    <!-- <h2>Customers</h2> -->
+    <!-- <a href="{{ url_for('main.add_customer') }}" style="display: inline-block; padding: 10px; background: #4CAF50; color: white; text-decoration: none; margin-bottom: 20px;">Add Customer</a>
+-->
+    <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr style="background: #f5f5f5;">
+                <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Name</th>
+                <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Contact</th>
+                <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Location</th>
+                <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for customer in customers %}
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd;">{{ customer.name }}</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">
+                    {% if customer.email %}Email: {{ customer.email }}<br>{% endif %}
+                    {% if customer.phone %}Phone: {{ customer.phone }}{% endif %}
+                </td>
+                <td style="padding: 10px; border: 1px solid #ddd;">
+                    {% if customer.city %}{{ customer.city }}{% endif %}
+                    {% if customer.country %}, {{ customer.country }}{% endif %}
+                </td>
+                <td style="padding: 10px; border: 1px solid #ddd;">
+                    <a href="{{ url_for('main.edit_customer', id=customer.id) }}" 
+                       style="display: inline-block; padding: 5px 10px; background: #2196F3; color: white; text-decoration: none; margin-right: 5px;">
+                        Edit
+                    </a>
+                    <a href="{{ url_for('main.add_job', customer_id=customer.id) }}"
+                        style="display: inline-block; padding: 5px 10px; background: #4CAF50; color: white; text-decoration: none; margin-right: 5px;">
+                        Create Job
+                    </a>
+                    <form action="{{ url_for('main.delete_customer', id=customer.id) }}" method="post" style="display: inline;">
+                        <button type="submit" onclick="return confirm('Are you sure you want to delete this customer?');"
+                                style="padding: 5px 10px; background: #f44336; color: white; border: none; cursor: pointer;">
+                            Delete
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+================================================
+File: /app/templates/base.html
+================================================
+<!-- app/templates/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jobs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header-nav {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        .header-nav h1 {
+            margin: 0;
+            margin-right: 20px;
+        }
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        .nav-menu a {
+            display: inline-block;
+            padding: 8px 16px;
+            margin-right: 10px;
+            background: #2196F3;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        .nav-menu a.active {
+            background: #1976D2;
+        }
+        .nav-menu a:hover {
+            background: #1976D2;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-nav">
+        <h1>Job Manager</h1>
+        <div class="nav-menu">
+            <a href="{{ url_for('main.index') }}" {% if request.endpoint == 'main.index' %}class="active"{% endif %}>Customers</a>
+            <a href="{{ url_for('main.job_list') }}" {% if request.endpoint == 'main.job_list' %}class="active"{% endif %}>Jobs</a>
+            <a href="{{ url_for('main.add_customer') }}" {% if request.endpoint == 'main.add_customer' %}class="active"{% endif %}>Add Customer</a>
+            <a href="{{ url_for('main.job_list') }}" {% if request.endpoint == 'main.add_customer' %}class="active"{% endif %}>Invoice</a>
+        </div>
+    </div>
+    {% block content %}{% endblock %}
+
+</body>
+</html>
+
+================================================
+File: /app/templates/job_list.html
+================================================
+<!-- app/templates/job_list.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .timer-container button {
+        padding: 5px 10px;
+        margin: 0 2px;
+        border: none;
+        cursor: pointer;
+        color: white;
+        border-radius: 4px;
+    }
+    .start-btn, .resume-btn { background: #38977b; }
+    .stop-btn { background: #f44336; }
+    .pause-btn { background: #FFC107; }
+    .timer.paused { color: #666; }
+    @keyframes pulse {
+        0% { opacity: 1; }
+        50% { opacity: 0.5; }
+        100% { opacity: 1; }
+    }
+    tr[data-timer-active="true"] span.status-active {
+        animation: pulse 2s infinite;
+    }
+    tr[data-timer-paused="true"] span.status-active {
+        animation: none;
+    }
+</style>
+
+<div>
+    <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr style="background: #f5f5f5;">
+                <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Customer</th>
+                <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Description</th>
+                <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Status & Controls</th>
+                <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Actions</th>
+                <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for job in jobs %}
+            <tr id="job-{{ job.id }}" {% if job.active_timer_id %}
+                    data-timer-active="true"
+                    data-timer-paused="false"
+                {% endif %}>
+                <td style="padding: 10px; border: 1px solid #ddd;">{{ job.customer_name }}</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">{{ job.description }}</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">
+                    <span class="status-active" style="
+                        padding: 3px 8px;
+                        border-radius: 4px;
+                        {% if job.status == 'Active' %}
+                            background-color: #4CAF50;
+                        {% elif job.status == 'Pending' %}
+                            background-color: #FFC107;
+                        {% else %}
+                            background-color: #9E9E9E;
+                        {% endif %}
+                        color: white;
+                        margin-right: 10px;
+                    ">{{ job.status }}</span>
+                    <div class="timer-container" style="display: inline-block;">
+                        {% if job.active_timer_id %}
+                            <button onclick="stopTimer({{ job.id }})" class="stop-btn">Stop</button>
+                            <button onclick="pauseTimer({{ job.id }})" class="pause-btn">Pause</button>
+                            <button onclick="resumeTimer({{ job.id }})" class="resume-btn" style="display: none;">Resume</button>
+                        {% elif job.status == 'Active' %}
+                            <button onclick="startTimer({{ job.id }})" class="start-btn">Start</button>
+                        {% endif %}
+                    </div>
+                </td>
+                <td style="padding: 10px; border: 1px solid #ddd;">
+                    <a href="{{ url_for('main.edit_job', id=job.id) }}" 
+                       style="display: inline-block; padding: 5px 10px; border-radius: 4px; background: #2196F3; color: white; text-decoration: none; margin-right: 5px;">
+                        Edit
+                    </a>
+                    <form action="{{ url_for('main.delete_job', id=job.id) }}" method="post" style="display: inline;">
+                        <button type="submit" onclick="return confirm('Are you sure you want to delete this job?');"
+                                style="padding: 5px 10px; border-radius: 4px; background: #f44336; color: white; border: none; cursor: pointer;">
+                            Delete
+                        </button>
+                    </form>
+                </td>
+                <td style="padding: 10px; border: 1px solid #ddd;">
+                    <span class="timer" id="timer-{{ job.id }}"
+                        {% if job.active_timer_id %}
+                            data-start="{{ job.timer_start }}"
+                            data-paused="false"
+                        {% endif %}
+                        data-accumulated="{{ job.accumulated_hours }}">
+                        {{ "%d:%02d"|format(job.accumulated_hours|int, 
+                        ((job.accumulated_hours % 1) * 60)|round|int) }}
+                    </span>
+                    {% if job.estimated_hours %}
+                        <span class="estimated-hours">
+                            / {{ "%d:%02d"|format(job.estimated_hours|int, 
+                                ((job.estimated_hours % 1) * 60)|round|int) }}
+                        </span>
+                    {% else %}
+                        <span class="estimated-hours">/ -</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        let timerIntervals = {};
+
+        function formatTime(hours) {
+            if (isNaN(hours) || hours === null) hours = 0;
+            let wholeHours = Math.floor(hours);
+            let minutes = Math.round((hours * 60 % 60) / 5) * 5;
+            if (minutes === 60) {
+                wholeHours += 1;
+                minutes = 0;
+            }
+            return `${wholeHours}:${String(minutes).padStart(2, '0')}`;
+        }
+
+        function updateTimer(timerElement) {
+            const startTime = timerElement.dataset.start;
+            const accumulated = parseFloat(timerElement.dataset.accumulated) || 0;
+            
+            if (!startTime) {
+                timerElement.textContent = formatTime(accumulated);
+                return;
+            }
+            
+            const start = new Date(startTime);
+            const isPaused = timerElement.dataset.paused === 'true';
+            
+            if (isPaused) {
+                timerElement.textContent = formatTime(accumulated);
+                clearInterval(timerIntervals[timerElement.id]);
+                return;
+            }
+            
+            function update() {
+                const now = new Date();
+                const elapsedHours = (now - start) / (1000 * 60 * 60) + accumulated;
+                timerElement.textContent = formatTime(elapsedHours);
+                
+                const minutes = now.getMinutes();
+                if (minutes % 5 === 0 && now.getSeconds() === 0) {
+                    const jobId = timerElement.id.replace('timer-', '');
+                    updateJobTotal(jobId);
+                }
+            }
+            
+            update();
+            clearInterval(timerIntervals[timerElement.id]);
+            timerIntervals[timerElement.id] = setInterval(update, 1000);
+        }
+
+        function updateJobTotal(jobId) {
+            fetch(`/job/${jobId}/update_total`, {
+                method: 'POST',
+            }).then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const row = document.getElementById(`job-${jobId}`);
+                    const hoursCell = row.querySelector('td:nth-child(5)');
+                    const estHours = hoursCell.textContent.split('/')[1].trim();
+                    hoursCell.textContent = `${formatTime(data.total_hours)} / ${estHours}`;
+                }
+            });
+        }
+
+        function startTimer(jobId) {
+            fetch(`/job/${jobId}/start_timer`, {
+                method: 'POST',
+            }).then(response => {
+                if (response.ok) {
+                    window.location.reload();
+                }
+            });
+        }
+
+        function stopTimer(jobId) {
+            fetch(`/job/${jobId}/stop_timer`, {
+                method: 'POST',
+            }).then(response => {
+                if (response.ok) {
+                    window.location.reload();
+                }
+            });
+        }
+
+        function pauseTimer(jobId) {
+            fetch(`/job/${jobId}/pause_timer`, {
+                method: 'POST',
+            }).then(response => {
+                if (response.ok) {
+                    const row = document.getElementById(`job-${jobId}`);
+                    row.dataset.timerPaused = 'true';
+                    row.dataset.timerActive = 'false';
+                    
+                    const timer = document.getElementById(`timer-${jobId}`);
+                    timer.dataset.paused = 'true';
+                    
+                    const container = row.querySelector('.timer-container');
+                    container.querySelector('.pause-btn').style.display = 'none';
+                    container.querySelector('.resume-btn').style.display = 'inline';
+                }
+            });
+        }
+
+        function resumeTimer(jobId) {
+            fetch(`/job/${jobId}/resume_timer`, {
+                method: 'POST',
+            }).then(response => {
+                if (response.ok) {
+                    const row = document.getElementById(`job-${jobId}`);
+                    row.dataset.timerPaused = 'false';
+                    row.dataset.timerActive = 'true';
+                    
+                    const timer = document.getElementById(`timer-${jobId}`);
+                    timer.dataset.paused = 'false';
+                    
+                    const container = row.querySelector('.timer-container');
+                    container.querySelector('.pause-btn').style.display = 'inline';
+                    container.querySelector('.resume-btn').style.display = 'none';
+                    
+                    updateTimer(timer);
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.timer').forEach(timer => {
+                updateTimer(timer);
+            });
+
+            document.querySelectorAll('.active-timer').forEach(row => {
+                const timer = row.querySelector('.timer');
+                if (timer) {
+                    updateTimer(timer);
+                }
+            });
+        });
+    </script>
+</div>
+{% endblock %}
+
+================================================
+File: /app/init_db.py
+================================================
+# app/init_db.py
+from app import create_app
+
+app = create_app()
+
+def init_db():
+    with app.app_context():
+        from app.routes import get_db
+        db = get_db()
+        with app.open_resource('schema.sql', mode='r') as f:
+            db.executescript(f.read())  # Remove the decode() since it's already a string
+        print("Database initialized successfully!")
+
+if __name__ == '__main__':
+    init_db()
+
+================================================
+File: /app/schema.sql
+================================================
+-- app/schema.sql
+CREATE TABLE IF NOT EXISTS customer (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    email TEXT,
+    phone TEXT,
+    street TEXT,
+    city TEXT,
+    postal_code TEXT,
+    country TEXT,
+    vat_number TEXT,
+    payment_terms TEXT,
+    notes TEXT
+);
+
+CREATE TABLE IF NOT EXISTS job (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    customer_id INTEGER NOT NULL,
+    description TEXT NOT NULL,
+    status TEXT NOT NULL,
+    creation_date TEXT NOT NULL,
+    deadline TEXT,
+    base_rate REAL,
+    custom_rate REAL,
+    estimated_hours REAL,
+    total_hours REAL DEFAULT 0,
+    last_active TEXT,
+    FOREIGN KEY (customer_id) REFERENCES customer (id)
+);
+
+CREATE TABLE IF NOT EXISTS time_entry (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    job_id INTEGER NOT NULL,
+    start_time TEXT NOT NULL,
+    end_time TEXT,
+    entry_type TEXT NOT NULL,
+    notes TEXT,
+    materials_used TEXT,
+    adjusted_by TEXT,
+    adjustment_reason TEXT,
+    location TEXT,
+    break_duration INTEGER DEFAULT 0,
+    FOREIGN KEY (job_id) REFERENCES job (id)
+);
+
+CREATE TABLE IF NOT EXISTS job_note (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    job_id INTEGER NOT NULL,
+    note TEXT NOT NULL,
+    timestamp TEXT NOT NULL,
+    FOREIGN KEY (job_id) REFERENCES job (id)
+);
+
+CREATE TABLE IF NOT EXISTS job_material (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    job_id INTEGER NOT NULL,
+    material TEXT NOT NULL, 
+    quantity REAL,
+    unit TEXT,
+    timestamp TEXT NOT NULL,
+    FOREIGN KEY (job_id) REFERENCES job (id)
+);
+
+================================================
+File: /gitback.sh
+================================================
+#!/bin/sh
+# root_gitbackup.sh v3
+# Location: /root/root_gitbackup.sh
+cd /home/Jobmanager
+# rm job*.txt
+cd /home/
+HOUR=`date +%-H`
+HOUR=$((HOUR + 1))
+if [ $HOUR -eq 24 ]; then
+    HOUR=00
+fi
+DATE=$(date +"%m%d-")${HOUR}$(date +%M)
+gitingest ./Jobmanager -e /static -e /backups -e /db -e /README.txt -e /export -e *.db -e /utils -o /home/Jobmanager/jobmgr-${DATE}.txt
+
+
+================================================
+File: /run.py
+================================================
+# run.py
+from app import create_app
+
+app = create_app()
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)
+
+
+================================================
+File: /LICENSE
+================================================
+MIT License
+
+Copyright (c) 2025 kees
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+================================================
+File: /updated-jobmanager-doc.md
+================================================
+# Job Manager System Design
+
+## Core Requirements
+- Must run entirely offline/local
+- Mobile-friendly interface
+- Lightweight enough for Raspberry Pi deployment
+- No external CDNs or dependencies
+- Daily local database backups
+- Complete file management (no partial updates)
+- Practical implementation focus
+- Workshop-friendly interface
+
+## Core Philosophy
+- Interactive list-based interface is the heart of the system
+- Time tracking should be seamless and automatic
+- Smart behaviors reduce administrative overhead
+- Design for workshop environment
+- Future-proof for billing and automation
+- Support for work breaks via pause function
+- Comprehensive search across all data
+
+## Main Entities
+
+### Customer
+```
+- ID
+- Name
+- Email
+- Phone
+- Address
+  - Street
+  - City
+  - Postal Code
+  - Country
+- VAT/Tax Number
+- Payment Terms
+- Notes
+```
+
+### Job
+```
+- ID
+- Customer ID
+- Description
+- Status (Active/Pending/Completed)
+- Creation Date
+- Deadline
+- Rate Information
+  - Base Rate
+  - Custom Rate (if different)
+- Estimated Hours
+- Total Hours Accumulated
+- Last Active
+```
+
+### TimeEntry
+```
+- ID
+- Job ID
+- Start Time
+- End Time
+- Entry Type (auto/manual/adjusted)
+- Notes
+- Materials Used
+- Adjusted By (if corrected)
+- Adjustment Reason
+- Location (future: for RFID integration)
+- Break Duration
+```
+
+## User Interface Design
+
+### Main Screen Layout
+```
++----------------------------------------+
+|  Search/Filter Bar                      |
++----------------------------------------+
+|  Timer Controls [▶️ ⏸️ ⏹️]              |
++----------------------------------------+
+|  [Active Jobs]                         |
+|  - Customer | Job | Timer | Hours | €  |
+|    ↳ Expanded details when clicked     |
+|  - Next job...                         |
++----------------------------------------+
+|  [Pending Jobs]                        |
+|  - Same format                         |
++----------------------------------------+
+|  [Recent Completed]                    |
+|  - Same format                         |
++----------------------------------------+
+|  Quick Actions Bar                     |
++----------------------------------------+
+```
+
+### Mobile Considerations
+- Touch-friendly large tap targets
+- Responsive design (no horizontal scrolling)
+- Simplified views for small screens
+- Bottom navigation for thumb reach
+- Swipe gestures for common actions
+
+### Smart Behaviors
+- Drag job to top = Start timer
+- Auto-stop previous job when new one started
+- Click to expand/collapse details
+- Double-click for quick edits
+- Color coding for status/alerts
+- Break tracking with pause button
+- Global search across all fields
+
+### Expanded Job View
+```
++----------------+------------------+---------------+
+| Customer Info  | Time Entries    | Running       |
+| Job Details   | Progress Notes  | Totals        |
+| Rate Info     | Materials Used  | Costs         |
++----------------+------------------+---------------+
+```
+
+## Time Tracking System
+
+### Automatic Tracking
+- Start on job activation (drag to top)
+- Stop on new job start
+- Manual pause for breaks
+- Batch similar entries
+
+### Manual Adjustments
+- Split time entries
+- Merge entries
+- Backdate entries
+- Bulk time entry
+- Corrections with audit trail
+- Break time tracking
+
+### Time Views
+- Real-time active job timer
+- Daily totals per job
+- Weekly summaries
+- Monthly reports
+- Customer statements
+
+## Data Management
+
+### Backup System
+- Daily automatic local backups
+- Rolling 7-day backup retention
+- Manual backup option
+- Simple restoration process
+- Backup verification
+
+### Search Functionality
+- Global search across all fields
+- Search in:
+  - Job descriptions
+  - Customer details
+  - Notes
+  - Materials
+  - Time entries
+- Real-time search results
+- Search history
+
+## Implementation Notes
+
+### Database Considerations
+- SQLite for simplicity and portability
+- Regular VACUUM operations
+- Efficient indexing for search
+- Minimal writes for Pi storage
+- Transaction safety
+
+### UI Guidelines
+- Touch-friendly interface
+- Clear visual feedback
+- Minimal click operations
+- Workshop-friendly design
+- Error prevention over error handling
+- Offline-first architecture
+- No external resources
+
+### Performance Considerations
+- Lazy loading for long lists
+- Minimal DOM updates
+- Efficient search indexing
+- Optimized for Pi resources
+- Background backup process
+
+
+================================================
+File: /README.md
+================================================
+# Jobmanager-2
+
+
+
+================================================
+File: /requirements.txt
+================================================
+# requirements.txt
+Flask==3.0.2
+python-dotenv==1.0.1
+
+
+
+================================================
+File: /run.py
+================================================
+# run.py
+from app import create_app
+
+app = create_app()
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)
+
+
+================================================
+File: /LICENSE
+================================================
+MIT License
+
+Copyright (c) 2025 kees
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+================================================
+File: /updated-jobmanager-doc.md
+================================================
+# Job Manager System Design
+
+## Core Requirements
+- Must run entirely offline/local
+- Mobile-friendly interface
+- Lightweight enough for Raspberry Pi deployment
+- No external CDNs or dependencies
+- Daily local database backups
+- Complete file management (no partial updates)
+- Practical implementation focus
+- Workshop-friendly interface
+
+## Core Philosophy
+- Interactive list-based interface is the heart of the system
+- Time tracking should be seamless and automatic
+- Smart behaviors reduce administrative overhead
+- Design for workshop environment
+- Future-proof for billing and automation
+- Support for work breaks via pause function
+- Comprehensive search across all data
+
+## Main Entities
+
+### Customer
+```
+- ID
+- Name
+- Email
+- Phone
+- Address
+  - Street
+  - City
+  - Postal Code
+  - Country
+- VAT/Tax Number
+- Payment Terms
+- Notes
+```
+
+### Job
+```
+- ID
+- Customer ID
+- Description
+- Status (Active/Pending/Completed)
+- Creation Date
+- Deadline
+- Rate Information
+  - Base Rate
+  - Custom Rate (if different)
+- Estimated Hours
+- Total Hours Accumulated
+- Last Active
+```
+
+### TimeEntry
+```
+- ID
+- Job ID
+- Start Time
+- End Time
+- Entry Type (auto/manual/adjusted)
+- Notes
+- Materials Used
+- Adjusted By (if corrected)
+- Adjustment Reason
+- Location (future: for RFID integration)
+- Break Duration
+```
+
+## User Interface Design
+
+### Main Screen Layout
+```
++----------------------------------------+
+|  Search/Filter Bar                      |
++----------------------------------------+
+|  Timer Controls [▶️ ⏸️ ⏹️]              |
++----------------------------------------+
+|  [Active Jobs]                         |
+|  - Customer | Job | Timer | Hours | €  |
+|    ↳ Expanded details when clicked     |
+|  - Next job...                         |
++----------------------------------------+
+|  [Pending Jobs]                        |
+|  - Same format                         |
++----------------------------------------+
+|  [Recent Completed]                    |
+|  - Same format                         |
++----------------------------------------+
+|  Quick Actions Bar                     |
++----------------------------------------+
+```
+
+### Mobile Considerations
+- Touch-friendly large tap targets
+- Responsive design (no horizontal scrolling)
+- Simplified views for small screens
+- Bottom navigation for thumb reach
+- Swipe gestures for common actions
+
+### Smart Behaviors
+- Drag job to top = Start timer
+- Auto-stop previous job when new one started
+- Click to expand/collapse details
+- Double-click for quick edits
+- Color coding for status/alerts
+- Break tracking with pause button
+- Global search across all fields
+
+### Expanded Job View
+```
++----------------+------------------+---------------+
+| Customer Info  | Time Entries    | Running       |
+| Job Details   | Progress Notes  | Totals        |
+| Rate Info     | Materials Used  | Costs         |
++----------------+------------------+---------------+
+```
+
+## Time Tracking System
+
+### Automatic Tracking
+- Start on job activation (drag to top)
+- Stop on new job start
+- Manual pause for breaks
+- Batch similar entries
+
+### Manual Adjustments
+- Split time entries
+- Merge entries
+- Backdate entries
+- Bulk time entry
+- Corrections with audit trail
+- Break time tracking
+
+### Time Views
+- Real-time active job timer
+- Daily totals per job
+- Weekly summaries
+- Monthly reports
+- Customer statements
+
+## Data Management
+
+### Backup System
+- Daily automatic local backups
+- Rolling 7-day backup retention
+- Manual backup option
+- Simple restoration process
+- Backup verification
+
+### Search Functionality
+- Global search across all fields
+- Search in:
+  - Job descriptions
+  - Customer details
+  - Notes
+  - Materials
+  - Time entries
+- Real-time search results
+- Search history
+
+## Implementation Notes
+
+### Database Considerations
+- SQLite for simplicity and portability
+- Regular VACUUM operations
+- Efficient indexing for search
+- Minimal writes for Pi storage
+- Transaction safety
+
+### UI Guidelines
+- Touch-friendly interface
+- Clear visual feedback
+- Minimal click operations
+- Workshop-friendly design
+- Error prevention over error handling
+- Offline-first architecture
+- No external resources
+
+### Performance Considerations
+- Lazy loading for long lists
+- Minimal DOM updates
+- Efficient search indexing
+- Optimized for Pi resources
+- Background backup process
+
+
+================================================
+File: /README.md
+================================================
+# Jobmanager-2
+
+
+
+================================================
+File: /requirements.txt
+================================================
+# requirements.txt
+Flask==3.0.2
+python-dotenv==1.0.1
+
