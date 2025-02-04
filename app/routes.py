@@ -288,3 +288,27 @@ def update_job_total(id):
         'success': True, 
         'total_hours': total
     }), 200, {'ContentType': 'application/json'}
+
+
+@bp.route('/job/<int:job_id>/add_note', methods=['POST'])
+def add_note(job_id):
+    db = get_db()
+    now = datetime.now(timezone.utc).isoformat()
+    db.execute(
+        'INSERT INTO job_note (job_id, note, timestamp) VALUES (?, ?, ?)',
+        (job_id, request.form['note'], now)
+    )
+    db.commit()
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+@bp.route('/job/<int:job_id>/add_material', methods=['POST'])
+def add_material(job_id):
+    db = get_db()
+    now = datetime.now(timezone.utc).isoformat()
+    db.execute(
+        'INSERT INTO job_material (job_id, material, quantity, unit, timestamp) VALUES (?, ?, ?, ?, ?)',
+        (job_id, request.form['material'], float(request.form['quantity']), request.form['unit'], now)
+    )
+    db.commit()
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+

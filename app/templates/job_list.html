@@ -11,7 +11,7 @@
         color: white;
         border-radius: 4px;
     }
-    .start-btn, .resume-btn { background: #4CAF50; }
+    .start-btn, .resume-btn { background: #38977b; }
     .stop-btn { background: #f44336; }
     .pause-btn { background: #FFC107; }
     .timer.paused { color: #666; }
@@ -20,8 +20,11 @@
         50% { opacity: 0.5; }
         100% { opacity: 1; }
     }
-    tbody tr:first-child span[style*="background-color: #4CAF50"] {
+    tr[data-timer-active="true"] span.status-active {
         animation: pulse 2s infinite;
+    }
+    tr[data-timer-paused="true"] span.status-active {
+        animation: none;
     }
 </style>
 
@@ -38,16 +41,18 @@
         </thead>
         <tbody>
             {% for job in jobs %}
-            <tr id="job-{{ job.id }}" {% if job.active_timer_id %}class="active-timer"{% endif %}>
+            <tr id="job-{{ job.id }}" {% if job.active_timer_id %}
+                    data-timer-active="true"
+                    data-timer-paused="false"
+                {% endif %}>
                 <td style="padding: 10px; border: 1px solid #ddd;">{{ job.customer_name }}</td>
                 <td style="padding: 10px; border: 1px solid #ddd;">{{ job.description }}</td>
                 <td style="padding: 10px; border: 1px solid #ddd;">
-                    <span style="
+                    <span class="status-active" style="
                         padding: 3px 8px;
                         border-radius: 4px;
                         {% if job.status == 'Active' %}
                             background-color: #4CAF50;
-                            {% if loop.first %}animation: pulse 2s infinite;{% endif %}
                         {% elif job.status == 'Pending' %}
                             background-color: #FFC107;
                         {% else %}
@@ -190,13 +195,14 @@
                 method: 'POST',
             }).then(response => {
                 if (response.ok) {
+                    const row = document.getElementById(`job-${jobId}`);
+                    row.dataset.timerPaused = 'true';
+                    row.dataset.timerActive = 'false';
+                    
                     const timer = document.getElementById(`timer-${jobId}`);
                     timer.dataset.paused = 'true';
-                    timer.classList.add('paused');
                     
-                    clearInterval(timerIntervals[`timer-${jobId}`]);
-                    
-                    const container = timer.closest('.timer-container');
+                    const container = row.querySelector('.timer-container');
                     container.querySelector('.pause-btn').style.display = 'none';
                     container.querySelector('.resume-btn').style.display = 'inline';
                 }
@@ -208,14 +214,18 @@
                 method: 'POST',
             }).then(response => {
                 if (response.ok) {
+                    const row = document.getElementById(`job-${jobId}`);
+                    row.dataset.timerPaused = 'false';
+                    row.dataset.timerActive = 'true';
+                    
                     const timer = document.getElementById(`timer-${jobId}`);
                     timer.dataset.paused = 'false';
-                    timer.classList.remove('paused');
-                    updateTimer(timer);
                     
-                    const container = timer.closest('.timer-container');
+                    const container = row.querySelector('.timer-container');
                     container.querySelector('.pause-btn').style.display = 'inline';
                     container.querySelector('.resume-btn').style.display = 'none';
+                    
+                    updateTimer(timer);
                 }
             });
         }

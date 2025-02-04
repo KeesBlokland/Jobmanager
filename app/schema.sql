@@ -42,3 +42,21 @@ CREATE TABLE IF NOT EXISTS time_entry (
     break_duration INTEGER DEFAULT 0,
     FOREIGN KEY (job_id) REFERENCES job (id)
 );
+
+CREATE TABLE IF NOT EXISTS job_note (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    job_id INTEGER NOT NULL,
+    note TEXT NOT NULL,
+    timestamp TEXT NOT NULL,
+    FOREIGN KEY (job_id) REFERENCES job (id)
+);
+
+CREATE TABLE IF NOT EXISTS job_material (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    job_id INTEGER NOT NULL,
+    material TEXT NOT NULL, 
+    quantity REAL,
+    unit TEXT,
+    timestamp TEXT NOT NULL,
+    FOREIGN KEY (job_id) REFERENCES job (id)
+);

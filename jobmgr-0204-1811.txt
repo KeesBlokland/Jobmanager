@@ -314,6 +314,31 @@ def update_job_total(id):
         'total_hours': total
     }), 200, {'ContentType': 'application/json'}
 
+
+@bp.route('/job/<int:job_id>/add_note', methods=['POST'])
+def add_note(job_id):
+    db = get_db()
+    now = datetime.now(timezone.utc).isoformat()
+    db.execute(
+        'INSERT INTO job_note (job_id, note, timestamp) VALUES (?, ?, ?)',
+        (job_id, request.form['note'], now)
+    )
+    db.commit()
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+@bp.route('/job/<int:job_id>/add_material', methods=['POST'])
+def add_material(job_id):
+    db = get_db()
+    now = datetime.now(timezone.utc).isoformat()
+    db.execute(
+        'INSERT INTO job_material (job_id, material, quantity, unit, timestamp) VALUES (?, ?, ?, ?, ?)',
+        (job_id, request.form['material'], float(request.form['quantity']), request.form['unit'], now)
+    )
+    db.commit()
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+
+
 ================================================
 File: /app/__init__.py
 ================================================
@@ -604,40 +629,47 @@ File: /app/templates/job_list.html
         cursor: pointer;
         color: white;
         border-radius: 4px;
-        }
-    .start-btn, .resume-btn { background: #4CAF50; }
+    }
+    .start-btn, .resume-btn { background: #38977b; }
     .stop-btn { background: #f44336; }
     .pause-btn { background: #FFC107; }
-    .timer.paused {
-        color: #666;
-    .status-label {
-        border-radius: 4px;
+    .timer.paused { color: #666; }
+    @keyframes pulse {
+        0% { opacity: 1; }
+        50% { opacity: 0.5; }
+        100% { opacity: 1; }
     }
+    tr[data-timer-active="true"] span.status-active {
+        animation: pulse 2s infinite;
+    }
+    tr[data-timer-paused="true"] span.status-active {
+        animation: none;
     }
 </style>
 
 <div>
-    
     <table style="width: 100%; border-collapse: collapse;">
         <thead>
             <tr style="background: #f5f5f5;">
                 <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Customer</th>
                 <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Description</th>
-                <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Status</th>
-                <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Time</th>
-                <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Rate</th>
+                <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Status & Controls</th>
                 <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Actions</th>
+                <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Time</th>
             </tr>
         </thead>
         <tbody>
             {% for job in jobs %}
-            <tr id="job-{{ job.id }}" {% if job.active_timer_id %}class="active-timer"{% endif %}>
+            <tr id="job-{{ job.id }}" {% if job.active_timer_id %}
+                    data-timer-active="true"
+                    data-timer-paused="false"
+                {% endif %}>
                 <td style="padding: 10px; border: 1px solid #ddd;">{{ job.customer_name }}</td>
                 <td style="padding: 10px; border: 1px solid #ddd;">{{ job.description }}</td>
                 <td style="padding: 10px; border: 1px solid #ddd;">
-                    <span style="
+                    <span class="status-active" style="
                         padding: 3px 8px;
-                        border-radius: 3px;
+                        border-radius: 4px;
                         {% if job.status == 'Active' %}
                             background-color: #4CAF50;
                         {% elif job.status == 'Pending' %}
@@ -646,49 +678,18 @@ File: /app/templates/job_list.html
                             background-color: #9E9E9E;
                         {% endif %}
                         color: white;
+                        margin-right: 10px;
                     ">{{ job.status }}</span>
-                </td>
-                <!-- Part of job_list.html where we display the time -->
-                <td style="padding: 10px; border: 1px solid #ddd;">
-                    <div class="timer-container">
+                    <div class="timer-container" style="display: inline-block;">
                         {% if job.active_timer_id %}
-                            <span class="timer" id="timer-{{ job.id }}"
-                                data-start="{{ job.timer_start }}"
-                                data-accumulated="{{ job.accumulated_hours }}"
-                                data-paused="false">
-                                {{ "%d:%02d"|format(job.accumulated_hours|int, 
-                                ((job.accumulated_hours % 1) * 60)|round|int) }}
-                            </span>
                             <button onclick="stopTimer({{ job.id }})" class="stop-btn">Stop</button>
                             <button onclick="pauseTimer({{ job.id }})" class="pause-btn">Pause</button>
                             <button onclick="resumeTimer({{ job.id }})" class="resume-btn" style="display: none;">Resume</button>
                         {% elif job.status == 'Active' %}
-                            <span class="timer" id="timer-{{ job.id }}"
-                                data-accumulated="{{ job.accumulated_hours }}">
-                                {{ "%d:%02d"|format(job.accumulated_hours|int, 
-                                ((job.accumulated_hours % 1) * 60)|round|int) }}
-                            </span>
                             <button onclick="startTimer({{ job.id }})" class="start-btn">Start</button>
-                        {% else %}
-                            <!-- For inactive jobs -->
-                            <span>
-                                {{ "%d:%02d"|format(job.accumulated_hours|int, 
-                                ((job.accumulated_hours % 1) * 60)|round|int) }}
-                            </span>
-                        {% endif %}
-
-                        {% if job.estimated_hours %}
-                            <span class="estimated-hours">
-                                / {{ "%d:%02d"|format(job.estimated_hours|int, 
-                                    ((job.estimated_hours % 1) * 60)|round|int) }}
-                            </span>
-                        {% else %}
-                            <span class="estimated-hours">/ -</span>
                         {% endif %}
                     </div>
                 </td>
-                </td>
-                <td style="padding: 10px; border: 1px solid #ddd;">{{ "€%.2f"|format(job.base_rate) if job.base_rate else '-' }}</td>
                 <td style="padding: 10px; border: 1px solid #ddd;">
                     <a href="{{ url_for('main.edit_job', id=job.id) }}" 
                        style="display: inline-block; padding: 5px 10px; border-radius: 4px; background: #2196F3; color: white; text-decoration: none; margin-right: 5px;">
@@ -701,6 +702,25 @@ File: /app/templates/job_list.html
                         </button>
                     </form>
                 </td>
+                <td style="padding: 10px; border: 1px solid #ddd;">
+                    <span class="timer" id="timer-{{ job.id }}"
+                        {% if job.active_timer_id %}
+                            data-start="{{ job.timer_start }}"
+                            data-paused="false"
+                        {% endif %}
+                        data-accumulated="{{ job.accumulated_hours }}">
+                        {{ "%d:%02d"|format(job.accumulated_hours|int, 
+                        ((job.accumulated_hours % 1) * 60)|round|int) }}
+                    </span>
+                    {% if job.estimated_hours %}
+                        <span class="estimated-hours">
+                            / {{ "%d:%02d"|format(job.estimated_hours|int, 
+                                ((job.estimated_hours % 1) * 60)|round|int) }}
+                        </span>
+                    {% else %}
+                        <span class="estimated-hours">/ -</span>
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
         </tbody>
@@ -712,7 +732,6 @@ File: /app/templates/job_list.html
         function formatTime(hours) {
             if (isNaN(hours) || hours === null) hours = 0;
             let wholeHours = Math.floor(hours);
-            // Round to nearest 5 minutes
             let minutes = Math.round((hours * 60 % 60) / 5) * 5;
             if (minutes === 60) {
                 wholeHours += 1;
@@ -725,7 +744,6 @@ File: /app/templates/job_list.html
             const startTime = timerElement.dataset.start;
             const accumulated = parseFloat(timerElement.dataset.accumulated) || 0;
             
-            // If there's no active timer, just show accumulated time
             if (!startTime) {
                 timerElement.textContent = formatTime(accumulated);
                 return;
@@ -745,7 +763,6 @@ File: /app/templates/job_list.html
                 const elapsedHours = (now - start) / (1000 * 60 * 60) + accumulated;
                 timerElement.textContent = formatTime(elapsedHours);
                 
-                // Update totals every 5 minutes
                 const minutes = now.getMinutes();
                 if (minutes % 5 === 0 && now.getSeconds() === 0) {
                     const jobId = timerElement.id.replace('timer-', '');
@@ -755,7 +772,7 @@ File: /app/templates/job_list.html
             
             update();
             clearInterval(timerIntervals[timerElement.id]);
-            timerIntervals[timerElement.id] = setInterval(update, 1000); // Check every second for minute changes
+            timerIntervals[timerElement.id] = setInterval(update, 1000);
         }
 
         function updateJobTotal(jobId) {
@@ -764,9 +781,8 @@ File: /app/templates/job_list.html
             }).then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // Update the hours display in the table
                     const row = document.getElementById(`job-${jobId}`);
-                    const hoursCell = row.querySelector('td:nth-child(6)');
+                    const hoursCell = row.querySelector('td:nth-child(5)');
                     const estHours = hoursCell.textContent.split('/')[1].trim();
                     hoursCell.textContent = `${formatTime(data.total_hours)} / ${estHours}`;
                 }
@@ -798,13 +814,14 @@ File: /app/templates/job_list.html
                 method: 'POST',
             }).then(response => {
                 if (response.ok) {
+                    const row = document.getElementById(`job-${jobId}`);
+                    row.dataset.timerPaused = 'true';
+                    row.dataset.timerActive = 'false';
+                    
                     const timer = document.getElementById(`timer-${jobId}`);
                     timer.dataset.paused = 'true';
-                    timer.classList.add('paused');
                     
-                    clearInterval(timerIntervals[`timer-${jobId}`]);
-                    
-                    const container = timer.closest('.timer-container');
+                    const container = row.querySelector('.timer-container');
                     container.querySelector('.pause-btn').style.display = 'none';
                     container.querySelector('.resume-btn').style.display = 'inline';
                 }
@@ -816,14 +833,18 @@ File: /app/templates/job_list.html
                 method: 'POST',
             }).then(response => {
                 if (response.ok) {
+                    const row = document.getElementById(`job-${jobId}`);
+                    row.dataset.timerPaused = 'false';
+                    row.dataset.timerActive = 'true';
+                    
                     const timer = document.getElementById(`timer-${jobId}`);
                     timer.dataset.paused = 'false';
-                    timer.classList.remove('paused');
-                    updateTimer(timer);
                     
-                    const container = timer.closest('.timer-container');
+                    const container = row.querySelector('.timer-container');
                     container.querySelector('.pause-btn').style.display = 'inline';
                     container.querySelector('.resume-btn').style.display = 'none';
+                    
+                    updateTimer(timer);
                 }
             });
         }
@@ -833,7 +854,6 @@ File: /app/templates/job_list.html
                 updateTimer(timer);
             });
 
-            // Initialize any active timers
             document.querySelectorAll('.active-timer').forEach(row => {
                 const timer = row.querySelector('.timer');
                 if (timer) {
@@ -912,6 +932,23 @@ CREATE TABLE IF NOT EXISTS time_entry (
     FOREIGN KEY (job_id) REFERENCES job (id)
 );
 
+CREATE TABLE IF NOT EXISTS job_note (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    job_id INTEGER NOT NULL,
+    note TEXT NOT NULL,
+    timestamp TEXT NOT NULL,
+    FOREIGN KEY (job_id) REFERENCES job (id)
+);
+
+CREATE TABLE IF NOT EXISTS job_material (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    job_id INTEGER NOT NULL,
+    material TEXT NOT NULL, 
+    quantity REAL,
+    unit TEXT,
+    timestamp TEXT NOT NULL,
+    FOREIGN KEY (job_id) REFERENCES job (id)
+);
 
 ================================================
 File: /gitback.sh
