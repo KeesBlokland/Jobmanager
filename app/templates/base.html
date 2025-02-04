@@ -54,6 +54,8 @@
         <div class="nav-menu">
             <a href="{{ url_for('main.index') }}" {% if request.endpoint == 'main.index' %}class="active"{% endif %}>Customers</a>
             <a href="{{ url_for('main.job_list') }}" {% if request.endpoint == 'main.job_list' %}class="active"{% endif %}>Jobs</a>
+            <a href="{{ url_for('main.add_customer') }}" {% if request.endpoint == 'main.add_customer' %}class="active"{% endif %}>Add Customer</a>
+            <a href="{{ url_for('main.job_list') }}" {% if request.endpoint == 'main.add_customer' %}class="active"{% endif %}>Invoice</a>
         </div>
     </div>
     {% block content %}{% endblock %}
