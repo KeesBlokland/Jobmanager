@@ -72,30 +72,32 @@ def delete_customer(id):
     db.commit()
     return redirect(url_for('main.index'))
 
+# In routes.py, update the job_list query:
+# In routes.py
 @bp.route('/jobs')
 def job_list():
     db = get_db()
     jobs = db.execute('''
+        WITH job_hours AS (
+            SELECT 
+                job_id,
+                SUM((julianday(COALESCE(end_time, datetime('now'))) - julianday(start_time)) * 24) as hours
+            FROM time_entry
+            GROUP BY job_id
+        )
         SELECT 
             job.*,
             customer.name as customer_name,
             te_active.id as active_timer_id,
             te_active.start_time as timer_start,
-            COALESCE(SUM(
-                CASE 
-                    WHEN te_all.end_time IS NOT NULL 
-                    THEN (julianday(te_all.end_time) - julianday(te_all.start_time)) * 24 
-                    ELSE 0 
-                END
-            ), 0) as accumulated_hours
+            COALESCE(job_hours.hours, 0) as accumulated_hours
         FROM job 
         JOIN customer ON job.customer_id = customer.id 
         LEFT JOIN time_entry te_active ON job.id = te_active.job_id 
             AND te_active.end_time IS NULL
-        LEFT JOIN time_entry te_all ON job.id = te_all.job_id 
-            AND te_all.end_time IS NOT NULL
-        GROUP BY job.id
+        LEFT JOIN job_hours ON job_hours.job_id = job.id
         ORDER BY 
+            te_active.id IS NOT NULL DESC,
             CASE job.status
                 WHEN 'Active' THEN 1
                 WHEN 'Pending' THEN 2
@@ -161,29 +163,50 @@ def start_timer(id):
     db = get_db()
     now = datetime.now(timezone.utc).isoformat()
     
-    # Check if there's any active timer
-    active_entry = db.execute('''
-        SELECT time_entry.* 
+    # Find any currently running timer and which job it belongs to
+    active_timer = db.execute('''
+        SELECT time_entry.*, job.id as job_id
         FROM time_entry 
-        WHERE end_time IS NULL
+        JOIN job ON time_entry.job_id = job.id
+        WHERE time_entry.end_time IS NULL
     ''').fetchone()
     
-    if active_entry:
-        # Stop the current timer
+    if active_timer:
+        # Stop the timer for the specific job
+        db.execute('''
+            UPDATE time_entry 
+            SET end_time = ?
+            WHERE id = ? AND job_id = ?
+        ''', (now, active_timer['id'], active_timer['job_id']))
+        
+        # Update the last_active time for that job
+        db.execute('UPDATE job SET last_active = ? WHERE id = ?',
+                  (now, active_timer['job_id']))
+    
+    # Check if the requested job already has accumulated time
+    has_time = db.execute('''
+        SELECT EXISTS (
+            SELECT 1 FROM time_entry 
+            WHERE job_id = ?
+        ) as has_entries
+    ''', (id,)).fetchone()['has_entries']
+    
+    if not has_time:
+        # Only create a new time entry if this is the first time
         db.execute(
-            'UPDATE time_entry SET end_time = ? WHERE id = ?',
-            (now, active_entry['id'])
+            'INSERT INTO time_entry (job_id, start_time, entry_type) VALUES (?, ?, ?)',
+            (id, now, 'auto')
+        )
+    else:
+        # Otherwise, just resume the last entry
+        db.execute(
+            'INSERT INTO time_entry (job_id, start_time, entry_type) VALUES (?, ?, ?)',
+            (id, now, 'resume')
         )
     
-    # Create new time entry
-    db.execute(
-        'INSERT INTO time_entry (job_id, start_time, entry_type) VALUES (?, ?, ?)',
-        (id, now, 'auto')
-    )
-    
-    # Update job status and last_active
-    db.execute('UPDATE job SET status = ?, last_active = ? WHERE id = ?', 
-               ('Active', now, id))
+    # Update the requested job's last_active time
+    db.execute('UPDATE job SET last_active = ? WHERE id = ?', 
+               (now, id))
     
     db.commit()
     return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
@@ -232,3 +255,36 @@ def resume_timer(id):
     
     return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
 
+# Add to routes.py
+@bp.route('/job/<int:id>/update_total', methods=['POST'])
+def update_job_total(id):
+    db = get_db()
+    now = datetime.now(timezone.utc).isoformat()
+    
+    # Calculate total hours including current running timer
+    total = db.execute('''
+        SELECT COALESCE(
+            (
+                SELECT SUM(
+                    CASE 
+                        WHEN end_time IS NOT NULL 
+                        THEN (julianday(end_time) - julianday(start_time)) * 24
+                        ELSE (julianday(?) - julianday(start_time)) * 24
+                    END
+                )
+                FROM time_entry 
+                WHERE job_id = ?
+            ), 
+            0
+        ) as total_hours
+    ''', (now, id)).fetchone()['total_hours']
+    
+    # Update the job's total_hours
+    db.execute('UPDATE job SET total_hours = ? WHERE id = ?', 
+               (total, id))
+    db.commit()
+    
+    return json.dumps({
+        'success': True, 
+        'total_hours': total
+    }), 200, {'ContentType': 'application/json'}

@@ -2,9 +2,23 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style>
+    .timer-container button {
+        padding: 5px 10px;
+        margin: 0 2px;
+        border: none;
+        cursor: pointer;
+        color: white;
+    }
+    .start-btn, .resume-btn { background: #4CAF50; }
+    .stop-btn { background: #f44336; }
+    .pause-btn { background: #FFC107; }
+    .timer.paused {
+        color: #666;
+    }
+</style>
+
 <div>
-    <h2>Jobs</h2>
-    <a href="{{ url_for('main.index') }}" style="display: inline-block; padding: 10px; background: #2196F3; color: white; text-decoration: none; margin-bottom: 20px;">Back to Customers</a>
     
     <table style="width: 100%; border-collapse: collapse;">
         <thead>
@@ -12,9 +26,8 @@
                 <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Customer</th>
                 <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Description</th>
                 <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Status</th>
-                <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Timer</th>
+                <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Time</th>
                 <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Rate</th>
-                <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Hours</th>
                 <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Actions</th>
             </tr>
         </thead>
@@ -37,33 +50,47 @@
                         color: white;
                     ">{{ job.status }}</span>
                 </td>
+                <!-- Part of job_list.html where we display the time -->
                 <td style="padding: 10px; border: 1px solid #ddd;">
-                    {% if job.status == 'Active' %}
-                        <div class="timer-container">
+                    <div class="timer-container">
+                        {% if job.active_timer_id %}
                             <span class="timer" id="timer-{{ job.id }}"
-                                  data-start="{{ job.timer_start }}"
-                                  data-accumulated="{{ job.accumulated_hours }}"
-                                  data-paused="false">
-                                00:00:00
+                                data-start="{{ job.timer_start }}"
+                                data-accumulated="{{ job.accumulated_hours }}"
+                                data-paused="false">
+                                {{ "%d:%02d"|format(job.accumulated_hours|int, 
+                                ((job.accumulated_hours % 1) * 60)|round|int) }}
                             </span>
-                            {% if job.active_timer_id %}
-                                <button onclick="stopTimer({{ job.id }})" class="stop-btn">Stop</button>
-                                <button onclick="pauseTimer({{ job.id }})" class="pause-btn">Pause</button>
-                                <button onclick="resumeTimer({{ job.id }})" class="resume-btn" style="display: none;">Resume</button>
-                            {% else %}
-                                <button onclick="startTimer({{ job.id }})" class="start-btn">Start</button>
-                            {% endif %}
-                        </div>
-                    {% endif %}
+                            <button onclick="stopTimer({{ job.id }})" class="stop-btn">Stop</button>
+                            <button onclick="pauseTimer({{ job.id }})" class="pause-btn">Pause</button>
+                            <button onclick="resumeTimer({{ job.id }})" class="resume-btn" style="display: none;">Resume</button>
+                        {% elif job.status == 'Active' %}
+                            <span class="timer" id="timer-{{ job.id }}"
+                                data-accumulated="{{ job.accumulated_hours }}">
+                                {{ "%d:%02d"|format(job.accumulated_hours|int, 
+                                ((job.accumulated_hours % 1) * 60)|round|int) }}
+                            </span>
+                            <button onclick="startTimer({{ job.id }})" class="start-btn">Start</button>
+                        {% else %}
+                            <!-- For inactive jobs -->
+                            <span>
+                                {{ "%d:%02d"|format(job.accumulated_hours|int, 
+                                ((job.accumulated_hours % 1) * 60)|round|int) }}
+                            </span>
+                        {% endif %}
+
+                        {% if job.estimated_hours %}
+                            <span class="estimated-hours">
+                                / {{ "%d:%02d"|format(job.estimated_hours|int, 
+                                    ((job.estimated_hours % 1) * 60)|round|int) }}
+                            </span>
+                        {% else %}
+                            <span class="estimated-hours">/ -</span>
+                        {% endif %}
+                    </div>
+                </td>
                 </td>
                 <td style="padding: 10px; border: 1px solid #ddd;">{{ "€%.2f"|format(job.base_rate) if job.base_rate else '-' }}</td>
-                <td style="padding: 10px; border: 1px solid #ddd;">
-                    {% if job.total_hours %}
-                        {{ "%.1f"|format(job.total_hours) }} / {{ "%.1f"|format(job.estimated_hours) if job.estimated_hours else '-' }}
-                    {% else %}
-                        0 / {{ "%.1f"|format(job.estimated_hours) if job.estimated_hours else '-' }}
-                    {% endif %}
-                </td>
                 <td style="padding: 10px; border: 1px solid #ddd;">
                     <a href="{{ url_for('main.edit_job', id=job.id) }}" 
                        style="display: inline-block; padding: 5px 10px; background: #2196F3; color: white; text-decoration: none; margin-right: 5px;">
@@ -84,23 +111,33 @@
     <script>
         let timerIntervals = {};
 
+        function formatTime(hours) {
+            if (isNaN(hours) || hours === null) hours = 0;
+            let wholeHours = Math.floor(hours);
+            // Round to nearest 5 minutes
+            let minutes = Math.round((hours * 60 % 60) / 5) * 5;
+            if (minutes === 60) {
+                wholeHours += 1;
+                minutes = 0;
+            }
+            return `${wholeHours}:${String(minutes).padStart(2, '0')}`;
+        }
+
         function updateTimer(timerElement) {
             const startTime = timerElement.dataset.start;
             const accumulated = parseFloat(timerElement.dataset.accumulated) || 0;
             
-            // For running or paused jobs, we should have a start time
-            if (!startTime) return;
+            // If there's no active timer, just show accumulated time
+            if (!startTime) {
+                timerElement.textContent = formatTime(accumulated);
+                return;
+            }
             
             const start = new Date(startTime);
             const isPaused = timerElement.dataset.paused === 'true';
             
             if (isPaused) {
-                // Keep showing the accumulated time when paused
-                const hours = Math.floor(accumulated);
-                const minutes = Math.floor((accumulated * 60) % 60);
-                const seconds = Math.floor((accumulated * 3600) % 60);
-                timerElement.textContent = 
-                    `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                timerElement.textContent = formatTime(accumulated);
                 clearInterval(timerIntervals[timerElement.id]);
                 return;
             }
@@ -108,17 +145,34 @@
             function update() {
                 const now = new Date();
                 const elapsedHours = (now - start) / (1000 * 60 * 60) + accumulated;
-                const hours = Math.floor(elapsedHours);
-                const minutes = Math.floor((elapsedHours * 60) % 60);
-                const seconds = Math.floor((elapsedHours * 3600) % 60);
+                timerElement.textContent = formatTime(elapsedHours);
                 
-                timerElement.textContent = 
-                    `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                // Update totals every 5 minutes
+                const minutes = now.getMinutes();
+                if (minutes % 5 === 0 && now.getSeconds() === 0) {
+                    const jobId = timerElement.id.replace('timer-', '');
+                    updateJobTotal(jobId);
+                }
             }
             
             update();
             clearInterval(timerIntervals[timerElement.id]);
-            timerIntervals[timerElement.id] = setInterval(update, 1000);
+            timerIntervals[timerElement.id] = setInterval(update, 1000); // Check every second for minute changes
+        }
+
+        function updateJobTotal(jobId) {
+            fetch(`/job/${jobId}/update_total`, {
+                method: 'POST',
+            }).then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Update the hours display in the table
+                    const row = document.getElementById(`job-${jobId}`);
+                    const hoursCell = row.querySelector('td:nth-child(6)');
+                    const estHours = hoursCell.textContent.split('/')[1].trim();
+                    hoursCell.textContent = `${formatTime(data.total_hours)} / ${estHours}`;
+                }
+            });
         }
 
         function startTimer(jobId) {
@@ -126,9 +180,6 @@
                 method: 'POST',
             }).then(response => {
                 if (response.ok) {
-                    const jobRow = document.getElementById(`job-${jobId}`);
-                    const jobName = jobRow.querySelector('td').textContent;
-                    updateGlobalControls(jobId, jobName);
                     window.location.reload();
                 }
             });
@@ -139,7 +190,6 @@
                 method: 'POST',
             }).then(response => {
                 if (response.ok) {
-                    updateGlobalControls(null, null);
                     window.location.reload();
                 }
             });
@@ -154,7 +204,7 @@
                     timer.dataset.paused = 'true';
                     timer.classList.add('paused');
                     
-                    clearInterval(timerIntervals[`timer-${jobId}`]); // Clear the interval
+                    clearInterval(timerIntervals[`timer-${jobId}`]);
                     
                     const container = timer.closest('.timer-container');
                     container.querySelector('.pause-btn').style.display = 'none';
@@ -185,12 +235,13 @@
                 updateTimer(timer);
             });
 
-            const activeTimerRow = document.querySelector('.active-timer');
-            if (activeTimerRow) {
-                const jobId = activeTimerRow.id.replace('job-', '');
-                const jobName = activeTimerRow.querySelector('td').textContent;
-                updateGlobalControls(jobId, jobName);
-            }
+            // Initialize any active timers
+            document.querySelectorAll('.active-timer').forEach(row => {
+                const timer = row.querySelector('.timer');
+                if (timer) {
+                    updateTimer(timer);
+                }
+            });
         });
     </script>
 </div>
