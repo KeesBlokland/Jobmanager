@@ -1,4 +1,4 @@
-# app/schema.sql
+-- app/schema.sql
 CREATE TABLE IF NOT EXISTS customer (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,

@@ -1,0 +1,73 @@
+<!-- app/templates/customer_form.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+    <h2>{% if customer %}Edit{% else %}Add{% endif %} Customer</h2>
+    <form method="post" style="max-width: 600px;">
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">Name *</label>
+            <input type="text" name="name" required style="width: 100%; padding: 8px;" 
+                   value="{{ customer.name if customer else '' }}">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">Email</label>
+            <input type="email" name="email" style="width: 100%; padding: 8px;"
+                   value="{{ customer.email if customer else '' }}">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">Phone</label>
+            <input type="tel" name="phone" style="width: 100%; padding: 8px;"
+                   value="{{ customer.phone if customer else '' }}">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">Street</label>
+            <input type="text" name="street" style="width: 100%; padding: 8px;"
+                   value="{{ customer.street if customer else '' }}">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">City</label>
+            <input type="text" name="city" style="width: 100%; padding: 8px;"
+                   value="{{ customer.city if customer else '' }}">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">Postal Code</label>
+            <input type="text" name="postal_code" style="width: 100%; padding: 8px;"
+                   value="{{ customer.postal_code if customer else '' }}">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">Country</label>
+            <input type="text" name="country" style="width: 100%; padding: 8px;"
+                   value="{{ customer.country if customer else '' }}">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">VAT Number</label>
+            <input type="text" name="vat_number" style="width: 100%; padding: 8px;"
+                   value="{{ customer.vat_number if customer else '' }}">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">Payment Terms</label>
+            <input type="text" name="payment_terms" style="width: 100%; padding: 8px;"
+                   value="{{ customer.payment_terms if customer else '' }}">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px;">Notes</label>
+            <textarea name="notes" style="width: 100%; padding: 8px; height: 100px;">{{ customer.notes if customer else '' }}</textarea>
+        </div>
+        
+        <button type="submit" style="background: #4CAF50; color: white; padding: 10px 20px; border: none; cursor: pointer;">
+            {% if customer %}Save Changes{% else %}Save Customer{% endif %}
+        </button>
+        <a href="{{ url_for('main.index') }}" style="display: inline-block; padding: 10px 20px; background: #f5f5f5; text-decoration: none; color: black; margin-left: 10px;">Cancel</a>
+    </form>
+</div>
+{% endblock %}

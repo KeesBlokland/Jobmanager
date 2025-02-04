@@ -17,3 +17,10 @@ def create_app():
     app.register_blueprint(routes.bp)
     
     return app
+
+# Add to app/__init__.py after creating app
+def init_db():
+    with app.app_context():
+        db = get_db()
+        with app.open_resource('schema.sql', mode='r') as f:
+            db.executescript(f.read().decode('utf8'))

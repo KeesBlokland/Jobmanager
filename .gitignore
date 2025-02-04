@@ -1,5 +1,21 @@
-venv/
-instance/
+# Python
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+ENV/
+
+# Flask
+instance/
+.webassets-cache
+
+# IDEs
+.idea/
+.vscode/
+
+# Local dev
 .env
+*.db
+*.sqlite3
