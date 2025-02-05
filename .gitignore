@@ -22,3 +22,4 @@ instance/
 
 # txt files
 *.txt
+*.md
