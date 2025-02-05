@@ -1,0 +1,173 @@
+<!-- app/templates/job_details.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .detail-section {
+        margin-bottom: 20px;
+        padding: 15px;
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+    .detail-section h3 {
+        margin-top: 0;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 10px;
+    }
+    .item-row {
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+    }
+    .item-row:last-child {
+        border-bottom: none;
+    }
+    .timestamp {
+        color: #666;
+        font-size: 0.9em;
+    }
+    .summary-box {
+        background: #fff;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-bottom: 20px;
+    }
+    .total-row {
+        font-weight: bold;
+        border-top: 2px solid #ddd;
+        padding-top: 10px;
+        margin-top: 10px;
+    }
+
+    .edit-btn { background: #2196F3; }
+    .delete-btn { background: #f44336; }
+    .save-btn { background: #4CAF50; }
+    .cancel-btn { background: #9E9E9E; }
+    .edit-btn, .delete-btn, .save-btn, .cancel-btn {
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-right: 5px;
+    }
+    .edit-view form {
+        margin-top: 10px;
+    }
+    .edit-view input[type="text"],
+    .edit-view input[type="number"],
+    .edit-view textarea {
+        width: 100%;
+        padding: 5px;
+        margin-bottom: 5px;
+    }
+    .actions {
+        margin-top: 5px;
+    }
+
+
+</style>
+
+<div class="summary-box">
+    <h2>{{ job.customer_name }} - {{ job.description }}</h2>
+    <p>Status: <span style="
+        padding: 3px 8px;
+        border-radius: 4px;
+        {% if job.status == 'Active' %}
+            background-color: #4CAF50;
+        {% elif job.status == 'Pending' %}
+            background-color: #FFC107;
+        {% else %}
+            background-color: #9E9E9E;
+        {% endif %}
+        color: white;">{{ job.status }}</span>
+    </p>
+    <p>Base Rate: €{{ "%.2f"|format(job.base_rate) if job.base_rate else '0.00' }}/hour</p>
+</div>
+
+<div class="detail-section">
+    <h3>Time Entries</h3>
+    <div>
+        {% for entry in time_entries %}
+        <div class="item-row">
+            <div>{{ entry.start_time[:16] }} - {{ entry.end_time[:16] if entry.end_time else 'Ongoing' }}</div>
+            <div>Hours: {{ "%.2f"|format(entry.hours) }}</div>
+            {% if entry.notes %}<div>Note: {{ entry.notes }}</div>{% endif %}
+        </div>
+        {% endfor %}
+        <div class="total-row">
+            Total Hours: {{ "%.2f"|format(job.total_hours) }}
+            {% if job.base_rate %}
+            <br>Total Amount: €{{ "%.2f"|format(job.total_hours * job.base_rate) }}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="detail-section">
+    <h3>Materials Used</h3>
+    <div>
+        {% for material in materials %}
+        <div class="item-row" id="material-{{ material.id }}">
+            <div class="display-view">
+                <div>{{ material.material }} - Qty: {{ material.quantity }}</div>
+                <div class="timestamp">Added: {{ material.timestamp[:16] }}</div>
+                <div class="actions">
+                    <button onclick="showMaterialEdit({{ material.id }})" class="edit-btn">Edit</button>
+                    <form action="{{ url_for('main.delete_material', job_id=job.id, material_id=material.id) }}" method="post" style="display: inline;">
+                        <button type="submit" class="delete-btn" onclick="return confirm('Delete this material?')">Delete</button>
+                    </form>
+                </div>
+            </div>
+            <div class="edit-view" style="display: none;">
+                <form action="{{ url_for('main.edit_material', job_id=job.id, material_id=material.id) }}" method="post">
+                    <input type="text" name="material" value="{{ material.material }}" required>
+                    <input type="number" name="quantity" value="{{ material.quantity }}" required>
+                    <button type="submit" class="save-btn">Save</button>
+                    <button type="button" onclick="hideMaterialEdit({{ material.id }})" class="cancel-btn">Cancel</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="detail-section">
+    <h3>Notes</h3>
+    <form action="{{ url_for('main.job_details', id=job.id) }}" method="post">
+        <textarea name="notes" style="width: 100%; min-height: 200px; padding: 10px; margin-bottom: 10px; font-family: monospace;">{{ combined_notes }}</textarea>
+        <button type="submit" style="padding: 5px 10px; border-radius: 4px; background: #4CAF50; color: white; border: none; cursor: pointer;">
+            Save Notes
+        </button>
+    </form>
+</div>
+</div>
+
+<script>
+    function showMaterialEdit(id) {
+        const row = document.getElementById(`material-${id}`);
+        row.querySelector('.display-view').style.display = 'none';
+        row.querySelector('.edit-view').style.display = 'block';
+    }
+
+    function hideMaterialEdit(id) {
+        const row = document.getElementById(`material-${id}`);
+        row.querySelector('.display-view').style.display = 'block';
+        row.querySelector('.edit-view').style.display = 'none';
+    }
+
+    function showNoteEdit(id) {
+        const row = document.getElementById(`note-${id}`);
+        row.querySelector('.display-view').style.display = 'none';
+        row.querySelector('.edit-view').style.display = 'block';
+    }
+
+    function hideNoteEdit(id) {
+        const row = document.getElementById(`note-${id}`);
+        row.querySelector('.display-view').style.display = 'block';
+        row.querySelector('.edit-view').style.display = 'none';
+    }
+</script>
+
+{% endblock %}

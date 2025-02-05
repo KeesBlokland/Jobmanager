@@ -26,47 +26,6 @@
     tr[data-timer-paused="true"] span.status-active {
         animation: none;
     }
-    .notes-materials {
-        padding: 5px;
-        background: #f9f9f9;
-        border: 1px solid #ddd;
-        margin-top: 5px;
-    }
-    .notes-materials textarea {
-        width: 80%;
-        padding: 5px;
-        margin-bottom: 2px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-    .notes-materials input {
-        width: 70%;
-        padding: 5px;
-        margin-right: 5px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-    .notes-materials button {
-        padding: 5px 5px;
-        background: #4CAF50;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        
-    }
-    .materials-input {
-        display: flex;
-        gap: 5px;
-        align-items: center;
-        margin-bottom: 0px;
-    }
-    .materials-input input[type="number"] {
-        width: 50px;
-    }
-    .materials-input input[type="text"] {
-        flex-grow: 1;
-    }
 </style>
 
 <div>
@@ -82,27 +41,12 @@
         </thead>
         <tbody>
             {% for job in jobs %}
-            <tr id="job-{{ job.id }}" {% if job.active_timer_id %}data-timer-active="true" data-timer-paused="false"{% endif %}>
+            <tr id="job-{{ job.id }}" {% if job.active_timer_id %}
+                    data-timer-active="true"
+                    data-timer-paused="false"
+                {% endif %}>
                 <td style="padding: 10px; border: 1px solid #ddd;">{{ job.customer_name }}</td>
-                <td style="padding: 10px; border: 1px solid #ddd;">
-                    {{ job.description }}
-                    {% if loop.first %}
-                    <div class="notes-materials">
-                        <div style="margin-bottom: 10px;">
-                            
-                            <textarea id="note-{{ job.id }}" rows="3" placeholder="Enter note"></textarea>
-                            <button onclick="addNote({{ job.id }})">Note</button>
-                        </div>
-                        <div>
-                            <div class="materials-input">
-                                <input type="text" id="material-{{ job.id }}" placeholder="Material name">
-                                <input type="number" id="quantity-{{ job.id }}" placeholder="Qty" step="1">
-                                <button onclick="addMaterial({{ job.id }})">Material</button>
-                            </div>
-                        </div>
-                    </div>
-                    {% endif %}
-                </td>
+                <td style="padding: 10px; border: 1px solid #ddd;">{{ job.description }}</td>
                 <td style="padding: 10px; border: 1px solid #ddd;">
                     <span class="status-active" style="
                         padding: 3px 8px;
@@ -128,10 +72,6 @@
                     </div>
                 </td>
                 <td style="padding: 10px; border: 1px solid #ddd;">
-                    <a href="{{ url_for('main.job_details', id=job.id) }}" 
-                       style="display: inline-block; padding: 5px 10px; border-radius: 4px; background: #38977b; color: white; text-decoration: none; margin-right: 5px;">
-                        Details
-                    </a>
                     <a href="{{ url_for('main.edit_job', id=job.id) }}" 
                        style="display: inline-block; padding: 5px 10px; border-radius: 4px; background: #2196F3; color: white; text-decoration: none; margin-right: 5px;">
                         Edit
@@ -214,65 +154,6 @@
             update();
             clearInterval(timerIntervals[timerElement.id]);
             timerIntervals[timerElement.id] = setInterval(update, 1000);
-        }
-
-        function addNote(jobId) {
-            const noteText = document.getElementById(`note-${jobId}`).value;
-            if (!noteText.trim()) return;
-
-            const formData = new FormData();
-            formData.append('note', noteText);
-
-            fetch(`/job/${jobId}/add_note`, {
-                method: 'POST',
-                body: formData
-            }).then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    document.getElementById(`note-${jobId}`).value = '';
-                }
-            });
-        }
-
-        function addMaterial(jobId) {
-            const material = document.getElementById(`material-${jobId}`).value;
-            const quantity = document.getElementById(`quantity-${jobId}`).value;
-            const unit = '';  // No longer required
-            
-            if (!material.trim() || !quantity) {
-                console.log('Missing required fields');
-                return;
-            }
-
-            const formData = new FormData();
-            formData.append('material', material);
-            formData.append('quantity', quantity);
-            formData.append('unit', unit);
-
-            console.log('Submitting material:', material, quantity, unit);
-
-            fetch(`/job/${jobId}/add_material`, {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Success:', data);
-                if (data.success) {
-                    document.getElementById(`material-${jobId}`).value = '';
-                    document.getElementById(`quantity-${jobId}`).value = '';
-                    alert('Material added successfully');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Error adding material');
-            });
         }
 
         function updateJobTotal(jobId) {
@@ -361,34 +242,6 @@
                 }
             });
         });
-
-        
-        function showMaterialEdit(id) {
-            const row = document.getElementById(`material-${id}`);
-            row.querySelector('.display-view').style.display = 'none';
-            row.querySelector('.edit-view').style.display = 'block';
-        }
-
-        function hideMaterialEdit(id) {
-            const row = document.getElementById(`material-${id}`);
-            row.querySelector('.display-view').style.display = 'block';
-            row.querySelector('.edit-view').style.display = 'none';
-        }
-
-        function showNoteEdit(id) {
-            const row = document.getElementById(`note-${id}`);
-            row.querySelector('.display-view').style.display = 'none';
-            row.querySelector('.edit-view').style.display = 'block';
-        }
-
-        function hideNoteEdit(id) {
-            const row = document.getElementById(`note-${id}`);
-            row.querySelector('.display-view').style.display = 'block';
-            row.querySelector('.edit-view').style.display = 'none';
-        }
-
-
-
     </script>
 </div>
 {% endblock %}
