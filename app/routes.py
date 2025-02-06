@@ -353,13 +353,13 @@ def job_details(id):
 # Get time entries
     time_entries = db.execute('''
         SELECT *,
-        (julianday(COALESCE(end_time, CURRENT_TIMESTAMP)) - julianday(start_time)) * 24 as hours
+        ROUND((julianday(COALESCE(end_time, CURRENT_TIMESTAMP)) - julianday(start_time)) * 24, 2) as hours
         FROM time_entry
-        WHERE job_id = ?
+        WHERE job_id = ? AND 
+        ROUND((julianday(COALESCE(end_time, CURRENT_TIMESTAMP)) - julianday(start_time)) * 24, 2) > 0.03
         ORDER BY start_time DESC
     ''', (id,)).fetchall()
 
-# Calculate total hours
     total_hours = sum(entry['hours'] for entry in time_entries)
     total_amount = total_hours * job['base_rate'] if job['base_rate'] else 0
 
@@ -370,7 +370,6 @@ def job_details(id):
         time_entries=time_entries,
         total_hours=total_hours,
         total_amount=total_amount)
-
     
 
 # Notes routes
@@ -476,3 +475,64 @@ def edit_time_entry(job_id, entry_id):
         
         return redirect(url_for('main.job_details', id=job_id))
     return redirect(url_for('main.job_details', id=job_id))
+
+@bp.route('/job/<int:id>/invoice')
+def job_invoice(id):
+    db = get_db()
+    
+    # Get job info with customer details
+    job = db.execute('''
+        SELECT job.*, customer.*
+        FROM job
+        JOIN customer ON job.customer_id = customer.id
+        WHERE job.id = ?
+    ''', [id]).fetchone()
+
+    # Get time entries (excluding 0:00)
+    time_entries = db.execute('''
+        SELECT *,
+        ROUND((julianday(COALESCE(end_time, CURRENT_TIMESTAMP)) - julianday(start_time)) * 24, 2) as hours
+        FROM time_entry
+        WHERE job_id = ? AND 
+        ROUND((julianday(COALESCE(end_time, CURRENT_TIMESTAMP)) - julianday(start_time)) * 24, 2) > 0
+        ORDER BY start_time
+    ''', (id,)).fetchall()
+
+    # Get materials
+    materials = db.execute('''
+        SELECT * FROM job_material
+        WHERE job_id = ?
+        ORDER BY timestamp
+    ''', (id,)).fetchall()
+
+    # Calculate totals
+    total_hours = sum(entry['hours'] for entry in time_entries)
+    total_amount = total_hours * job['base_rate'] if job['base_rate'] else 0
+    
+    # Generate invoice number
+    date_str = datetime.now().strftime('%Y%m%d')
+    last_invoice = db.execute(
+        'SELECT invoice_number FROM job WHERE invoice_number LIKE ? ORDER BY invoice_number DESC LIMIT 1', 
+        (f'{date_str}%',)
+    ).fetchone()
+    
+    if last_invoice and last_invoice['invoice_number']:
+        sequence = int(last_invoice['invoice_number'][-2:]) + 1
+    else:
+        sequence = 1
+        
+    invoice_number = f'{date_str}-{sequence:02d}'
+    
+    # Update job with invoice number
+    db.execute('UPDATE job SET invoice_number = ? WHERE id = ?', (invoice_number, id))
+    db.commit()
+
+    return render_template('invoice.html',
+        job=job,
+        time_entries=time_entries,
+        materials=materials,
+        total_hours=total_hours,
+        total_amount=total_amount,
+        invoice_number=invoice_number)
+
+        

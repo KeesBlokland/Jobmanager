@@ -55,7 +55,9 @@
             <a href="{{ url_for('main.index') }}" {% if request.endpoint == 'main.index' %}class="active"{% endif %}>Customers</a>
             <a href="{{ url_for('main.job_list') }}" {% if request.endpoint == 'main.job_list' %}class="active"{% endif %}>Jobs</a>
             <a href="{{ url_for('main.add_customer') }}" {% if request.endpoint == 'main.add_customer' %}class="active"{% endif %}>Add Customer</a>
-            <a href="{{ url_for('main.job_list') }}" {% if request.endpoint == 'main.add_customer' %}class="active"{% endif %}>Invoice</a>
+            {% if job is defined and job.id %}
+            <a href="{{ url_for('main.job_invoice', id=job.id) }}" style="display: inline-block; padding: 8px 10px; border-radius: 4px; background: #4CAF50; color: white; text-decoration: none; margin-right: 5px;">Invoice</a>
+            {% endif %}        
         </div>
     </div>
     {% block content %}{% endblock %}

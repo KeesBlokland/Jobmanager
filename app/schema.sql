@@ -60,3 +60,5 @@ CREATE TABLE IF NOT EXISTS job_material (
     timestamp TEXT NOT NULL,
     FOREIGN KEY (job_id) REFERENCES job (id)
 );
+
+ALTER TABLE job ADD COLUMN invoice_number TEXT;
