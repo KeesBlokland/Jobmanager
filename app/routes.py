@@ -6,6 +6,9 @@ import sqlite3
 
 bp = Blueprint('main', __name__)
 
+# =============================================================================
+# Database Setup
+# =============================================================================
 def get_db():
     if 'db' not in g:
         g.db = sqlite3.connect(
@@ -21,6 +24,9 @@ def close_db(e=None):
     if db is not None:
         db.close()
 
+# =============================================================================
+# Customer Routes
+# =============================================================================
 @bp.route('/')
 def index():
     db = get_db()
@@ -71,6 +77,9 @@ def delete_customer(id):
     db.commit()
     return redirect(url_for('main.index'))
 
+# =============================================================================
+# Job Routes (Main CRUD)
+# =============================================================================
 @bp.route('/jobs')
 def job_list():
     db = get_db()
@@ -154,6 +163,9 @@ def delete_job(id):
     db.commit()
     return redirect(url_for('main.job_list'))
 
+# =============================================================================
+# Timer Routes
+# =============================================================================
 @bp.route('/job/<int:id>/start_timer', methods=['POST'])
 def start_timer(id):
     db = get_db()
@@ -284,46 +296,32 @@ def update_job_total(id):
         'total_hours': total
     }), 200, {'ContentType': 'application/json'}
 
-@bp.route('/job/<int:job_id>/add_note', methods=['POST'])
-def add_note(job_id):
-    db = get_db()
-    now = datetime.now(timezone.utc).isoformat()
-    db.execute(
-        'INSERT INTO job_note (job_id, note, timestamp) VALUES (?, ?, ?)',
-        (job_id, request.form['note'], now)
-    )
-    db.commit()
-    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
-
-@bp.route('/job/<int:job_id>/add_material', methods=['POST'])
-def add_material(job_id):
-    db = get_db()
-    now = datetime.now(timezone.utc).isoformat()
-    db.execute(
-        'INSERT INTO job_material (job_id, material, quantity, unit, timestamp) VALUES (?, ?, ?, ?, ?)',
-        (job_id, request.form['material'], float(request.form['quantity']), request.form['unit'], now)
-    )
-    db.commit()
-    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
-
+# =============================================================================
+# Job Details Routes (Notes, Materials, Time Entries)
+# =============================================================================
 @bp.route('/job/<int:id>/details', methods=['GET', 'POST'])
 def job_details(id):
     db = get_db()
+    
+    # Handle note updates
     if request.method == 'POST':
-        print("\n\nPOST received")
-        print("Form notes:", request.form['notes'])
-        now = datetime.now(timezone.utc).isoformat()
-        print("Timestamp:", now)
-        db.execute('DELETE FROM job_note WHERE job_id = ?', (id,))
-        db.execute(
-            'INSERT INTO job_note (job_id, note, timestamp) VALUES (?, ?, ?)',
-            (id, request.form['notes'], now)
-        )
-        print("After insert - notes saved\n\n")
-        db.commit()
+        notes = request.form['notes'].strip()
+        if notes:
+            db.execute('DELETE FROM job_note WHERE job_id = ?', (id,))
+            for line in notes.splitlines():
+                if line.strip():
+                    # Remove any existing timestamps from the start of the line
+                    import re
+                    clean_line = re.sub(r'^\d{2} \w{3} \d{2} \d{2}:\d{2}: ', '', line.strip())
+                    if clean_line:
+                        db.execute(
+                            'INSERT INTO job_note (job_id, note, timestamp) VALUES (?, ?, ?)',
+                            (id, clean_line, datetime.now(timezone.utc).isoformat())
+                        )
+            db.commit()
         return redirect(url_for('main.job_details', id=id))
- 
-    # Get job info with customer name
+
+    # Get job info
     job = db.execute('''
         SELECT job.*, customer.name as customer_name
         FROM job
@@ -331,33 +329,15 @@ def job_details(id):
         WHERE job.id = ?
     ''', [id]).fetchone()
 
-    # Get all notes individually and format
+    # Get notes
+    notes = db.execute('''
+        SELECT note, timestamp 
+        FROM job_note 
+        WHERE job_id = ? 
+        ORDER BY timestamp DESC
+    ''', [id]).fetchall()
 
-    notes = db.execute('SELECT DISTINCT note, MIN(timestamp) as first_timestamp FROM job_note WHERE job_id = ? GROUP BY note ORDER BY first_timestamp DESC', [id]).fetchall()
-    combined_notes = ''
-    for note in notes:
-        ts = datetime.fromisoformat(note['first_timestamp']).strftime('%d %b %y %H:%M')
-        combined_notes += f"{ts}: {note['note']}\n"
-        
-
-    # Get all notes combined with timestamps
-    #print("DEBUG - Checking raw notes data:")
-    #debug_notes = db.execute('SELECT * FROM job_note WHERE job_id = ?', (id,)).fetchall()
-    #for note in debug_notes:
-    #    print(f"Note found: {note['timestamp']} - {note['note']}")
-
-
-# Get job info with customer name
-    job = db.execute('''
-        SELECT job.*, customer.name as customer_name
-        FROM job
-        JOIN customer ON job.customer_id = customer.id
-        WHERE job.id = ?
-    ''', [id]).fetchone()
-
-    # Get all notes individually and format
-
-    notes = db.execute('SELECT note, timestamp FROM job_note WHERE job_id = ? GROUP BY note ORDER BY timestamp DESC', [id]).fetchall()
+    # Format notes with timestamps for display
     combined_notes = ''
     for note in notes:
         ts = datetime.fromisoformat(note['timestamp']).strftime('%d %b %y %H:%M')
@@ -370,7 +350,7 @@ def job_details(id):
         ORDER BY timestamp DESC
     ''', (id,)).fetchall()
 
-    # Get time entries
+# Get time entries
     time_entries = db.execute('''
         SELECT *,
         (julianday(COALESCE(end_time, CURRENT_TIMESTAMP)) - julianday(start_time)) * 24 as hours
@@ -379,23 +359,36 @@ def job_details(id):
         ORDER BY start_time DESC
     ''', (id,)).fetchall()
 
+# Calculate total hours
+    total_hours = sum(entry['hours'] for entry in time_entries)
+    total_amount = total_hours * job['base_rate'] if job['base_rate'] else 0
+
     return render_template('job_details.html',
         job=job,
         combined_notes=combined_notes,
         materials=materials,
-        time_entries=time_entries)
+        time_entries=time_entries,
+        total_hours=total_hours,
+        total_amount=total_amount)
+
+    
+
+# Notes routes
+@bp.route('/job/<int:job_id>/add_note', methods=['POST'])
+def add_note(job_id):
+    db = get_db()
+    now = datetime.now(timezone.utc).isoformat()
+    db.execute(
+        'INSERT INTO job_note (job_id, note, timestamp) VALUES (?, ?, ?)',
+        (job_id, request.form['note'], now)
+    )
+    db.commit()
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
 
 @bp.route('/job/<int:job_id>/delete_note/<int:note_id>', methods=['POST'])
 def delete_note(job_id, note_id):
     db = get_db()
     db.execute('DELETE FROM job_note WHERE id = ? AND job_id = ?', (note_id, job_id))
-    db.commit()
-    return redirect(url_for('main.job_details', id=job_id))
-
-@bp.route('/job/<int:job_id>/delete_material/<int:material_id>', methods=['POST'])
-def delete_material(job_id, material_id):
-    db = get_db()
-    db.execute('DELETE FROM job_material WHERE id = ? AND job_id = ?', (material_id, job_id))
     db.commit()
     return redirect(url_for('main.job_details', id=job_id))
 
@@ -407,6 +400,51 @@ def edit_note(job_id, note_id):
     db.commit()
     return redirect(url_for('main.job_details', id=job_id))
 
+@bp.route('/job/<int:job_id>/save_notes', methods=['POST'])
+def save_notes(job_id):
+    db = get_db()
+    notes = request.form['notes'].strip()
+    timestamp = datetime.now(timezone.utc).isoformat()
+    
+    # Clear existing notes
+    db.execute('DELETE FROM job_note WHERE job_id = ?', (job_id,))
+    
+    # Save each non-empty line
+    for line in notes.splitlines():
+        if line.strip():
+            db.execute(
+                'INSERT INTO job_note (job_id, note, timestamp) VALUES (?, ?, ?)',
+                (job_id, line.strip(), timestamp)
+            )
+    
+    db.commit()
+    return redirect(url_for('main.job_details', id=job_id))
+
+@bp.route('/dump_notes/<int:job_id>')
+def dump_notes(job_id):
+    db = get_db()
+    notes = db.execute('SELECT * FROM job_note WHERE job_id = ?', [job_id]).fetchall()
+    return [dict(row) for row in notes]
+
+# Materials routes
+@bp.route('/job/<int:job_id>/add_material', methods=['POST'])
+def add_material(job_id):
+    db = get_db()
+    now = datetime.now(timezone.utc).isoformat()
+    db.execute(
+        'INSERT INTO job_material (job_id, material, quantity, timestamp) VALUES (?, ?, ?, ?)',
+        (job_id, request.form['material'], float(request.form['quantity']), now)
+    )
+    db.commit()
+    return redirect(url_for('main.job_details', id=job_id))
+
+@bp.route('/job/<int:job_id>/delete_material/<int:material_id>', methods=['POST'])
+def delete_material(job_id, material_id):
+    db = get_db()
+    db.execute('DELETE FROM job_material WHERE id = ? AND job_id = ?', (material_id, job_id))
+    db.commit()
+    return redirect(url_for('main.job_details', id=job_id))
+
 @bp.route('/job/<int:job_id>/edit_material/<int:material_id>', methods=['POST'])
 def edit_material(job_id, material_id):
     db = get_db()
@@ -415,45 +453,26 @@ def edit_material(job_id, material_id):
     db.commit()
     return redirect(url_for('main.job_details', id=job_id))
 
-@bp.route('/job/<int:job_id>/save_notes', methods=['POST'])
-def save_notes(job_id):
-   print("\n\nDEBUG START: save_notes called\n\n")
-   db = get_db()
-   notes = request.form['notes'].strip()
-   timestamp = datetime.now(timezone.utc).isoformat()
-   
-   print("ORIGINAL NOTES:", notes)
-   
-   # Split into individual notes
-   lines = [line.strip() for line in notes.split('\n') if line.strip()]
-   print("SPLIT LINES:", lines)
-   
-   db.execute('DELETE FROM job_note WHERE job_id = ?', (job_id,))
-   
-   for line in lines:
-       print("PROCESSING LINE:", line)
-       # Extract actual note content after final timestamp 
-       import re
-       pattern = r'\d{2} \w{3} \d{2} \d{2}:\d{2}: (.+)$'
-       if match := re.search(pattern, line):
-           note_text = match.group(1)
-           print("MATCHED: note_text =", note_text)
-       else:
-           note_text = line
-           print("NO MATCH: using full line as note_text")
-           
-       print("INSERTING:", note_text)
-       print("WITH TIMESTAMP:", timestamp)
-       
-       db.execute(
-           'INSERT INTO job_note (job_id, note, timestamp) VALUES (?, ?, ?)',
-           (job_id, note_text, timestamp)
-       )
-   db.commit()
-   return redirect(url_for('main.job_details', id=job_id))
-
-@bp.route('/dump_notes/<int:job_id>')
-def dump_notes(job_id):
+# Time Entry routes
+@bp.route('/job/<int:job_id>/delete_time_entry/<int:entry_id>', methods=['POST'])
+def delete_time_entry(job_id, entry_id):
     db = get_db()
-    notes = db.execute('SELECT * FROM job_note WHERE job_id = ?', [job_id]).fetchall()
-    return [dict(row) for row in notes]
+    db.execute('DELETE FROM time_entry WHERE id = ? AND job_id = ?', (entry_id, job_id))
+    db.commit()
+    return redirect(url_for('main.job_details', id=job_id))
+
+@bp.route('/job/<int:job_id>/edit_time_entry/<int:entry_id>', methods=['POST'])
+def edit_time_entry(job_id, entry_id):
+    if request.method == 'POST':
+        start_time = request.form['start_time']
+        end_time = request.form['end_time']
+        
+        db = get_db()
+        db.execute(
+            'UPDATE time_entry SET start_time = ?, end_time = ? WHERE id = ? AND job_id = ?',
+            (start_time, end_time, entry_id, job_id)
+        )
+        db.commit()
+        
+        return redirect(url_for('main.job_details', id=job_id))
+    return redirect(url_for('main.job_details', id=job_id))

@@ -22,10 +22,6 @@
     .item-row:last-child {
         border-bottom: none;
     }
-    .timestamp {
-        color: #666;
-        font-size: 0.9em;
-    }
     .summary-box {
         background: #fff;
         padding: 15px;
@@ -39,7 +35,6 @@
         padding-top: 10px;
         margin-top: 10px;
     }
-
     .edit-btn { background: #2196F3; }
     .delete-btn { background: #f44336; }
     .save-btn { background: #4CAF50; }
@@ -52,21 +47,23 @@
         cursor: pointer;
         margin-right: 5px;
     }
-    .edit-view form {
-        margin-top: 10px;
-    }
-    .edit-view input[type="text"],
-    .edit-view input[type="number"],
-    .edit-view textarea {
-        width: 100%;
-        padding: 5px;
-        margin-bottom: 5px;
-    }
-    .actions {
+    .edit-view {
+        display: none;
         margin-top: 5px;
     }
-
-
+    .edit-view form {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+    }
+    .edit-view input[type="text"] {
+        flex-grow: 1;
+        padding: 5px;
+    }
+    .edit-view input[type="number"] {
+        width: 80px;
+        padding: 5px;
+    }
 </style>
 
 <div class="summary-box">
@@ -90,16 +87,34 @@
     <h3>Time Entries</h3>
     <div>
         {% for entry in time_entries %}
-        <div class="item-row">
-            <div>{{ entry.start_time[:16] }} - {{ entry.end_time[:16] if entry.end_time else 'Ongoing' }}</div>
-            <div>Hours: {{ "%.2f"|format(entry.hours) }}</div>
-            {% if entry.notes %}<div>Note: {{ entry.notes }}</div>{% endif %}
+        <div class="item-row" id="time-entry-{{ entry.id }}" style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="display-view">
+                <span>
+                    {{ entry.start_time[8:10] }} {{ entry.start_time[5:7]|month_name }} {{ entry.start_time[0:4] }}
+                    {{ entry.start_time[11:16] }} - {{ entry.end_time[11:16] if entry.end_time else 'Ongoing' }}
+                    ({{ "%d:%02d"|format(entry.hours|int, ((entry.hours % 1) * 60)|round|int) }})
+                </span>
+                <div style="display: inline-block; margin-left: 10px;">
+                    <button onclick="showTimeEdit({{ entry.id }})" class="edit-btn">Edit</button>
+                    <form action="{{ url_for('main.delete_time_entry', job_id=job.id, entry_id=entry.id) }}" method="post" style="display: inline;">
+                        <button type="submit" class="delete-btn" onclick="return confirm('Delete this time entry?')">Delete</button>
+                    </form>
+                </div>
+            </div>
+            <div class="edit-view" style="display: none; width: 100%;">
+                <form action="{{ url_for('main.edit_time_entry', job_id=job.id, entry_id=entry.id) }}" method="post" style="display: flex; gap: 10px; align-items: center;">
+                    <input type="datetime-local" name="start_time" value="{{ entry.start_time[:16] }}" required>
+                    <input type="datetime-local" name="end_time" value="{{ entry.end_time[:16] if entry.end_time else '' }}" required>
+                    <button type="submit" class="save-btn">Save</button>
+                    <button type="button" onclick="hideTimeEdit({{ entry.id }})" class="cancel-btn">Cancel</button>
+                </form>
+            </div>
         </div>
         {% endfor %}
         <div class="total-row">
-            Total Hours: {{ "%.2f"|format(job.total_hours) }}
+            Total Hours: {{ "%.2f"|format(total_hours) }}
             {% if job.base_rate %}
-            <br>Total Amount: €{{ "%.2f"|format(job.total_hours * job.base_rate) }}
+            <br>Total Amount: €{{ "%.2f"|format(total_amount) }}
             {% endif %}
         </div>
     </div>
@@ -107,23 +122,31 @@
 
 <div class="detail-section">
     <h3>Materials Used</h3>
+    <div class="new-material-form" style="margin-bottom: 15px; padding: 10px; background: #fff; border: 1px solid #ddd; border-radius: 4px;">
+        <form action="{{ url_for('main.add_material', job_id=job.id) }}" method="post" style="display: flex; gap: 5px; align-items: center;">
+            <input type="text" name="material" placeholder="Material description" required style="flex-grow: 1; padding: 5px;">
+            <input type="number" name="quantity" placeholder="Qty" step="0.1" required style="width: 80px; padding: 5px;">
+            <button type="submit" class="save-btn">Add Material</button>
+        </form>
+    </div>
     <div>
         {% for material in materials %}
         <div class="item-row" id="material-{{ material.id }}">
             <div class="display-view">
-                <div>{{ material.material }} - Qty: {{ material.quantity }}</div>
-                <div class="timestamp">Added: {{ material.timestamp[:16] }}</div>
-                <div class="actions">
-                    <button onclick="showMaterialEdit({{ material.id }})" class="edit-btn">Edit</button>
-                    <form action="{{ url_for('main.delete_material', job_id=job.id, material_id=material.id) }}" method="post" style="display: inline;">
-                        <button type="submit" class="delete-btn" onclick="return confirm('Delete this material?')">Delete</button>
-                    </form>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span>{{ material.material }} ({{ material.quantity }})</span>
+                    <div>
+                        <button onclick="showMaterialEdit({{ material.id }})" class="edit-btn">Edit</button>
+                        <form action="{{ url_for('main.delete_material', job_id=job.id, material_id=material.id) }}" method="post" style="display: inline;">
+                            <button type="submit" class="delete-btn" onclick="return confirm('Delete this material?')">Delete</button>
+                        </form>
+                    </div>
                 </div>
             </div>
-            <div class="edit-view" style="display: none;">
+            <div class="edit-view">
                 <form action="{{ url_for('main.edit_material', job_id=job.id, material_id=material.id) }}" method="post">
                     <input type="text" name="material" value="{{ material.material }}" required>
-                    <input type="number" name="quantity" value="{{ material.quantity }}" required>
+                    <input type="number" name="quantity" value="{{ material.quantity }}" step="0.1" required>
                     <button type="submit" class="save-btn">Save</button>
                     <button type="button" onclick="hideMaterialEdit({{ material.id }})" class="cancel-btn">Cancel</button>
                 </form>
@@ -142,9 +165,20 @@
         </button>
     </form>
 </div>
-</div>
 
 <script>
+    function showTimeEdit(id) {
+        const row = document.getElementById(`time-entry-${id}`);
+        row.querySelector('.display-view').style.display = 'none';
+        row.querySelector('.edit-view').style.display = 'block';
+    }
+
+    function hideTimeEdit(id) {
+        const row = document.getElementById(`time-entry-${id}`);
+        row.querySelector('.display-view').style.display = 'flex';
+        row.querySelector('.edit-view').style.display = 'none';
+    }
+
     function showMaterialEdit(id) {
         const row = document.getElementById(`material-${id}`);
         row.querySelector('.display-view').style.display = 'none';
@@ -153,18 +187,6 @@
 
     function hideMaterialEdit(id) {
         const row = document.getElementById(`material-${id}`);
-        row.querySelector('.display-view').style.display = 'block';
-        row.querySelector('.edit-view').style.display = 'none';
-    }
-
-    function showNoteEdit(id) {
-        const row = document.getElementById(`note-${id}`);
-        row.querySelector('.display-view').style.display = 'none';
-        row.querySelector('.edit-view').style.display = 'block';
-    }
-
-    function hideNoteEdit(id) {
-        const row = document.getElementById(`note-${id}`);
         row.querySelector('.display-view').style.display = 'block';
         row.querySelector('.edit-view').style.display = 'none';
     }
