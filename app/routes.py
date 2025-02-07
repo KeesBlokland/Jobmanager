@@ -169,7 +169,7 @@ def delete_job(id):
 @bp.route('/job/<int:id>/start_timer', methods=['POST'])
 def start_timer(id):
     db = get_db()
-    now = datetime.now(timezone.utc).isoformat()
+    now = datetime.now().isoformat()
     
     # Find any currently running timer and which job it belongs to
     active_timer = db.execute('''
@@ -222,7 +222,7 @@ def start_timer(id):
 @bp.route('/job/<int:id>/stop_timer', methods=['POST'])
 def stop_timer(id):
     db = get_db()
-    now = datetime.now(timezone.utc).isoformat()
+    now = datetime.now().isoformat()
     
     # Find and stop active timer for this job
     db.execute('''
@@ -237,7 +237,7 @@ def stop_timer(id):
 @bp.route('/job/<int:id>/pause_timer', methods=['POST'])
 def pause_timer(id):
     db = get_db()
-    now = datetime.now(timezone.utc).isoformat()
+    now = datetime.now().isoformat()
     
     # Just stop the current timer but don't change job status
     db.execute('''
@@ -252,7 +252,7 @@ def pause_timer(id):
 @bp.route('/job/<int:id>/resume_timer', methods=['POST'])
 def resume_timer(id):
     db = get_db()
-    now = datetime.now(timezone.utc).isoformat()
+    now = datetime.now().isoformat()
     
     # Create new time entry but don't change job status
     db.execute(
@@ -266,7 +266,7 @@ def resume_timer(id):
 @bp.route('/job/<int:id>/update_total', methods=['POST'])
 def update_job_total(id):
     db = get_db()
-    now = datetime.now(timezone.utc).isoformat()
+    now = datetime.now().isoformat()
     
     # Calculate total hours including current running timer
     total = db.execute('''
@@ -376,7 +376,7 @@ def job_details(id):
 @bp.route('/job/<int:job_id>/add_note', methods=['POST'])
 def add_note(job_id):
     db = get_db()
-    now = datetime.now(timezone.utc).isoformat()
+    now = datetime.now().isoformat()
     db.execute(
         'INSERT INTO job_note (job_id, note, timestamp) VALUES (?, ?, ?)',
         (job_id, request.form['note'], now)
@@ -429,7 +429,7 @@ def dump_notes(job_id):
 @bp.route('/job/<int:job_id>/add_material', methods=['POST'])
 def add_material(job_id):
     db = get_db()
-    now = datetime.now(timezone.utc).isoformat()
+    now = datetime.now().isoformat()
     material = request.form['material']
     quantity = float(request.form['quantity'])
     price = float(request.form['price']) if 'price' in request.form else 0.0
