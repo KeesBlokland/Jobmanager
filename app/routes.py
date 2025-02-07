@@ -430,9 +430,13 @@ def dump_notes(job_id):
 def add_material(job_id):
     db = get_db()
     now = datetime.now(timezone.utc).isoformat()
+    material = request.form['material']
+    quantity = float(request.form['quantity'])
+    price = float(request.form['price']) if 'price' in request.form else 0.0
+    
     db.execute(
-        'INSERT INTO job_material (job_id, material, quantity, timestamp) VALUES (?, ?, ?, ?)',
-        (job_id, request.form['material'], float(request.form['quantity']), now)
+        'INSERT INTO job_material (job_id, material, quantity, price, timestamp) VALUES (?, ?, ?, ?, ?)',
+        (job_id, material, quantity, price, now)
     )
     db.commit()
     return redirect(url_for('main.job_details', id=job_id))
@@ -447,8 +451,8 @@ def delete_material(job_id, material_id):
 @bp.route('/job/<int:job_id>/edit_material/<int:material_id>', methods=['POST'])
 def edit_material(job_id, material_id):
     db = get_db()
-    db.execute('UPDATE job_material SET material = ?, quantity = ? WHERE id = ? AND job_id = ?',
-               (request.form['material'], request.form['quantity'], material_id, job_id))
+    db.execute('UPDATE job_material SET material = ?, quantity = ?, price = ? WHERE id = ? AND job_id = ?',
+               (request.form['material'], request.form['quantity'], request.form['price'], material_id, job_id))
     db.commit()
     return redirect(url_for('main.job_details', id=job_id))
 
@@ -535,4 +539,3 @@ def job_invoice(id):
         total_amount=total_amount,
         invoice_number=invoice_number)
 
-        

@@ -58,7 +58,9 @@ CREATE TABLE IF NOT EXISTS job_material (
     quantity REAL,
     unit TEXT,
     timestamp TEXT NOT NULL,
+    price REAL DEFAULT 0,
     FOREIGN KEY (job_id) REFERENCES job (id)
 );
 
-ALTER TABLE job ADD COLUMN invoice_number TEXT;
+-- ALTER TABLE job ADD COLUMN invoice_number TEXT;
+-- ALTER TABLE job_material ADD COLUMN price REAL DEFAULT 0;

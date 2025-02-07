@@ -53,7 +53,6 @@
         border: none;
         border-radius: 4px;
         cursor: pointer;
-        
     }
     .materials-input {
         display: flex;
@@ -89,7 +88,6 @@
                     {% if loop.first %}
                     <div class="notes-materials">
                         <div style="margin-bottom: 10px;">
-                            
                             <textarea id="note-{{ job.id }}" rows="3" placeholder="Enter note"></textarea>
                             <button onclick="addNote({{ job.id }})">Note</button>
                         </div>
@@ -237,41 +235,21 @@
         function addMaterial(jobId) {
             const material = document.getElementById(`material-${jobId}`).value;
             const quantity = document.getElementById(`quantity-${jobId}`).value;
-            const unit = '';  // No longer required
             
             if (!material.trim() || !quantity) {
-                console.log('Missing required fields');
                 return;
             }
 
             const formData = new FormData();
             formData.append('material', material);
             formData.append('quantity', quantity);
-            formData.append('unit', unit);
-
-            console.log('Submitting material:', material, quantity, unit);
 
             fetch(`/job/${jobId}/add_material`, {
                 method: 'POST',
                 body: formData
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Success:', data);
-                if (data.success) {
-                    document.getElementById(`material-${jobId}`).value = '';
-                    document.getElementById(`quantity-${jobId}`).value = '';
-                    alert('Material added successfully');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Error adding material');
+            }).then(() => {
+                document.getElementById(`material-${jobId}`).value = '';
+                document.getElementById(`quantity-${jobId}`).value = '';
             });
         }
 
@@ -320,10 +298,13 @@
                     
                     const timer = document.getElementById(`timer-${jobId}`);
                     timer.dataset.paused = 'true';
+                    timer.dataset.start = '';
                     
                     const container = row.querySelector('.timer-container');
                     container.querySelector('.pause-btn').style.display = 'none';
                     container.querySelector('.resume-btn').style.display = 'inline';
+                    
+                    updateTimer(timer);
                 }
             });
         }
@@ -339,6 +320,7 @@
                     
                     const timer = document.getElementById(`timer-${jobId}`);
                     timer.dataset.paused = 'false';
+                    timer.dataset.start = new Date().toISOString();
                     
                     const container = row.querySelector('.timer-container');
                     container.querySelector('.pause-btn').style.display = 'inline';
@@ -353,42 +335,7 @@
             document.querySelectorAll('.timer').forEach(timer => {
                 updateTimer(timer);
             });
-
-            document.querySelectorAll('.active-timer').forEach(row => {
-                const timer = row.querySelector('.timer');
-                if (timer) {
-                    updateTimer(timer);
-                }
-            });
         });
-
-        
-        function showMaterialEdit(id) {
-            const row = document.getElementById(`material-${id}`);
-            row.querySelector('.display-view').style.display = 'none';
-            row.querySelector('.edit-view').style.display = 'block';
-        }
-
-        function hideMaterialEdit(id) {
-            const row = document.getElementById(`material-${id}`);
-            row.querySelector('.display-view').style.display = 'block';
-            row.querySelector('.edit-view').style.display = 'none';
-        }
-
-        function showNoteEdit(id) {
-            const row = document.getElementById(`note-${id}`);
-            row.querySelector('.display-view').style.display = 'none';
-            row.querySelector('.edit-view').style.display = 'block';
-        }
-
-        function hideNoteEdit(id) {
-            const row = document.getElementById(`note-${id}`);
-            row.querySelector('.display-view').style.display = 'block';
-            row.querySelector('.edit-view').style.display = 'none';
-        }
-
-
-
     </script>
 </div>
 {% endblock %}

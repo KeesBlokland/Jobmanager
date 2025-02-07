@@ -4,59 +4,27 @@
 <head>
     <title>Invoice {{ invoice_number }}</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            max-width: 800px;
-        }
-        .header {
-            margin-bottom: 40px;
-        }
-        .business-details {
-            float: left;
-        }
-        .invoice-details {
-            float: right;
-            text-align: right;
-        }
-        .customer-details {
-            clear: both;
-            margin-bottom: 30px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        .total {
-            text-align: right;
-            margin-top: 20px;
-            font-weight: bold;
-        }
-        @media print {
-            body { margin: 0; }
-            button { display: none; }
-        }
+        body { font-family: Arial, sans-serif; margin: 40px; max-width: 800px; }
+        .header { margin-bottom: 40px; overflow: hidden; }
+        .business-details { float: left; }
+        .invoice-details { float: right; text-align: right; }
+        .customer-details { clear: both; margin-bottom: 30px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
+        .total { text-align: right; margin-top: 20px; font-weight: bold; }
+        .amount-column { text-align: right; }
+        @media print { body { margin: 0; } button { display: none; } }
     </style>
 </head>
 <body>
     <div class="header">
         <div class="business-details">
             <h2>Kees Blokland</h2>
-            <p>Prz-Claus-Str 29<br>
-               46446 Elten<br>
-               Email: kees@blokland.net<br>
-               Phone: +49(0)1745607840</p>
+            <p>Prz-Claus-Str 29<br>46446 Elten<br>Email: kees@blokland.net<br>Phone: +49(0)1745607840</p>
         </div>
         <div class="invoice-details">
             <h1>Invoice</h1>
-            <p>Invoice #: {{ invoice_number }}<br>
-               Date: {{ job.creation_date[:10] }}</p>
+            <p>Invoice #: {{ invoice_number }}<br>Date: {{ job.creation_date[:10] }}</p>
         </div>
     </div>
 
@@ -78,17 +46,33 @@
             <th>Date</th>
             <th>Hours</th>
             <th>Rate</th>
-            <th>Amount</th>
+            <th class="amount-column">Amount</th>
         </tr>
+        {% set ns = namespace(current_date='', daily_hours=0) %}
         {% for entry in time_entries %}
-        <tr>
-            <td>{{ entry.start_time[8:10] }} {{ entry.start_time[5:7]|month_name }} {{ entry.start_time[0:4] }}
-                {{ entry.start_time[11:16] }} - {{ entry.end_time[11:16] }}</td>
-            <td>{{ "%.2f"|format(entry.hours) }}</td>
-            <td>€{{ "%.2f"|format(job.base_rate) }}</td>
-            <td>€{{ "%.2f"|format(entry.hours * job.base_rate) }}</td>
-        </tr>
+            {% set entry_date = entry.start_time[0:10] %}
+            {% if ns.current_date and ns.current_date != entry_date %}
+                {% set rounded_hours = ((ns.daily_hours * 60 + 4) // 5 * 5) / 60 %}
+                <tr>
+                    <td>{{ ns.current_date[8:10] }} {{ ns.current_date[5:7]|month_name }} {{ ns.current_date[0:4] }}</td>
+                    <td>{{ "%d:%02d"|format(rounded_hours|int, (rounded_hours % 1 * 60)|int) }}</td>
+                    <td>€{{ "%.2f"|format(job.base_rate) }}</td>
+                    <td class="amount-column">€{{ "%.2f"|format(rounded_hours * job.base_rate) }}</td>
+                </tr>
+                {% set ns.daily_hours = 0 %}
+            {% endif %}
+            {% set ns.current_date = entry_date %}
+            {% set ns.daily_hours = ns.daily_hours + entry.hours %}
         {% endfor %}
+        {% if ns.current_date %}
+            {% set rounded_hours = ((ns.daily_hours * 60 + 4) // 5 * 5) / 60 %}
+            <tr>
+                <td>{{ ns.current_date[8:10] }} {{ ns.current_date[5:7]|month_name }} {{ ns.current_date[0:4] }}</td>
+                <td>{{ "%d:%02d"|format(rounded_hours|int, (rounded_hours % 1 * 60)|int) }}</td>
+                <td>€{{ "%.2f"|format(job.base_rate) }}</td>
+                <td class="amount-column">€{{ "%.2f"|format(rounded_hours * job.base_rate) }}</td>
+            </tr>
+        {% endif %}
     </table>
 
     {% if materials %}
@@ -97,19 +81,52 @@
         <tr>
             <th>Description</th>
             <th>Quantity</th>
+            <th>Price/Item</th>
+            <th class="amount-column">Amount</th>
         </tr>
         {% for material in materials %}
         <tr>
             <td>{{ material.material }}</td>
             <td>{{ material.quantity }}</td>
+            <td>€{{ "%.2f"|format(material.price) }}</td>
+            <td class="amount-column">€{{ "%.2f"|format(material.quantity * material.price) }}</td>
         </tr>
         {% endfor %}
     </table>
     {% endif %}
 
     <div class="total">
-        <p>Total Hours: {{ "%.2f"|format(total_hours) }}<br>
-           Total Amount: €{{ "%.2f"|format(total_amount) }}</p>
+        {% set total_hours = 0 %}
+        {% set total_amount = 0 %}
+        {% set ns = namespace(current_date='', daily_hours=0) %}
+        
+        {% for entry in time_entries %}
+            {% set entry_date = entry.start_time[0:10] %}
+            {% if ns.current_date and ns.current_date != entry_date %}
+                {% set rounded_hours = ((ns.daily_hours * 60 + 4) // 5 * 5) / 60 %}
+                {% set total_hours = total_hours + rounded_hours %}
+                {% set total_amount = total_amount + (rounded_hours * job.base_rate) %}
+                {% set ns.daily_hours = 0 %}
+            {% endif %}
+            {% set ns.current_date = entry_date %}
+            {% set ns.daily_hours = ns.daily_hours + entry.hours %}
+        {% endfor %}
+        
+        {% if ns.daily_hours > 0 %}
+            {% set rounded_hours = ((ns.daily_hours * 60 + 4) // 5 * 5) / 60 %}
+            {% set total_hours = total_hours + rounded_hours %}
+            {% set total_amount = total_amount + (rounded_hours * job.base_rate) %}
+        {% endif %}
+    
+        {% set materials_total = namespace(value=0.0) %}
+        {% for material in materials %}
+            {% set materials_total.value = materials_total.value + (material.quantity * material.price) %}
+        {% endfor %}
+        
+        <p>Total Hours: {{ "%d:%02d"|format(total_hours|int, (total_hours % 1 * 60)|int) }}<br>
+           Labor Cost: €{{ "%.2f"|format(total_amount) }}<br>
+           Materials Cost: €{{ "%.2f"|format(materials_total.value) }}<br>
+           Total Amount: €{{ "%.2f"|format(total_amount + materials_total.value) }}</p>
     </div>
 
     <button onclick="window.print()" style="margin-top: 20px;">Print Invoice</button>
