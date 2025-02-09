@@ -1,0 +1,15 @@
+2025-02-09 07:29:00,360 [INFO] Starting migration
+2025-02-09 07:29:00,361 [INFO] Database backed up to instance/jobmanager.db.backup_20250209_072900
+2025-02-09 07:29:00,361 [INFO] Database backup created successfully
+2025-02-09 07:29:00,493 [INFO] Executed: ALTER TABLE job ADD COLUMN is_template INTEGER DEFAULT 0
+2025-02-09 07:29:00,549 [INFO] Executed: ALTER TABLE job ADD COLUMN template_name TEXT
+2025-02-09 07:29:00,669 [INFO] Executed: CREATE TABLE IF NOT EXISTS template_material (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                job_id INTEGER NOT NULL,
+                material TEXT NOT NULL,
+                quantity REAL DEFAULT 1,
+                price REAL DEFAULT 0,
+                FOREIGN KEY (job_id) REFERENCES job (id)
+            )
+2025-02-09 07:29:00,748 [INFO] Executed: CREATE INDEX IF NOT EXISTS idx_job_template ON job(is_template)
+2025-02-09 07:29:00,748 [INFO] Migration completed successfully

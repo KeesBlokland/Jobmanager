@@ -64,3 +64,17 @@ CREATE TABLE IF NOT EXISTS job_material (
 
 -- ALTER TABLE job ADD COLUMN invoice_number TEXT;
 -- ALTER TABLE job_material ADD COLUMN price REAL DEFAULT 0;
+
+-- Add is_template column to job table
+ALTER TABLE job ADD COLUMN is_template INTEGER DEFAULT 0;
+ALTER TABLE job ADD COLUMN template_name TEXT;
+
+-- Create table for template materials
+CREATE TABLE IF NOT EXISTS template_material (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    job_id INTEGER NOT NULL,
+    material TEXT NOT NULL,
+    quantity REAL DEFAULT 1,
+    price REAL DEFAULT 0,
+    FOREIGN KEY (job_id) REFERENCES job (id)
+);

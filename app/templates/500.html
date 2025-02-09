@@ -1,0 +1,12 @@
+<!-- app/templates/500.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div style="text-align: center; padding: 20px;">
+    <h1>Internal Server Error</h1>
+    <p>An unexpected error has occurred. Please try again later.</p>
+    <a href="{{ url_for('customer.index') }}" style="display: inline-block; padding: 10px 20px; background: #4CAF50; color: white; text-decoration: none; border-radius: 4px; margin-top: 20px;">
+        Return to Home
+    </a>
+</div>
+{% endblock %}

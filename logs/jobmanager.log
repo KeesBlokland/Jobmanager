@@ -1,0 +1,187 @@
+2025-02-08 15:49:34,444 [INFO] Starting Job Manager application
+2025-02-08 15:49:34,444 [INFO] Starting Job Manager application
+2025-02-08 15:49:34,453 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.2.75:5000
+2025-02-08 15:49:34,453 [INFO] [33mPress CTRL+C to quit[0m
+2025-02-08 15:49:34,456 [INFO]  * Restarting with stat
+2025-02-08 15:49:34,674 [INFO] Starting Job Manager application
+2025-02-08 15:49:34,674 [INFO] Starting Job Manager application
+2025-02-08 15:49:34,682 [WARNING]  * Debugger is active!
+2025-02-08 15:49:34,682 [INFO]  * Debugger PIN: 665-657-951
+2025-02-08 15:51:37,415 [INFO] 192.168.2.64 - - [08/Feb/2025 15:51:37] "GET /job/details/15 HTTP/1.1" 200 -
+2025-02-08 15:51:57,790 [INFO] 192.168.2.64 - - [08/Feb/2025 15:51:57] "[32mPOST /job/details/15 HTTP/1.1[0m" 302 -
+2025-02-08 15:51:57,805 [INFO] 192.168.2.64 - - [08/Feb/2025 15:51:57] "GET /job/details/15 HTTP/1.1" 200 -
+2025-02-08 15:52:11,694 [INFO] 192.168.2.62 - - [08/Feb/2025 15:52:11] "GET /job/details/15 HTTP/1.1" 200 -
+2025-02-08 15:52:28,741 [INFO] 192.168.2.62 - - [08/Feb/2025 15:52:28] "[32mPOST /job/15/add_material HTTP/1.1[0m" 302 -
+2025-02-08 15:52:28,766 [INFO] 192.168.2.62 - - [08/Feb/2025 15:52:28] "GET /job/details/15 HTTP/1.1" 200 -
+2025-02-08 15:53:10,801 [INFO] 192.168.2.62 - - [08/Feb/2025 15:53:10] "[32mPOST /job/15/add_material HTTP/1.1[0m" 302 -
+2025-02-08 15:53:10,808 [INFO] 192.168.2.62 - - [08/Feb/2025 15:53:10] "GET /job/details/15 HTTP/1.1" 200 -
+2025-02-08 15:53:24,967 [INFO] 192.168.2.62 - - [08/Feb/2025 15:53:24] "GET /job/15/invoice HTTP/1.1" 200 -
+2025-02-08 15:54:25,107 [INFO] 192.168.2.62 - - [08/Feb/2025 15:54:25] "GET /job/15/invoice HTTP/1.1" 200 -
+2025-02-08 15:55:17,666 [INFO] Stopping timer for job 15
+2025-02-08 15:55:17,666 [INFO] Stopping timer for job 15
+2025-02-08 15:55:17,853 [INFO] 192.168.2.64 - - [08/Feb/2025 15:55:17] "POST /timer/job/15/stop_timer HTTP/1.1" 200 -
+2025-02-08 15:55:17,886 [INFO] 192.168.2.64 - - [08/Feb/2025 15:55:17] "GET /job/ HTTP/1.1" 200 -
+2025-02-08 15:55:26,996 [INFO] 192.168.2.64 - - [08/Feb/2025 15:55:26] "GET /job/15/edit HTTP/1.1" 200 -
+2025-02-08 15:55:31,416 [INFO] 192.168.2.64 - - [08/Feb/2025 15:55:31] "[32mPOST /job/15/edit HTTP/1.1[0m" 302 -
+2025-02-08 15:55:31,480 [INFO] 192.168.2.64 - - [08/Feb/2025 15:55:31] "GET /job/ HTTP/1.1" 200 -
+2025-02-09 07:05:57,979 [INFO] Starting Job Manager application
+2025-02-09 07:05:57,979 [INFO] Starting Job Manager application
+2025-02-09 07:05:57,988 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.2.75:5000
+2025-02-09 07:05:57,988 [INFO] [33mPress CTRL+C to quit[0m
+2025-02-09 07:05:57,991 [INFO]  * Restarting with stat
+2025-02-09 07:05:58,191 [INFO] Starting Job Manager application
+2025-02-09 07:05:58,191 [INFO] Starting Job Manager application
+2025-02-09 07:05:58,198 [WARNING]  * Debugger is active!
+2025-02-09 07:05:58,199 [INFO]  * Debugger PIN: 513-118-621
+2025-02-09 07:09:44,781 [INFO] Starting Job Manager application
+2025-02-09 07:09:44,781 [INFO] Starting Job Manager application
+2025-02-09 07:09:44,790 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.2.75:5000
+2025-02-09 07:09:44,790 [INFO] [33mPress CTRL+C to quit[0m
+2025-02-09 07:09:44,793 [INFO]  * Restarting with stat
+2025-02-09 07:09:44,995 [INFO] Starting Job Manager application
+2025-02-09 07:09:44,995 [INFO] Starting Job Manager application
+2025-02-09 07:09:45,003 [WARNING]  * Debugger is active!
+2025-02-09 07:09:45,003 [INFO]  * Debugger PIN: 513-118-621
+2025-02-09 07:10:32,171 [INFO] 192.168.2.56 - - [09/Feb/2025 07:10:32] "GET / HTTP/1.1" 200 -
+2025-02-09 07:10:40,862 [INFO] 192.168.2.56 - - [09/Feb/2025 07:10:40] "GET /job/add/8 HTTP/1.1" 200 -
+2025-02-09 07:16:27,612 [INFO] 192.168.2.56 - - [09/Feb/2025 07:16:27] "GET /job/add/8 HTTP/1.1" 200 -
+2025-02-09 07:17:34,961 [INFO] 192.168.2.56 - - [09/Feb/2025 07:17:34] "GET /job/ HTTP/1.1" 200 -
+2025-02-09 07:17:37,925 [INFO] 192.168.2.56 - - [09/Feb/2025 07:17:37] "GET /job/details/4 HTTP/1.1" 200 -
+2025-02-09 07:17:47,277 [INFO] Starting timer for job 4
+2025-02-09 07:17:47,277 [INFO] Starting timer for job 4
+2025-02-09 07:17:47,278 [INFO] Stopping all active timers
+2025-02-09 07:17:47,278 [INFO] Stopping all active timers
+2025-02-09 07:17:47,570 [INFO] 192.168.2.56 - - [09/Feb/2025 07:17:47] "POST /timer/job/4/start_timer HTTP/1.1" 200 -
+2025-02-09 07:17:47,591 [INFO] 192.168.2.56 - - [09/Feb/2025 07:17:47] "GET /job/ HTTP/1.1" 200 -
+2025-02-09 07:17:55,379 [INFO] 192.168.2.56 - - [09/Feb/2025 07:17:55] "GET /job/details/4 HTTP/1.1" 200 -
+2025-02-09 07:18:12,252 [INFO] 192.168.2.56 - - [09/Feb/2025 07:18:12] "GET /job/details/4 HTTP/1.1" 200 -
+2025-02-09 07:54:36,599 [INFO] Starting Job Manager application
+2025-02-09 07:54:36,599 [INFO] Starting Job Manager application
+2025-02-09 07:54:36,610 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.2.75:5000
+2025-02-09 07:54:36,610 [INFO] [33mPress CTRL+C to quit[0m
+2025-02-09 07:54:36,613 [INFO]  * Restarting with stat
+2025-02-09 07:54:36,815 [INFO] Starting Job Manager application
+2025-02-09 07:54:36,815 [INFO] Starting Job Manager application
+2025-02-09 07:54:36,823 [WARNING]  * Debugger is active!
+2025-02-09 07:54:36,823 [INFO]  * Debugger PIN: 513-118-621
+2025-02-09 07:54:41,552 [INFO] 192.168.2.56 - - [09/Feb/2025 07:54:41] "GET /job/ HTTP/1.1" 200 -
+2025-02-09 07:54:43,933 [INFO] 192.168.2.56 - - [09/Feb/2025 07:54:43] "GET /job/details/4 HTTP/1.1" 200 -
+2025-02-09 07:54:51,178 [INFO] 192.168.2.56 - - [09/Feb/2025 07:54:51] "GET / HTTP/1.1" 200 -
+2025-02-09 07:54:51,180 [INFO] 192.168.2.56 - - [09/Feb/2025 07:54:51] "GET / HTTP/1.1" 200 -
+2025-02-09 07:54:54,295 [INFO] 192.168.2.56 - - [09/Feb/2025 07:54:54] "GET /job/add/8 HTTP/1.1" 200 -
+2025-02-09 07:55:20,201 [INFO] 192.168.2.56 - - [09/Feb/2025 07:55:20] "GET /job/add/8 HTTP/1.1" 200 -
+2025-02-09 07:57:21,432 [INFO] 192.168.2.56 - - [09/Feb/2025 07:57:21] "GET /job/add/8 HTTP/1.1" 200 -
+2025-02-09 08:00:44,495 [ERROR] Unexpected error: NOT NULL constraint failed: job_material.job_id
+2025-02-09 08:00:44,495 [ERROR] Unexpected error: NOT NULL constraint failed: job_material.job_id
+2025-02-09 08:00:44,496 [INFO] 192.168.2.56 - - [09/Feb/2025 08:00:44] "[35m[1mPOST /job/add/8 HTTP/1.1[0m" 500 -
+2025-02-09 08:00:52,808 [INFO] 192.168.2.56 - - [09/Feb/2025 08:00:52] "GET /job/add/8 HTTP/1.1" 200 -
+2025-02-09 08:01:29,013 [ERROR] Unexpected error: NOT NULL constraint failed: job_material.job_id
+2025-02-09 08:01:29,013 [ERROR] Unexpected error: NOT NULL constraint failed: job_material.job_id
+2025-02-09 08:01:29,013 [INFO] 192.168.2.56 - - [09/Feb/2025 08:01:29] "[35m[1mPOST /job/add/8 HTTP/1.1[0m" 500 -
+2025-02-09 08:04:57,002 [INFO]  * Detected change in '/home/Jobmanager/app/routes/job_routes.py', reloading
+2025-02-09 08:04:57,044 [INFO]  * Restarting with stat
+2025-02-09 08:04:57,250 [INFO] Starting Job Manager application
+2025-02-09 08:04:57,250 [INFO] Starting Job Manager application
+2025-02-09 08:04:57,257 [WARNING]  * Debugger is active!
+2025-02-09 08:04:57,258 [INFO]  * Debugger PIN: 513-118-621
+2025-02-09 08:04:59,299 [INFO] 192.168.2.56 - - [09/Feb/2025 08:04:59] "GET /job/add/8 HTTP/1.1" 200 -
+2025-02-09 08:05:22,774 [INFO] 192.168.2.56 - - [09/Feb/2025 08:05:22] "[32mPOST /job/add/8 HTTP/1.1[0m" 302 -
+2025-02-09 08:05:22,802 [INFO] 192.168.2.56 - - [09/Feb/2025 08:05:22] "GET /job/ HTTP/1.1" 200 -
+2025-02-09 08:05:33,703 [INFO] 192.168.2.56 - - [09/Feb/2025 08:05:33] "GET /job/details/21 HTTP/1.1" 200 -
+2025-02-09 08:05:41,865 [INFO] 192.168.2.56 - - [09/Feb/2025 08:05:41] "[32mPOST /job/21/delete HTTP/1.1[0m" 302 -
+2025-02-09 08:05:41,882 [INFO] 192.168.2.56 - - [09/Feb/2025 08:05:41] "GET /job/ HTTP/1.1" 200 -
+2025-02-09 08:05:45,154 [INFO] 192.168.2.56 - - [09/Feb/2025 08:05:45] "[32mPOST /job/20/delete HTTP/1.1[0m" 302 -
+2025-02-09 08:05:45,174 [INFO] 192.168.2.56 - - [09/Feb/2025 08:05:45] "GET /job/ HTTP/1.1" 200 -
+2025-02-09 08:05:48,488 [INFO] 192.168.2.56 - - [09/Feb/2025 08:05:48] "[32mPOST /job/19/delete HTTP/1.1[0m" 302 -
+2025-02-09 08:05:48,503 [INFO] 192.168.2.56 - - [09/Feb/2025 08:05:48] "GET /job/ HTTP/1.1" 200 -
+2025-02-09 08:05:57,281 [INFO] 192.168.2.56 - - [09/Feb/2025 08:05:57] "GET /job/details/18 HTTP/1.1" 200 -
+2025-02-09 08:06:07,133 [INFO] 192.168.2.56 - - [09/Feb/2025 08:06:07] "GET /job/ HTTP/1.1" 200 -
+2025-02-09 08:06:13,292 [INFO] 192.168.2.56 - - [09/Feb/2025 08:06:13] "GET / HTTP/1.1" 200 -
+2025-02-09 08:06:14,951 [INFO] 192.168.2.56 - - [09/Feb/2025 08:06:14] "GET /job/ HTTP/1.1" 200 -
+2025-02-09 08:06:20,236 [INFO] 192.168.2.56 - - [09/Feb/2025 08:06:20] "GET /job/18/edit HTTP/1.1" 200 -
+2025-02-09 08:06:42,385 [INFO] 192.168.2.56 - - [09/Feb/2025 08:06:42] "GET /job/ HTTP/1.1" 200 -
+2025-02-09 08:06:49,085 [INFO] 192.168.2.56 - - [09/Feb/2025 08:06:49] "GET /job/ HTTP/1.1" 200 -
+2025-02-09 08:06:56,562 [INFO] 192.168.2.56 - - [09/Feb/2025 08:06:56] "GET / HTTP/1.1" 200 -
+2025-02-09 08:06:59,346 [INFO] 192.168.2.56 - - [09/Feb/2025 08:06:59] "GET /job/add/3 HTTP/1.1" 200 -
+2025-02-09 08:08:12,399 [INFO] 192.168.2.56 - - [09/Feb/2025 08:08:12] "GET /job/add/3 HTTP/1.1" 200 -
+2025-02-09 08:08:21,495 [INFO] 192.168.2.56 - - [09/Feb/2025 08:08:21] "GET /job/add/3 HTTP/1.1" 200 -
+2025-02-09 08:08:25,763 [INFO] 192.168.2.56 - - [09/Feb/2025 08:08:25] "GET /job/add/3 HTTP/1.1" 200 -
+2025-02-09 08:09:38,704 [INFO] 192.168.2.56 - - [09/Feb/2025 08:09:38] "[32mPOST /job/add/3 HTTP/1.1[0m" 302 -
+2025-02-09 08:09:38,719 [INFO] 192.168.2.56 - - [09/Feb/2025 08:09:38] "GET /job/ HTTP/1.1" 200 -
+2025-02-09 08:09:42,996 [INFO] 192.168.2.56 - - [09/Feb/2025 08:09:42] "GET /job/22/edit HTTP/1.1" 200 -
+2025-02-09 08:10:45,901 [INFO] 192.168.2.56 - - [09/Feb/2025 08:10:45] "[32mPOST /job/add/3 HTTP/1.1[0m" 302 -
+2025-02-09 08:10:45,915 [INFO] 192.168.2.56 - - [09/Feb/2025 08:10:45] "GET /job/ HTTP/1.1" 200 -
+2025-02-09 08:10:50,902 [INFO] 192.168.2.56 - - [09/Feb/2025 08:10:50] "GET /job/23/edit HTTP/1.1" 200 -
+2025-02-09 08:10:56,665 [INFO] 192.168.2.56 - - [09/Feb/2025 08:10:56] "GET /job/22/edit HTTP/1.1" 200 -
+2025-02-09 08:11:06,117 [INFO] 192.168.2.56 - - [09/Feb/2025 08:11:06] "GET /job/details/22 HTTP/1.1" 200 -
+2025-02-09 08:11:18,375 [INFO] 192.168.2.56 - - [09/Feb/2025 08:11:18] "GET /job/23/edit HTTP/1.1" 200 -
+2025-02-09 08:11:25,286 [INFO] 192.168.2.56 - - [09/Feb/2025 08:11:25] "GET /job/details/22 HTTP/1.1" 200 -
+2025-02-09 08:11:37,288 [INFO] 192.168.2.56 - - [09/Feb/2025 08:11:37] "GET /job/4/edit HTTP/1.1" 200 -
+2025-02-09 08:11:43,862 [INFO] 192.168.2.56 - - [09/Feb/2025 08:11:43] "GET /job/details/11 HTTP/1.1" 200 -
+2025-02-09 08:11:52,133 [INFO] 192.168.2.56 - - [09/Feb/2025 08:11:52] "GET /job/12/edit HTTP/1.1" 200 -
+2025-02-09 08:12:10,500 [INFO] 192.168.2.56 - - [09/Feb/2025 08:12:10] "GET /job/details/4 HTTP/1.1" 200 -
+2025-02-09 08:12:19,508 [INFO] 192.168.2.56 - - [09/Feb/2025 08:12:19] "GET /job/23/edit HTTP/1.1" 200 -
+2025-02-09 08:13:50,658 [INFO] 192.168.2.56 - - [09/Feb/2025 08:13:50] "GET /job/details/23 HTTP/1.1" 200 -
+2025-02-09 08:14:06,215 [INFO] 192.168.2.56 - - [09/Feb/2025 08:14:06] "GET /job/details/22 HTTP/1.1" 200 -
+2025-02-09 08:14:11,565 [INFO] 192.168.2.56 - - [09/Feb/2025 08:14:11] "GET /job/22/edit HTTP/1.1" 200 -
+2025-02-09 08:16:34,198 [INFO] 192.168.2.56 - - [09/Feb/2025 08:16:34] "GET / HTTP/1.1" 200 -
+2025-02-09 08:16:38,046 [INFO] 192.168.2.56 - - [09/Feb/2025 08:16:38] "GET /job/add/3 HTTP/1.1" 200 -
+2025-02-09 08:16:41,277 [INFO] 192.168.2.56 - - [09/Feb/2025 08:16:41] "GET /job/template/23 HTTP/1.1" 200 -
+2025-02-09 08:16:56,726 [INFO] 192.168.2.56 - - [09/Feb/2025 08:16:56] "GET / HTTP/1.1" 200 -
+2025-02-09 08:16:59,064 [INFO] 192.168.2.56 - - [09/Feb/2025 08:16:59] "GET /job/add/5 HTTP/1.1" 200 -
+2025-02-09 08:17:01,123 [INFO] 192.168.2.56 - - [09/Feb/2025 08:17:01] "GET /job/template/23 HTTP/1.1" 200 -
+2025-02-09 08:17:04,256 [INFO] 192.168.2.56 - - [09/Feb/2025 08:17:04] "[32mPOST /job/add/5 HTTP/1.1[0m" 302 -
+2025-02-09 08:17:04,272 [INFO] 192.168.2.56 - - [09/Feb/2025 08:17:04] "GET /job/ HTTP/1.1" 200 -
+2025-02-09 08:17:11,226 [INFO] 192.168.2.56 - - [09/Feb/2025 08:17:11] "GET /job/details/24 HTTP/1.1" 200 -
+2025-02-09 08:17:16,456 [INFO] 192.168.2.56 - - [09/Feb/2025 08:17:16] "GET /job/24/invoice HTTP/1.1" 200 -
+2025-02-09 08:17:41,770 [INFO] 192.168.2.56 - - [09/Feb/2025 08:17:41] "GET /job/23/edit HTTP/1.1" 200 -
+2025-02-09 08:17:48,495 [INFO] 192.168.2.56 - - [09/Feb/2025 08:17:48] "[32mPOST /job/23/edit HTTP/1.1[0m" 302 -
+2025-02-09 08:17:48,513 [INFO] 192.168.2.56 - - [09/Feb/2025 08:17:48] "GET /job/ HTTP/1.1" 200 -
+2025-02-09 08:17:54,268 [INFO] 192.168.2.56 - - [09/Feb/2025 08:17:54] "GET /job/22/edit HTTP/1.1" 200 -
+2025-02-09 08:17:59,630 [INFO] 192.168.2.56 - - [09/Feb/2025 08:17:59] "[32mPOST /job/22/edit HTTP/1.1[0m" 302 -
+2025-02-09 08:17:59,647 [INFO] 192.168.2.56 - - [09/Feb/2025 08:17:59] "GET /job/ HTTP/1.1" 200 -
+2025-02-09 08:18:05,556 [INFO] 192.168.2.56 - - [09/Feb/2025 08:18:05] "GET /job/details/17 HTTP/1.1" 200 -
+2025-02-09 08:19:01,008 [INFO] 192.168.2.56 - - [09/Feb/2025 08:19:01] "[32mPOST /job/details/17 HTTP/1.1[0m" 302 -
+2025-02-09 08:19:01,191 [INFO] 192.168.2.56 - - [09/Feb/2025 08:19:01] "GET /job/details/17 HTTP/1.1" 200 -
+2025-02-09 08:19:10,115 [INFO] 192.168.2.56 - - [09/Feb/2025 08:19:10] "GET /job/15/edit HTTP/1.1" 200 -
+2025-02-09 08:22:09,448 [INFO] 192.168.2.56 - - [09/Feb/2025 08:22:09] "[32mPOST /job/15/edit HTTP/1.1[0m" 302 -
+2025-02-09 08:22:09,465 [INFO] 192.168.2.56 - - [09/Feb/2025 08:22:09] "GET /job/ HTTP/1.1" 200 -
+2025-02-09 08:22:12,481 [INFO] 192.168.2.56 - - [09/Feb/2025 08:22:12] "GET /job/details/16 HTTP/1.1" 200 -
+2025-02-09 08:22:23,558 [INFO] 192.168.2.56 - - [09/Feb/2025 08:22:23] "GET /job/details/16 HTTP/1.1" 200 -
+2025-02-09 08:22:26,385 [INFO] 192.168.2.56 - - [09/Feb/2025 08:22:26] "GET /job/16/invoice HTTP/1.1" 200 -
+2025-02-09 08:22:35,738 [INFO] 192.168.2.56 - - [09/Feb/2025 08:22:35] "GET /job/details/15 HTTP/1.1" 200 -
+2025-02-09 08:22:40,487 [INFO] 192.168.2.56 - - [09/Feb/2025 08:22:40] "GET /job/15/invoice HTTP/1.1" 200 -
+2025-02-09 08:23:03,391 [INFO] 192.168.2.56 - - [09/Feb/2025 08:23:03] "GET /job/ HTTP/1.1" 200 -
+2025-02-09 08:23:29,420 [INFO] 192.168.2.56 - - [09/Feb/2025 08:23:29] "GET /job/4/edit HTTP/1.1" 200 -
+2025-02-09 08:23:32,050 [INFO] 192.168.2.56 - - [09/Feb/2025 08:23:32] "GET /job/details/4 HTTP/1.1" 200 -
+2025-02-09 08:25:57,065 [INFO] 192.168.2.56 - - [09/Feb/2025 08:25:57] "GET /job/ HTTP/1.1" 200 -
+2025-02-09 08:31:42,319 [INFO]  * Detected change in '/home/Jobmanager/app/routes/job_routes.py', reloading
+2025-02-09 08:31:42,364 [INFO]  * Restarting with stat
+2025-02-09 08:31:42,574 [INFO] Starting Job Manager application
+2025-02-09 08:31:42,574 [INFO] Starting Job Manager application
+2025-02-09 08:31:42,582 [WARNING]  * Debugger is active!
+2025-02-09 08:31:42,583 [INFO]  * Debugger PIN: 513-118-621
+2025-02-09 08:55:30,476 [INFO] 192.168.2.56 - - [09/Feb/2025 08:55:30] "GET /job/ HTTP/1.1" 200 -
+2025-02-09 08:55:42,862 [INFO] 192.168.2.56 - - [09/Feb/2025 08:55:42] "GET /job/backup/db HTTP/1.1" 200 -
+2025-02-09 08:55:46,451 [INFO] 192.168.2.56 - - [09/Feb/2025 08:55:46] "GET /job/backup/full HTTP/1.1" 200 -
+2025-02-09 08:56:48,143 [INFO] Stopping timer for job 4
+2025-02-09 08:56:48,143 [INFO] Stopping timer for job 4
+2025-02-09 08:56:48,260 [INFO] 192.168.2.56 - - [09/Feb/2025 08:56:48] "POST /timer/job/4/stop_timer HTTP/1.1" 200 -
+2025-02-09 08:56:50,669 [INFO] 192.168.2.56 - - [09/Feb/2025 08:56:50] "GET /job/ HTTP/1.1" 200 -
+2025-02-09 08:56:50,733 [INFO] Stopping timer for job 4
+2025-02-09 08:56:50,733 [INFO] Stopping timer for job 4
+2025-02-09 08:56:50,734 [INFO] 192.168.2.56 - - [09/Feb/2025 08:56:50] "POST /timer/job/4/stop_timer HTTP/1.1" 200 -
+2025-02-09 09:13:54,972 [INFO] 192.168.2.62 - - [09/Feb/2025 09:13:54] "GET /job/15/invoice HTTP/1.1" 200 -
+2025-02-09 09:14:00,746 [INFO] 192.168.2.62 - - [09/Feb/2025 09:14:00] "GET /job/ HTTP/1.1" 200 -

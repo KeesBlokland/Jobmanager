@@ -10,4 +10,4 @@ if [ $HOUR -eq 24 ]; then
     HOUR=00
 fi
 DATE=$(date +"%m%d-")${HOUR}$(date +%M)
-gitingest ./Jobmanager -e /static -e /backups -e /db -e /*.txt  -e/*.md -e /export -e *.db -e /utils -o /home/Jobmanager/jobmgr-${DATE}.txt
+gitingest ./Jobmanager -e /static -e /backups -e /logs -e /db -e /*.txt  -e/*.md -e /export -e *.db -e /utils -o /home/Jobmanager/jobmgr-${DATE}.txt

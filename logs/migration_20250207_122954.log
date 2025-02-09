@@ -1,0 +1,7 @@
+2025-02-07 12:29:54,932 [INFO] Starting migration
+2025-02-07 12:29:54,933 [INFO] Database backed up to instance/jobmanager.db.backup_20250207_122954
+2025-02-07 12:29:54,933 [INFO] Database backup created successfully
+2025-02-07 12:29:55,078 [INFO] Executed: ALTER TABLE job ADD COLUMN error_count INTEGER DEFAULT 0
+2025-02-07 12:29:55,163 [INFO] Executed: CREATE INDEX IF NOT EXISTS idx_job_status ON job(status)
+2025-02-07 12:29:55,253 [INFO] Executed: CREATE INDEX IF NOT EXISTS idx_time_entry_job_id ON time_entry(job_id)
+2025-02-07 12:29:55,253 [INFO] Migration completed successfully

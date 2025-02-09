@@ -2,6 +2,12 @@
 {% extends "base.html" %}
 
 {% block content %}
+{% set month_names = {
+    '01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr',
+    '05': 'May', '06': 'Jun', '07': 'Jul', '08': 'Aug',
+    '09': 'Sep', '10': 'Oct', '11': 'Nov', '12': 'Dec'
+} %}
+{% set month_name = month_names.__getitem__ %}
 <style>
     .detail-section {
         margin-bottom: 20px;
@@ -68,22 +74,15 @@
 
 <div class="summary-box">
     <h2>{{ job.customer_name }} - {{ job.description }}</h2>
-    <p>Status: <span style="
-        padding: 3px 8px;
-        border-radius: 4px;
-        {% if job.status == 'Active' %}
-            background-color: #4CAF50;
-        {% elif job.status == 'Pending' %}
-            background-color: #FFC107;
-        {% else %}
-            background-color: #9E9E9E;
-        {% endif %}
-        color: white;">{{ job.status }}</span>
-    </p>
-    <p>Base Rate: €{{ "%.2f"|format(job.base_rate) if job.base_rate else '0.00' }}/hour</p>
+
+    
+    <a href="{{ url_for('job.invoice', id=job.id) }}" 
+    style="display: inline-block; padding: 5px 10px; border-radius: 4px; background: #ffc107; color: black; text-decoration: none; margin-right: 5px;">
+     Show Invoice</a>
+
 </div>
 
-<!-- Update the time entries section in job_details.html -->
+
 <div class="detail-section">
     <h3>Time Entries</h3>
     <div>
@@ -91,7 +90,7 @@
         <div class="item-row" id="time-entry-{{ entry.id }}" style="display: flex; align-items: center;">
             <div style="display: flex; gap: 5px; margin-right: 15px;">
                 <button onclick="showTimeEdit({{ entry.id }})" class="edit-btn">Edit</button>
-                <form action="{{ url_for('main.delete_time_entry', job_id=job.id, entry_id=entry.id) }}" method="post" style="display: inline;">
+                <form action="{{ url_for('job.delete_time_entry', id=job.id, entry_id=entry.id) }}" method="post" style="display: inline;">
                     <button type="submit" class="delete-btn" onclick="return confirm('Delete this time entry?')">Delete</button>
                 </form>
             </div>
@@ -102,8 +101,8 @@
                     ({{ "%d:%02d"|format(entry.hours|int, ((entry.hours % 1) * 60)|round|int) }})
                 </span>
             </div>
-            <div class="edit-view" style="display: none; width: 100%;">
-                <form action="{{ url_for('main.edit_time_entry', job_id=job.id, entry_id=entry.id) }}" method="post" style="display: flex; gap: 10px; align-items: center;">
+            <div class="edit-view" style="display: none; width: 50%;">
+                <form action="{{ url_for('job.edit_time_entry', job_id=job.id, entry_id=entry.id) }}" method="post" style="display: flex; gap: 10px; align-items: center;">
                     <input type="datetime-local" name="start_time" value="{{ entry.start_time[:16] }}" required>
                     <input type="datetime-local" name="end_time" value="{{ entry.end_time[:16] if entry.end_time else '' }}" required>
                     <button type="submit" class="save-btn">Save</button>
@@ -121,33 +120,29 @@
     </div>
 </div>
 
-<!-- Update the materials section in job_details.html -->
 <div class="detail-section">
     <h3>Materials Used</h3>
     <div class="new-material-form" style="margin-bottom: 15px; padding: 10px; background: #fff; border: 1px solid #ddd; border-radius: 4px;">
-        <form action="{{ url_for('main.add_material', job_id=job.id) }}" method="post" style="display: flex; gap: 5px; align-items: center;">
-            <div style="display: flex; gap: 5px; margin-right: 15px;">
-                <button type="submit" class="save-btn">Add Material</button>
-            </div>
-            <input type="text" name="material" placeholder="Material description" required style="flex-grow: 1; padding: 5px;">
+        <form action="{{ url_for('job.add_material', id=job.id) }}" method="post" style="display: flex; gap: 5px; align-items: center;">
+            <button type="submit" class="save-btn">Add Material</button>
+            <input type="text" name="material" placeholder="Material description" required style="width: 30%; padding: 5px;">
             <input type="number" name="quantity" placeholder="Qty" step="0.1" required style="width: 80px; padding: 5px;">
             <input type="number" name="price" placeholder="€/item" step="0.01" required style="width: 80px; padding: 5px;">
         </form>
     </div>
-    <div>
         {% for material in materials %}
         <div class="item-row" id="material-{{ material.id }}" style="display: flex; align-items: center;">
             <div style="display: flex; gap: 5px; margin-right: 15px;">
                 <button onclick="showMaterialEdit({{ material.id }})" class="edit-btn">Edit</button>
-                <form action="{{ url_for('main.delete_material', job_id=job.id, material_id=material.id) }}" method="post" style="display: inline;">
+                <form action="{{ url_for('job.delete_material', id=job.id, material_id=material.id) }}" method="post" style="display: inline;">
                     <button type="submit" class="delete-btn" onclick="return confirm('Delete this material?')">Delete</button>
                 </form>
             </div>
             <div class="display-view" style="flex-grow: 1;">
                 <span>{{ material.material }} ({{ material.quantity }}) - €{{ "%.2f"|format(material.price) }}/item</span>
             </div>
-            <div class="edit-view" style="display: none; width: 100%;">
-                <form action="{{ url_for('main.edit_material', job_id=job.id, material_id=material.id) }}" method="post" style="display: flex; gap: 5px; align-items: center;">
+            <div class="edit-view" style="display: none; width: 50%;">
+                <form action="{{ url_for('job.edit_material', id=job.id, material_id=material.id) }}" method="post" style="display: flex; gap: 5px; align-items: center;">
                     <input type="text" name="material" value="{{ material.material }}" required style="flex-grow: 1;">
                     <input type="number" name="quantity" value="{{ material.quantity }}" step="0.1" required style="width: 80px;">
                     <input type="number" name="price" value="{{ material.price }}" step="0.01" required style="width: 80px;">
@@ -162,11 +157,9 @@
 
 <div class="detail-section">
     <h3>Notes</h3>
-    <form action="{{ url_for('main.job_details', id=job.id) }}" method="post">
-        <textarea name="notes" style="width: 100%; min-height: 200px; padding: 10px; margin-bottom: 10px; font-family: monospace;">{{ combined_notes }}</textarea>
-        <button type="submit" style="padding: 5px 10px; border-radius: 4px; background: #4CAF50; color: white; border: none; cursor: pointer;">
-            Save Notes
-        </button>
+    <form action="{{ url_for('job.job_details', id=job.id) }}" method="post">
+        <textarea name="notes" style="width: 50%; min-height: 200px; padding: 10px; margin-bottom: 10px; font-family: monospace;">{{ combined_notes }}</textarea>
+        <button type="submit" class="save-btn">Save Notes</button>
     </form>
 </div>
 
@@ -195,5 +188,4 @@
         row.querySelector('.edit-view').style.display = 'none';
     }
 </script>
-
 {% endblock %}

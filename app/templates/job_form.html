@@ -2,39 +2,214 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style>
+    .form-section {
+        margin-bottom: 20px;
+        padding: 15px;
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+    .form-group {
+        margin-bottom: 15px;
+    }
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+    }
+    .form-control {
+        width: 100%;
+        padding: 8px;
+    }
+    .material-row {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 10px;
+        align-items: center;
+    }
+    .material-row input {
+        padding: 5px;
+    }
+    .material-row button {
+        padding: 5px 10px;
+        background: #f44336;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-right: 10px;
+    }
+    .btn-primary { background: #4CAF50; color: white; }
+    .btn-secondary { background: #f5f5f5; color: black; text-decoration: none; }
+    #materials-container { margin-top: 10px; }
+</style>
+
 <div>
     <h2>{% if job %}Edit Job{% else %}Add Job for {{ customer.name }}{% endif %}</h2>
-    <form method="post" style="max-width: 600px;">
-        <div style="margin-bottom: 15px;">
-            <label style="display: block; margin-bottom: 5px;">Description *</label>
-            <textarea name="description" required style="width: 100%; padding: 8px; height: 100px;">{{ job.description if job else '' }}</textarea>
+
+    {% if templates %}
+    <div class="form-section">
+        <h3>Load from Template</h3>
+        <select id="template-select" onchange="loadTemplate(this.value)">
+            <option value="">Select a template...</option>
+            {% for template in templates %}
+            <option value="{{ template.id }}">{{ template.template_name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    {% endif %}
+
+    <form method="post" style="max-width: 800px;" onsubmit="return validateForm()">
+        <div class="form-section">
+            <div class="form-group">
+                <label>Description *</label>
+                <textarea name="description" required class="form-control" style="height: 100px;">{{ job.description if job else '' }}</textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>Status *</label>
+                <select name="status" required class="form-control">
+                    <option value="Active" {% if job and job.status == 'Active' %}selected{% endif %}>Active</option>
+                    <option value="Pending" {% if job and job.status == 'Pending' %}selected{% endif %}>Pending</option>
+                    <option value="Completed" {% if job and job.status == 'Completed' %}selected{% endif %}>Completed</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Base Rate (€/hour)</label>
+                <input type="number" name="base_rate" step="0.01" class="form-control"
+                       value="{{ "%.2f"|format(job.base_rate) if job and job.base_rate else '' }}">
+            </div>
+
+            <div class="form-group">
+                <label>Estimated Hours</label>
+                <input type="number" name="estimated_hours" step="0.5" class="form-control"
+                       value="{{ "%.1f"|format(job.estimated_hours) if job and job.estimated_hours else '' }}">
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>Materials</h3>
+            <div id="materials-container">
+                {% if materials %}
+                {% for material in materials %}
+                <div class="material-row">
+                    <input type="text" name="materials[]" value="{{ material.material }}" placeholder="Material description">
+                    <input type="number" name="quantities[]" value="{{ material.quantity }}" placeholder="Qty" step="0.1" style="width: 80px;">
+                    <input type="number" name="prices[]" value="{{ material.price }}" placeholder="€/item" step="0.01" style="width: 80px;">
+                    <button type="button" onclick="removeMaterial(this)">Remove</button>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+            <button type="button" onclick="addMaterial()" class="btn btn-primary">Add Material</button>
+        </div>
+
+        <div class="form-section">
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" name="save_as_template" value="1" {% if job and job.is_template %}checked{% endif %}>
+                    Save as Template
+                </label>
+            </div>
+            <div class="form-group" id="template-name-group" style="display: none;">
+                <label>Template Name</label>
+                <input type="text" name="template_name" class="form-control" value="{{ job.template_name if job and job.template_name else '' }}">
+            </div>
         </div>
         
-        <div style="margin-bottom: 15px;">
-            <label style="display: block; margin-bottom: 5px;">Status *</label>
-            <select name="status" required style="width: 100%; padding: 8px;">
-                <option value="Active" {% if job and job.status == 'Active' %}selected{% endif %}>Active</option>
-                <option value="Pending" {% if job and job.status == 'Pending' %}selected{% endif %}>Pending</option>
-                <option value="Completed" {% if job and job.status == 'Completed' %}selected{% endif %}>Completed</option>
-            </select>
-        </div>
-        
-        <div style="margin-bottom: 15px;">
-            <label style="display: block; margin-bottom: 5px;">Base Rate (€/hour)</label>
-            <input type="number" step="0.5" name="base_rate" style="width: 100%; padding: 8px;"
-                   value="{{ "%.2f"|format(job.base_rate) if job and job.base_rate else '' }}">
-        </div>
-        
-        <div style="margin-bottom: 15px;">
-            <label style="display: block; margin-bottom: 5px;">Estimated Hours</label>
-            <input type="number" step="0.5" name="estimated_hours" style="width: 100%; padding: 8px;"
-                   value="{{ "%.1f"|format(job.estimated_hours) if job and job.estimated_hours else '' }}">
-        </div>
-        
-        <button type="submit" style="background: #4CAF50; color: white; padding: 10px 20px; border: none; cursor: pointer;">
+        <button type="submit" class="btn btn-primary">
             {% if job %}Save Changes{% else %}Create Job{% endif %}
         </button>
-        <a href="{{ url_for('main.job_list') }}" style="display: inline-block; padding: 10px 20px; background: #f5f5f5; text-decoration: none; color: black; margin-left: 10px;">Cancel</a>
+        <a href="{{ url_for('job.job_list') }}" class="btn btn-secondary">Cancel</a>
     </form>
 </div>
+
+<script>
+function addMaterial() {
+    const container = document.getElementById('materials-container');
+    const row = document.createElement('div');
+    row.className = 'material-row';
+    row.innerHTML = `
+        <input type="text" name="materials[]" placeholder="Material description">
+        <input type="number" name="quantities[]" placeholder="Qty" step="0.1" style="width: 80px;">
+        <input type="number" name="prices[]" placeholder="€/item" step="0.01" style="width: 80px;">
+        <button type="button" onclick="removeMaterial(this)">Remove</button>
+    `;
+    container.appendChild(row);
+}
+
+function removeMaterial(button) {
+    button.parentElement.remove();
+}
+
+document.querySelector('input[name="save_as_template"]').addEventListener('change', function() {
+    document.getElementById('template-name-group').style.display = this.checked ? 'block' : 'none';
+});
+
+function validateForm() {
+    const materials = document.getElementsByName('materials[]');
+    const quantities = document.getElementsByName('quantities[]');
+    const prices = document.getElementsByName('prices[]');
+    
+    // Remove any completely empty material rows
+    for (let i = materials.length - 1; i >= 0; i--) {
+        if (!materials[i].value.trim() && 
+            (!quantities[i].value || quantities[i].value === '0') && 
+            (!prices[i].value || prices[i].value === '0')) {
+            materials[i].parentElement.remove();
+        }
+    }
+    
+    // Check if saving as template requires a name
+    if (document.querySelector('input[name="save_as_template"]').checked) {
+        const templateName = document.querySelector('input[name="template_name"]').value;
+        if (!templateName.trim()) {
+            alert('Please provide a template name');
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+function loadTemplate(templateId) {
+    if (!templateId) return;
+    fetch(`/job/template/${templateId}`)
+        .then(response => response.json())
+        .then(data => {
+            document.querySelector('textarea[name="description"]').value = data.description;
+            document.querySelector('input[name="base_rate"]').value = data.base_rate;
+            document.querySelector('input[name="estimated_hours"]').value = data.estimated_hours;
+            
+            // Clear existing materials
+            const container = document.getElementById('materials-container');
+            container.innerHTML = '';
+            
+            // Add template materials
+            data.materials.forEach(material => {
+                const row = document.createElement('div');
+                row.className = 'material-row';
+                row.innerHTML = `
+                    <input type="text" name="materials[]" value="${material.material}">
+                    <input type="number" name="quantities[]" value="${material.quantity}" step="0.1" style="width: 80px;">
+                    <input type="number" name="prices[]" value="${material.price}" step="0.01" style="width: 80px;">
+                    <button type="button" onclick="removeMaterial(this)">Remove</button>
+                `;
+                container.appendChild(row);
+            });
+        });
+}
+
+// Show template name field if template checkbox is checked
+if (document.querySelector('input[name="save_as_template"]').checked) {
+    document.getElementById('template-name-group').style.display = 'block';
+}
+</script>
 {% endblock %}
