@@ -5,66 +5,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jobs</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .header-nav {
-            display: flex;
-            align-items: center;
-            margin-bottom: 5px;
-            padding-bottom: 1px;
-            border-radius: 4px;
-        }
-        .header-nav h1 {
-            margin: 0;
-            margin-right: 20px;
-        }
-        .nav-menu {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-            padding-bottom: 5px;
-            border-radius: 4px;
-        }
-        .nav-menu a {
-            display: inline-block;
-            padding: 8px 16px;
-            margin-right: 10px;
-            background: #6fbcfc;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-        }
-        .nav-menu a.active {
-            background: #1976D2;
-        }
-        .nav-menu a:hover {
-            background: #1976D2;
-        }
-        @media print {
-            .header-nav {
-                display: none;
-            }
-            .nav-menu {
-                display: none;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
     <div class="header-nav">
         <div class="nav-menu">
             <h1>Job Manager</h1>
-            <a href="{{ url_for('customer.index') }}" {% if request.endpoint == 'customer.index' %}class="active"{% endif %}>Customers</a>
-            <a href="{{ url_for('job.job_list') }}" {% if request.endpoint == 'job.job_list' %}class="active"{% endif %}>Jobs</a>
-            <a href="{{ url_for('customer.add_customer') }}" {% if request.endpoint == 'customer.add_customer' %}class="active"{% endif %}>Add Customer</a>
+            <div class="nav-links">
+                <a href="{{ url_for('customer.index') }}" {% if request.endpoint == 'customer.index' %}class="active"{% endif %}>Customers</a>
+                <a href="{{ url_for('job.job_list') }}" {% if request.endpoint == 'job.job_list' %}class="active"{% endif %}>Jobs</a>
+                <a href="{{ url_for('customer.add_customer') }}" {% if request.endpoint == 'customer.add_customer' %}class="active"{% endif %}>Add Customer</a>
+            </div>
+        </div>
+        <div class="backup-buttons">
+            <button onclick="createBackup('db')" class="action-btn">Backup Database</button>
+            <button onclick="createBackup('full')" class="action-btn">Backup Full System</button>
         </div>
     </div>
     {% block content %}{% endblock %}
+
+    <script>
+    async function createBackup(type) {
+        try {
+            const response = await fetch(`/job/backup/${type}`);
+            const data = await response.json();
+            
+            if (data.success) {
+                alert(data.message);
+            } else {
+                alert('Backup failed: ' + data.message);
+            }
+        } catch (error) {
+            alert('Backup failed: ' + error.message);
+        }
+    }
+    </script>
 </body>
 </html>

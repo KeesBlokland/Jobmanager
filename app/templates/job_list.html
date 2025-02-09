@@ -2,78 +2,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<style>
-.job-row { transition: background-color 0.3s; }
-.job-row:hover { background-color: #f5f5f5; }
-.timer-active { background-color: #e8f5e9; }
-.status-Active { color: #2e7d32; }
-.status-Pending { color: #f57c00; }
-.status-Completed { color: #757575; }
-.action-btn {
-    display: inline-block;
-    padding: 5px 10px;
-    border-radius: 4px;
-    color: white;
-    text-decoration: none;
-    margin-right: 5px;
-    border: none;
-    cursor: pointer;
-}
-.edit-btn { background: #2196F3; }
-.timer-btn { background: #4CAF50; }
-.delete-btn { background: #f44336; }
 
-.search-section {
-    margin-bottom: 20px;
-    padding: 15px;
-    background: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-.search-section input {
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    flex-grow: 1;
-}
-
-.search-section select {
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-.search-section button {
-    padding: 8px 16px;
-    background: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.search-section button:hover {
-    background: #45a049;
-}
-
-@keyframes pulse {
-    0% { background-color: #f3db6e; }
-    50% { background-color: #f7b35b; }
-    100% { background-color: #5ddb61; }
-}
-
-.timer-active .timer-btn {
-    animation: pulse 2s infinite;
-}
-
-.hidden {
-    display: none;
-}
-</style>
 
 <div class="search-section">
     <input type="text" id="searchInput" placeholder="Search in customer or description..." style="min-width: 250px;">
@@ -84,14 +13,6 @@
         <option value="Completed">Completed</option>
     </select>
     <button onclick="clearSearch()">Clear</button>
-</div>
-<div class="search-section" style="justify-content: flex-end;">
-    <button onclick="createBackup('db')" class="action-btn" style="background: #607d8b;">
-        Backup Database
-    </button>
-    <button onclick="createBackup('full')" class="action-btn" style="background: #607d8b;">
-        Backup Full System
-    </button>
 </div>
 
 <div class="job-list">
@@ -121,25 +42,27 @@
                     {% endif %}
                 </td>
                 <td style="padding: 10px; border: 1px solid #ddd;">
-                    <a href="{{ url_for('job.job_details', id=job.id) }}" 
-                       class="action-btn edit-btn">Details</a>
-                    <a href="{{ url_for('job.edit_job', id=job.id) }}" 
-                       class="action-btn edit-btn">Edit</a>
-                       
-                    {% if job.active_timer_id %}
-                        <button onclick="stopTimer({{ job.id }})"
-                                class="action-btn timer-btn">Stop Timer</button>
-                    {% else %}
-                        <button onclick="startTimer({{ job.id }})"
-                                class="action-btn timer-btn">Start Timer</button>
-                    {% endif %}
-
-                    <form action="{{ url_for('job.delete_job', id=job.id) }}" 
-                          method="post" style="display: inline;">
-                        <button type="submit" 
-                                onclick="return confirm('Delete this job?');"
-                                class="action-btn delete-btn">Delete</button>
-                    </form>
+                    <div class="btn-group">
+                        <a href="{{ url_for('job.job_details', id=job.id) }}" 
+                           class="action-btn edit-btn">Details</a>
+                        <a href="{{ url_for('job.edit_job', id=job.id) }}" 
+                           class="action-btn edit-btn">Edit</a>
+                           
+                        {% if job.active_timer_id %}
+                            <button onclick="stopTimer({{ job.id }})"
+                                    class="action-btn timer-btn active">Stop Timer</button>
+                        {% else %}
+                            <button onclick="startTimer({{ job.id }})"
+                                    class="action-btn timer-btn">Start Timer</button>
+                        {% endif %}
+                
+                        <form action="{{ url_for('job.delete_job', id=job.id) }}" 
+                              method="post" style="display: inline;">
+                            <button type="submit" 
+                                    onclick="return confirm('Delete this job?');"
+                                    class="action-btn delete-btn">Delete</button>
+                        </form>
+                    </div>
                 </td>
             </tr>
             {% endfor %}
@@ -196,23 +119,5 @@ function stopTimer(jobId) {
         headers: {'Content-Type': 'application/json'}
     }).then(() => window.location.reload());
 }
-
-
-    // Add this function to the existing script section
-async function createBackup(type) {
-    try {
-        const response = await fetch(`/job/backup/${type}`);
-        const data = await response.json();
-        
-        if (data.success) {
-            alert(data.message);
-        } else {
-            alert('Backup failed: ' + data.message);
-        }
-    } catch (error) {
-        alert('Backup failed: ' + error.message);
-    }
-}
-    
 </script>
 {% endblock %}
