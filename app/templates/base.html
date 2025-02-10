@@ -10,7 +10,15 @@
 <body>
     <div class="header-nav">
         <div class="nav-menu">
-            <h1>Job Manager</h1>
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <div style="text-align: center;">
+                    <img src="{{ url_for('job.generate_qr') }}" 
+                         alt="Quick Timer QR Code" 
+                         style="width: 80px; height: 80px; background: white; padding: 5px; border-radius: 4px;">
+                    
+                </div>
+                 <h1>Job Manager</h1>
+            </div>
             <div class="nav-links">
                 <a href="{{ url_for('customer.index') }}" {% if request.endpoint == 'customer.index' %}class="active"{% endif %}>Customers</a>
                 <a href="{{ url_for('job.job_list') }}" {% if request.endpoint == 'job.job_list' %}class="active"{% endif %}>Jobs</a>

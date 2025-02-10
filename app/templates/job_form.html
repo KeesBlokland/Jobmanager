@@ -2,55 +2,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<!--
-<style>
-    .form-section {
-        margin-bottom: 20px;
-        padding: 15px;
-        background: #f9f9f9;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-    }
-    .form-group {
-        margin-bottom: 15px;
-    }
-    .form-group label {
-        display: block;
-        margin-bottom: 5px;
-    }
-    .form-control {
-        width: 100%;
-        padding: 8px;
-    }
-    .material-row {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 10px;
-        align-items: center;
-    }
-    .material-row input {
-        padding: 5px;
-    }
-    .material-row button {
-        padding: 5px 10px;
-        background: #f44336;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-    .btn {
-        padding: 10px 20px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        margin-right: 10px;
-    }
-    .btn-primary { background: #4CAF50; color: white; }
-    .btn-secondary { background: #f5f5f5; color: black; text-decoration: none; }
-    #materials-container { margin-top: 10px; }
-</style>
--->
+
 <div>
     <h2>{% if job %}Edit Job{% else %}Add Job for {{ customer.name }}{% endif %}</h2>
 

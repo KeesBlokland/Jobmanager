@@ -1,6 +1,6 @@
 # app/routes/customer_routes.py
 from flask import Blueprint, render_template, request, redirect, url_for
-from ..utils.db_utils import with_db
+from ..db import with_db  # Changed from ..utils.db_utils
 
 bp = Blueprint('customer', __name__)
 
@@ -18,12 +18,12 @@ def add_customer(db):
     if request.method == 'POST':
         db.execute(
             'INSERT INTO customer (name, email, phone, street, city, postal_code, '
-            'country, vat_number, payment_terms, notes)'
-            ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            'country, payment_terms, notes)'
+            ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
             (request.form['name'], request.form['email'], request.form['phone'],
              request.form['street'], request.form['city'], request.form['postal_code'],
-             request.form['country'], request.form['vat_number'], 
-             request.form['payment_terms'], request.form['notes'])
+             request.form['country'], request.form['payment_terms'], 
+             request.form['notes'])
         )
         db.commit()
         return redirect(url_for('customer.index'))
@@ -35,12 +35,12 @@ def edit_customer(db, id):
     if request.method == 'POST':
         db.execute(
             'UPDATE customer SET name=?, email=?, phone=?, street=?, city=?, '
-            'postal_code=?, country=?, vat_number=?, payment_terms=?, notes=? '
+            'postal_code=?, country=?, payment_terms=?, notes=? '
             'WHERE id=?',
             (request.form['name'], request.form['email'], request.form['phone'],
              request.form['street'], request.form['city'], request.form['postal_code'],
-             request.form['country'], request.form['vat_number'],
-             request.form['payment_terms'], request.form['notes'], id)
+             request.form['country'], request.form['payment_terms'], 
+             request.form['notes'], id)
         )
         db.commit()
         return redirect(url_for('customer.index'))

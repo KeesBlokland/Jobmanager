@@ -8,7 +8,6 @@ CREATE TABLE IF NOT EXISTS customer (
     city TEXT,
     postal_code TEXT,
     country TEXT,
-    vat_number TEXT,
     payment_terms TEXT,
     notes TEXT
 );
@@ -66,8 +65,8 @@ CREATE TABLE IF NOT EXISTS job_material (
 -- ALTER TABLE job_material ADD COLUMN price REAL DEFAULT 0;
 
 -- Add is_template column to job table
-ALTER TABLE job ADD COLUMN is_template INTEGER DEFAULT 0;
-ALTER TABLE job ADD COLUMN template_name TEXT;
+-- ALTER TABLE job ADD COLUMN is_template INTEGER DEFAULT 0;
+-- ALTER TABLE job ADD COLUMN template_name TEXT;
 
 -- Create table for template materials
 CREATE TABLE IF NOT EXISTS template_material (
@@ -78,3 +77,15 @@ CREATE TABLE IF NOT EXISTS template_material (
     price REAL DEFAULT 0,
     FOREIGN KEY (job_id) REFERENCES job (id)
 );
+
+CREATE TABLE IF NOT EXISTS job_image (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    job_id INTEGER NOT NULL,
+    filename TEXT NOT NULL,
+    description TEXT,
+    timestamp TEXT NOT NULL,
+    location TEXT,  -- Optional GPS coordinates
+    tags TEXT,      -- Comma-separated tags
+    FOREIGN KEY (job_id) REFERENCES job (id)
+);
+

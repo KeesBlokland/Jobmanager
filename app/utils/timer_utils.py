@@ -1,5 +1,6 @@
 # app/utils/timer_utils.py
 from datetime import datetime
+from ..db import get_active_timer, calculate_job_total_hours
 from .error_utils import TimerError, handle_errors
 import logging
 
@@ -21,13 +22,18 @@ class TimerManager:
             'INSERT INTO time_entry (job_id, start_time, entry_type) VALUES (?, ?, ?)',
             (job_id, now, 'auto')
         )
-        self.db.commit()
         
-        # Update job's last_active timestamp
-        self.db.execute(
-            'UPDATE job SET last_active = ? WHERE id = ?',
-            (now, job_id)
-        )
+        # Update job's status to Active if it was Pending, and update last_active timestamp
+        self.db.execute('''
+            UPDATE job 
+            SET last_active = ?,
+                status = CASE 
+                    WHEN status = 'Pending' THEN 'Active'
+                    ELSE status
+                END
+            WHERE id = ?
+        ''', (now, job_id))
+        
         self.db.commit()
 
     @handle_errors
@@ -35,12 +41,8 @@ class TimerManager:
         self.logger.info(f"Stopping timer for job {job_id}")
         now = datetime.now().isoformat()
         
-        active_timer = self.db.execute(
-            'SELECT id FROM time_entry WHERE job_id = ? AND end_time IS NULL',
-            (job_id,)
-        ).fetchone()
-        
-        if active_timer:
+        active_timer = get_active_timer(self.db)
+        if active_timer and active_timer['job_id'] == job_id:
             self.db.execute(
                 'UPDATE time_entry SET end_time = ? WHERE id = ?',
                 (now, active_timer['id'])
@@ -60,14 +62,4 @@ class TimerManager:
 
     @handle_errors
     def calculate_total_hours(self, job_id):
-        result = self.db.execute('''
-            SELECT SUM((julianday(COALESCE(end_time, datetime('now'))) - 
-                       julianday(start_time)) * 24) as total_hours
-            FROM time_entry
-            WHERE job_id = ? AND 
-                  ROUND((julianday(COALESCE(end_time, datetime('now'))) - 
-                        julianday(start_time)) * 24, 2) > 0.03
-        ''', (job_id,)).fetchone()
-        
-        total_hours = result['total_hours'] if result['total_hours'] else 0
-        return round(total_hours * 12) / 12  # Round to nearest 5 minutes
+        return calculate_job_total_hours(self.db, job_id)

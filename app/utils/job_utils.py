@@ -1,5 +1,6 @@
 # app/utils/job_utils.py
 from datetime import datetime
+from ..db import get_job_with_hours, calculate_job_total_hours
 
 class JobManager:
     def __init__(self, db):
@@ -36,6 +37,9 @@ class JobManager:
                 job.creation_date DESC
         ''').fetchall()
 
+    def get_job(self, job_id):
+        return get_job_with_hours(self.db, job_id)
+
     def create_job(self, customer_id, data):
         self.db.execute(
             'INSERT INTO job (customer_id, description, status, creation_date, base_rate, estimated_hours)'
@@ -60,3 +64,6 @@ class JobManager:
     def delete_job(self, job_id):
         self.db.execute('DELETE FROM job WHERE id = ?', (job_id,))
         self.db.commit()
+
+    def get_total_hours(self, job_id):
+        return calculate_job_total_hours(self.db, job_id)

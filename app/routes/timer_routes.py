@@ -1,6 +1,6 @@
 # app/routes/timer_routes.py
 from flask import Blueprint, jsonify
-from ..utils.db_utils import with_db
+from ..db import with_db  # Changed from ..utils.db_utils
 from ..utils.timer_utils import TimerManager
 from datetime import datetime
 

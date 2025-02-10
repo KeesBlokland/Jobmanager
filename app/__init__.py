@@ -1,11 +1,8 @@
 # app/__init__.py
-from flask import Flask, render_template
+from flask import Flask
 import os
-from .utils.error_utils import setup_logging, DatabaseError, TimerError
-
-# Inside create_app():
-app = Flask(__name__)
-
+from .utils.error_utils import setup_logging
+from . import db
 
 def create_app():
     app = Flask(__name__)
@@ -20,7 +17,6 @@ def create_app():
     
     app.jinja_env.filters['month_name'] = month_name
     
-    
     # Setup logging
     app.logger = setup_logging()
     
@@ -33,28 +29,11 @@ def create_app():
     # Database configuration
     app.config['DATABASE'] = os.path.join(app.instance_path, 'jobmanager.db')
     
-    # Register error handlers
-    @app.errorhandler(DatabaseError)
-    def handle_database_error(error):
-        app.logger.error(f"Database error: {str(error)}")
-        return "Database error occurred", 500
-        
-    @app.errorhandler(TimerError)
-    def handle_timer_error(error):
-        app.logger.error(f"Timer error: {str(error)}")
-        return "Timer operation failed", 500
-        
-    @app.errorhandler(Exception)
-    def handle_unexpected_error(error):
-        app.logger.error(f"Unexpected error: {str(error)}")
-        return "An unexpected error occurred", 500
-
-    # Register routes and database handlers
+    # Register database commands
+    app.teardown_appcontext(db.close_db)
+    
+    # Register routes
     from . import routes
     routes.init_app(app)
-    
-    # Register database commands
-    from .utils.db_utils import close_db
-    app.teardown_appcontext(close_db)
     
     return app

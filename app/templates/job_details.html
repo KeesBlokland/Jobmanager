@@ -55,16 +55,7 @@
 <div class="detail-section">
     <h3>Materials Used</h3>
     <div class="new-material-form form-section">
-       <!--
-        <form action="{{ url_for('job.add_material', id=job.id) }}" method="post">
-            <div class="btn-group">
-                <button type="submit" class="action-btn save-btn">Add Material</button>
-                <input type="text" name="material" placeholder="Material description" required class="form-control" style="width: 30%;">
-                <input type="number" name="quantity" placeholder="Qty" step="0.1" required class="form-control" style="width: 80px;">
-                <input type="number" name="price" placeholder="€/item" step="0.01" required class="form-control" style="width: 80px;">
-            </div>
-        </form>
-    -->
+
         <form action="{{ url_for('job.add_material', id=job.id) }}" method="post">
             <div class="btn-group">
                 <button type="submit" class="action-btn save-btn">Add Material</button>
@@ -111,6 +102,35 @@
         </div>
     </form>
 </div>
+<div class="detail-section">
+    <h3>Photos</h3>
+    {% if images %}
+        <div class="image-grid">
+            {% for image in images %}
+            <div class="image-card">
+                <img src="{{ url_for('image.serve_image', job_id=job.id, filename=image.filename, thumbnail=true) }}" 
+                    alt="Job photo"
+                    onclick="showFullImage('{{ url_for('image.serve_image', job_id=job.id, filename=image.filename) }}')">
+                <div class="image-info">
+                    {{ image.timestamp[0:16] }}
+                    {% if image.description %}
+                        <br>{{ image.description }}
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No photos uploaded yet.</p>
+        <p>Use the mobile quick-timer interface to take photos for this job.</p>
+    {% endif %}
+</div>
+
+<div id="imageModal" class="modal" onclick="this.style.display='none'">
+    <img id="fullImage">
+</div>
+
+
 
 <script>
     function showTimeEdit(id) {
@@ -136,5 +156,12 @@
         row.querySelector('.display-view').style.display = 'block';
         row.querySelector('.edit-view').style.display = 'none';
     }
+
+    function showFullImage(src) {
+        const modal = document.getElementById('imageModal');
+        const img = document.getElementById('fullImage');
+        img.src = src;
+        modal.style.display = 'flex';
+}
 </script>
 {% endblock %}

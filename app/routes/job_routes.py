@@ -3,11 +3,11 @@ import shutil
 from datetime import datetime
 import os
 import zipfile
-from flask import Blueprint, render_template, request, redirect, url_for, jsonify
-from ..utils.db_utils import with_db
+from flask import Blueprint, render_template, request, redirect, url_for, jsonify, current_app
+from ..db import with_db
 from ..utils.job_utils import JobManager
 from ..utils.material_utils import MaterialManager
-from datetime import datetime
+import logging
 
 bp = Blueprint('job', __name__)
 
@@ -17,14 +17,26 @@ def create_backup(db, type):
     try:
         timestamp = datetime.now().strftime('%Y%m%d_%H%M')
         
-        if type == 'db':
-            # Database only backup
-            if not os.path.exists('backups'):
-                os.makedirs('backups')
+        # Get and log absolute paths
+        root_path = os.path.abspath(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+        current_app.logger.info(f"Root path: {root_path}")
+        current_app.logger.info(f"Current working directory: {os.getcwd()}")
+        current_app.logger.info(f"Instance path: {current_app.instance_path}")
+        
+        # Create backups directory in root path
+        backup_dir = os.path.join(root_path, 'backups')
+        if not os.path.exists(backup_dir):
+            os.makedirs(backup_dir)
+            current_app.logger.info(f"Created backup directory: {backup_dir}")
                 
-            db_path = 'instance/jobmanager.db'
+        if type == 'db':
+            # Database backup
+            db_path = current_app.config['DATABASE']
             backup_name = f'db_backup_{timestamp}.db'
-            backup_path = os.path.join('backups', backup_name)
+            backup_path = os.path.join(backup_dir, backup_name)
+            
+            current_app.logger.info(f"DB Path: {db_path}")
+            current_app.logger.info(f"Backup Path: {backup_path}")
             
             # Close the current database connection
             db.close()
@@ -32,19 +44,20 @@ def create_backup(db, type):
             # Copy the database file
             shutil.copy2(db_path, backup_path)
             
+            current_app.logger.info(f"Database backup created at: {backup_path}")
+            current_app.logger.info(f"Backup file exists: {os.path.exists(backup_path)}")
+            
             return jsonify({
                 'success': True,
                 'message': f'Database backup created: {backup_name}'
             })
             
         elif type == 'full':
-            # Full system backup using existing backup.py logic
             backup_name = f'jobmanager_backup_{timestamp}.zip'
+            backup_path = os.path.join(backup_dir, backup_name)
             
-            # Ensure backups directory exists
-            if not os.path.exists('backups'):
-                os.makedirs('backups')
-                
+            current_app.logger.info(f"Creating full backup at: {backup_path}")
+            
             include_dirs = ['app', 'instance']
             include_files = ['run.py', 'init_db.py', 'LICENSE', 'gitback.sh']
             exclude_patterns = [
@@ -64,25 +77,32 @@ def create_backup(db, type):
                 '*.md'
             ]
 
-            backup_path = os.path.join('backups', backup_name)
             with zipfile.ZipFile(backup_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
                 # Add individual files from root
                 for file in include_files:
-                    if os.path.exists(file):
-                        zipf.write(file)
+                    file_path = os.path.join(root_path, file)
+                    if os.path.exists(file_path):
+                        current_app.logger.info(f"Adding file: {file_path}")
+                        zipf.write(file_path, file)
 
                 # Add directories
                 for dir_name in include_dirs:
-                    if os.path.exists(dir_name):
-                        for root, dirs, files in os.walk(dir_name):
+                    dir_path = os.path.join(root_path, dir_name)
+                    if os.path.exists(dir_path):
+                        for root, dirs, files in os.walk(dir_path):
                             # Remove excluded directories
                             dirs[:] = [d for d in dirs if d not in exclude_patterns]
                             
                             for file in files:
                                 if not any(file.endswith(pat.strip('*')) for pat in exclude_patterns):
                                     file_path = os.path.join(root, file)
-                                    zipf.write(file_path)
+                                    arc_path = os.path.relpath(file_path, root_path)
+                                    current_app.logger.info(f"Adding to zip: {arc_path}")
+                                    zipf.write(file_path, arc_path)
 
+            current_app.logger.info(f"Full backup created at: {backup_path}")
+            current_app.logger.info(f"Backup file exists: {os.path.exists(backup_path)}")
+            
             return jsonify({
                 'success': True,
                 'message': f'Full system backup created: {backup_name}'
@@ -94,11 +114,11 @@ def create_backup(db, type):
         })
         
     except Exception as e:
+        current_app.logger.error(f"Backup failed: {str(e)}", exc_info=True)
         return jsonify({
             'success': False,
             'message': f'Backup failed: {str(e)}'
-        })
-        
+        })    
 
 # app/routes/job_routes.py
 @bp.route('/')
@@ -307,6 +327,13 @@ def job_details(db, id):
     
     combined_notes = '\n'.join(note['note'] for note in notes)
     
+    # Get images for this job
+    images = db.execute('''
+        SELECT * FROM job_image 
+        WHERE job_id = ? 
+        ORDER BY timestamp DESC
+    ''', [id]).fetchall()
+
     return render_template('job_details.html', 
                          job=job, 
                          time_entries=time_entries,
@@ -314,7 +341,8 @@ def job_details(db, id):
                          notes=notes,
                          combined_notes=combined_notes,
                          total_hours=total_hours,
-                         total_amount=total_amount)
+                         total_amount=total_amount,
+                         images=images)  # Add images to template context
 
 @bp.route('/<int:job_id>/edit_time_entry/<int:entry_id>', methods=['POST'])
 @with_db
@@ -432,3 +460,70 @@ def get_template(db, template_id):
         } for m in materials]
     })
     
+    
+# Mobile phone route to app/routes/job_routes.py
+@bp.route('/quick_timer')
+@with_db
+def quick_timer(db):
+    jobs = db.execute('''
+        WITH job_hours AS (
+            SELECT 
+                job_id,
+                SUM((julianday(COALESCE(end_time, datetime('now'))) - julianday(start_time)) * 24) as hours
+            FROM time_entry
+            GROUP BY job_id
+        )
+        SELECT 
+            job.*,
+            customer.name as customer_name,
+            te_active.id as active_timer_id,
+            te_active.start_time as timer_start,
+            COALESCE(job_hours.hours, 0) as accumulated_hours
+        FROM job 
+        JOIN customer ON job.customer_id = customer.id 
+        LEFT JOIN time_entry te_active ON job.id = te_active.job_id 
+            AND te_active.end_time IS NULL
+        LEFT JOIN job_hours ON job_hours.job_id = job.id
+        WHERE job.status = 'Active'
+        ORDER BY 
+            te_active.id IS NOT NULL DESC,
+            CASE job.status
+                WHEN 'Active' THEN 1
+                WHEN 'Pending' THEN 2
+            END,
+            job.last_active DESC NULLS LAST,
+            job.creation_date DESC
+    ''').fetchall()
+    return render_template('quick_timer.html', jobs=jobs)
+
+import qrcode
+import io
+from flask import send_file
+from urllib.parse import urljoin
+
+@bp.route('/qr_code')
+def generate_qr():
+    # Get the base URL from the request
+    base_url = request.url_root
+    # Create the full URL for the quick timer page
+    quick_timer_url = urljoin(base_url, url_for('job.quick_timer'))
+    
+    # Create QR code
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        box_size=10,
+        border=4,
+    )
+    qr.add_data(quick_timer_url)
+    qr.make(fit=True)
+
+    # Create image
+    img = qr.make_image(fill_color="black", back_color="white")
+    
+    # Save to bytes
+    img_io = io.BytesIO()
+    img.save(img_io, 'PNG')
+    img_io.seek(0)
+    
+    return send_file(img_io, mimetype='image/png')

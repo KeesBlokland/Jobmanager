@@ -4,15 +4,17 @@
 {% block content %}
 
 
+
 <div class="search-section">
-    <input type="text" id="searchInput" placeholder="Search in customer or description..." style="min-width: 250px;">
-    <select id="statusFilter">
+    <input type="text" id="searchInput" placeholder="Search in customer or description..." 
+           style="min-width: 250px; padding: 8px; height: 16px;">
+    <select id="statusFilter" style="height: 30px; padding: 4px 12px;">
         <option value="">All Statuses</option>
         <option value="Active">Active</option>
         <option value="Pending">Pending</option>
         <option value="Completed">Completed</option>
     </select>
-    <button onclick="clearSearch()">Clear</button>
+    <button onclick="clearSearch()" style="height: 30px; padding: 4px 12px;">Clear</button>
 </div>
 
 <div class="job-list">
@@ -29,9 +31,9 @@
         <tbody>
             {% for job in jobs %}
             <tr class="job-row {% if job.active_timer_id %}timer-active{% endif %}" data-customer="{{ job.customer_name }}" data-description="{{ job.description }}" data-status="{{ job.status }}">
-                <td style="padding: 10px; border: 1px solid #ddd;">{{ job.customer_name }}</td>
-                <td style="padding: 10px; border: 1px solid #ddd;">{{ job.description }}</td>
-                <td style="padding: 10px; border: 1px solid #ddd;">
+                <td style="padding: 5px; border: 1px solid #ddd;">{{ job.customer_name }}</td>
+                <td style="padding: 5px; border: 1px solid #ddd;">{{ job.description }}</td>
+                <td style="padding: 5px; border: 1px solid #ddd;">
                     <span class="status-{{ job.status }}">{{ job.status }}</span>
                 </td>
                 <td style="padding: 10px; border: 1px solid #ddd;">
@@ -41,7 +43,7 @@
                         0.0
                     {% endif %}
                 </td>
-                <td style="padding: 10px; border: 1px solid #ddd;">
+                <td style="padding: 5px; border: 1px solid #ddd;">
                     <div class="btn-group">
                         <a href="{{ url_for('job.job_details', id=job.id) }}" 
                            class="action-btn edit-btn">Details</a>
@@ -71,53 +73,91 @@
 </div>
 
 <script>
-function filterJobs() {
-    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-    const statusFilter = document.getElementById('statusFilter').value;
-    const rows = document.getElementsByClassName('job-row');
-    let visible = 0;
+    // Save search state to localStorage when it changes
+    function saveSearchState() {
+        const searchTerm = document.getElementById('searchInput').value;
+        const statusFilter = document.getElementById('statusFilter').value;
+        localStorage.setItem('jobSearchTerm', searchTerm);
+        localStorage.setItem('jobStatusFilter', statusFilter);
+    }
     
-    for (let row of rows) {
-        const customer = row.getAttribute('data-customer').toLowerCase();
-        const description = row.getAttribute('data-description').toLowerCase();
-        const status = row.getAttribute('data-status');
+    function filterJobs() {
+        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+        const statusFilter = document.getElementById('statusFilter').value;
+        const rows = document.getElementsByClassName('job-row');
+        let visible = 0;
         
-        const matchesSearch = searchTerm === '' || 
-                            customer.includes(searchTerm) || 
-                            description.includes(searchTerm);
-        const matchesStatus = statusFilter === '' || status === statusFilter;
+        for (let row of rows) {
+            const customer = row.getAttribute('data-customer').toLowerCase();
+            const description = row.getAttribute('data-description').toLowerCase();
+            const status = row.getAttribute('data-status');
+            
+            const matchesSearch = searchTerm === '' || 
+                                customer.includes(searchTerm) || 
+                                description.includes(searchTerm);
+            const matchesStatus = statusFilter === '' || status === statusFilter;
+            
+            if (matchesSearch && matchesStatus) {
+                row.classList.remove('hidden');
+                visible++;
+            } else {
+                row.classList.add('hidden');
+            }
+        }
         
-        if (matchesSearch && matchesStatus) {
-            row.classList.remove('hidden');
-            visible++;
-        } else {
-            row.classList.add('hidden');
+        saveSearchState();
+    }
+    
+    function clearSearch() {
+        document.getElementById('searchInput').value = '';
+        document.getElementById('statusFilter').value = '';
+        localStorage.removeItem('jobSearchTerm');
+        localStorage.removeItem('jobStatusFilter');
+        filterJobs();
+    }
+    
+    // Add event listeners
+    document.getElementById('searchInput').addEventListener('input', filterJobs);
+    document.getElementById('statusFilter').addEventListener('change', filterJobs);
+    
+    // Restore search state on page load
+    window.addEventListener('load', function() {
+        const savedSearchTerm = localStorage.getItem('jobSearchTerm');
+        const savedStatusFilter = localStorage.getItem('jobStatusFilter');
+        
+        if (savedSearchTerm) {
+            document.getElementById('searchInput').value = savedSearchTerm;
+        }
+        if (savedStatusFilter) {
+            document.getElementById('statusFilter').value = savedStatusFilter;
+        }
+        if (savedSearchTerm || savedStatusFilter) {
+            filterJobs();
+        }
+    });
+    
+    async function startTimer(jobId) {
+        try {
+            await fetch(`/timer/job/${jobId}/start_timer`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'}
+            });
+            window.location.reload();
+        } catch (error) {
+            alert('Error starting timer: ' + error.message);
         }
     }
-}
-
-function clearSearch() {
-    document.getElementById('searchInput').value = '';
-    document.getElementById('statusFilter').value = '';
-    filterJobs();
-}
-
-// Add event listeners
-document.getElementById('searchInput').addEventListener('input', filterJobs);
-document.getElementById('statusFilter').addEventListener('change', filterJobs);
-
-function startTimer(jobId) {
-    fetch(`/timer/job/${jobId}/start_timer`, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'}
-    }).then(() => window.location.reload());
-}
-
-function stopTimer(jobId) {
-    fetch(`/timer/job/${jobId}/stop_timer`, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'}
-    }).then(() => window.location.reload());
-}
-</script>
+    
+    async function stopTimer(jobId) {
+        try {
+            await fetch(`/timer/job/${jobId}/stop_timer`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'}
+            });
+            window.location.reload();
+        } catch (error) {
+            alert('Error stopping timer: ' + error.message);
+        }
+    }
+    </script>
 {% endblock %}

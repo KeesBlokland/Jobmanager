@@ -2,43 +2,20 @@
 {% extends "base.html" %}
 
 {% block content %}
-<!--
-<style>
-    body { font-family: Arial, sans-serif; margin: 40px; max-width: 800px; }
-    .header { margin-bottom: 40px; overflow: hidden; }
-    .business-details { float: left; }
-    .invoice-details { float: right; text-align: right; }
-    .customer-details { 
-    clear: both; 
-    margin-bottom: 30px;
-    display: flex;
-    gap: 40px;
-}
-.customer-details > div {
-    flex: 1;
-}
-    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-    th { padding: 6px 10px; text-align: left; border-bottom: 1px solid #ddd; }
-    td { padding: 3px 10px; text-align: left; border-bottom: 1px solid #ddd; }
-    table { margin: 12px 0; }
-    .total { text-align: right; margin-top: 20px; font-weight: bold; }
-    .amount-column { text-align: right; }
-    @media print { body { margin: 0; } button { display: none; } }
-</style>
--->
-<div class="header">
-    <div class="business-details">
+
+<div class="header" style="display: flex; justify-content: space-between; gap: 20px; margin-bottom: 20px;">
+    <div class="business-details" style="flex: 1;">
         <h2>Kees Blokland</h2>
         <p>Prz-Claus-Str 29<br>46446 Elten<br>Email: kees@blokland.net<br>Phone: +49(0)1745607840</p>
     </div>
-    <div class="invoice-details">
+    <div class="invoice-details" style="flex: 1; text-align: right;">
         <h1>Invoice</h1>
         <p>Invoice #: {{ invoice_number }}<br>Date: {{ job.creation_date[:10] }}</p>
     </div>
 </div>
 
-<div class="customer-details">
-    <div class="billing-info">
+<div class="customer-details" style="display: flex; justify-content: space-between; gap: 20px; margin: 20px 0;">
+    <div class="billing-info" style="flex: 1;">
         <h3>Bill To:</h3>
         <p>{{ job.name }}<br>
            {% if job.street %}{{ job.street }}<br>{% endif %}
@@ -46,7 +23,7 @@
            {% if job.postal_code %}, {{ job.postal_code }}{% endif %}<br>
            {% if job.country %}{{ job.country }}{% endif %}</p>
     </div>
-    <div class="job-info">
+    <div class="job-info" style="flex: 1;">
         <h3>Job Description:</h3>
         <p>{{ job.description }}</p>
     </div>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Timer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 10px;
+            background: #f0f0f0;
+        }
+        .job-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .active-timer {
+            background: #b6e6ba;
+        }
+        .customer-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .job-description {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .timer-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1em;
+            cursor: pointer;
+        }
+        .start-timer {
+            background: #4CAF50;
+            color: white;
+        }
+        .stop-timer {
+            background: #f44336;
+            color: white;
+        }
+        .hours {
+            float: right;
+            font-size: 0.9em;
+            color: #666;
+        }
+        .refresh-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            background: #2196F3;
+            color: white;
+            border: none;
+            font-size: 24px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            cursor: pointer;
+        }
+        .photo-btn {
+            position: absolute;
+            right: 70px;
+            top: 10px;
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            font-size: 20px;
+            line-height: 40px;
+            text-align: center;
+        }
+        .job-card {
+            position: relative;
+        }
+        #uploadProgress {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            body {
+                max-width: 600px;
+                margin: 0 auto;
+            }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+    } 
+        
+    </style>
+</head>
+<body>
+    {% for job in jobs %}
+    <div class="job-card {% if job.active_timer_id %}active-timer{% endif %}">
+        <div class="customer-name">
+            {{ job.customer_name }}
+            <span class="hours">{{ "%.1f"|format(job.accumulated_hours) }}h</span>
+        </div>
+        <div class="job-description">{{ job.description }}</div>
+        <div class="button-container">   
+            {% if job.active_timer_id is not none and job.active_timer_id > 0 %}
+                <button onclick="stopTimer({{ job.id }})" class="timer-btn stop-timer">Stop Timer</button>
+                <button onclick="takePhoto({{ job.id }})" class="photo-btn">📷</button>
+            {% else %}
+                <button onclick="startTimer({{ job.id }})" class="timer-btn start-timer">Start Timer</button>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+    
+    <button onclick="location.reload()" class="refresh-btn">↻</button>
+
+    <div id="uploadProgress">Uploading photo...</div>
+
+    <!-- Hidden file input for photos -->
+    <input type="file" id="photoInput" accept="image/*" capture="environment" style="display: none">
+
+    <script>
+    function startTimer(jobId) {
+        fetch(`/timer/job/${jobId}/start_timer`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'}
+        }).then(() => window.location.reload());
+    }
+
+    function stopTimer(jobId) {
+        fetch(`/timer/job/${jobId}/stop_timer`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'}
+        }).then(() => window.location.reload());
+    }
+
+    function takePhoto(jobId) {
+        const input = document.getElementById('photoInput');
+        input.onchange = function() {
+            if (this.files && this.files[0]) {
+                uploadPhoto(jobId, this.files[0]);
+            }
+        };
+        input.click();
+    }
+
+    async function uploadPhoto(jobId, file) {
+        const formData = new FormData();
+        formData.append('file', file);
+        
+        // Show progress indicator
+        document.getElementById('uploadProgress').style.display = 'block';
+        
+        try {
+            const response = await fetch(`/image/upload/direct/${jobId}`, {
+                method: 'POST',
+                body: formData
+            });
+            
+            const result = await response.json();
+            if (result.success) {
+                alert('Photo uploaded successfully');
+            } else {
+                alert('Upload failed: ' + result.error);
+            }
+        } catch (error) {
+            alert('Upload failed: ' + error.message);
+        } finally {
+            document.getElementById('uploadProgress').style.display = 'none';
+        }
+    }
+    </script>
+</body>
+</html>

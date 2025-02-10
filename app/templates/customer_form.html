@@ -1,4 +1,3 @@
-<!-- app/templates/customer_form.html -->
 {% extends "base.html" %}
 
 {% block content %}
@@ -7,7 +6,7 @@
     <form method="post">
         <div class="form-grid">
             <!-- Primary Information -->
-            <div class="form-group">
+            <div class="form-group" style="grid-column: span 2;">
                 <label>Name *</label>
                 <input type="text" name="name" required 
                        value="{{ customer.name if customer else '' }}">
@@ -19,14 +18,15 @@
                        value="{{ customer.email if customer else '' }}">
             </div>
             
-            <div class="form-group">
+            <div class="form-group" style="max-width: 150px;">
                 <label>Phone</label>
-                <input type="tel" name="phone"
-                       value="{{ customer.phone if customer else '' }}">
+                <input type="tel" name="phone" maxlength="15"
+                       value="{{ customer.phone if customer else '' }}"
+                       placeholder="+49123456789">
             </div>
 
             <!-- Address Information -->
-            <div class="form-group">
+            <div class="form-group" style="grid-column: span 2;">
                 <label>Street</label>
                 <input type="text" name="street"
                        value="{{ customer.street if customer else '' }}">
@@ -38,26 +38,21 @@
                        value="{{ customer.city if customer else '' }}">
             </div>
             
-            <div class="form-group">
+            <div class="form-group" style="max-width: 100px;">
                 <label>Postal Code</label>
-                <input type="text" name="postal_code"
+                <input type="text" name="postal_code" maxlength="6"
                        value="{{ customer.postal_code if customer else '' }}">
             </div>
             
-            <div class="form-group">
+            <div class="form-group" style="max-width: 100px;">
                 <label>Country</label>
-                <input type="text" name="country"
-                       value="{{ customer.country if customer else '' }}">
+                <select name="country">
+                    <option value="DE" {% if customer and customer.country == 'DE' %}selected{% endif %}>DE</option>
+                    <option value="NL" {% if customer and customer.country == 'NL' %}selected{% endif %}>NL</option>
+                </select>
             </div>
 
-            <!-- Business Information 
-            <div class="form-group">
-                <label>VAT Number</label>
-                <input type="text" name="vat_number"
-                       value="{{ customer.vat_number if customer else '' }}">
-            </div>
-        -->
-            <div class="form-group">
+            <div class="form-group" style="grid-column: span 2;">
                 <label>Payment Terms</label>
                 <input type="text" name="payment_terms"
                        value="{{ customer.payment_terms if customer else '' }}">
@@ -78,51 +73,4 @@
         </div>
     </form>
 </div>
-
-<style>
-.form-container {
-    max-width: 1000px;
-    padding: 20px;
-}
-
-.form-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    margin-bottom: 15px;
-}
-
-.form-group {
-    margin: 0;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 4px;
-    font-weight: 500;
-}
-
-.form-group input,
-.form-group textarea {
-    width: 100%;
-    padding: 6px 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
-}
-
-.notes-group {
-    margin-bottom: 15px;
-}
-
-.notes-group textarea {
-    height: 100px;
-    resize: vertical;
-}
-
-.btn-group {
-    display: flex;
-    gap: 10px;
-}
-</style>
 {% endblock %}
