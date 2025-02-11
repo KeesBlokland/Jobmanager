@@ -69,28 +69,28 @@
     </div>
     {% for material in materials %}
     <div class="item-row" id="material-{{ material.id }}" style="display: flex; align-items: center;">
-        <div style="display: flex; gap: 5px; margin-right: 15px;">
-            <button onclick="showMaterialEdit({{ material.id }})" class="action-btn edit-btn">Edit</button>
-            <form action="{{ url_for('job.delete_material', id=job.id, material_id=material.id) }}" method="post" style="display: inline;">
-                <button type="submit" class="action-btn delete-btn" onclick="return confirm('Delete this material?')">Delete</button>
-            </form>
-        </div>
-        <div class="display-view" style="flex-grow: 1;">
-            <span>{{ material.material }} ({{ material.quantity }}) - €{{ "%.2f"|format(material.price) }}/item</span>
-        </div>
-        <div class="edit-view" style="display: none; width: 50%;">
-            <form action="{{ url_for('job.edit_material', id=job.id, material_id=material.id) }}" method="post" style="display: flex; gap: 5px; align-items: center;">
-                <input type="text" name="material" value="{{ material.material }}" required style="flex-grow: 1;">
-                <input type="number" name="quantity" value="{{ material.quantity }}" step="0.1" required style="width: 80px;">
-                <input type="number" name="price" value="{{ material.price }}" step="0.01" required style="width: 80px;">
-                <div class="btn-group">
-                    <button type="submit" class="action-btn save-btn">Save</button>
-                    <button type="button" onclick="hideMaterialEdit({{ material.id }})" class="action-btn cancel-btn">Cancel</button>
-                </div>
-            </form>
-        </div>
+       <div style="display: flex; gap: 5px; margin-right: 15px;">
+           <button onclick="showMaterialEdit({{ material.id }})" class="action-btn edit-btn">Edit</button>
+           <form action="{{ url_for('job.delete_material', id=job.id, material_id=material.id) }}" method="post" style="display: inline;">
+               <button type="submit" class="action-btn delete-btn" onclick="return confirm('Delete this material?')">Delete</button>
+           </form>
+       </div>
+       <div class="display-view" style="flex-grow: 1;">
+           <span>{{ material.material }} ({{ material.quantity }}) - €{{ "%.2f"|format(material.price) }}/item</span>
+       </div>
+       <div class="edit-view" style="display: none; width: 50%;">
+        <form action="{{ url_for('job.edit_material', id=job.id, material_id=material.id) }}" method="post" style="display: flex; gap: 5px; align-items: center;">
+            <input type="text" name="material" value="{{ material.material }}" required style="flex-grow: 1;">
+            <input type="number" name="quantity" value="{{ material.quantity }}" step="0.1" required style="width: 80px;">
+            <input type="number" name="price" value="{{ material.price }}" step="0.01" required style="width: 80px;">
+            <div class="btn-group">
+                <button type="submit" class="action-btn save-btn">Save</button>
+                <button type="button" onclick="hideMaterialEdit({{ material.id }})" class="action-btn cancel-btn">Cancel</button>
+            </div>
+        </form>
     </div>
-    {% endfor %}
+   </div>
+   {% endfor %}
 </div>
 
 <div class="detail-section">

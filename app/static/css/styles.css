@@ -125,12 +125,22 @@ body {
 
 .form-group input,
 .form-group textarea,
-.form-group select {
+.form-group select,
+input[type="text"],
+input[type="number"] {
     width: 100%;
     padding: 8px;
     border: 1px solid var(--border-color);
     border-radius: 4px;
     font-size: 14px;
+    height: 36px;  /* Match button height */
+    box-sizing: border-box;
+}
+
+input[name="material_description"] {
+    height: 36px;
+    box-sizing: border-box;
+    vertical-align: middle;
 }
 
 .notes-group textarea {
