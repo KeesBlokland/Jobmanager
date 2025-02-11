@@ -4549,3 +4549,526 @@ AttributeError: 'TimerManager' object has no attribute 'stop_all_active'
 2025-02-11 09:25:05,614 [INFO] 192.168.2.62 - - [11/Feb/2025 09:25:05] "GET /job/qr_code HTTP/1.1" 200 -
 2025-02-11 09:25:05,671 [INFO] 192.168.2.62 - - [11/Feb/2025 09:25:05] "GET /image/serve/4/img_20250210_144542_deb218.jpg?thumbnail=True HTTP/1.1" 200 -
 2025-02-11 09:25:05,673 [INFO] 192.168.2.62 - - [11/Feb/2025 09:25:05] "GET /image/serve/4/img_20250210_144020_893259.jpg?thumbnail=True HTTP/1.1" 200 -
+2025-02-11 09:27:25,555 [INFO] Starting timer for job 12
+2025-02-11 09:27:25,555 [INFO] Starting timer for job 12
+2025-02-11 09:27:25,555 [INFO] Stopping all active timers
+2025-02-11 09:27:25,555 [INFO] Stopping all active timers
+2025-02-11 09:27:25,724 [INFO] 192.168.2.54 - - [11/Feb/2025 09:27:25] "POST /timer/job/12/start_timer HTTP/1.1" 200 -
+2025-02-11 09:27:25,790 [INFO] 192.168.2.54 - - [11/Feb/2025 09:27:25] "GET /job/quick_timer HTTP/1.1" 200 -
+2025-02-11 09:33:40,340 [INFO] 192.168.2.54 - - [11/Feb/2025 09:33:40] "POST /image/upload/direct/12 HTTP/1.1" 200 -
+2025-02-11 09:52:58,041 [INFO] 192.168.2.54 - - [11/Feb/2025 09:52:58] "GET /job/quick_timer HTTP/1.1" 200 -
+2025-02-11 09:53:43,408 [INFO] 192.168.2.54 - - [11/Feb/2025 09:53:43] "POST /image/upload/direct/12 HTTP/1.1" 200 -
+2025-02-11 10:05:07,799 [INFO] 192.168.2.54 - - [11/Feb/2025 10:05:07] "POST /image/upload/direct/12 HTTP/1.1" 200 -
+2025-02-11 11:33:13,711 [INFO] Stopping timer for job 12
+2025-02-11 11:33:13,711 [INFO] Stopping timer for job 12
+2025-02-11 11:33:13,809 [INFO] 192.168.2.54 - - [11/Feb/2025 11:33:13] "POST /timer/job/12/stop_timer HTTP/1.1" 200 -
+2025-02-11 11:33:13,878 [INFO] 192.168.2.54 - - [11/Feb/2025 11:33:13] "GET /job/quick_timer HTTP/1.1" 200 -
+2025-02-11 11:33:16,915 [INFO] 192.168.2.54 - - [11/Feb/2025 11:33:16] "GET /job/quick_timer HTTP/1.1" 200 -
+2025-02-11 11:33:18,839 [INFO] 192.168.2.54 - - [11/Feb/2025 11:33:18] "GET /job/quick_timer HTTP/1.1" 200 -
+2025-02-11 11:51:08,163 [INFO] 192.168.2.64 - - [11/Feb/2025 11:51:08] "[33mGET /apple-touch-icon-precomposed.png HTTP/1.1[0m" 404 -
+2025-02-11 11:51:08,164 [INFO] 192.168.2.64 - - [11/Feb/2025 11:51:08] "[33mGET /apple-touch-icon.png HTTP/1.1[0m" 404 -
+2025-02-11 11:51:08,165 [INFO] 192.168.2.64 - - [11/Feb/2025 11:51:08] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-02-11 11:51:08,216 [INFO] 192.168.2.64 - - [11/Feb/2025 11:51:08] "[33mGET /apple-touch-icon-precomposed.png HTTP/1.1[0m" 404 -
+2025-02-11 11:51:08,222 [INFO] 192.168.2.64 - - [11/Feb/2025 11:51:08] "[33mGET /apple-touch-icon.png HTTP/1.1[0m" 404 -
+2025-02-11 11:51:08,223 [INFO] 192.168.2.64 - - [11/Feb/2025 11:51:08] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-02-11 11:51:08,534 [INFO] 192.168.2.64 - - [11/Feb/2025 11:51:08] "GET /job/26/invoice HTTP/1.1" 200 -
+2025-02-11 11:51:08,535 [INFO] 192.168.2.64 - - [11/Feb/2025 11:51:08] "GET /job/26/invoice HTTP/1.1" 200 -
+2025-02-11 11:51:08,644 [INFO] 192.168.2.64 - - [11/Feb/2025 11:51:08] "GET /job/26/invoice HTTP/1.1" 200 -
+2025-02-11 11:52:37,348 [INFO] Starting timer for job 25
+2025-02-11 11:52:37,348 [INFO] Starting timer for job 25
+2025-02-11 11:52:37,348 [INFO] Stopping all active timers
+2025-02-11 11:52:37,348 [INFO] Stopping all active timers
+2025-02-11 11:52:37,412 [INFO] 192.168.2.54 - - [11/Feb/2025 11:52:37] "POST /timer/job/25/start_timer HTTP/1.1" 200 -
+2025-02-11 11:52:37,457 [INFO] 192.168.2.54 - - [11/Feb/2025 11:52:37] "GET /job/quick_timer HTTP/1.1" 200 -
+2025-02-11 12:15:41,745 [INFO] Starting timer for job 12
+2025-02-11 12:15:41,745 [INFO] Starting timer for job 12
+2025-02-11 12:15:41,745 [INFO] Stopping all active timers
+2025-02-11 12:15:41,745 [INFO] Stopping all active timers
+2025-02-11 12:15:41,963 [INFO] 192.168.2.54 - - [11/Feb/2025 12:15:41] "POST /timer/job/12/start_timer HTTP/1.1" 200 -
+2025-02-11 12:15:42,080 [INFO] 192.168.2.54 - - [11/Feb/2025 12:15:42] "GET /job/quick_timer HTTP/1.1" 200 -
+2025-02-11 12:31:37,546 [INFO] 192.168.2.62 - - [11/Feb/2025 12:31:37] "GET /job/details/12 HTTP/1.1" 200 -
+2025-02-11 12:31:37,582 [INFO] 192.168.2.62 - - [11/Feb/2025 12:31:37] "GET /image/serve/12/img_20250211_100507_0fccdb.jpg?thumbnail=True HTTP/1.1" 200 -
+2025-02-11 12:31:37,583 [INFO] 192.168.2.62 - - [11/Feb/2025 12:31:37] "GET /image/serve/12/img_20250211_095342_8dbdb0.jpg?thumbnail=True HTTP/1.1" 200 -
+2025-02-11 12:31:37,585 [INFO] 192.168.2.62 - - [11/Feb/2025 12:31:37] "GET /image/serve/12/img_20250211_093339_c722fb.jpg?thumbnail=True HTTP/1.1" 200 -
+2025-02-11 12:31:37,586 [INFO] 192.168.2.62 - - [11/Feb/2025 12:31:37] "GET /static/css/styles.css HTTP/1.1" 200 -
+2025-02-11 12:31:37,595 [INFO] 192.168.2.62 - - [11/Feb/2025 12:31:37] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 12:32:05,890 [INFO] 192.168.2.62 - - [11/Feb/2025 12:32:05] "[32mPOST /job/12/add_material HTTP/1.1[0m" 302 -
+2025-02-11 12:32:05,897 [INFO] 192.168.2.62 - - [11/Feb/2025 12:32:05] "GET /job/details/12 HTTP/1.1" 200 -
+2025-02-11 12:32:05,921 [INFO] 192.168.2.62 - - [11/Feb/2025 12:32:05] "GET /static/css/styles.css HTTP/1.1" 200 -
+2025-02-11 12:32:05,931 [INFO] 192.168.2.62 - - [11/Feb/2025 12:32:05] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 12:32:05,944 [INFO] 192.168.2.62 - - [11/Feb/2025 12:32:05] "GET /image/serve/12/img_20250211_100507_0fccdb.jpg?thumbnail=True HTTP/1.1" 200 -
+2025-02-11 12:32:05,946 [INFO] 192.168.2.62 - - [11/Feb/2025 12:32:05] "[36mGET /image/serve/12/img_20250211_095342_8dbdb0.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 12:32:05,947 [INFO] 192.168.2.62 - - [11/Feb/2025 12:32:05] "[36mGET /image/serve/12/img_20250211_093339_c722fb.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 12:42:55,655 [INFO] 192.168.2.62 - - [11/Feb/2025 12:42:55] "[32mPOST /job/12/add_material HTTP/1.1[0m" 302 -
+2025-02-11 12:42:55,662 [INFO] 192.168.2.62 - - [11/Feb/2025 12:42:55] "GET /job/details/12 HTTP/1.1" 200 -
+2025-02-11 12:42:55,684 [INFO] 192.168.2.62 - - [11/Feb/2025 12:42:55] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 12:42:55,693 [INFO] 192.168.2.62 - - [11/Feb/2025 12:42:55] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 12:42:55,713 [INFO] 192.168.2.62 - - [11/Feb/2025 12:42:55] "[36mGET /image/serve/12/img_20250211_095342_8dbdb0.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 12:42:55,713 [INFO] 192.168.2.62 - - [11/Feb/2025 12:42:55] "[36mGET /image/serve/12/img_20250211_100507_0fccdb.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 12:42:55,713 [INFO] 192.168.2.62 - - [11/Feb/2025 12:42:55] "[36mGET /image/serve/12/img_20250211_093339_c722fb.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 12:43:01,384 [INFO] 192.168.2.62 - - [11/Feb/2025 12:43:01] "GET /job/12/invoice HTTP/1.1" 200 -
+2025-02-11 12:43:01,411 [INFO] 192.168.2.62 - - [11/Feb/2025 12:43:01] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 12:43:01,422 [INFO] 192.168.2.62 - - [11/Feb/2025 12:43:01] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 13:04:33,414 [INFO] Starting timer for job 4
+2025-02-11 13:04:33,414 [INFO] Starting timer for job 4
+2025-02-11 13:04:33,415 [INFO] Stopping all active timers
+2025-02-11 13:04:33,415 [INFO] Stopping all active timers
+2025-02-11 13:04:33,596 [INFO] 192.168.2.54 - - [11/Feb/2025 13:04:33] "POST /timer/job/4/start_timer HTTP/1.1" 200 -
+2025-02-11 13:04:33,679 [INFO] 192.168.2.54 - - [11/Feb/2025 13:04:33] "GET /job/quick_timer HTTP/1.1" 200 -
+2025-02-11 13:05:26,613 [INFO] 192.168.2.62 - - [11/Feb/2025 13:05:26] "[32mPOST /job/details/12 HTTP/1.1[0m" 302 -
+2025-02-11 13:05:26,622 [INFO] 192.168.2.62 - - [11/Feb/2025 13:05:26] "GET /job/details/12 HTTP/1.1" 200 -
+2025-02-11 13:05:26,654 [INFO] 192.168.2.62 - - [11/Feb/2025 13:05:26] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 13:05:26,664 [INFO] 192.168.2.62 - - [11/Feb/2025 13:05:26] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 13:05:26,673 [INFO] 192.168.2.62 - - [11/Feb/2025 13:05:26] "[36mGET /image/serve/12/img_20250211_100507_0fccdb.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 13:05:26,674 [INFO] 192.168.2.62 - - [11/Feb/2025 13:05:26] "[36mGET /image/serve/12/img_20250211_095342_8dbdb0.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 13:05:26,675 [INFO] 192.168.2.62 - - [11/Feb/2025 13:05:26] "[36mGET /image/serve/12/img_20250211_093339_c722fb.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 13:06:19,536 [INFO] 192.168.2.62 - - [11/Feb/2025 13:06:19] "GET /job/details/4 HTTP/1.1" 200 -
+2025-02-11 13:06:19,576 [INFO] 192.168.2.62 - - [11/Feb/2025 13:06:19] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 13:06:19,586 [INFO] 192.168.2.62 - - [11/Feb/2025 13:06:19] "[36mGET /image/serve/4/img_20250210_144542_deb218.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 13:06:19,587 [INFO] 192.168.2.62 - - [11/Feb/2025 13:06:19] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 13:06:19,588 [INFO] 192.168.2.62 - - [11/Feb/2025 13:06:19] "[36mGET /image/serve/4/img_20250210_144020_893259.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 13:06:32,654 [INFO] 192.168.2.62 - - [11/Feb/2025 13:06:32] "[32mPOST /job/4/delete_time_entry/231 HTTP/1.1[0m" 302 -
+2025-02-11 13:06:32,664 [INFO] 192.168.2.62 - - [11/Feb/2025 13:06:32] "GET /job/details/4 HTTP/1.1" 200 -
+2025-02-11 13:06:32,684 [INFO] 192.168.2.62 - - [11/Feb/2025 13:06:32] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 13:06:32,694 [INFO] 192.168.2.62 - - [11/Feb/2025 13:06:32] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 13:06:32,741 [INFO] 192.168.2.62 - - [11/Feb/2025 13:06:32] "[36mGET /image/serve/4/img_20250210_144542_deb218.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 13:06:32,741 [INFO] 192.168.2.62 - - [11/Feb/2025 13:06:32] "[36mGET /image/serve/4/img_20250210_144020_893259.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 13:06:36,566 [INFO] 192.168.2.62 - - [11/Feb/2025 13:06:36] "[32mPOST /job/4/delete_time_entry/244 HTTP/1.1[0m" 302 -
+2025-02-11 13:06:36,574 [INFO] 192.168.2.62 - - [11/Feb/2025 13:06:36] "GET /job/details/4 HTTP/1.1" 200 -
+2025-02-11 13:06:36,598 [INFO] 192.168.2.62 - - [11/Feb/2025 13:06:36] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 13:06:36,608 [INFO] 192.168.2.62 - - [11/Feb/2025 13:06:36] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 13:06:36,656 [INFO] 192.168.2.62 - - [11/Feb/2025 13:06:36] "[36mGET /image/serve/4/img_20250210_144542_deb218.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 13:06:36,657 [INFO] 192.168.2.62 - - [11/Feb/2025 13:06:36] "[36mGET /image/serve/4/img_20250210_144020_893259.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 13:06:43,678 [INFO] 192.168.2.62 - - [11/Feb/2025 13:06:43] "[32mPOST /job/4/delete_time_entry/223 HTTP/1.1[0m" 302 -
+2025-02-11 13:06:43,687 [INFO] 192.168.2.62 - - [11/Feb/2025 13:06:43] "GET /job/details/4 HTTP/1.1" 200 -
+2025-02-11 13:06:43,717 [INFO] 192.168.2.62 - - [11/Feb/2025 13:06:43] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 13:06:43,727 [INFO] 192.168.2.62 - - [11/Feb/2025 13:06:43] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 13:06:43,763 [INFO] 192.168.2.62 - - [11/Feb/2025 13:06:43] "[36mGET /image/serve/4/img_20250210_144542_deb218.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 13:06:43,764 [INFO] 192.168.2.62 - - [11/Feb/2025 13:06:43] "[36mGET /image/serve/4/img_20250210_144020_893259.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 13:06:48,001 [INFO] 192.168.2.62 - - [11/Feb/2025 13:06:48] "[32mPOST /job/4/delete_time_entry/238 HTTP/1.1[0m" 302 -
+2025-02-11 13:06:48,010 [INFO] 192.168.2.62 - - [11/Feb/2025 13:06:48] "GET /job/details/4 HTTP/1.1" 200 -
+2025-02-11 13:06:48,036 [INFO] 192.168.2.62 - - [11/Feb/2025 13:06:48] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 13:06:48,046 [INFO] 192.168.2.62 - - [11/Feb/2025 13:06:48] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 13:06:48,080 [INFO] 192.168.2.62 - - [11/Feb/2025 13:06:48] "[36mGET /image/serve/4/img_20250210_144542_deb218.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 13:06:48,081 [INFO] 192.168.2.62 - - [11/Feb/2025 13:06:48] "[36mGET /image/serve/4/img_20250210_144020_893259.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 13:06:53,846 [INFO] 192.168.2.62 - - [11/Feb/2025 13:06:53] "[32mPOST /job/4/delete_time_entry/222 HTTP/1.1[0m" 302 -
+2025-02-11 13:06:53,854 [INFO] 192.168.2.62 - - [11/Feb/2025 13:06:53] "GET /job/details/4 HTTP/1.1" 200 -
+2025-02-11 13:06:53,876 [INFO] 192.168.2.62 - - [11/Feb/2025 13:06:53] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 13:06:53,887 [INFO] 192.168.2.62 - - [11/Feb/2025 13:06:53] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 13:06:53,928 [INFO] 192.168.2.62 - - [11/Feb/2025 13:06:53] "[36mGET /image/serve/4/img_20250210_144542_deb218.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 13:06:53,929 [INFO] 192.168.2.62 - - [11/Feb/2025 13:06:53] "[36mGET /image/serve/4/img_20250210_144020_893259.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 13:11:32,328 [INFO] 192.168.2.62 - - [11/Feb/2025 13:11:32] "GET /job/details/4 HTTP/1.1" 200 -
+2025-02-11 13:11:32,354 [INFO] 192.168.2.62 - - [11/Feb/2025 13:11:32] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 13:11:32,365 [INFO] 192.168.2.62 - - [11/Feb/2025 13:11:32] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 13:11:32,391 [INFO] 192.168.2.62 - - [11/Feb/2025 13:11:32] "[36mGET /image/serve/4/img_20250210_144542_deb218.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 13:11:32,391 [INFO] 192.168.2.62 - - [11/Feb/2025 13:11:32] "[36mGET /image/serve/4/img_20250210_144020_893259.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 13:11:38,486 [INFO] 192.168.2.62 - - [11/Feb/2025 13:11:38] "GET /job/details/4 HTTP/1.1" 200 -
+2025-02-11 13:11:38,520 [INFO] 192.168.2.62 - - [11/Feb/2025 13:11:38] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 13:11:38,530 [INFO] 192.168.2.62 - - [11/Feb/2025 13:11:38] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 13:11:38,571 [INFO] 192.168.2.62 - - [11/Feb/2025 13:11:38] "[36mGET /image/serve/4/img_20250210_144542_deb218.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 13:11:38,571 [INFO] 192.168.2.62 - - [11/Feb/2025 13:11:38] "[36mGET /image/serve/4/img_20250210_144020_893259.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 13:11:39,869 [INFO] 192.168.2.62 - - [11/Feb/2025 13:11:39] "GET /job/4/invoice HTTP/1.1" 200 -
+2025-02-11 13:11:39,898 [INFO] 192.168.2.62 - - [11/Feb/2025 13:11:39] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 13:11:39,908 [INFO] 192.168.2.62 - - [11/Feb/2025 13:11:39] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 13:12:19,295 [INFO] Root path: /home/Jobmanager
+2025-02-11 13:12:19,295 [INFO] Root path: /home/Jobmanager
+2025-02-11 13:12:19,295 [INFO] Current working directory: /home/Jobmanager
+2025-02-11 13:12:19,295 [INFO] Current working directory: /home/Jobmanager
+2025-02-11 13:12:19,296 [INFO] Instance path: /home/Jobmanager/instance
+2025-02-11 13:12:19,296 [INFO] Instance path: /home/Jobmanager/instance
+2025-02-11 13:12:19,296 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250211_1312.zip
+2025-02-11 13:12:19,296 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250211_1312.zip
+2025-02-11 13:12:19,296 [INFO] Adding file: /home/Jobmanager/run.py
+2025-02-11 13:12:19,296 [INFO] Adding file: /home/Jobmanager/run.py
+2025-02-11 13:12:19,297 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-02-11 13:12:19,297 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-02-11 13:12:19,297 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-02-11 13:12:19,297 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-02-11 13:12:19,297 [INFO] Adding to zip: app/db.py
+2025-02-11 13:12:19,297 [INFO] Adding to zip: app/db.py
+2025-02-11 13:12:19,298 [INFO] Adding to zip: app/__init__.py
+2025-02-11 13:12:19,298 [INFO] Adding to zip: app/__init__.py
+2025-02-11 13:12:19,298 [INFO] Adding to zip: app/schema.sql
+2025-02-11 13:12:19,298 [INFO] Adding to zip: app/schema.sql
+2025-02-11 13:12:19,299 [INFO] Adding to zip: app/routes/image_routes.py
+2025-02-11 13:12:19,299 [INFO] Adding to zip: app/routes/image_routes.py
+2025-02-11 13:12:19,299 [INFO] Adding to zip: app/routes/__init__.py
+2025-02-11 13:12:19,299 [INFO] Adding to zip: app/routes/__init__.py
+2025-02-11 13:12:19,300 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-02-11 13:12:19,300 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-02-11 13:12:19,300 [INFO] Adding to zip: app/routes/job_routes.py
+2025-02-11 13:12:19,300 [INFO] Adding to zip: app/routes/job_routes.py
+2025-02-11 13:12:19,301 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-02-11 13:12:19,301 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-02-11 13:12:19,302 [INFO] Adding to zip: app/utils/job_utils.py
+2025-02-11 13:12:19,302 [INFO] Adding to zip: app/utils/job_utils.py
+2025-02-11 13:12:19,302 [INFO] Adding to zip: app/utils/material_utils.py
+2025-02-11 13:12:19,302 [INFO] Adding to zip: app/utils/material_utils.py
+2025-02-11 13:12:19,302 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-02-11 13:12:19,302 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-02-11 13:12:19,303 [INFO] Adding to zip: app/utils/__init__.py
+2025-02-11 13:12:19,303 [INFO] Adding to zip: app/utils/__init__.py
+2025-02-11 13:12:19,303 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-02-11 13:12:19,303 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-02-11 13:12:19,304 [INFO] Adding to zip: app/utils/error_utils.py
+2025-02-11 13:12:19,304 [INFO] Adding to zip: app/utils/error_utils.py
+2025-02-11 13:12:19,304 [INFO] Adding to zip: app/utils/image_utils.py
+2025-02-11 13:12:19,304 [INFO] Adding to zip: app/utils/image_utils.py
+2025-02-11 13:12:19,305 [INFO] Adding to zip: app/templates/customer_form.html
+2025-02-11 13:12:19,305 [INFO] Adding to zip: app/templates/customer_form.html
+2025-02-11 13:12:19,305 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-02-11 13:12:19,305 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-02-11 13:12:19,306 [INFO] Adding to zip: app/templates/job_details.html
+2025-02-11 13:12:19,306 [INFO] Adding to zip: app/templates/job_details.html
+2025-02-11 13:12:19,306 [INFO] Adding to zip: app/templates/invoice.html
+2025-02-11 13:12:19,306 [INFO] Adding to zip: app/templates/invoice.html
+2025-02-11 13:12:19,307 [INFO] Adding to zip: app/templates/job_form.html
+2025-02-11 13:12:19,307 [INFO] Adding to zip: app/templates/job_form.html
+2025-02-11 13:12:19,307 [INFO] Adding to zip: app/templates/customer_list.html
+2025-02-11 13:12:19,307 [INFO] Adding to zip: app/templates/customer_list.html
+2025-02-11 13:12:19,308 [INFO] Adding to zip: app/templates/500.html
+2025-02-11 13:12:19,308 [INFO] Adding to zip: app/templates/500.html
+2025-02-11 13:12:19,308 [INFO] Adding to zip: app/templates/base.html
+2025-02-11 13:12:19,308 [INFO] Adding to zip: app/templates/base.html
+2025-02-11 13:12:19,308 [INFO] Adding to zip: app/templates/job_list.html
+2025-02-11 13:12:19,308 [INFO] Adding to zip: app/templates/job_list.html
+2025-02-11 13:12:19,309 [INFO] Adding to zip: app/templates/404.html
+2025-02-11 13:12:19,309 [INFO] Adding to zip: app/templates/404.html
+2025-02-11 13:12:19,309 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-02-11 13:12:19,309 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-02-11 13:12:19,310 [INFO] Adding to zip: app/static/css/styles.css
+2025-02-11 13:12:19,310 [INFO] Adding to zip: app/static/css/styles.css
+2025-02-11 13:12:19,311 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250211_1312.zip
+2025-02-11 13:12:19,311 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250211_1312.zip
+2025-02-11 13:12:19,311 [INFO] Backup file exists: True
+2025-02-11 13:12:19,311 [INFO] Backup file exists: True
+2025-02-11 13:12:19,311 [INFO] 192.168.2.62 - - [11/Feb/2025 13:12:19] "GET /job/backup/full HTTP/1.1" 200 -
+2025-02-11 13:12:52,408 [INFO] 192.168.2.62 - - [11/Feb/2025 13:12:52] "GET /job/ HTTP/1.1" 200 -
+2025-02-11 13:12:52,446 [INFO] 192.168.2.62 - - [11/Feb/2025 13:12:52] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 13:12:52,456 [INFO] 192.168.2.62 - - [11/Feb/2025 13:12:52] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 13:12:54,618 [INFO] 192.168.2.62 - - [11/Feb/2025 13:12:54] "GET /job/details/12 HTTP/1.1" 200 -
+2025-02-11 13:12:54,653 [INFO] 192.168.2.62 - - [11/Feb/2025 13:12:54] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 13:12:54,663 [INFO] 192.168.2.62 - - [11/Feb/2025 13:12:54] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 13:12:54,664 [INFO] 192.168.2.62 - - [11/Feb/2025 13:12:54] "[36mGET /image/serve/12/img_20250211_100507_0fccdb.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 13:12:54,665 [INFO] 192.168.2.62 - - [11/Feb/2025 13:12:54] "[36mGET /image/serve/12/img_20250211_095342_8dbdb0.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 13:12:54,665 [INFO] 192.168.2.62 - - [11/Feb/2025 13:12:54] "[36mGET /image/serve/12/img_20250211_093339_c722fb.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 13:12:55,757 [INFO] 192.168.2.62 - - [11/Feb/2025 13:12:55] "GET /job/12/invoice HTTP/1.1" 200 -
+2025-02-11 13:12:55,789 [INFO] 192.168.2.62 - - [11/Feb/2025 13:12:55] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 13:12:55,799 [INFO] 192.168.2.62 - - [11/Feb/2025 13:12:55] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 13:13:22,124 [INFO] 192.168.2.62 - - [11/Feb/2025 13:13:22] "GET /job/ HTTP/1.1" 200 -
+2025-02-11 13:13:22,146 [INFO] 192.168.2.62 - - [11/Feb/2025 13:13:22] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 13:13:22,155 [INFO] 192.168.2.62 - - [11/Feb/2025 13:13:22] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 13:13:40,112 [INFO] Root path: /home/Jobmanager
+2025-02-11 13:13:40,112 [INFO] Root path: /home/Jobmanager
+2025-02-11 13:13:40,113 [INFO] Current working directory: /home/Jobmanager
+2025-02-11 13:13:40,113 [INFO] Current working directory: /home/Jobmanager
+2025-02-11 13:13:40,113 [INFO] Instance path: /home/Jobmanager/instance
+2025-02-11 13:13:40,113 [INFO] Instance path: /home/Jobmanager/instance
+2025-02-11 13:13:40,113 [INFO] DB Path: /home/Jobmanager/instance/jobmanager.db
+2025-02-11 13:13:40,113 [INFO] DB Path: /home/Jobmanager/instance/jobmanager.db
+2025-02-11 13:13:40,113 [INFO] Backup Path: /home/Jobmanager/backups/db_backup_20250211_1313.db
+2025-02-11 13:13:40,113 [INFO] Backup Path: /home/Jobmanager/backups/db_backup_20250211_1313.db
+2025-02-11 13:13:40,114 [INFO] Database backup created at: /home/Jobmanager/backups/db_backup_20250211_1313.db
+2025-02-11 13:13:40,114 [INFO] Database backup created at: /home/Jobmanager/backups/db_backup_20250211_1313.db
+2025-02-11 13:13:40,114 [INFO] Backup file exists: True
+2025-02-11 13:13:40,114 [INFO] Backup file exists: True
+2025-02-11 13:13:40,114 [INFO] 192.168.2.62 - - [11/Feb/2025 13:13:40] "GET /job/backup/db HTTP/1.1" 200 -
+2025-02-11 13:13:43,130 [INFO] 192.168.2.62 - - [11/Feb/2025 13:13:43] "GET / HTTP/1.1" 200 -
+2025-02-11 13:13:43,159 [INFO] 192.168.2.62 - - [11/Feb/2025 13:13:43] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 13:13:43,169 [INFO] 192.168.2.62 - - [11/Feb/2025 13:13:43] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 13:14:47,901 [INFO] 192.168.2.62 - - [11/Feb/2025 13:14:47] "GET /8/edit HTTP/1.1" 200 -
+2025-02-11 13:14:47,942 [INFO] 192.168.2.62 - - [11/Feb/2025 13:14:47] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 13:14:47,952 [INFO] 192.168.2.62 - - [11/Feb/2025 13:14:47] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 13:15:02,492 [INFO] 192.168.2.62 - - [11/Feb/2025 13:15:02] "[32mPOST /8/edit HTTP/1.1[0m" 302 -
+2025-02-11 13:15:02,499 [INFO] 192.168.2.62 - - [11/Feb/2025 13:15:02] "GET / HTTP/1.1" 200 -
+2025-02-11 13:15:02,530 [INFO] 192.168.2.62 - - [11/Feb/2025 13:15:02] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 13:15:02,541 [INFO] 192.168.2.62 - - [11/Feb/2025 13:15:02] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 13:15:05,666 [INFO] 192.168.2.62 - - [11/Feb/2025 13:15:05] "GET /8/edit HTTP/1.1" 200 -
+2025-02-11 13:15:05,703 [INFO] 192.168.2.62 - - [11/Feb/2025 13:15:05] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 13:15:05,712 [INFO] 192.168.2.62 - - [11/Feb/2025 13:15:05] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 13:15:14,860 [INFO] 192.168.2.62 - - [11/Feb/2025 13:15:14] "[32mPOST /8/edit HTTP/1.1[0m" 302 -
+2025-02-11 13:15:14,866 [INFO] 192.168.2.62 - - [11/Feb/2025 13:15:14] "GET / HTTP/1.1" 200 -
+2025-02-11 13:15:14,897 [INFO] 192.168.2.62 - - [11/Feb/2025 13:15:14] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 13:15:14,907 [INFO] 192.168.2.62 - - [11/Feb/2025 13:15:14] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 13:15:45,018 [INFO] 192.168.2.62 - - [11/Feb/2025 13:15:45] "GET /9/edit HTTP/1.1" 200 -
+2025-02-11 13:15:45,053 [INFO] 192.168.2.62 - - [11/Feb/2025 13:15:45] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 13:15:45,062 [INFO] 192.168.2.62 - - [11/Feb/2025 13:15:45] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 13:16:36,158 [INFO] 192.168.2.62 - - [11/Feb/2025 13:16:36] "[32mPOST /9/edit HTTP/1.1[0m" 302 -
+2025-02-11 13:16:36,165 [INFO] 192.168.2.62 - - [11/Feb/2025 13:16:36] "GET / HTTP/1.1" 200 -
+2025-02-11 13:16:36,188 [INFO] 192.168.2.62 - - [11/Feb/2025 13:16:36] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 13:16:36,197 [INFO] 192.168.2.62 - - [11/Feb/2025 13:16:36] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 13:16:48,600 [INFO] 192.168.2.62 - - [11/Feb/2025 13:16:48] "GET /9/edit HTTP/1.1" 200 -
+2025-02-11 13:16:48,631 [INFO] 192.168.2.62 - - [11/Feb/2025 13:16:48] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 13:16:48,641 [INFO] 192.168.2.62 - - [11/Feb/2025 13:16:48] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 13:17:14,285 [INFO] 192.168.2.62 - - [11/Feb/2025 13:17:14] "[32mPOST /9/edit HTTP/1.1[0m" 302 -
+2025-02-11 13:17:14,292 [INFO] 192.168.2.62 - - [11/Feb/2025 13:17:14] "GET / HTTP/1.1" 200 -
+2025-02-11 13:17:14,327 [INFO] 192.168.2.62 - - [11/Feb/2025 13:17:14] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 13:17:14,337 [INFO] 192.168.2.62 - - [11/Feb/2025 13:17:14] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 13:17:45,895 [INFO] 192.168.2.62 - - [11/Feb/2025 13:17:45] "GET /job/ HTTP/1.1" 200 -
+2025-02-11 13:17:45,917 [INFO] 192.168.2.62 - - [11/Feb/2025 13:17:45] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 13:17:45,927 [INFO] 192.168.2.62 - - [11/Feb/2025 13:17:45] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 13:17:51,490 [INFO] 192.168.2.62 - - [11/Feb/2025 13:17:51] "GET /job/details/12 HTTP/1.1" 200 -
+2025-02-11 13:17:51,522 [INFO] 192.168.2.62 - - [11/Feb/2025 13:17:51] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 13:17:51,525 [INFO] 192.168.2.62 - - [11/Feb/2025 13:17:51] "[36mGET /image/serve/12/img_20250211_100507_0fccdb.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 13:17:51,526 [INFO] 192.168.2.62 - - [11/Feb/2025 13:17:51] "[36mGET /image/serve/12/img_20250211_095342_8dbdb0.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 13:17:51,527 [INFO] 192.168.2.62 - - [11/Feb/2025 13:17:51] "[36mGET /image/serve/12/img_20250211_093339_c722fb.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 13:17:51,536 [INFO] 192.168.2.62 - - [11/Feb/2025 13:17:51] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 13:21:11,944 [INFO] 192.168.2.62 - - [11/Feb/2025 13:21:11] "GET /job/12/invoice HTTP/1.1" 200 -
+2025-02-11 13:21:11,984 [INFO] 192.168.2.62 - - [11/Feb/2025 13:21:11] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 13:21:11,993 [INFO] 192.168.2.62 - - [11/Feb/2025 13:21:11] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 13:22:14,818 [INFO] Starting timer for job 12
+2025-02-11 13:22:14,818 [INFO] Starting timer for job 12
+2025-02-11 13:22:14,818 [INFO] Stopping all active timers
+2025-02-11 13:22:14,818 [INFO] Stopping all active timers
+2025-02-11 13:22:14,965 [INFO] 192.168.2.54 - - [11/Feb/2025 13:22:14] "POST /timer/job/12/start_timer HTTP/1.1" 200 -
+2025-02-11 13:22:15,176 [INFO] 192.168.2.54 - - [11/Feb/2025 13:22:15] "GET /job/quick_timer HTTP/1.1" 200 -
+2025-02-11 13:33:28,649 [INFO] 192.168.2.54 - - [11/Feb/2025 13:33:28] "POST /image/upload/direct/12 HTTP/1.1" 200 -
+2025-02-11 13:34:02,076 [INFO] 192.168.2.54 - - [11/Feb/2025 13:34:02] "POST /image/upload/direct/12 HTTP/1.1" 200 -
+2025-02-11 13:34:46,214 [INFO] 192.168.2.54 - - [11/Feb/2025 13:34:46] "POST /image/upload/direct/12 HTTP/1.1" 200 -
+2025-02-11 13:38:27,840 [INFO] 192.168.2.54 - - [11/Feb/2025 13:38:27] "POST /image/upload/direct/12 HTTP/1.1" 200 -
+2025-02-11 13:41:49,738 [INFO] 192.168.2.62 - - [11/Feb/2025 13:41:49] "GET /job/ HTTP/1.1" 200 -
+2025-02-11 13:41:49,776 [INFO] 192.168.2.62 - - [11/Feb/2025 13:41:49] "GET /static/css/styles.css HTTP/1.1" 200 -
+2025-02-11 13:41:49,785 [INFO] 192.168.2.62 - - [11/Feb/2025 13:41:49] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 13:41:54,556 [INFO] Starting timer for job 4
+2025-02-11 13:41:54,556 [INFO] Starting timer for job 4
+2025-02-11 13:41:54,557 [INFO] Stopping all active timers
+2025-02-11 13:41:54,557 [INFO] Stopping all active timers
+2025-02-11 13:41:54,692 [INFO] 192.168.2.62 - - [11/Feb/2025 13:41:54] "POST /timer/job/4/start_timer HTTP/1.1" 200 -
+2025-02-11 13:41:54,703 [INFO] 192.168.2.62 - - [11/Feb/2025 13:41:54] "GET /job/ HTTP/1.1" 200 -
+2025-02-11 13:41:54,724 [INFO] 192.168.2.62 - - [11/Feb/2025 13:41:54] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 13:41:54,733 [INFO] 192.168.2.62 - - [11/Feb/2025 13:41:54] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 13:44:00,535 [INFO] 192.168.2.62 - - [11/Feb/2025 13:44:00] "GET /job/details/12 HTTP/1.1" 200 -
+2025-02-11 13:44:00,574 [INFO] 192.168.2.62 - - [11/Feb/2025 13:44:00] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 13:44:00,577 [INFO] 192.168.2.62 - - [11/Feb/2025 13:44:00] "GET /image/serve/12/img_20250211_133827_8505ff.jpg?thumbnail=True HTTP/1.1" 200 -
+2025-02-11 13:44:00,579 [INFO] 192.168.2.62 - - [11/Feb/2025 13:44:00] "GET /image/serve/12/img_20250211_133445_e718c4.jpg?thumbnail=True HTTP/1.1" 200 -
+2025-02-11 13:44:00,580 [INFO] 192.168.2.62 - - [11/Feb/2025 13:44:00] "GET /image/serve/12/img_20250211_133401_735c32.jpg?thumbnail=True HTTP/1.1" 200 -
+2025-02-11 13:44:00,580 [INFO] 192.168.2.62 - - [11/Feb/2025 13:44:00] "GET /image/serve/12/img_20250211_133328_240e2c.jpg?thumbnail=True HTTP/1.1" 200 -
+2025-02-11 13:44:00,590 [INFO] 192.168.2.62 - - [11/Feb/2025 13:44:00] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 13:44:00,600 [INFO] 192.168.2.62 - - [11/Feb/2025 13:44:00] "[36mGET /image/serve/12/img_20250211_095342_8dbdb0.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 13:44:00,601 [INFO] 192.168.2.62 - - [11/Feb/2025 13:44:00] "[36mGET /image/serve/12/img_20250211_100507_0fccdb.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 13:44:00,602 [INFO] 192.168.2.62 - - [11/Feb/2025 13:44:00] "[36mGET /image/serve/12/img_20250211_093339_c722fb.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 13:44:27,210 [INFO] 192.168.2.62 - - [11/Feb/2025 13:44:27] "[32mPOST /job/12/edit_material/41 HTTP/1.1[0m" 302 -
+2025-02-11 13:44:27,218 [INFO] 192.168.2.62 - - [11/Feb/2025 13:44:27] "GET /job/details/12 HTTP/1.1" 200 -
+2025-02-11 13:44:27,240 [INFO] 192.168.2.62 - - [11/Feb/2025 13:44:27] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 13:44:27,250 [INFO] 192.168.2.62 - - [11/Feb/2025 13:44:27] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 13:44:27,271 [INFO] 192.168.2.62 - - [11/Feb/2025 13:44:27] "[36mGET /image/serve/12/img_20250211_133827_8505ff.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 13:44:27,272 [INFO] 192.168.2.62 - - [11/Feb/2025 13:44:27] "[36mGET /image/serve/12/img_20250211_133445_e718c4.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 13:44:27,274 [INFO] 192.168.2.62 - - [11/Feb/2025 13:44:27] "[36mGET /image/serve/12/img_20250211_133401_735c32.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 13:44:27,276 [INFO] 192.168.2.62 - - [11/Feb/2025 13:44:27] "[36mGET /image/serve/12/img_20250211_133328_240e2c.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 13:44:27,277 [INFO] 192.168.2.62 - - [11/Feb/2025 13:44:27] "[36mGET /image/serve/12/img_20250211_100507_0fccdb.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 13:44:27,278 [INFO] 192.168.2.62 - - [11/Feb/2025 13:44:27] "[36mGET /image/serve/12/img_20250211_095342_8dbdb0.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 13:44:27,280 [INFO] 192.168.2.62 - - [11/Feb/2025 13:44:27] "[36mGET /image/serve/12/img_20250211_093339_c722fb.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 13:45:00,693 [INFO] 192.168.2.54 - - [11/Feb/2025 13:45:00] "GET /job/quick_timer HTTP/1.1" 200 -
+2025-02-11 14:43:29,193 [INFO] Starting timer for job 12
+2025-02-11 14:43:29,193 [INFO] Starting timer for job 12
+2025-02-11 14:43:29,193 [INFO] Stopping all active timers
+2025-02-11 14:43:29,193 [INFO] Stopping all active timers
+2025-02-11 14:43:29,370 [INFO] 192.168.2.54 - - [11/Feb/2025 14:43:29] "POST /timer/job/12/start_timer HTTP/1.1" 200 -
+2025-02-11 14:43:29,538 [INFO] 192.168.2.54 - - [11/Feb/2025 14:43:29] "GET /job/quick_timer HTTP/1.1" 200 -
+2025-02-11 14:44:28,883 [INFO] 192.168.2.54 - - [11/Feb/2025 14:44:28] "POST /image/upload/direct/12 HTTP/1.1" 200 -
+2025-02-11 15:26:07,929 [INFO] 192.168.2.54 - - [11/Feb/2025 15:26:07] "GET /job/quick_timer HTTP/1.1" 200 -
+2025-02-11 15:26:41,890 [INFO] Stopping timer for job 12
+2025-02-11 15:26:41,890 [INFO] Stopping timer for job 12
+2025-02-11 15:26:41,997 [INFO] 192.168.2.54 - - [11/Feb/2025 15:26:41] "POST /timer/job/12/stop_timer HTTP/1.1" 200 -
+2025-02-11 15:26:43,123 [INFO] 192.168.2.54 - - [11/Feb/2025 15:26:43] "GET /job/quick_timer HTTP/1.1" 200 -
+2025-02-11 15:26:46,327 [INFO] 192.168.2.54 - - [11/Feb/2025 15:26:46] "[31m[1mPOST /image/upload/direct/12 HTTP/1.1[0m" 400 -
+2025-02-11 15:26:51,075 [INFO] 192.168.2.62 - - [11/Feb/2025 15:26:51] "GET /job/12/invoice HTTP/1.1" 200 -
+2025-02-11 15:26:51,106 [INFO] 192.168.2.62 - - [11/Feb/2025 15:26:51] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 15:26:51,115 [INFO] 192.168.2.62 - - [11/Feb/2025 15:26:51] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 15:26:54,240 [INFO] 192.168.2.62 - - [11/Feb/2025 15:26:54] "GET /job/ HTTP/1.1" 200 -
+2025-02-11 15:26:54,267 [INFO] 192.168.2.62 - - [11/Feb/2025 15:26:54] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 15:26:54,276 [INFO] 192.168.2.62 - - [11/Feb/2025 15:26:54] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 15:26:56,208 [INFO] 192.168.2.62 - - [11/Feb/2025 15:26:56] "GET /job/details/12 HTTP/1.1" 200 -
+2025-02-11 15:26:56,234 [INFO] 192.168.2.62 - - [11/Feb/2025 15:26:56] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 15:26:56,244 [INFO] 192.168.2.62 - - [11/Feb/2025 15:26:56] "GET /image/serve/12/img_20250211_144428_ea18e8.jpg?thumbnail=True HTTP/1.1" 200 -
+2025-02-11 15:26:56,245 [INFO] 192.168.2.62 - - [11/Feb/2025 15:26:56] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 15:26:56,271 [INFO] 192.168.2.62 - - [11/Feb/2025 15:26:56] "[36mGET /image/serve/12/img_20250211_133445_e718c4.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 15:26:56,271 [INFO] 192.168.2.62 - - [11/Feb/2025 15:26:56] "[36mGET /image/serve/12/img_20250211_133827_8505ff.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 15:26:56,272 [INFO] 192.168.2.62 - - [11/Feb/2025 15:26:56] "[36mGET /image/serve/12/img_20250211_133401_735c32.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 15:26:56,274 [INFO] 192.168.2.62 - - [11/Feb/2025 15:26:56] "[36mGET /image/serve/12/img_20250211_133328_240e2c.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 15:26:56,275 [INFO] 192.168.2.62 - - [11/Feb/2025 15:26:56] "[36mGET /image/serve/12/img_20250211_100507_0fccdb.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 15:26:56,277 [INFO] 192.168.2.62 - - [11/Feb/2025 15:26:56] "[36mGET /image/serve/12/img_20250211_093339_c722fb.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 15:26:56,278 [INFO] 192.168.2.62 - - [11/Feb/2025 15:26:56] "[36mGET /image/serve/12/img_20250211_095342_8dbdb0.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 15:27:05,382 [INFO] Starting timer for job 12
+2025-02-11 15:27:05,382 [INFO] Starting timer for job 12
+2025-02-11 15:27:05,383 [INFO] Stopping all active timers
+2025-02-11 15:27:05,383 [INFO] Stopping all active timers
+2025-02-11 15:27:05,455 [INFO] 192.168.2.54 - - [11/Feb/2025 15:27:05] "POST /timer/job/12/start_timer HTTP/1.1" 200 -
+2025-02-11 15:27:05,578 [INFO] 192.168.2.54 - - [11/Feb/2025 15:27:05] "GET /job/quick_timer HTTP/1.1" 200 -
+2025-02-11 15:28:06,890 [INFO] 192.168.2.54 - - [11/Feb/2025 15:28:06] "POST /image/upload/direct/12 HTTP/1.1" 200 -
+2025-02-11 15:28:16,945 [INFO] 192.168.2.62 - - [11/Feb/2025 15:28:16] "GET /job/details/12 HTTP/1.1" 200 -
+2025-02-11 15:28:16,967 [INFO] 192.168.2.62 - - [11/Feb/2025 15:28:16] "GET /image/serve/12/img_20250211_152806_a52c5f.jpg?thumbnail=True HTTP/1.1" 200 -
+2025-02-11 15:28:16,968 [INFO] 192.168.2.62 - - [11/Feb/2025 15:28:16] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 15:28:16,978 [INFO] 192.168.2.62 - - [11/Feb/2025 15:28:16] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 15:28:17,002 [INFO] 192.168.2.62 - - [11/Feb/2025 15:28:17] "[36mGET /image/serve/12/img_20250211_144428_ea18e8.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 15:28:17,002 [INFO] 192.168.2.62 - - [11/Feb/2025 15:28:17] "[36mGET /image/serve/12/img_20250211_133827_8505ff.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 15:28:17,003 [INFO] 192.168.2.62 - - [11/Feb/2025 15:28:17] "[36mGET /image/serve/12/img_20250211_133445_e718c4.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 15:28:17,006 [INFO] 192.168.2.62 - - [11/Feb/2025 15:28:17] "[36mGET /image/serve/12/img_20250211_133328_240e2c.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 15:28:17,007 [INFO] 192.168.2.62 - - [11/Feb/2025 15:28:17] "[36mGET /image/serve/12/img_20250211_100507_0fccdb.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 15:28:17,009 [INFO] 192.168.2.62 - - [11/Feb/2025 15:28:17] "[36mGET /image/serve/12/img_20250211_133401_735c32.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 15:28:17,010 [INFO] 192.168.2.62 - - [11/Feb/2025 15:28:17] "[36mGET /image/serve/12/img_20250211_095342_8dbdb0.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 15:28:17,011 [INFO] 192.168.2.62 - - [11/Feb/2025 15:28:17] "[36mGET /image/serve/12/img_20250211_093339_c722fb.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 15:28:39,674 [INFO] Stopping timer for job 12
+2025-02-11 15:28:39,674 [INFO] Stopping timer for job 12
+2025-02-11 15:28:39,799 [INFO] 192.168.2.54 - - [11/Feb/2025 15:28:39] "POST /timer/job/12/stop_timer HTTP/1.1" 200 -
+2025-02-11 15:28:39,899 [INFO] 192.168.2.54 - - [11/Feb/2025 15:28:39] "GET /job/quick_timer HTTP/1.1" 200 -
+2025-02-11 15:28:42,217 [INFO] 192.168.2.54 - - [11/Feb/2025 15:28:42] "GET /job/quick_timer HTTP/1.1" 200 -
+2025-02-11 15:28:48,677 [INFO] 192.168.2.62 - - [11/Feb/2025 15:28:48] "GET /job/12/invoice HTTP/1.1" 200 -
+2025-02-11 15:28:48,703 [INFO] 192.168.2.62 - - [11/Feb/2025 15:28:48] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 15:28:48,713 [INFO] 192.168.2.62 - - [11/Feb/2025 15:28:48] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 15:29:39,051 [INFO] 192.168.2.62 - - [11/Feb/2025 15:29:39] "[32mPOST /job/12/edit_material/16 HTTP/1.1[0m" 302 -
+2025-02-11 15:29:39,058 [INFO] 192.168.2.62 - - [11/Feb/2025 15:29:39] "GET /job/details/12 HTTP/1.1" 200 -
+2025-02-11 15:29:39,075 [INFO] 192.168.2.62 - - [11/Feb/2025 15:29:39] "GET /static/css/styles.css HTTP/1.1" 200 -
+2025-02-11 15:29:39,085 [INFO] 192.168.2.62 - - [11/Feb/2025 15:29:39] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 15:29:39,096 [INFO] 192.168.2.62 - - [11/Feb/2025 15:29:39] "GET /image/serve/12/img_20250211_152806_a52c5f.jpg?thumbnail=True HTTP/1.1" 200 -
+2025-02-11 15:29:39,096 [INFO] 192.168.2.62 - - [11/Feb/2025 15:29:39] "[36mGET /image/serve/12/img_20250211_133827_8505ff.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 15:29:39,099 [INFO] 192.168.2.62 - - [11/Feb/2025 15:29:39] "[36mGET /image/serve/12/img_20250211_133445_e718c4.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 15:29:39,099 [INFO] 192.168.2.62 - - [11/Feb/2025 15:29:39] "[36mGET /image/serve/12/img_20250211_133401_735c32.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 15:29:39,100 [INFO] 192.168.2.62 - - [11/Feb/2025 15:29:39] "GET /image/serve/12/img_20250211_144428_ea18e8.jpg?thumbnail=True HTTP/1.1" 200 -
+2025-02-11 15:29:39,102 [INFO] 192.168.2.62 - - [11/Feb/2025 15:29:39] "[36mGET /image/serve/12/img_20250211_133328_240e2c.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 15:29:39,103 [INFO] 192.168.2.62 - - [11/Feb/2025 15:29:39] "[36mGET /image/serve/12/img_20250211_100507_0fccdb.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 15:29:39,105 [INFO] 192.168.2.62 - - [11/Feb/2025 15:29:39] "[36mGET /image/serve/12/img_20250211_093339_c722fb.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 15:29:39,106 [INFO] 192.168.2.62 - - [11/Feb/2025 15:29:39] "[36mGET /image/serve/12/img_20250211_095342_8dbdb0.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 15:29:48,096 [INFO] 192.168.2.62 - - [11/Feb/2025 15:29:48] "[32mPOST /job/12/edit_material/41 HTTP/1.1[0m" 302 -
+2025-02-11 15:29:48,105 [INFO] 192.168.2.62 - - [11/Feb/2025 15:29:48] "GET /job/details/12 HTTP/1.1" 200 -
+2025-02-11 15:29:48,124 [INFO] 192.168.2.62 - - [11/Feb/2025 15:29:48] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 15:29:48,133 [INFO] 192.168.2.62 - - [11/Feb/2025 15:29:48] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 15:29:48,165 [INFO] 192.168.2.62 - - [11/Feb/2025 15:29:48] "[36mGET /image/serve/12/img_20250211_152806_a52c5f.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 15:29:48,167 [INFO] 192.168.2.62 - - [11/Feb/2025 15:29:48] "[36mGET /image/serve/12/img_20250211_144428_ea18e8.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 15:29:48,168 [INFO] 192.168.2.62 - - [11/Feb/2025 15:29:48] "[36mGET /image/serve/12/img_20250211_133827_8505ff.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 15:29:48,170 [INFO] 192.168.2.62 - - [11/Feb/2025 15:29:48] "[36mGET /image/serve/12/img_20250211_133445_e718c4.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 15:29:48,171 [INFO] 192.168.2.62 - - [11/Feb/2025 15:29:48] "[36mGET /image/serve/12/img_20250211_133401_735c32.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 15:29:48,172 [INFO] 192.168.2.62 - - [11/Feb/2025 15:29:48] "[36mGET /image/serve/12/img_20250211_133328_240e2c.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 15:29:48,176 [INFO] 192.168.2.62 - - [11/Feb/2025 15:29:48] "[36mGET /image/serve/12/img_20250211_100507_0fccdb.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 15:29:48,177 [INFO] 192.168.2.62 - - [11/Feb/2025 15:29:48] "[36mGET /image/serve/12/img_20250211_095342_8dbdb0.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 15:29:48,178 [INFO] 192.168.2.62 - - [11/Feb/2025 15:29:48] "[36mGET /image/serve/12/img_20250211_093339_c722fb.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 15:29:52,973 [INFO] 192.168.2.62 - - [11/Feb/2025 15:29:52] "GET /job/12/invoice HTTP/1.1" 200 -
+2025-02-11 15:29:53,001 [INFO] 192.168.2.62 - - [11/Feb/2025 15:29:53] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 15:29:53,010 [INFO] 192.168.2.62 - - [11/Feb/2025 15:29:53] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 15:30:13,396 [INFO] 192.168.2.62 - - [11/Feb/2025 15:30:13] "GET /job/ HTTP/1.1" 200 -
+2025-02-11 15:30:13,428 [INFO] 192.168.2.62 - - [11/Feb/2025 15:30:13] "GET /static/css/styles.css HTTP/1.1" 200 -
+2025-02-11 15:30:13,438 [INFO] 192.168.2.62 - - [11/Feb/2025 15:30:13] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 16:49:17,810 [INFO] 192.168.2.54 - - [11/Feb/2025 16:49:17] "GET /job/quick_timer HTTP/1.1" 200 -
+2025-02-11 17:20:20,450 [INFO] 192.168.2.62 - - [11/Feb/2025 17:20:20] "GET /job/ HTTP/1.1" 200 -
+2025-02-11 17:20:20,469 [INFO] 192.168.2.62 - - [11/Feb/2025 17:20:20] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 17:20:20,479 [INFO] 192.168.2.62 - - [11/Feb/2025 17:20:20] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 17:21:20,500 [INFO] 192.168.2.54 - - [11/Feb/2025 17:21:20] "GET /job/quick_timer HTTP/1.1" 200 -
+2025-02-11 17:21:23,558 [INFO] Starting timer for job 12
+2025-02-11 17:21:23,558 [INFO] Starting timer for job 12
+2025-02-11 17:21:23,558 [INFO] Stopping all active timers
+2025-02-11 17:21:23,558 [INFO] Stopping all active timers
+2025-02-11 17:21:23,672 [INFO] 192.168.2.54 - - [11/Feb/2025 17:21:23] "POST /timer/job/12/start_timer HTTP/1.1" 200 -
+2025-02-11 17:21:25,048 [INFO] 192.168.2.54 - - [11/Feb/2025 17:21:25] "GET /job/quick_timer HTTP/1.1" 200 -
+2025-02-11 17:22:04,582 [INFO] 192.168.2.54 - - [11/Feb/2025 17:22:04] "POST /image/upload/direct/12 HTTP/1.1" 200 -
+2025-02-11 17:24:05,556 [INFO] 192.168.2.62 - - [11/Feb/2025 17:24:05] "GET /job/details/12 HTTP/1.1" 200 -
+2025-02-11 17:24:05,596 [INFO] 192.168.2.62 - - [11/Feb/2025 17:24:05] "GET /image/serve/12/img_20250211_172204_8d434f.jpg?thumbnail=True HTTP/1.1" 200 -
+2025-02-11 17:24:05,598 [INFO] 192.168.2.62 - - [11/Feb/2025 17:24:05] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 17:24:05,601 [INFO] 192.168.2.62 - - [11/Feb/2025 17:24:05] "[36mGET /image/serve/12/img_20250211_152806_a52c5f.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 17:24:05,602 [INFO] 192.168.2.62 - - [11/Feb/2025 17:24:05] "[36mGET /image/serve/12/img_20250211_144428_ea18e8.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 17:24:05,603 [INFO] 192.168.2.62 - - [11/Feb/2025 17:24:05] "[36mGET /image/serve/12/img_20250211_133827_8505ff.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 17:24:05,607 [INFO] 192.168.2.62 - - [11/Feb/2025 17:24:05] "[36mGET /image/serve/12/img_20250211_133445_e718c4.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 17:24:05,608 [INFO] 192.168.2.62 - - [11/Feb/2025 17:24:05] "[36mGET /image/serve/12/img_20250211_133401_735c32.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 17:24:05,608 [INFO] 192.168.2.62 - - [11/Feb/2025 17:24:05] "[36mGET /image/serve/12/img_20250211_100507_0fccdb.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 17:24:05,609 [INFO] 192.168.2.62 - - [11/Feb/2025 17:24:05] "[36mGET /image/serve/12/img_20250211_133328_240e2c.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 17:24:05,611 [INFO] 192.168.2.62 - - [11/Feb/2025 17:24:05] "[36mGET /image/serve/12/img_20250211_095342_8dbdb0.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 17:24:05,612 [INFO] 192.168.2.62 - - [11/Feb/2025 17:24:05] "[36mGET /image/serve/12/img_20250211_093339_c722fb.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 17:24:05,622 [INFO] 192.168.2.62 - - [11/Feb/2025 17:24:05] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 17:24:17,406 [INFO] 192.168.2.62 - - [11/Feb/2025 17:24:17] "GET /image/serve/12/img_20250211_133827_8505ff.jpg HTTP/1.1" 200 -
+2025-02-11 17:24:36,510 [INFO] 192.168.2.62 - - [11/Feb/2025 17:24:36] "GET /image/serve/12/img_20250211_133328_240e2c.jpg HTTP/1.1" 200 -
+2025-02-11 17:24:45,081 [INFO] 192.168.2.62 - - [11/Feb/2025 17:24:45] "GET /job/ HTTP/1.1" 200 -
+2025-02-11 17:24:45,111 [INFO] 192.168.2.62 - - [11/Feb/2025 17:24:45] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 17:24:45,120 [INFO] 192.168.2.62 - - [11/Feb/2025 17:24:45] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 17:24:48,038 [INFO] Stopping timer for job 12
+2025-02-11 17:24:48,038 [INFO] Stopping timer for job 12
+2025-02-11 17:24:48,251 [INFO] 192.168.2.62 - - [11/Feb/2025 17:24:48] "POST /timer/job/12/stop_timer HTTP/1.1" 200 -
+2025-02-11 17:24:48,265 [INFO] 192.168.2.62 - - [11/Feb/2025 17:24:48] "GET /job/ HTTP/1.1" 200 -
+2025-02-11 17:24:48,287 [INFO] 192.168.2.62 - - [11/Feb/2025 17:24:48] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 17:24:48,296 [INFO] 192.168.2.62 - - [11/Feb/2025 17:24:48] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 17:30:24,631 [INFO] 192.168.2.64 - - [11/Feb/2025 17:30:24] "GET /job/26/invoice HTTP/1.1" 200 -
+2025-02-11 17:30:24,711 [INFO] 192.168.2.64 - - [11/Feb/2025 17:30:24] "GET /static/css/styles.css HTTP/1.1" 200 -
+2025-02-11 17:30:24,719 [INFO] 192.168.2.64 - - [11/Feb/2025 17:30:24] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 17:30:29,418 [INFO] 192.168.2.64 - - [11/Feb/2025 17:30:29] "GET /job/26/invoice HTTP/1.1" 200 -
+2025-02-11 17:30:29,476 [INFO] 192.168.2.64 - - [11/Feb/2025 17:30:29] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 17:30:29,509 [INFO] 192.168.2.64 - - [11/Feb/2025 17:30:29] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 17:31:23,257 [INFO] Starting timer for job 4
+2025-02-11 17:31:23,257 [INFO] Starting timer for job 4
+2025-02-11 17:31:23,257 [INFO] Stopping all active timers
+2025-02-11 17:31:23,257 [INFO] Stopping all active timers
+2025-02-11 17:31:23,442 [INFO] 192.168.2.56 - - [11/Feb/2025 17:31:23] "POST /timer/job/4/start_timer HTTP/1.1" 200 -
+2025-02-11 17:31:23,463 [INFO] 192.168.2.56 - - [11/Feb/2025 17:31:23] "GET /job/ HTTP/1.1" 200 -
+2025-02-11 17:31:23,497 [INFO] 192.168.2.56 - - [11/Feb/2025 17:31:23] "GET /static/css/styles.css HTTP/1.1" 200 -
+2025-02-11 17:31:23,513 [INFO] 192.168.2.56 - - [11/Feb/2025 17:31:23] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 17:31:29,439 [INFO] 192.168.2.56 - - [11/Feb/2025 17:31:29] "GET /job/details/4 HTTP/1.1" 200 -
+2025-02-11 17:31:29,482 [INFO] 192.168.2.56 - - [11/Feb/2025 17:31:29] "GET /static/css/styles.css HTTP/1.1" 200 -
+2025-02-11 17:31:29,496 [INFO] 192.168.2.56 - - [11/Feb/2025 17:31:29] "GET /image/serve/4/img_20250210_144542_deb218.jpg?thumbnail=True HTTP/1.1" 200 -
+2025-02-11 17:31:29,496 [INFO] 192.168.2.56 - - [11/Feb/2025 17:31:29] "GET /image/serve/4/img_20250210_144020_893259.jpg?thumbnail=True HTTP/1.1" 200 -
+2025-02-11 17:31:29,505 [INFO] 192.168.2.56 - - [11/Feb/2025 17:31:29] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 17:31:36,689 [INFO] 192.168.2.56 - - [11/Feb/2025 17:31:36] "GET /image/serve/4/img_20250210_144020_893259.jpg HTTP/1.1" 200 -
+2025-02-11 17:31:40,456 [INFO] 192.168.2.56 - - [11/Feb/2025 17:31:40] "GET /job/details/4 HTTP/1.1" 200 -
+2025-02-11 17:31:40,491 [INFO] 192.168.2.56 - - [11/Feb/2025 17:31:40] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 17:31:40,508 [INFO] 192.168.2.56 - - [11/Feb/2025 17:31:40] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 17:31:40,563 [INFO] 192.168.2.56 - - [11/Feb/2025 17:31:40] "[36mGET /image/serve/4/img_20250210_144542_deb218.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 17:31:40,564 [INFO] 192.168.2.56 - - [11/Feb/2025 17:31:40] "[36mGET /image/serve/4/img_20250210_144020_893259.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 17:31:49,128 [INFO] 192.168.2.56 - - [11/Feb/2025 17:31:49] "GET /job/4/invoice HTTP/1.1" 200 -
+2025-02-11 17:31:49,163 [INFO] 192.168.2.56 - - [11/Feb/2025 17:31:49] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 17:31:49,177 [INFO] 192.168.2.56 - - [11/Feb/2025 17:31:49] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 17:32:07,120 [INFO] 192.168.2.56 - - [11/Feb/2025 17:32:07] "GET /job/ HTTP/1.1" 200 -
+2025-02-11 17:32:07,149 [INFO] 192.168.2.56 - - [11/Feb/2025 17:32:07] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 17:32:07,163 [INFO] 192.168.2.56 - - [11/Feb/2025 17:32:07] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 17:32:09,047 [INFO] 192.168.2.56 - - [11/Feb/2025 17:32:09] "GET /job/4/edit HTTP/1.1" 200 -
+2025-02-11 17:32:09,079 [INFO] 192.168.2.56 - - [11/Feb/2025 17:32:09] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 17:32:09,094 [INFO] 192.168.2.56 - - [11/Feb/2025 17:32:09] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 17:32:16,292 [INFO] 192.168.2.56 - - [11/Feb/2025 17:32:16] "[32mPOST /job/4/edit HTTP/1.1[0m" 302 -
+2025-02-11 17:32:16,308 [INFO] 192.168.2.56 - - [11/Feb/2025 17:32:16] "GET /job/ HTTP/1.1" 200 -
+2025-02-11 17:32:16,341 [INFO] 192.168.2.56 - - [11/Feb/2025 17:32:16] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 17:32:16,356 [INFO] 192.168.2.56 - - [11/Feb/2025 17:32:16] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 17:32:21,749 [INFO] 192.168.2.56 - - [11/Feb/2025 17:32:21] "GET /job/details/4 HTTP/1.1" 200 -
+2025-02-11 17:32:21,780 [INFO] 192.168.2.56 - - [11/Feb/2025 17:32:21] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 17:32:21,795 [INFO] 192.168.2.56 - - [11/Feb/2025 17:32:21] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 17:32:21,841 [INFO] 192.168.2.56 - - [11/Feb/2025 17:32:21] "[36mGET /image/serve/4/img_20250210_144542_deb218.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 17:32:21,842 [INFO] 192.168.2.56 - - [11/Feb/2025 17:32:21] "[36mGET /image/serve/4/img_20250210_144020_893259.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 17:32:22,740 [INFO] 192.168.2.56 - - [11/Feb/2025 17:32:22] "GET /job/4/invoice HTTP/1.1" 200 -
+2025-02-11 17:32:22,777 [INFO] 192.168.2.56 - - [11/Feb/2025 17:32:22] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 17:32:22,791 [INFO] 192.168.2.56 - - [11/Feb/2025 17:32:22] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 17:38:18,569 [INFO] 192.168.2.56 - - [11/Feb/2025 17:38:18] "GET / HTTP/1.1" 200 -
+2025-02-11 17:38:18,604 [INFO] 192.168.2.56 - - [11/Feb/2025 17:38:18] "GET /static/css/styles.css HTTP/1.1" 200 -
+2025-02-11 17:38:18,622 [INFO] 192.168.2.56 - - [11/Feb/2025 17:38:18] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 17:38:23,223 [INFO] 192.168.2.56 - - [11/Feb/2025 17:38:23] "GET /job/ HTTP/1.1" 200 -
+2025-02-11 17:38:23,256 [INFO] 192.168.2.56 - - [11/Feb/2025 17:38:23] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 17:38:23,272 [INFO] 192.168.2.56 - - [11/Feb/2025 17:38:23] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 17:38:29,225 [INFO] 192.168.2.56 - - [11/Feb/2025 17:38:29] "GET /job/details/4 HTTP/1.1" 200 -
+2025-02-11 17:38:29,259 [INFO] 192.168.2.56 - - [11/Feb/2025 17:38:29] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 17:38:29,275 [INFO] 192.168.2.56 - - [11/Feb/2025 17:38:29] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 17:38:29,318 [INFO] 192.168.2.56 - - [11/Feb/2025 17:38:29] "[36mGET /image/serve/4/img_20250210_144542_deb218.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 17:38:29,319 [INFO] 192.168.2.56 - - [11/Feb/2025 17:38:29] "[36mGET /image/serve/4/img_20250210_144020_893259.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 17:38:33,450 [INFO] 192.168.2.56 - - [11/Feb/2025 17:38:33] "GET /job/4/invoice HTTP/1.1" 200 -
+2025-02-11 17:38:33,487 [INFO] 192.168.2.56 - - [11/Feb/2025 17:38:33] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 17:38:33,516 [INFO] 192.168.2.56 - - [11/Feb/2025 17:38:33] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 17:38:47,113 [INFO] 192.168.2.56 - - [11/Feb/2025 17:38:47] "GET /job/details/12 HTTP/1.1" 200 -
+2025-02-11 17:38:47,149 [INFO] 192.168.2.56 - - [11/Feb/2025 17:38:47] "GET /static/css/styles.css HTTP/1.1" 200 -
+2025-02-11 17:38:47,364 [INFO] 192.168.2.56 - - [11/Feb/2025 17:38:47] "GET /image/serve/12/img_20250211_152806_a52c5f.jpg?thumbnail=True HTTP/1.1" 200 -
+2025-02-11 17:38:47,364 [INFO] 192.168.2.56 - - [11/Feb/2025 17:38:47] "GET /image/serve/12/img_20250211_172204_8d434f.jpg?thumbnail=True HTTP/1.1" 200 -
+2025-02-11 17:38:47,366 [INFO] 192.168.2.56 - - [11/Feb/2025 17:38:47] "GET /image/serve/12/img_20250211_144428_ea18e8.jpg?thumbnail=True HTTP/1.1" 200 -
+2025-02-11 17:38:47,367 [INFO] 192.168.2.56 - - [11/Feb/2025 17:38:47] "GET /image/serve/12/img_20250211_133827_8505ff.jpg?thumbnail=True HTTP/1.1" 200 -
+2025-02-11 17:38:47,370 [INFO] 192.168.2.56 - - [11/Feb/2025 17:38:47] "GET /image/serve/12/img_20250211_133445_e718c4.jpg?thumbnail=True HTTP/1.1" 200 -
+2025-02-11 17:38:47,370 [INFO] 192.168.2.56 - - [11/Feb/2025 17:38:47] "GET /image/serve/12/img_20250211_133401_735c32.jpg?thumbnail=True HTTP/1.1" 200 -
+2025-02-11 17:38:47,375 [INFO] 192.168.2.56 - - [11/Feb/2025 17:38:47] "GET /image/serve/12/img_20250211_133328_240e2c.jpg?thumbnail=True HTTP/1.1" 200 -
+2025-02-11 17:38:47,377 [INFO] 192.168.2.56 - - [11/Feb/2025 17:38:47] "GET /image/serve/12/img_20250211_100507_0fccdb.jpg?thumbnail=True HTTP/1.1" 200 -
+2025-02-11 17:38:47,380 [INFO] 192.168.2.56 - - [11/Feb/2025 17:38:47] "GET /image/serve/12/img_20250211_093339_c722fb.jpg?thumbnail=True HTTP/1.1" 200 -
+2025-02-11 17:38:47,380 [INFO] 192.168.2.56 - - [11/Feb/2025 17:38:47] "GET /image/serve/12/img_20250211_095342_8dbdb0.jpg?thumbnail=True HTTP/1.1" 200 -
+2025-02-11 17:38:47,390 [INFO] 192.168.2.56 - - [11/Feb/2025 17:38:47] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 17:38:48,616 [INFO] 192.168.2.56 - - [11/Feb/2025 17:38:48] "GET /job/12/invoice HTTP/1.1" 200 -
+2025-02-11 17:38:48,645 [INFO] 192.168.2.56 - - [11/Feb/2025 17:38:48] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 17:38:48,662 [INFO] 192.168.2.56 - - [11/Feb/2025 17:38:48] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 17:44:29,444 [INFO]  * Detected change in '/home/Jobmanager/app/utils/image_utils.py', reloading
+2025-02-11 17:44:29,495 [INFO]  * Restarting with stat
+2025-02-11 17:44:29,730 [INFO] Starting Job Manager application
+2025-02-11 17:44:29,730 [INFO] Starting Job Manager application
+2025-02-11 17:44:29,738 [WARNING]  * Debugger is active!
+2025-02-11 17:44:29,739 [INFO]  * Debugger PIN: 719-273-389
+2025-02-11 17:44:56,804 [INFO]  * Detected change in '/home/Jobmanager/app/routes/image_routes.py', reloading
+2025-02-11 17:44:56,853 [INFO]  * Restarting with stat
+2025-02-11 17:44:57,093 [INFO] Starting Job Manager application
+2025-02-11 17:44:57,093 [INFO] Starting Job Manager application
+2025-02-11 17:44:57,101 [WARNING]  * Debugger is active!
+2025-02-11 17:44:57,101 [INFO]  * Debugger PIN: 719-273-389

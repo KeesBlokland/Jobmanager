@@ -3,7 +3,7 @@ from PIL import Image
 from PIL.ExifTags import TAGS
 import os
 from datetime import datetime
-import hashlib
+import sqlite3
 
 class ImageManager:
     def __init__(self, base_path):
@@ -11,17 +11,29 @@ class ImageManager:
         self.THUMBNAIL_SIZE = (300, 300)
         self.MAX_SIZE = (1024, 1024)
 
-    def process_image(self, job_id, image_file):
+    def get_job_identifier(self, db, job_id):
+        """Get invoice number or job ID to use in filename"""
+        result = db.execute(
+            'SELECT invoice_number FROM job WHERE id = ?',
+            (job_id,)
+        ).fetchone()
+        
+        if result and result['invoice_number']:
+            # Remove year prefix from invoice number (e.g., '2025-0004' becomes '0004')
+            return result['invoice_number'].split('-')[1]
+        return f"job{job_id}"
+
+    def process_image(self, job_id, image_file, db=None):
         # Create job directory if it doesn't exist
         job_path = os.path.join(self.base_path, f'job_{job_id}')
         thumb_path = os.path.join(job_path, 'thumbnails')
         os.makedirs(thumb_path, exist_ok=True)
 
-        # Generate unique filename
-        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-        file_hash = hashlib.md5(image_file.read()).hexdigest()[:6]
-        filename = f'img_{timestamp}_{file_hash}.jpg'
-        
+        # Generate filename with job identifier
+        timestamp = datetime.now().strftime('%y%m%d%H%M')
+        job_identifier = self.get_job_identifier(db, job_id) if db else f"job{job_id}"
+        filename = f'{job_identifier}-{timestamp}.jpg'
+
         # Reset file pointer
         image_file.seek(0)
 

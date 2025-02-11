@@ -29,7 +29,7 @@ def upload_direct(db, job_id):
 
     try:
         image_mgr = ImageManager(os.path.join(current_app.instance_path, 'images'))
-        filename = image_mgr.process_image(job_id, file)
+        filename = image_mgr.process_image(job_id, file, db)
         
         # Store in database
         db.execute(
@@ -63,7 +63,7 @@ def process_watch_folder(db, job_id):
         filepath = os.path.join(watch_folder, filename)
         try:
             with open(filepath, 'rb') as file:
-                new_filename = image_mgr.process_image(job_id, file)
+                new_filename = image_mgr.process_image(job_id, file, db)
                 
                 # Store in database
                 db.execute(
