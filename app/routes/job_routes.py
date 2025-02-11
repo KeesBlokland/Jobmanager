@@ -59,7 +59,7 @@ def create_backup(db, type):
             current_app.logger.info(f"Creating full backup at: {backup_path}")
             
             include_dirs = ['app', 'instance']
-            include_files = ['run.py', 'init_db.py', 'LICENSE', 'gitback.sh']
+            include_files = ['run.py', 'init_db.py', 'gitback.sh']
             exclude_patterns = [
                 '__pycache__',
                 '*.pyc',
@@ -74,7 +74,8 @@ def create_backup(db, type):
                 'backup.py',
                 '*.zip',
                 '.txt',
-                '*.md'
+                '*.md',
+                'images'
             ]
 
             with zipfile.ZipFile(backup_path, 'w', zipfile.ZIP_DEFLATED) as zipf:

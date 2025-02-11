@@ -3142,3 +3142,1334 @@ AttributeError: 'TimerManager' object has no attribute 'stop_all_active'
 2025-02-10 18:39:30,250 [INFO] Backup file exists: True
 2025-02-10 18:39:30,250 [INFO] Backup file exists: True
 2025-02-10 18:39:30,251 [INFO] 192.168.2.56 - - [10/Feb/2025 18:39:30] "GET /job/backup/full HTTP/1.1" 200 -
+2025-02-10 18:41:14,489 [INFO] Stopping timer for job 4
+2025-02-10 18:41:14,489 [INFO] Stopping timer for job 4
+2025-02-10 18:41:14,628 [INFO] 192.168.2.56 - - [10/Feb/2025 18:41:14] "POST /timer/job/4/stop_timer HTTP/1.1" 200 -
+2025-02-10 18:41:14,663 [INFO] 192.168.2.56 - - [10/Feb/2025 18:41:14] "GET /job/ HTTP/1.1" 200 -
+2025-02-10 18:41:14,710 [INFO] 192.168.2.56 - - [10/Feb/2025 18:41:14] "GET /static/css/styles.css HTTP/1.1" 200 -
+2025-02-10 18:41:14,737 [INFO] 192.168.2.56 - - [10/Feb/2025 18:41:14] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-10 18:48:11,351 [INFO] Starting Job Manager application
+2025-02-10 18:48:11,351 [INFO] Starting Job Manager application
+2025-02-10 18:48:11,361 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.2.75:5000
+2025-02-10 18:48:11,361 [INFO] [33mPress CTRL+C to quit[0m
+2025-02-10 18:48:11,364 [INFO]  * Restarting with stat
+2025-02-10 18:48:11,597 [INFO] Starting Job Manager application
+2025-02-10 18:48:11,597 [INFO] Starting Job Manager application
+2025-02-10 18:48:11,604 [WARNING]  * Debugger is active!
+2025-02-10 18:48:11,605 [INFO]  * Debugger PIN: 618-195-796
+2025-02-10 18:48:14,279 [INFO] Root path: /home/Jobmanager
+2025-02-10 18:48:14,279 [INFO] Root path: /home/Jobmanager
+2025-02-10 18:48:14,279 [INFO] Current working directory: /home/Jobmanager
+2025-02-10 18:48:14,279 [INFO] Current working directory: /home/Jobmanager
+2025-02-10 18:48:14,279 [INFO] Instance path: /home/Jobmanager/instance
+2025-02-10 18:48:14,279 [INFO] Instance path: /home/Jobmanager/instance
+2025-02-10 18:48:14,279 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250210_1848.zip
+2025-02-10 18:48:14,279 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250210_1848.zip
+2025-02-10 18:48:14,280 [INFO] Adding file: /home/Jobmanager/run.py
+2025-02-10 18:48:14,280 [INFO] Adding file: /home/Jobmanager/run.py
+2025-02-10 18:48:14,280 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-02-10 18:48:14,280 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-02-10 18:48:14,281 [INFO] Adding file: /home/Jobmanager/LICENSE
+2025-02-10 18:48:14,281 [INFO] Adding file: /home/Jobmanager/LICENSE
+2025-02-10 18:48:14,281 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-02-10 18:48:14,281 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-02-10 18:48:14,282 [INFO] Adding to zip: app/db.py
+2025-02-10 18:48:14,282 [INFO] Adding to zip: app/db.py
+2025-02-10 18:48:14,283 [INFO] Adding to zip: app/__init__.py
+2025-02-10 18:48:14,283 [INFO] Adding to zip: app/__init__.py
+2025-02-10 18:48:14,283 [INFO] Adding to zip: app/schema.sql
+2025-02-10 18:48:14,283 [INFO] Adding to zip: app/schema.sql
+2025-02-10 18:48:14,284 [INFO] Adding to zip: app/routes/image_routes.py
+2025-02-10 18:48:14,284 [INFO] Adding to zip: app/routes/image_routes.py
+2025-02-10 18:48:14,284 [INFO] Adding to zip: app/routes/__init__.py
+2025-02-10 18:48:14,284 [INFO] Adding to zip: app/routes/__init__.py
+2025-02-10 18:48:14,285 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-02-10 18:48:14,285 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-02-10 18:48:14,285 [INFO] Adding to zip: app/routes/job_routes.py
+2025-02-10 18:48:14,285 [INFO] Adding to zip: app/routes/job_routes.py
+2025-02-10 18:48:14,286 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-02-10 18:48:14,286 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-02-10 18:48:14,287 [INFO] Adding to zip: app/utils/job_utils.py
+2025-02-10 18:48:14,287 [INFO] Adding to zip: app/utils/job_utils.py
+2025-02-10 18:48:14,287 [INFO] Adding to zip: app/utils/material_utils.py
+2025-02-10 18:48:14,287 [INFO] Adding to zip: app/utils/material_utils.py
+2025-02-10 18:48:14,288 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-02-10 18:48:14,288 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-02-10 18:48:14,288 [INFO] Adding to zip: app/utils/__init__.py
+2025-02-10 18:48:14,288 [INFO] Adding to zip: app/utils/__init__.py
+2025-02-10 18:48:14,288 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-02-10 18:48:14,288 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-02-10 18:48:14,289 [INFO] Adding to zip: app/utils/error_utils.py
+2025-02-10 18:48:14,289 [INFO] Adding to zip: app/utils/error_utils.py
+2025-02-10 18:48:14,289 [INFO] Adding to zip: app/utils/image_utils.py
+2025-02-10 18:48:14,289 [INFO] Adding to zip: app/utils/image_utils.py
+2025-02-10 18:48:14,290 [INFO] Adding to zip: app/templates/customer_form.html
+2025-02-10 18:48:14,290 [INFO] Adding to zip: app/templates/customer_form.html
+2025-02-10 18:48:14,290 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-02-10 18:48:14,290 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-02-10 18:48:14,291 [INFO] Adding to zip: app/templates/job_details.html
+2025-02-10 18:48:14,291 [INFO] Adding to zip: app/templates/job_details.html
+2025-02-10 18:48:14,292 [INFO] Adding to zip: app/templates/invoice.html
+2025-02-10 18:48:14,292 [INFO] Adding to zip: app/templates/invoice.html
+2025-02-10 18:48:14,292 [INFO] Adding to zip: app/templates/job_form.html
+2025-02-10 18:48:14,292 [INFO] Adding to zip: app/templates/job_form.html
+2025-02-10 18:48:14,293 [INFO] Adding to zip: app/templates/customer_list.html
+2025-02-10 18:48:14,293 [INFO] Adding to zip: app/templates/customer_list.html
+2025-02-10 18:48:14,293 [INFO] Adding to zip: app/templates/500.html
+2025-02-10 18:48:14,293 [INFO] Adding to zip: app/templates/500.html
+2025-02-10 18:48:14,294 [INFO] Adding to zip: app/templates/base.html
+2025-02-10 18:48:14,294 [INFO] Adding to zip: app/templates/base.html
+2025-02-10 18:48:14,294 [INFO] Adding to zip: app/templates/job_list.html
+2025-02-10 18:48:14,294 [INFO] Adding to zip: app/templates/job_list.html
+2025-02-10 18:48:14,295 [INFO] Adding to zip: app/templates/404.html
+2025-02-10 18:48:14,295 [INFO] Adding to zip: app/templates/404.html
+2025-02-10 18:48:14,295 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-02-10 18:48:14,295 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-02-10 18:48:14,296 [INFO] Adding to zip: app/static/css/styles.css
+2025-02-10 18:48:14,296 [INFO] Adding to zip: app/static/css/styles.css
+2025-02-10 18:48:14,297 [INFO] Adding to zip: instance/images/job_4/img_20250210_144020_893259.jpg
+2025-02-10 18:48:14,297 [INFO] Adding to zip: instance/images/job_4/img_20250210_144020_893259.jpg
+2025-02-10 18:48:14,305 [INFO] Adding to zip: instance/images/job_4/img_20250210_144542_deb218.jpg
+2025-02-10 18:48:14,305 [INFO] Adding to zip: instance/images/job_4/img_20250210_144542_deb218.jpg
+2025-02-10 18:48:14,312 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144020_893259.jpg
+2025-02-10 18:48:14,312 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144020_893259.jpg
+2025-02-10 18:48:14,313 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144542_deb218.jpg
+2025-02-10 18:48:14,313 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144542_deb218.jpg
+2025-02-10 18:48:14,314 [INFO] Adding to zip: instance/images/job_11/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:48:14,314 [INFO] Adding to zip: instance/images/job_11/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:48:14,319 [INFO] Adding to zip: instance/images/job_11/thumbnails/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:48:14,319 [INFO] Adding to zip: instance/images/job_11/thumbnails/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:48:14,320 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250210_1848.zip
+2025-02-10 18:48:14,320 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250210_1848.zip
+2025-02-10 18:48:14,321 [INFO] Backup file exists: True
+2025-02-10 18:48:14,321 [INFO] Backup file exists: True
+2025-02-10 18:48:14,321 [INFO] 192.168.2.56 - - [10/Feb/2025 18:48:14] "GET /job/backup/full HTTP/1.1" 200 -
+2025-02-10 18:49:01,715 [INFO]  * Detected change in '/home/Jobmanager/backup.py', reloading
+2025-02-10 18:49:01,763 [INFO]  * Restarting with stat
+2025-02-10 18:49:01,996 [INFO] Starting Job Manager application
+2025-02-10 18:49:01,996 [INFO] Starting Job Manager application
+2025-02-10 18:49:02,004 [WARNING]  * Debugger is active!
+2025-02-10 18:49:02,005 [INFO]  * Debugger PIN: 618-195-796
+2025-02-10 18:49:05,839 [INFO] Root path: /home/Jobmanager
+2025-02-10 18:49:05,839 [INFO] Root path: /home/Jobmanager
+2025-02-10 18:49:05,839 [INFO] Current working directory: /home/Jobmanager
+2025-02-10 18:49:05,839 [INFO] Current working directory: /home/Jobmanager
+2025-02-10 18:49:05,840 [INFO] Instance path: /home/Jobmanager/instance
+2025-02-10 18:49:05,840 [INFO] Instance path: /home/Jobmanager/instance
+2025-02-10 18:49:05,840 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250210_1849.zip
+2025-02-10 18:49:05,840 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250210_1849.zip
+2025-02-10 18:49:05,840 [INFO] Adding file: /home/Jobmanager/run.py
+2025-02-10 18:49:05,840 [INFO] Adding file: /home/Jobmanager/run.py
+2025-02-10 18:49:05,841 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-02-10 18:49:05,841 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-02-10 18:49:05,842 [INFO] Adding file: /home/Jobmanager/LICENSE
+2025-02-10 18:49:05,842 [INFO] Adding file: /home/Jobmanager/LICENSE
+2025-02-10 18:49:05,842 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-02-10 18:49:05,842 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-02-10 18:49:05,843 [INFO] Adding to zip: app/db.py
+2025-02-10 18:49:05,843 [INFO] Adding to zip: app/db.py
+2025-02-10 18:49:05,843 [INFO] Adding to zip: app/__init__.py
+2025-02-10 18:49:05,843 [INFO] Adding to zip: app/__init__.py
+2025-02-10 18:49:05,844 [INFO] Adding to zip: app/schema.sql
+2025-02-10 18:49:05,844 [INFO] Adding to zip: app/schema.sql
+2025-02-10 18:49:05,844 [INFO] Adding to zip: app/routes/image_routes.py
+2025-02-10 18:49:05,844 [INFO] Adding to zip: app/routes/image_routes.py
+2025-02-10 18:49:05,845 [INFO] Adding to zip: app/routes/__init__.py
+2025-02-10 18:49:05,845 [INFO] Adding to zip: app/routes/__init__.py
+2025-02-10 18:49:05,845 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-02-10 18:49:05,845 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-02-10 18:49:05,846 [INFO] Adding to zip: app/routes/job_routes.py
+2025-02-10 18:49:05,846 [INFO] Adding to zip: app/routes/job_routes.py
+2025-02-10 18:49:05,847 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-02-10 18:49:05,847 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-02-10 18:49:05,847 [INFO] Adding to zip: app/utils/job_utils.py
+2025-02-10 18:49:05,847 [INFO] Adding to zip: app/utils/job_utils.py
+2025-02-10 18:49:05,848 [INFO] Adding to zip: app/utils/material_utils.py
+2025-02-10 18:49:05,848 [INFO] Adding to zip: app/utils/material_utils.py
+2025-02-10 18:49:05,848 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-02-10 18:49:05,848 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-02-10 18:49:05,849 [INFO] Adding to zip: app/utils/__init__.py
+2025-02-10 18:49:05,849 [INFO] Adding to zip: app/utils/__init__.py
+2025-02-10 18:49:05,849 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-02-10 18:49:05,849 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-02-10 18:49:05,850 [INFO] Adding to zip: app/utils/error_utils.py
+2025-02-10 18:49:05,850 [INFO] Adding to zip: app/utils/error_utils.py
+2025-02-10 18:49:05,850 [INFO] Adding to zip: app/utils/image_utils.py
+2025-02-10 18:49:05,850 [INFO] Adding to zip: app/utils/image_utils.py
+2025-02-10 18:49:05,851 [INFO] Adding to zip: app/templates/customer_form.html
+2025-02-10 18:49:05,851 [INFO] Adding to zip: app/templates/customer_form.html
+2025-02-10 18:49:05,851 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-02-10 18:49:05,851 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-02-10 18:49:05,852 [INFO] Adding to zip: app/templates/job_details.html
+2025-02-10 18:49:05,852 [INFO] Adding to zip: app/templates/job_details.html
+2025-02-10 18:49:05,852 [INFO] Adding to zip: app/templates/invoice.html
+2025-02-10 18:49:05,852 [INFO] Adding to zip: app/templates/invoice.html
+2025-02-10 18:49:05,853 [INFO] Adding to zip: app/templates/job_form.html
+2025-02-10 18:49:05,853 [INFO] Adding to zip: app/templates/job_form.html
+2025-02-10 18:49:05,854 [INFO] Adding to zip: app/templates/customer_list.html
+2025-02-10 18:49:05,854 [INFO] Adding to zip: app/templates/customer_list.html
+2025-02-10 18:49:05,854 [INFO] Adding to zip: app/templates/500.html
+2025-02-10 18:49:05,854 [INFO] Adding to zip: app/templates/500.html
+2025-02-10 18:49:05,854 [INFO] Adding to zip: app/templates/base.html
+2025-02-10 18:49:05,854 [INFO] Adding to zip: app/templates/base.html
+2025-02-10 18:49:05,855 [INFO] Adding to zip: app/templates/job_list.html
+2025-02-10 18:49:05,855 [INFO] Adding to zip: app/templates/job_list.html
+2025-02-10 18:49:05,856 [INFO] Adding to zip: app/templates/404.html
+2025-02-10 18:49:05,856 [INFO] Adding to zip: app/templates/404.html
+2025-02-10 18:49:05,856 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-02-10 18:49:05,856 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-02-10 18:49:05,857 [INFO] Adding to zip: app/static/css/styles.css
+2025-02-10 18:49:05,857 [INFO] Adding to zip: app/static/css/styles.css
+2025-02-10 18:49:05,857 [INFO] Adding to zip: instance/images/job_4/img_20250210_144020_893259.jpg
+2025-02-10 18:49:05,857 [INFO] Adding to zip: instance/images/job_4/img_20250210_144020_893259.jpg
+2025-02-10 18:49:05,865 [INFO] Adding to zip: instance/images/job_4/img_20250210_144542_deb218.jpg
+2025-02-10 18:49:05,865 [INFO] Adding to zip: instance/images/job_4/img_20250210_144542_deb218.jpg
+2025-02-10 18:49:05,875 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144020_893259.jpg
+2025-02-10 18:49:05,875 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144020_893259.jpg
+2025-02-10 18:49:05,876 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144542_deb218.jpg
+2025-02-10 18:49:05,876 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144542_deb218.jpg
+2025-02-10 18:49:05,877 [INFO] Adding to zip: instance/images/job_11/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:49:05,877 [INFO] Adding to zip: instance/images/job_11/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:49:05,882 [INFO] Adding to zip: instance/images/job_11/thumbnails/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:49:05,882 [INFO] Adding to zip: instance/images/job_11/thumbnails/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:49:05,883 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250210_1849.zip
+2025-02-10 18:49:05,883 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250210_1849.zip
+2025-02-10 18:49:05,884 [INFO] Backup file exists: True
+2025-02-10 18:49:05,884 [INFO] Backup file exists: True
+2025-02-10 18:49:05,884 [INFO] 192.168.2.56 - - [10/Feb/2025 18:49:05] "GET /job/backup/full HTTP/1.1" 200 -
+2025-02-10 18:50:25,179 [INFO]  * Detected change in '/home/Jobmanager/backup.py', reloading
+2025-02-10 18:50:25,226 [INFO]  * Restarting with stat
+2025-02-10 18:50:25,459 [INFO] Starting Job Manager application
+2025-02-10 18:50:25,459 [INFO] Starting Job Manager application
+2025-02-10 18:50:25,467 [WARNING]  * Debugger is active!
+2025-02-10 18:50:25,468 [INFO]  * Debugger PIN: 618-195-796
+2025-02-10 18:50:28,858 [INFO] Root path: /home/Jobmanager
+2025-02-10 18:50:28,858 [INFO] Root path: /home/Jobmanager
+2025-02-10 18:50:28,859 [INFO] Current working directory: /home/Jobmanager
+2025-02-10 18:50:28,859 [INFO] Current working directory: /home/Jobmanager
+2025-02-10 18:50:28,859 [INFO] Instance path: /home/Jobmanager/instance
+2025-02-10 18:50:28,859 [INFO] Instance path: /home/Jobmanager/instance
+2025-02-10 18:50:28,859 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250210_1850.zip
+2025-02-10 18:50:28,859 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250210_1850.zip
+2025-02-10 18:50:28,860 [INFO] Adding file: /home/Jobmanager/run.py
+2025-02-10 18:50:28,860 [INFO] Adding file: /home/Jobmanager/run.py
+2025-02-10 18:50:28,860 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-02-10 18:50:28,860 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-02-10 18:50:28,861 [INFO] Adding file: /home/Jobmanager/LICENSE
+2025-02-10 18:50:28,861 [INFO] Adding file: /home/Jobmanager/LICENSE
+2025-02-10 18:50:28,861 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-02-10 18:50:28,861 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-02-10 18:50:28,862 [INFO] Adding to zip: app/db.py
+2025-02-10 18:50:28,862 [INFO] Adding to zip: app/db.py
+2025-02-10 18:50:28,862 [INFO] Adding to zip: app/__init__.py
+2025-02-10 18:50:28,862 [INFO] Adding to zip: app/__init__.py
+2025-02-10 18:50:28,863 [INFO] Adding to zip: app/schema.sql
+2025-02-10 18:50:28,863 [INFO] Adding to zip: app/schema.sql
+2025-02-10 18:50:28,863 [INFO] Adding to zip: app/routes/image_routes.py
+2025-02-10 18:50:28,863 [INFO] Adding to zip: app/routes/image_routes.py
+2025-02-10 18:50:28,864 [INFO] Adding to zip: app/routes/__init__.py
+2025-02-10 18:50:28,864 [INFO] Adding to zip: app/routes/__init__.py
+2025-02-10 18:50:28,865 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-02-10 18:50:28,865 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-02-10 18:50:28,865 [INFO] Adding to zip: app/routes/job_routes.py
+2025-02-10 18:50:28,865 [INFO] Adding to zip: app/routes/job_routes.py
+2025-02-10 18:50:28,866 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-02-10 18:50:28,866 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-02-10 18:50:28,867 [INFO] Adding to zip: app/utils/job_utils.py
+2025-02-10 18:50:28,867 [INFO] Adding to zip: app/utils/job_utils.py
+2025-02-10 18:50:28,867 [INFO] Adding to zip: app/utils/material_utils.py
+2025-02-10 18:50:28,867 [INFO] Adding to zip: app/utils/material_utils.py
+2025-02-10 18:50:28,867 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-02-10 18:50:28,867 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-02-10 18:50:28,868 [INFO] Adding to zip: app/utils/__init__.py
+2025-02-10 18:50:28,868 [INFO] Adding to zip: app/utils/__init__.py
+2025-02-10 18:50:28,868 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-02-10 18:50:28,868 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-02-10 18:50:28,869 [INFO] Adding to zip: app/utils/error_utils.py
+2025-02-10 18:50:28,869 [INFO] Adding to zip: app/utils/error_utils.py
+2025-02-10 18:50:28,869 [INFO] Adding to zip: app/utils/image_utils.py
+2025-02-10 18:50:28,869 [INFO] Adding to zip: app/utils/image_utils.py
+2025-02-10 18:50:28,870 [INFO] Adding to zip: app/templates/customer_form.html
+2025-02-10 18:50:28,870 [INFO] Adding to zip: app/templates/customer_form.html
+2025-02-10 18:50:28,870 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-02-10 18:50:28,870 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-02-10 18:50:28,871 [INFO] Adding to zip: app/templates/job_details.html
+2025-02-10 18:50:28,871 [INFO] Adding to zip: app/templates/job_details.html
+2025-02-10 18:50:28,872 [INFO] Adding to zip: app/templates/invoice.html
+2025-02-10 18:50:28,872 [INFO] Adding to zip: app/templates/invoice.html
+2025-02-10 18:50:28,872 [INFO] Adding to zip: app/templates/job_form.html
+2025-02-10 18:50:28,872 [INFO] Adding to zip: app/templates/job_form.html
+2025-02-10 18:50:28,873 [INFO] Adding to zip: app/templates/customer_list.html
+2025-02-10 18:50:28,873 [INFO] Adding to zip: app/templates/customer_list.html
+2025-02-10 18:50:28,873 [INFO] Adding to zip: app/templates/500.html
+2025-02-10 18:50:28,873 [INFO] Adding to zip: app/templates/500.html
+2025-02-10 18:50:28,874 [INFO] Adding to zip: app/templates/base.html
+2025-02-10 18:50:28,874 [INFO] Adding to zip: app/templates/base.html
+2025-02-10 18:50:28,874 [INFO] Adding to zip: app/templates/job_list.html
+2025-02-10 18:50:28,874 [INFO] Adding to zip: app/templates/job_list.html
+2025-02-10 18:50:28,875 [INFO] Adding to zip: app/templates/404.html
+2025-02-10 18:50:28,875 [INFO] Adding to zip: app/templates/404.html
+2025-02-10 18:50:28,875 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-02-10 18:50:28,875 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-02-10 18:50:28,876 [INFO] Adding to zip: app/static/css/styles.css
+2025-02-10 18:50:28,876 [INFO] Adding to zip: app/static/css/styles.css
+2025-02-10 18:50:28,877 [INFO] Adding to zip: instance/images/job_4/img_20250210_144020_893259.jpg
+2025-02-10 18:50:28,877 [INFO] Adding to zip: instance/images/job_4/img_20250210_144020_893259.jpg
+2025-02-10 18:50:28,884 [INFO] Adding to zip: instance/images/job_4/img_20250210_144542_deb218.jpg
+2025-02-10 18:50:28,884 [INFO] Adding to zip: instance/images/job_4/img_20250210_144542_deb218.jpg
+2025-02-10 18:50:28,892 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144020_893259.jpg
+2025-02-10 18:50:28,892 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144020_893259.jpg
+2025-02-10 18:50:28,893 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144542_deb218.jpg
+2025-02-10 18:50:28,893 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144542_deb218.jpg
+2025-02-10 18:50:28,894 [INFO] Adding to zip: instance/images/job_11/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:50:28,894 [INFO] Adding to zip: instance/images/job_11/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:50:28,899 [INFO] Adding to zip: instance/images/job_11/thumbnails/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:50:28,899 [INFO] Adding to zip: instance/images/job_11/thumbnails/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:50:28,900 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250210_1850.zip
+2025-02-10 18:50:28,900 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250210_1850.zip
+2025-02-10 18:50:28,900 [INFO] Backup file exists: True
+2025-02-10 18:50:28,900 [INFO] Backup file exists: True
+2025-02-10 18:50:28,901 [INFO] 192.168.2.56 - - [10/Feb/2025 18:50:28] "GET /job/backup/full HTTP/1.1" 200 -
+2025-02-10 18:52:21,711 [INFO]  * Detected change in '/home/Jobmanager/backup.py', reloading
+2025-02-10 18:52:21,758 [INFO]  * Restarting with stat
+2025-02-10 18:52:22,030 [INFO] Starting Job Manager application
+2025-02-10 18:52:22,030 [INFO] Starting Job Manager application
+2025-02-10 18:52:22,041 [WARNING]  * Debugger is active!
+2025-02-10 18:52:22,042 [INFO]  * Debugger PIN: 618-195-796
+2025-02-10 18:52:31,275 [INFO] Root path: /home/Jobmanager
+2025-02-10 18:52:31,275 [INFO] Root path: /home/Jobmanager
+2025-02-10 18:52:31,276 [INFO] Current working directory: /home/Jobmanager
+2025-02-10 18:52:31,276 [INFO] Current working directory: /home/Jobmanager
+2025-02-10 18:52:31,276 [INFO] Instance path: /home/Jobmanager/instance
+2025-02-10 18:52:31,276 [INFO] Instance path: /home/Jobmanager/instance
+2025-02-10 18:52:31,276 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250210_1852.zip
+2025-02-10 18:52:31,276 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250210_1852.zip
+2025-02-10 18:52:31,276 [INFO] Adding file: /home/Jobmanager/run.py
+2025-02-10 18:52:31,276 [INFO] Adding file: /home/Jobmanager/run.py
+2025-02-10 18:52:31,277 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-02-10 18:52:31,277 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-02-10 18:52:31,278 [INFO] Adding file: /home/Jobmanager/LICENSE
+2025-02-10 18:52:31,278 [INFO] Adding file: /home/Jobmanager/LICENSE
+2025-02-10 18:52:31,278 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-02-10 18:52:31,278 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-02-10 18:52:31,279 [INFO] Adding to zip: app/db.py
+2025-02-10 18:52:31,279 [INFO] Adding to zip: app/db.py
+2025-02-10 18:52:31,279 [INFO] Adding to zip: app/__init__.py
+2025-02-10 18:52:31,279 [INFO] Adding to zip: app/__init__.py
+2025-02-10 18:52:31,280 [INFO] Adding to zip: app/schema.sql
+2025-02-10 18:52:31,280 [INFO] Adding to zip: app/schema.sql
+2025-02-10 18:52:31,280 [INFO] Adding to zip: app/routes/image_routes.py
+2025-02-10 18:52:31,280 [INFO] Adding to zip: app/routes/image_routes.py
+2025-02-10 18:52:31,281 [INFO] Adding to zip: app/routes/__init__.py
+2025-02-10 18:52:31,281 [INFO] Adding to zip: app/routes/__init__.py
+2025-02-10 18:52:31,281 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-02-10 18:52:31,281 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-02-10 18:52:31,282 [INFO] Adding to zip: app/routes/job_routes.py
+2025-02-10 18:52:31,282 [INFO] Adding to zip: app/routes/job_routes.py
+2025-02-10 18:52:31,283 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-02-10 18:52:31,283 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-02-10 18:52:31,283 [INFO] Adding to zip: app/utils/job_utils.py
+2025-02-10 18:52:31,283 [INFO] Adding to zip: app/utils/job_utils.py
+2025-02-10 18:52:31,284 [INFO] Adding to zip: app/utils/material_utils.py
+2025-02-10 18:52:31,284 [INFO] Adding to zip: app/utils/material_utils.py
+2025-02-10 18:52:31,284 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-02-10 18:52:31,284 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-02-10 18:52:31,285 [INFO] Adding to zip: app/utils/__init__.py
+2025-02-10 18:52:31,285 [INFO] Adding to zip: app/utils/__init__.py
+2025-02-10 18:52:31,285 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-02-10 18:52:31,285 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-02-10 18:52:31,286 [INFO] Adding to zip: app/utils/error_utils.py
+2025-02-10 18:52:31,286 [INFO] Adding to zip: app/utils/error_utils.py
+2025-02-10 18:52:31,286 [INFO] Adding to zip: app/utils/image_utils.py
+2025-02-10 18:52:31,286 [INFO] Adding to zip: app/utils/image_utils.py
+2025-02-10 18:52:31,287 [INFO] Adding to zip: app/templates/customer_form.html
+2025-02-10 18:52:31,287 [INFO] Adding to zip: app/templates/customer_form.html
+2025-02-10 18:52:31,287 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-02-10 18:52:31,287 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-02-10 18:52:31,288 [INFO] Adding to zip: app/templates/job_details.html
+2025-02-10 18:52:31,288 [INFO] Adding to zip: app/templates/job_details.html
+2025-02-10 18:52:31,288 [INFO] Adding to zip: app/templates/invoice.html
+2025-02-10 18:52:31,288 [INFO] Adding to zip: app/templates/invoice.html
+2025-02-10 18:52:31,289 [INFO] Adding to zip: app/templates/job_form.html
+2025-02-10 18:52:31,289 [INFO] Adding to zip: app/templates/job_form.html
+2025-02-10 18:52:31,290 [INFO] Adding to zip: app/templates/customer_list.html
+2025-02-10 18:52:31,290 [INFO] Adding to zip: app/templates/customer_list.html
+2025-02-10 18:52:31,290 [INFO] Adding to zip: app/templates/500.html
+2025-02-10 18:52:31,290 [INFO] Adding to zip: app/templates/500.html
+2025-02-10 18:52:31,291 [INFO] Adding to zip: app/templates/base.html
+2025-02-10 18:52:31,291 [INFO] Adding to zip: app/templates/base.html
+2025-02-10 18:52:31,291 [INFO] Adding to zip: app/templates/job_list.html
+2025-02-10 18:52:31,291 [INFO] Adding to zip: app/templates/job_list.html
+2025-02-10 18:52:31,292 [INFO] Adding to zip: app/templates/404.html
+2025-02-10 18:52:31,292 [INFO] Adding to zip: app/templates/404.html
+2025-02-10 18:52:31,292 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-02-10 18:52:31,292 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-02-10 18:52:31,293 [INFO] Adding to zip: app/static/css/styles.css
+2025-02-10 18:52:31,293 [INFO] Adding to zip: app/static/css/styles.css
+2025-02-10 18:52:31,293 [INFO] Adding to zip: instance/images/job_4/img_20250210_144020_893259.jpg
+2025-02-10 18:52:31,293 [INFO] Adding to zip: instance/images/job_4/img_20250210_144020_893259.jpg
+2025-02-10 18:52:31,301 [INFO] Adding to zip: instance/images/job_4/img_20250210_144542_deb218.jpg
+2025-02-10 18:52:31,301 [INFO] Adding to zip: instance/images/job_4/img_20250210_144542_deb218.jpg
+2025-02-10 18:52:31,309 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144020_893259.jpg
+2025-02-10 18:52:31,309 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144020_893259.jpg
+2025-02-10 18:52:31,310 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144542_deb218.jpg
+2025-02-10 18:52:31,310 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144542_deb218.jpg
+2025-02-10 18:52:31,311 [INFO] Adding to zip: instance/images/job_11/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:52:31,311 [INFO] Adding to zip: instance/images/job_11/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:52:31,316 [INFO] Adding to zip: instance/images/job_11/thumbnails/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:52:31,316 [INFO] Adding to zip: instance/images/job_11/thumbnails/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:52:31,317 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250210_1852.zip
+2025-02-10 18:52:31,317 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250210_1852.zip
+2025-02-10 18:52:31,317 [INFO] Backup file exists: True
+2025-02-10 18:52:31,317 [INFO] Backup file exists: True
+2025-02-10 18:52:31,318 [INFO] 192.168.2.56 - - [10/Feb/2025 18:52:31] "GET /job/backup/full HTTP/1.1" 200 -
+2025-02-10 18:53:22,169 [INFO]  * Detected change in '/home/Jobmanager/backup.py', reloading
+2025-02-10 18:53:22,216 [INFO]  * Restarting with stat
+2025-02-10 18:53:22,449 [INFO] Starting Job Manager application
+2025-02-10 18:53:22,449 [INFO] Starting Job Manager application
+2025-02-10 18:53:22,456 [WARNING]  * Debugger is active!
+2025-02-10 18:53:22,457 [INFO]  * Debugger PIN: 618-195-796
+2025-02-10 18:53:25,088 [INFO] Root path: /home/Jobmanager
+2025-02-10 18:53:25,088 [INFO] Root path: /home/Jobmanager
+2025-02-10 18:53:25,088 [INFO] Current working directory: /home/Jobmanager
+2025-02-10 18:53:25,088 [INFO] Current working directory: /home/Jobmanager
+2025-02-10 18:53:25,088 [INFO] Instance path: /home/Jobmanager/instance
+2025-02-10 18:53:25,088 [INFO] Instance path: /home/Jobmanager/instance
+2025-02-10 18:53:25,089 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250210_1853.zip
+2025-02-10 18:53:25,089 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250210_1853.zip
+2025-02-10 18:53:25,089 [INFO] Adding file: /home/Jobmanager/run.py
+2025-02-10 18:53:25,089 [INFO] Adding file: /home/Jobmanager/run.py
+2025-02-10 18:53:25,090 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-02-10 18:53:25,090 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-02-10 18:53:25,090 [INFO] Adding file: /home/Jobmanager/LICENSE
+2025-02-10 18:53:25,090 [INFO] Adding file: /home/Jobmanager/LICENSE
+2025-02-10 18:53:25,091 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-02-10 18:53:25,091 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-02-10 18:53:25,091 [INFO] Adding to zip: app/db.py
+2025-02-10 18:53:25,091 [INFO] Adding to zip: app/db.py
+2025-02-10 18:53:25,092 [INFO] Adding to zip: app/__init__.py
+2025-02-10 18:53:25,092 [INFO] Adding to zip: app/__init__.py
+2025-02-10 18:53:25,092 [INFO] Adding to zip: app/schema.sql
+2025-02-10 18:53:25,092 [INFO] Adding to zip: app/schema.sql
+2025-02-10 18:53:25,093 [INFO] Adding to zip: app/routes/image_routes.py
+2025-02-10 18:53:25,093 [INFO] Adding to zip: app/routes/image_routes.py
+2025-02-10 18:53:25,094 [INFO] Adding to zip: app/routes/__init__.py
+2025-02-10 18:53:25,094 [INFO] Adding to zip: app/routes/__init__.py
+2025-02-10 18:53:25,094 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-02-10 18:53:25,094 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-02-10 18:53:25,095 [INFO] Adding to zip: app/routes/job_routes.py
+2025-02-10 18:53:25,095 [INFO] Adding to zip: app/routes/job_routes.py
+2025-02-10 18:53:25,096 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-02-10 18:53:25,096 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-02-10 18:53:25,096 [INFO] Adding to zip: app/utils/job_utils.py
+2025-02-10 18:53:25,096 [INFO] Adding to zip: app/utils/job_utils.py
+2025-02-10 18:53:25,097 [INFO] Adding to zip: app/utils/material_utils.py
+2025-02-10 18:53:25,097 [INFO] Adding to zip: app/utils/material_utils.py
+2025-02-10 18:53:25,097 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-02-10 18:53:25,097 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-02-10 18:53:25,097 [INFO] Adding to zip: app/utils/__init__.py
+2025-02-10 18:53:25,097 [INFO] Adding to zip: app/utils/__init__.py
+2025-02-10 18:53:25,098 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-02-10 18:53:25,098 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-02-10 18:53:25,098 [INFO] Adding to zip: app/utils/error_utils.py
+2025-02-10 18:53:25,098 [INFO] Adding to zip: app/utils/error_utils.py
+2025-02-10 18:53:25,099 [INFO] Adding to zip: app/utils/image_utils.py
+2025-02-10 18:53:25,099 [INFO] Adding to zip: app/utils/image_utils.py
+2025-02-10 18:53:25,099 [INFO] Adding to zip: app/templates/customer_form.html
+2025-02-10 18:53:25,099 [INFO] Adding to zip: app/templates/customer_form.html
+2025-02-10 18:53:25,100 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-02-10 18:53:25,100 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-02-10 18:53:25,101 [INFO] Adding to zip: app/templates/job_details.html
+2025-02-10 18:53:25,101 [INFO] Adding to zip: app/templates/job_details.html
+2025-02-10 18:53:25,101 [INFO] Adding to zip: app/templates/invoice.html
+2025-02-10 18:53:25,101 [INFO] Adding to zip: app/templates/invoice.html
+2025-02-10 18:53:25,102 [INFO] Adding to zip: app/templates/job_form.html
+2025-02-10 18:53:25,102 [INFO] Adding to zip: app/templates/job_form.html
+2025-02-10 18:53:25,102 [INFO] Adding to zip: app/templates/customer_list.html
+2025-02-10 18:53:25,102 [INFO] Adding to zip: app/templates/customer_list.html
+2025-02-10 18:53:25,103 [INFO] Adding to zip: app/templates/500.html
+2025-02-10 18:53:25,103 [INFO] Adding to zip: app/templates/500.html
+2025-02-10 18:53:25,103 [INFO] Adding to zip: app/templates/base.html
+2025-02-10 18:53:25,103 [INFO] Adding to zip: app/templates/base.html
+2025-02-10 18:53:25,104 [INFO] Adding to zip: app/templates/job_list.html
+2025-02-10 18:53:25,104 [INFO] Adding to zip: app/templates/job_list.html
+2025-02-10 18:53:25,104 [INFO] Adding to zip: app/templates/404.html
+2025-02-10 18:53:25,104 [INFO] Adding to zip: app/templates/404.html
+2025-02-10 18:53:25,105 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-02-10 18:53:25,105 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-02-10 18:53:25,105 [INFO] Adding to zip: app/static/css/styles.css
+2025-02-10 18:53:25,105 [INFO] Adding to zip: app/static/css/styles.css
+2025-02-10 18:53:25,106 [INFO] Adding to zip: instance/images/job_4/img_20250210_144020_893259.jpg
+2025-02-10 18:53:25,106 [INFO] Adding to zip: instance/images/job_4/img_20250210_144020_893259.jpg
+2025-02-10 18:53:25,114 [INFO] Adding to zip: instance/images/job_4/img_20250210_144542_deb218.jpg
+2025-02-10 18:53:25,114 [INFO] Adding to zip: instance/images/job_4/img_20250210_144542_deb218.jpg
+2025-02-10 18:53:25,122 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144020_893259.jpg
+2025-02-10 18:53:25,122 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144020_893259.jpg
+2025-02-10 18:53:25,123 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144542_deb218.jpg
+2025-02-10 18:53:25,123 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144542_deb218.jpg
+2025-02-10 18:53:25,124 [INFO] Adding to zip: instance/images/job_11/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:53:25,124 [INFO] Adding to zip: instance/images/job_11/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:53:25,129 [INFO] Adding to zip: instance/images/job_11/thumbnails/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:53:25,129 [INFO] Adding to zip: instance/images/job_11/thumbnails/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:53:25,130 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250210_1853.zip
+2025-02-10 18:53:25,130 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250210_1853.zip
+2025-02-10 18:53:25,130 [INFO] Backup file exists: True
+2025-02-10 18:53:25,130 [INFO] Backup file exists: True
+2025-02-10 18:53:25,131 [INFO] 192.168.2.56 - - [10/Feb/2025 18:53:25] "GET /job/backup/full HTTP/1.1" 200 -
+2025-02-10 18:54:36,614 [INFO]  * Detected change in '/home/Jobmanager/backup.py', reloading
+2025-02-10 18:54:36,660 [INFO]  * Restarting with stat
+2025-02-10 18:54:36,893 [INFO] Starting Job Manager application
+2025-02-10 18:54:36,893 [INFO] Starting Job Manager application
+2025-02-10 18:54:36,901 [WARNING]  * Debugger is active!
+2025-02-10 18:54:36,902 [INFO]  * Debugger PIN: 618-195-796
+2025-02-10 18:54:39,542 [INFO] Root path: /home/Jobmanager
+2025-02-10 18:54:39,542 [INFO] Root path: /home/Jobmanager
+2025-02-10 18:54:39,542 [INFO] Current working directory: /home/Jobmanager
+2025-02-10 18:54:39,542 [INFO] Current working directory: /home/Jobmanager
+2025-02-10 18:54:39,542 [INFO] Instance path: /home/Jobmanager/instance
+2025-02-10 18:54:39,542 [INFO] Instance path: /home/Jobmanager/instance
+2025-02-10 18:54:39,542 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250210_1854.zip
+2025-02-10 18:54:39,542 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250210_1854.zip
+2025-02-10 18:54:39,543 [INFO] Adding file: /home/Jobmanager/run.py
+2025-02-10 18:54:39,543 [INFO] Adding file: /home/Jobmanager/run.py
+2025-02-10 18:54:39,544 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-02-10 18:54:39,544 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-02-10 18:54:39,544 [INFO] Adding file: /home/Jobmanager/LICENSE
+2025-02-10 18:54:39,544 [INFO] Adding file: /home/Jobmanager/LICENSE
+2025-02-10 18:54:39,544 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-02-10 18:54:39,544 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-02-10 18:54:39,545 [INFO] Adding to zip: app/db.py
+2025-02-10 18:54:39,545 [INFO] Adding to zip: app/db.py
+2025-02-10 18:54:39,546 [INFO] Adding to zip: app/__init__.py
+2025-02-10 18:54:39,546 [INFO] Adding to zip: app/__init__.py
+2025-02-10 18:54:39,546 [INFO] Adding to zip: app/schema.sql
+2025-02-10 18:54:39,546 [INFO] Adding to zip: app/schema.sql
+2025-02-10 18:54:39,547 [INFO] Adding to zip: app/routes/image_routes.py
+2025-02-10 18:54:39,547 [INFO] Adding to zip: app/routes/image_routes.py
+2025-02-10 18:54:39,547 [INFO] Adding to zip: app/routes/__init__.py
+2025-02-10 18:54:39,547 [INFO] Adding to zip: app/routes/__init__.py
+2025-02-10 18:54:39,548 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-02-10 18:54:39,548 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-02-10 18:54:39,548 [INFO] Adding to zip: app/routes/job_routes.py
+2025-02-10 18:54:39,548 [INFO] Adding to zip: app/routes/job_routes.py
+2025-02-10 18:54:39,549 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-02-10 18:54:39,549 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-02-10 18:54:39,550 [INFO] Adding to zip: app/utils/job_utils.py
+2025-02-10 18:54:39,550 [INFO] Adding to zip: app/utils/job_utils.py
+2025-02-10 18:54:39,550 [INFO] Adding to zip: app/utils/material_utils.py
+2025-02-10 18:54:39,550 [INFO] Adding to zip: app/utils/material_utils.py
+2025-02-10 18:54:39,551 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-02-10 18:54:39,551 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-02-10 18:54:39,551 [INFO] Adding to zip: app/utils/__init__.py
+2025-02-10 18:54:39,551 [INFO] Adding to zip: app/utils/__init__.py
+2025-02-10 18:54:39,551 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-02-10 18:54:39,551 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-02-10 18:54:39,552 [INFO] Adding to zip: app/utils/error_utils.py
+2025-02-10 18:54:39,552 [INFO] Adding to zip: app/utils/error_utils.py
+2025-02-10 18:54:39,552 [INFO] Adding to zip: app/utils/image_utils.py
+2025-02-10 18:54:39,552 [INFO] Adding to zip: app/utils/image_utils.py
+2025-02-10 18:54:39,553 [INFO] Adding to zip: app/templates/customer_form.html
+2025-02-10 18:54:39,553 [INFO] Adding to zip: app/templates/customer_form.html
+2025-02-10 18:54:39,553 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-02-10 18:54:39,553 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-02-10 18:54:39,554 [INFO] Adding to zip: app/templates/job_details.html
+2025-02-10 18:54:39,554 [INFO] Adding to zip: app/templates/job_details.html
+2025-02-10 18:54:39,555 [INFO] Adding to zip: app/templates/invoice.html
+2025-02-10 18:54:39,555 [INFO] Adding to zip: app/templates/invoice.html
+2025-02-10 18:54:39,555 [INFO] Adding to zip: app/templates/job_form.html
+2025-02-10 18:54:39,555 [INFO] Adding to zip: app/templates/job_form.html
+2025-02-10 18:54:39,556 [INFO] Adding to zip: app/templates/customer_list.html
+2025-02-10 18:54:39,556 [INFO] Adding to zip: app/templates/customer_list.html
+2025-02-10 18:54:39,556 [INFO] Adding to zip: app/templates/500.html
+2025-02-10 18:54:39,556 [INFO] Adding to zip: app/templates/500.html
+2025-02-10 18:54:39,557 [INFO] Adding to zip: app/templates/base.html
+2025-02-10 18:54:39,557 [INFO] Adding to zip: app/templates/base.html
+2025-02-10 18:54:39,557 [INFO] Adding to zip: app/templates/job_list.html
+2025-02-10 18:54:39,557 [INFO] Adding to zip: app/templates/job_list.html
+2025-02-10 18:54:39,558 [INFO] Adding to zip: app/templates/404.html
+2025-02-10 18:54:39,558 [INFO] Adding to zip: app/templates/404.html
+2025-02-10 18:54:39,558 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-02-10 18:54:39,558 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-02-10 18:54:39,559 [INFO] Adding to zip: app/static/css/styles.css
+2025-02-10 18:54:39,559 [INFO] Adding to zip: app/static/css/styles.css
+2025-02-10 18:54:39,560 [INFO] Adding to zip: instance/images/job_4/img_20250210_144020_893259.jpg
+2025-02-10 18:54:39,560 [INFO] Adding to zip: instance/images/job_4/img_20250210_144020_893259.jpg
+2025-02-10 18:54:39,567 [INFO] Adding to zip: instance/images/job_4/img_20250210_144542_deb218.jpg
+2025-02-10 18:54:39,567 [INFO] Adding to zip: instance/images/job_4/img_20250210_144542_deb218.jpg
+2025-02-10 18:54:39,575 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144020_893259.jpg
+2025-02-10 18:54:39,575 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144020_893259.jpg
+2025-02-10 18:54:39,576 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144542_deb218.jpg
+2025-02-10 18:54:39,576 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144542_deb218.jpg
+2025-02-10 18:54:39,577 [INFO] Adding to zip: instance/images/job_11/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:54:39,577 [INFO] Adding to zip: instance/images/job_11/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:54:39,582 [INFO] Adding to zip: instance/images/job_11/thumbnails/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:54:39,582 [INFO] Adding to zip: instance/images/job_11/thumbnails/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:54:39,583 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250210_1854.zip
+2025-02-10 18:54:39,583 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250210_1854.zip
+2025-02-10 18:54:39,584 [INFO] Backup file exists: True
+2025-02-10 18:54:39,584 [INFO] Backup file exists: True
+2025-02-10 18:54:39,584 [INFO] 192.168.2.56 - - [10/Feb/2025 18:54:39] "GET /job/backup/full HTTP/1.1" 200 -
+2025-02-10 18:55:10,054 [INFO] Root path: /home/Jobmanager
+2025-02-10 18:55:10,054 [INFO] Root path: /home/Jobmanager
+2025-02-10 18:55:10,054 [INFO] Current working directory: /home/Jobmanager
+2025-02-10 18:55:10,054 [INFO] Current working directory: /home/Jobmanager
+2025-02-10 18:55:10,054 [INFO] Instance path: /home/Jobmanager/instance
+2025-02-10 18:55:10,054 [INFO] Instance path: /home/Jobmanager/instance
+2025-02-10 18:55:10,054 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250210_1855.zip
+2025-02-10 18:55:10,054 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250210_1855.zip
+2025-02-10 18:55:10,055 [INFO] Adding file: /home/Jobmanager/run.py
+2025-02-10 18:55:10,055 [INFO] Adding file: /home/Jobmanager/run.py
+2025-02-10 18:55:10,055 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-02-10 18:55:10,055 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-02-10 18:55:10,055 [INFO] Adding file: /home/Jobmanager/LICENSE
+2025-02-10 18:55:10,055 [INFO] Adding file: /home/Jobmanager/LICENSE
+2025-02-10 18:55:10,056 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-02-10 18:55:10,056 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-02-10 18:55:10,056 [INFO] Adding to zip: app/db.py
+2025-02-10 18:55:10,056 [INFO] Adding to zip: app/db.py
+2025-02-10 18:55:10,057 [INFO] Adding to zip: app/__init__.py
+2025-02-10 18:55:10,057 [INFO] Adding to zip: app/__init__.py
+2025-02-10 18:55:10,057 [INFO] Adding to zip: app/schema.sql
+2025-02-10 18:55:10,057 [INFO] Adding to zip: app/schema.sql
+2025-02-10 18:55:10,058 [INFO] Adding to zip: app/routes/image_routes.py
+2025-02-10 18:55:10,058 [INFO] Adding to zip: app/routes/image_routes.py
+2025-02-10 18:55:10,058 [INFO] Adding to zip: app/routes/__init__.py
+2025-02-10 18:55:10,058 [INFO] Adding to zip: app/routes/__init__.py
+2025-02-10 18:55:10,059 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-02-10 18:55:10,059 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-02-10 18:55:10,059 [INFO] Adding to zip: app/routes/job_routes.py
+2025-02-10 18:55:10,059 [INFO] Adding to zip: app/routes/job_routes.py
+2025-02-10 18:55:10,060 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-02-10 18:55:10,060 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-02-10 18:55:10,061 [INFO] Adding to zip: app/utils/job_utils.py
+2025-02-10 18:55:10,061 [INFO] Adding to zip: app/utils/job_utils.py
+2025-02-10 18:55:10,061 [INFO] Adding to zip: app/utils/material_utils.py
+2025-02-10 18:55:10,061 [INFO] Adding to zip: app/utils/material_utils.py
+2025-02-10 18:55:10,062 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-02-10 18:55:10,062 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-02-10 18:55:10,062 [INFO] Adding to zip: app/utils/__init__.py
+2025-02-10 18:55:10,062 [INFO] Adding to zip: app/utils/__init__.py
+2025-02-10 18:55:10,063 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-02-10 18:55:10,063 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-02-10 18:55:10,063 [INFO] Adding to zip: app/utils/error_utils.py
+2025-02-10 18:55:10,063 [INFO] Adding to zip: app/utils/error_utils.py
+2025-02-10 18:55:10,063 [INFO] Adding to zip: app/utils/image_utils.py
+2025-02-10 18:55:10,063 [INFO] Adding to zip: app/utils/image_utils.py
+2025-02-10 18:55:10,064 [INFO] Adding to zip: app/templates/customer_form.html
+2025-02-10 18:55:10,064 [INFO] Adding to zip: app/templates/customer_form.html
+2025-02-10 18:55:10,065 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-02-10 18:55:10,065 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-02-10 18:55:10,065 [INFO] Adding to zip: app/templates/job_details.html
+2025-02-10 18:55:10,065 [INFO] Adding to zip: app/templates/job_details.html
+2025-02-10 18:55:10,066 [INFO] Adding to zip: app/templates/invoice.html
+2025-02-10 18:55:10,066 [INFO] Adding to zip: app/templates/invoice.html
+2025-02-10 18:55:10,066 [INFO] Adding to zip: app/templates/job_form.html
+2025-02-10 18:55:10,066 [INFO] Adding to zip: app/templates/job_form.html
+2025-02-10 18:55:10,067 [INFO] Adding to zip: app/templates/customer_list.html
+2025-02-10 18:55:10,067 [INFO] Adding to zip: app/templates/customer_list.html
+2025-02-10 18:55:10,067 [INFO] Adding to zip: app/templates/500.html
+2025-02-10 18:55:10,067 [INFO] Adding to zip: app/templates/500.html
+2025-02-10 18:55:10,068 [INFO] Adding to zip: app/templates/base.html
+2025-02-10 18:55:10,068 [INFO] Adding to zip: app/templates/base.html
+2025-02-10 18:55:10,068 [INFO] Adding to zip: app/templates/job_list.html
+2025-02-10 18:55:10,068 [INFO] Adding to zip: app/templates/job_list.html
+2025-02-10 18:55:10,069 [INFO] Adding to zip: app/templates/404.html
+2025-02-10 18:55:10,069 [INFO] Adding to zip: app/templates/404.html
+2025-02-10 18:55:10,069 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-02-10 18:55:10,069 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-02-10 18:55:10,070 [INFO] Adding to zip: app/static/css/styles.css
+2025-02-10 18:55:10,070 [INFO] Adding to zip: app/static/css/styles.css
+2025-02-10 18:55:10,071 [INFO] Adding to zip: instance/images/job_4/img_20250210_144020_893259.jpg
+2025-02-10 18:55:10,071 [INFO] Adding to zip: instance/images/job_4/img_20250210_144020_893259.jpg
+2025-02-10 18:55:10,078 [INFO] Adding to zip: instance/images/job_4/img_20250210_144542_deb218.jpg
+2025-02-10 18:55:10,078 [INFO] Adding to zip: instance/images/job_4/img_20250210_144542_deb218.jpg
+2025-02-10 18:55:10,086 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144020_893259.jpg
+2025-02-10 18:55:10,086 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144020_893259.jpg
+2025-02-10 18:55:10,087 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144542_deb218.jpg
+2025-02-10 18:55:10,087 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144542_deb218.jpg
+2025-02-10 18:55:10,088 [INFO] Adding to zip: instance/images/job_11/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:55:10,088 [INFO] Adding to zip: instance/images/job_11/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:55:10,093 [INFO] Adding to zip: instance/images/job_11/thumbnails/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:55:10,093 [INFO] Adding to zip: instance/images/job_11/thumbnails/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:55:10,094 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250210_1855.zip
+2025-02-10 18:55:10,094 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250210_1855.zip
+2025-02-10 18:55:10,094 [INFO] Backup file exists: True
+2025-02-10 18:55:10,094 [INFO] Backup file exists: True
+2025-02-10 18:55:10,095 [INFO] 192.168.2.56 - - [10/Feb/2025 18:55:10] "GET /job/backup/full HTTP/1.1" 200 -
+2025-02-10 18:55:43,042 [INFO]  * Detected change in '/home/Jobmanager/backup.py', reloading
+2025-02-10 18:55:43,090 [INFO]  * Restarting with stat
+2025-02-10 18:55:43,329 [INFO] Starting Job Manager application
+2025-02-10 18:55:43,329 [INFO] Starting Job Manager application
+2025-02-10 18:55:43,337 [WARNING]  * Debugger is active!
+2025-02-10 18:55:43,338 [INFO]  * Debugger PIN: 618-195-796
+2025-02-10 18:55:45,439 [INFO] Root path: /home/Jobmanager
+2025-02-10 18:55:45,439 [INFO] Root path: /home/Jobmanager
+2025-02-10 18:55:45,439 [INFO] Current working directory: /home/Jobmanager
+2025-02-10 18:55:45,439 [INFO] Current working directory: /home/Jobmanager
+2025-02-10 18:55:45,440 [INFO] Instance path: /home/Jobmanager/instance
+2025-02-10 18:55:45,440 [INFO] Instance path: /home/Jobmanager/instance
+2025-02-10 18:55:45,440 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250210_1855.zip
+2025-02-10 18:55:45,440 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250210_1855.zip
+2025-02-10 18:55:45,440 [INFO] Adding file: /home/Jobmanager/run.py
+2025-02-10 18:55:45,440 [INFO] Adding file: /home/Jobmanager/run.py
+2025-02-10 18:55:45,441 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-02-10 18:55:45,441 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-02-10 18:55:45,442 [INFO] Adding file: /home/Jobmanager/LICENSE
+2025-02-10 18:55:45,442 [INFO] Adding file: /home/Jobmanager/LICENSE
+2025-02-10 18:55:45,442 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-02-10 18:55:45,442 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-02-10 18:55:45,443 [INFO] Adding to zip: app/db.py
+2025-02-10 18:55:45,443 [INFO] Adding to zip: app/db.py
+2025-02-10 18:55:45,443 [INFO] Adding to zip: app/__init__.py
+2025-02-10 18:55:45,443 [INFO] Adding to zip: app/__init__.py
+2025-02-10 18:55:45,444 [INFO] Adding to zip: app/schema.sql
+2025-02-10 18:55:45,444 [INFO] Adding to zip: app/schema.sql
+2025-02-10 18:55:45,444 [INFO] Adding to zip: app/routes/image_routes.py
+2025-02-10 18:55:45,444 [INFO] Adding to zip: app/routes/image_routes.py
+2025-02-10 18:55:45,445 [INFO] Adding to zip: app/routes/__init__.py
+2025-02-10 18:55:45,445 [INFO] Adding to zip: app/routes/__init__.py
+2025-02-10 18:55:45,445 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-02-10 18:55:45,445 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-02-10 18:55:45,446 [INFO] Adding to zip: app/routes/job_routes.py
+2025-02-10 18:55:45,446 [INFO] Adding to zip: app/routes/job_routes.py
+2025-02-10 18:55:45,447 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-02-10 18:55:45,447 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-02-10 18:55:45,447 [INFO] Adding to zip: app/utils/job_utils.py
+2025-02-10 18:55:45,447 [INFO] Adding to zip: app/utils/job_utils.py
+2025-02-10 18:55:45,448 [INFO] Adding to zip: app/utils/material_utils.py
+2025-02-10 18:55:45,448 [INFO] Adding to zip: app/utils/material_utils.py
+2025-02-10 18:55:45,448 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-02-10 18:55:45,448 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-02-10 18:55:45,449 [INFO] Adding to zip: app/utils/__init__.py
+2025-02-10 18:55:45,449 [INFO] Adding to zip: app/utils/__init__.py
+2025-02-10 18:55:45,449 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-02-10 18:55:45,449 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-02-10 18:55:45,450 [INFO] Adding to zip: app/utils/error_utils.py
+2025-02-10 18:55:45,450 [INFO] Adding to zip: app/utils/error_utils.py
+2025-02-10 18:55:45,450 [INFO] Adding to zip: app/utils/image_utils.py
+2025-02-10 18:55:45,450 [INFO] Adding to zip: app/utils/image_utils.py
+2025-02-10 18:55:45,451 [INFO] Adding to zip: app/templates/customer_form.html
+2025-02-10 18:55:45,451 [INFO] Adding to zip: app/templates/customer_form.html
+2025-02-10 18:55:45,451 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-02-10 18:55:45,451 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-02-10 18:55:45,452 [INFO] Adding to zip: app/templates/job_details.html
+2025-02-10 18:55:45,452 [INFO] Adding to zip: app/templates/job_details.html
+2025-02-10 18:55:45,452 [INFO] Adding to zip: app/templates/invoice.html
+2025-02-10 18:55:45,452 [INFO] Adding to zip: app/templates/invoice.html
+2025-02-10 18:55:45,453 [INFO] Adding to zip: app/templates/job_form.html
+2025-02-10 18:55:45,453 [INFO] Adding to zip: app/templates/job_form.html
+2025-02-10 18:55:45,454 [INFO] Adding to zip: app/templates/customer_list.html
+2025-02-10 18:55:45,454 [INFO] Adding to zip: app/templates/customer_list.html
+2025-02-10 18:55:45,454 [INFO] Adding to zip: app/templates/500.html
+2025-02-10 18:55:45,454 [INFO] Adding to zip: app/templates/500.html
+2025-02-10 18:55:45,455 [INFO] Adding to zip: app/templates/base.html
+2025-02-10 18:55:45,455 [INFO] Adding to zip: app/templates/base.html
+2025-02-10 18:55:45,455 [INFO] Adding to zip: app/templates/job_list.html
+2025-02-10 18:55:45,455 [INFO] Adding to zip: app/templates/job_list.html
+2025-02-10 18:55:45,456 [INFO] Adding to zip: app/templates/404.html
+2025-02-10 18:55:45,456 [INFO] Adding to zip: app/templates/404.html
+2025-02-10 18:55:45,456 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-02-10 18:55:45,456 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-02-10 18:55:45,457 [INFO] Adding to zip: app/static/css/styles.css
+2025-02-10 18:55:45,457 [INFO] Adding to zip: app/static/css/styles.css
+2025-02-10 18:55:45,457 [INFO] Adding to zip: instance/images/job_4/img_20250210_144020_893259.jpg
+2025-02-10 18:55:45,457 [INFO] Adding to zip: instance/images/job_4/img_20250210_144020_893259.jpg
+2025-02-10 18:55:45,465 [INFO] Adding to zip: instance/images/job_4/img_20250210_144542_deb218.jpg
+2025-02-10 18:55:45,465 [INFO] Adding to zip: instance/images/job_4/img_20250210_144542_deb218.jpg
+2025-02-10 18:55:45,473 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144020_893259.jpg
+2025-02-10 18:55:45,473 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144020_893259.jpg
+2025-02-10 18:55:45,474 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144542_deb218.jpg
+2025-02-10 18:55:45,474 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144542_deb218.jpg
+2025-02-10 18:55:45,475 [INFO] Adding to zip: instance/images/job_11/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:55:45,475 [INFO] Adding to zip: instance/images/job_11/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:55:45,480 [INFO] Adding to zip: instance/images/job_11/thumbnails/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:55:45,480 [INFO] Adding to zip: instance/images/job_11/thumbnails/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:55:45,482 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250210_1855.zip
+2025-02-10 18:55:45,482 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250210_1855.zip
+2025-02-10 18:55:45,482 [INFO] Backup file exists: True
+2025-02-10 18:55:45,482 [INFO] Backup file exists: True
+2025-02-10 18:55:45,483 [INFO] 192.168.2.56 - - [10/Feb/2025 18:55:45] "GET /job/backup/full HTTP/1.1" 200 -
+2025-02-10 18:56:07,894 [INFO] Starting Job Manager application
+2025-02-10 18:56:07,894 [INFO] Starting Job Manager application
+2025-02-10 18:56:07,904 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.2.75:5000
+2025-02-10 18:56:07,904 [INFO] [33mPress CTRL+C to quit[0m
+2025-02-10 18:56:07,907 [INFO]  * Restarting with stat
+2025-02-10 18:56:08,140 [INFO] Starting Job Manager application
+2025-02-10 18:56:08,140 [INFO] Starting Job Manager application
+2025-02-10 18:56:08,147 [WARNING]  * Debugger is active!
+2025-02-10 18:56:08,148 [INFO]  * Debugger PIN: 618-195-796
+2025-02-10 18:56:10,275 [INFO] Root path: /home/Jobmanager
+2025-02-10 18:56:10,275 [INFO] Root path: /home/Jobmanager
+2025-02-10 18:56:10,276 [INFO] Current working directory: /home/Jobmanager
+2025-02-10 18:56:10,276 [INFO] Current working directory: /home/Jobmanager
+2025-02-10 18:56:10,276 [INFO] Instance path: /home/Jobmanager/instance
+2025-02-10 18:56:10,276 [INFO] Instance path: /home/Jobmanager/instance
+2025-02-10 18:56:10,276 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250210_1856.zip
+2025-02-10 18:56:10,276 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250210_1856.zip
+2025-02-10 18:56:10,277 [INFO] Adding file: /home/Jobmanager/run.py
+2025-02-10 18:56:10,277 [INFO] Adding file: /home/Jobmanager/run.py
+2025-02-10 18:56:10,277 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-02-10 18:56:10,277 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-02-10 18:56:10,278 [INFO] Adding file: /home/Jobmanager/LICENSE
+2025-02-10 18:56:10,278 [INFO] Adding file: /home/Jobmanager/LICENSE
+2025-02-10 18:56:10,278 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-02-10 18:56:10,278 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-02-10 18:56:10,279 [INFO] Adding to zip: app/db.py
+2025-02-10 18:56:10,279 [INFO] Adding to zip: app/db.py
+2025-02-10 18:56:10,279 [INFO] Adding to zip: app/__init__.py
+2025-02-10 18:56:10,279 [INFO] Adding to zip: app/__init__.py
+2025-02-10 18:56:10,280 [INFO] Adding to zip: app/schema.sql
+2025-02-10 18:56:10,280 [INFO] Adding to zip: app/schema.sql
+2025-02-10 18:56:10,280 [INFO] Adding to zip: app/routes/image_routes.py
+2025-02-10 18:56:10,280 [INFO] Adding to zip: app/routes/image_routes.py
+2025-02-10 18:56:10,281 [INFO] Adding to zip: app/routes/__init__.py
+2025-02-10 18:56:10,281 [INFO] Adding to zip: app/routes/__init__.py
+2025-02-10 18:56:10,282 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-02-10 18:56:10,282 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-02-10 18:56:10,282 [INFO] Adding to zip: app/routes/job_routes.py
+2025-02-10 18:56:10,282 [INFO] Adding to zip: app/routes/job_routes.py
+2025-02-10 18:56:10,283 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-02-10 18:56:10,283 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-02-10 18:56:10,284 [INFO] Adding to zip: app/utils/job_utils.py
+2025-02-10 18:56:10,284 [INFO] Adding to zip: app/utils/job_utils.py
+2025-02-10 18:56:10,284 [INFO] Adding to zip: app/utils/material_utils.py
+2025-02-10 18:56:10,284 [INFO] Adding to zip: app/utils/material_utils.py
+2025-02-10 18:56:10,285 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-02-10 18:56:10,285 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-02-10 18:56:10,285 [INFO] Adding to zip: app/utils/__init__.py
+2025-02-10 18:56:10,285 [INFO] Adding to zip: app/utils/__init__.py
+2025-02-10 18:56:10,286 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-02-10 18:56:10,286 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-02-10 18:56:10,286 [INFO] Adding to zip: app/utils/error_utils.py
+2025-02-10 18:56:10,286 [INFO] Adding to zip: app/utils/error_utils.py
+2025-02-10 18:56:10,287 [INFO] Adding to zip: app/utils/image_utils.py
+2025-02-10 18:56:10,287 [INFO] Adding to zip: app/utils/image_utils.py
+2025-02-10 18:56:10,287 [INFO] Adding to zip: app/templates/customer_form.html
+2025-02-10 18:56:10,287 [INFO] Adding to zip: app/templates/customer_form.html
+2025-02-10 18:56:10,288 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-02-10 18:56:10,288 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-02-10 18:56:10,288 [INFO] Adding to zip: app/templates/job_details.html
+2025-02-10 18:56:10,288 [INFO] Adding to zip: app/templates/job_details.html
+2025-02-10 18:56:10,289 [INFO] Adding to zip: app/templates/invoice.html
+2025-02-10 18:56:10,289 [INFO] Adding to zip: app/templates/invoice.html
+2025-02-10 18:56:10,289 [INFO] Adding to zip: app/templates/job_form.html
+2025-02-10 18:56:10,289 [INFO] Adding to zip: app/templates/job_form.html
+2025-02-10 18:56:10,290 [INFO] Adding to zip: app/templates/customer_list.html
+2025-02-10 18:56:10,290 [INFO] Adding to zip: app/templates/customer_list.html
+2025-02-10 18:56:10,291 [INFO] Adding to zip: app/templates/500.html
+2025-02-10 18:56:10,291 [INFO] Adding to zip: app/templates/500.html
+2025-02-10 18:56:10,291 [INFO] Adding to zip: app/templates/base.html
+2025-02-10 18:56:10,291 [INFO] Adding to zip: app/templates/base.html
+2025-02-10 18:56:10,292 [INFO] Adding to zip: app/templates/job_list.html
+2025-02-10 18:56:10,292 [INFO] Adding to zip: app/templates/job_list.html
+2025-02-10 18:56:10,292 [INFO] Adding to zip: app/templates/404.html
+2025-02-10 18:56:10,292 [INFO] Adding to zip: app/templates/404.html
+2025-02-10 18:56:10,293 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-02-10 18:56:10,293 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-02-10 18:56:10,293 [INFO] Adding to zip: app/static/css/styles.css
+2025-02-10 18:56:10,293 [INFO] Adding to zip: app/static/css/styles.css
+2025-02-10 18:56:10,294 [INFO] Adding to zip: instance/images/job_4/img_20250210_144020_893259.jpg
+2025-02-10 18:56:10,294 [INFO] Adding to zip: instance/images/job_4/img_20250210_144020_893259.jpg
+2025-02-10 18:56:10,302 [INFO] Adding to zip: instance/images/job_4/img_20250210_144542_deb218.jpg
+2025-02-10 18:56:10,302 [INFO] Adding to zip: instance/images/job_4/img_20250210_144542_deb218.jpg
+2025-02-10 18:56:10,310 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144020_893259.jpg
+2025-02-10 18:56:10,310 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144020_893259.jpg
+2025-02-10 18:56:10,310 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144542_deb218.jpg
+2025-02-10 18:56:10,310 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144542_deb218.jpg
+2025-02-10 18:56:10,311 [INFO] Adding to zip: instance/images/job_11/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:56:10,311 [INFO] Adding to zip: instance/images/job_11/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:56:10,317 [INFO] Adding to zip: instance/images/job_11/thumbnails/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:56:10,317 [INFO] Adding to zip: instance/images/job_11/thumbnails/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:56:10,318 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250210_1856.zip
+2025-02-10 18:56:10,318 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250210_1856.zip
+2025-02-10 18:56:10,318 [INFO] Backup file exists: True
+2025-02-10 18:56:10,318 [INFO] Backup file exists: True
+2025-02-10 18:56:10,319 [INFO] 192.168.2.56 - - [10/Feb/2025 18:56:10] "GET /job/backup/full HTTP/1.1" 200 -
+2025-02-10 18:56:59,260 [INFO]  * Detected change in '/home/Jobmanager/backup.py', reloading
+2025-02-10 18:56:59,307 [INFO]  * Restarting with stat
+2025-02-10 18:56:59,542 [INFO] Starting Job Manager application
+2025-02-10 18:56:59,542 [INFO] Starting Job Manager application
+2025-02-10 18:56:59,550 [WARNING]  * Debugger is active!
+2025-02-10 18:56:59,550 [INFO]  * Debugger PIN: 618-195-796
+2025-02-10 18:57:01,171 [INFO] Root path: /home/Jobmanager
+2025-02-10 18:57:01,171 [INFO] Root path: /home/Jobmanager
+2025-02-10 18:57:01,172 [INFO] Current working directory: /home/Jobmanager
+2025-02-10 18:57:01,172 [INFO] Current working directory: /home/Jobmanager
+2025-02-10 18:57:01,172 [INFO] Instance path: /home/Jobmanager/instance
+2025-02-10 18:57:01,172 [INFO] Instance path: /home/Jobmanager/instance
+2025-02-10 18:57:01,172 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250210_1857.zip
+2025-02-10 18:57:01,172 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250210_1857.zip
+2025-02-10 18:57:01,173 [INFO] Adding file: /home/Jobmanager/run.py
+2025-02-10 18:57:01,173 [INFO] Adding file: /home/Jobmanager/run.py
+2025-02-10 18:57:01,173 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-02-10 18:57:01,173 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-02-10 18:57:01,174 [INFO] Adding file: /home/Jobmanager/LICENSE
+2025-02-10 18:57:01,174 [INFO] Adding file: /home/Jobmanager/LICENSE
+2025-02-10 18:57:01,174 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-02-10 18:57:01,174 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-02-10 18:57:01,175 [INFO] Adding to zip: app/db.py
+2025-02-10 18:57:01,175 [INFO] Adding to zip: app/db.py
+2025-02-10 18:57:01,175 [INFO] Adding to zip: app/__init__.py
+2025-02-10 18:57:01,175 [INFO] Adding to zip: app/__init__.py
+2025-02-10 18:57:01,176 [INFO] Adding to zip: app/schema.sql
+2025-02-10 18:57:01,176 [INFO] Adding to zip: app/schema.sql
+2025-02-10 18:57:01,176 [INFO] Adding to zip: app/routes/image_routes.py
+2025-02-10 18:57:01,176 [INFO] Adding to zip: app/routes/image_routes.py
+2025-02-10 18:57:01,177 [INFO] Adding to zip: app/routes/__init__.py
+2025-02-10 18:57:01,177 [INFO] Adding to zip: app/routes/__init__.py
+2025-02-10 18:57:01,177 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-02-10 18:57:01,177 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-02-10 18:57:01,178 [INFO] Adding to zip: app/routes/job_routes.py
+2025-02-10 18:57:01,178 [INFO] Adding to zip: app/routes/job_routes.py
+2025-02-10 18:57:01,179 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-02-10 18:57:01,179 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-02-10 18:57:01,179 [INFO] Adding to zip: app/utils/job_utils.py
+2025-02-10 18:57:01,179 [INFO] Adding to zip: app/utils/job_utils.py
+2025-02-10 18:57:01,180 [INFO] Adding to zip: app/utils/material_utils.py
+2025-02-10 18:57:01,180 [INFO] Adding to zip: app/utils/material_utils.py
+2025-02-10 18:57:01,180 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-02-10 18:57:01,180 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-02-10 18:57:01,181 [INFO] Adding to zip: app/utils/__init__.py
+2025-02-10 18:57:01,181 [INFO] Adding to zip: app/utils/__init__.py
+2025-02-10 18:57:01,181 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-02-10 18:57:01,181 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-02-10 18:57:01,182 [INFO] Adding to zip: app/utils/error_utils.py
+2025-02-10 18:57:01,182 [INFO] Adding to zip: app/utils/error_utils.py
+2025-02-10 18:57:01,182 [INFO] Adding to zip: app/utils/image_utils.py
+2025-02-10 18:57:01,182 [INFO] Adding to zip: app/utils/image_utils.py
+2025-02-10 18:57:01,183 [INFO] Adding to zip: app/templates/customer_form.html
+2025-02-10 18:57:01,183 [INFO] Adding to zip: app/templates/customer_form.html
+2025-02-10 18:57:01,183 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-02-10 18:57:01,183 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-02-10 18:57:01,184 [INFO] Adding to zip: app/templates/job_details.html
+2025-02-10 18:57:01,184 [INFO] Adding to zip: app/templates/job_details.html
+2025-02-10 18:57:01,185 [INFO] Adding to zip: app/templates/invoice.html
+2025-02-10 18:57:01,185 [INFO] Adding to zip: app/templates/invoice.html
+2025-02-10 18:57:01,185 [INFO] Adding to zip: app/templates/job_form.html
+2025-02-10 18:57:01,185 [INFO] Adding to zip: app/templates/job_form.html
+2025-02-10 18:57:01,186 [INFO] Adding to zip: app/templates/customer_list.html
+2025-02-10 18:57:01,186 [INFO] Adding to zip: app/templates/customer_list.html
+2025-02-10 18:57:01,186 [INFO] Adding to zip: app/templates/500.html
+2025-02-10 18:57:01,186 [INFO] Adding to zip: app/templates/500.html
+2025-02-10 18:57:01,187 [INFO] Adding to zip: app/templates/base.html
+2025-02-10 18:57:01,187 [INFO] Adding to zip: app/templates/base.html
+2025-02-10 18:57:01,187 [INFO] Adding to zip: app/templates/job_list.html
+2025-02-10 18:57:01,187 [INFO] Adding to zip: app/templates/job_list.html
+2025-02-10 18:57:01,188 [INFO] Adding to zip: app/templates/404.html
+2025-02-10 18:57:01,188 [INFO] Adding to zip: app/templates/404.html
+2025-02-10 18:57:01,188 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-02-10 18:57:01,188 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-02-10 18:57:01,189 [INFO] Adding to zip: app/static/css/styles.css
+2025-02-10 18:57:01,189 [INFO] Adding to zip: app/static/css/styles.css
+2025-02-10 18:57:01,190 [INFO] Adding to zip: instance/images/job_4/img_20250210_144020_893259.jpg
+2025-02-10 18:57:01,190 [INFO] Adding to zip: instance/images/job_4/img_20250210_144020_893259.jpg
+2025-02-10 18:57:01,198 [INFO] Adding to zip: instance/images/job_4/img_20250210_144542_deb218.jpg
+2025-02-10 18:57:01,198 [INFO] Adding to zip: instance/images/job_4/img_20250210_144542_deb218.jpg
+2025-02-10 18:57:01,205 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144020_893259.jpg
+2025-02-10 18:57:01,205 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144020_893259.jpg
+2025-02-10 18:57:01,206 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144542_deb218.jpg
+2025-02-10 18:57:01,206 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144542_deb218.jpg
+2025-02-10 18:57:01,207 [INFO] Adding to zip: instance/images/job_11/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:57:01,207 [INFO] Adding to zip: instance/images/job_11/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:57:01,212 [INFO] Adding to zip: instance/images/job_11/thumbnails/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:57:01,212 [INFO] Adding to zip: instance/images/job_11/thumbnails/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:57:01,213 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250210_1857.zip
+2025-02-10 18:57:01,213 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250210_1857.zip
+2025-02-10 18:57:01,214 [INFO] Backup file exists: True
+2025-02-10 18:57:01,214 [INFO] Backup file exists: True
+2025-02-10 18:57:01,214 [INFO] 192.168.2.56 - - [10/Feb/2025 18:57:01] "GET /job/backup/full HTTP/1.1" 200 -
+2025-02-10 18:57:10,777 [INFO] 192.168.2.56 - - [10/Feb/2025 18:57:10] "GET /job/ HTTP/1.1" 200 -
+2025-02-10 18:57:10,815 [INFO] 192.168.2.56 - - [10/Feb/2025 18:57:10] "GET /static/css/styles.css HTTP/1.1" 200 -
+2025-02-10 18:57:10,848 [INFO] 192.168.2.56 - - [10/Feb/2025 18:57:10] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-10 18:57:14,851 [INFO] Root path: /home/Jobmanager
+2025-02-10 18:57:14,851 [INFO] Root path: /home/Jobmanager
+2025-02-10 18:57:14,851 [INFO] Current working directory: /home/Jobmanager
+2025-02-10 18:57:14,851 [INFO] Current working directory: /home/Jobmanager
+2025-02-10 18:57:14,852 [INFO] Instance path: /home/Jobmanager/instance
+2025-02-10 18:57:14,852 [INFO] Instance path: /home/Jobmanager/instance
+2025-02-10 18:57:14,852 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250210_1857.zip
+2025-02-10 18:57:14,852 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250210_1857.zip
+2025-02-10 18:57:14,852 [INFO] Adding file: /home/Jobmanager/run.py
+2025-02-10 18:57:14,852 [INFO] Adding file: /home/Jobmanager/run.py
+2025-02-10 18:57:14,853 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-02-10 18:57:14,853 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-02-10 18:57:14,853 [INFO] Adding file: /home/Jobmanager/LICENSE
+2025-02-10 18:57:14,853 [INFO] Adding file: /home/Jobmanager/LICENSE
+2025-02-10 18:57:14,854 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-02-10 18:57:14,854 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-02-10 18:57:14,854 [INFO] Adding to zip: app/db.py
+2025-02-10 18:57:14,854 [INFO] Adding to zip: app/db.py
+2025-02-10 18:57:14,855 [INFO] Adding to zip: app/__init__.py
+2025-02-10 18:57:14,855 [INFO] Adding to zip: app/__init__.py
+2025-02-10 18:57:14,855 [INFO] Adding to zip: app/schema.sql
+2025-02-10 18:57:14,855 [INFO] Adding to zip: app/schema.sql
+2025-02-10 18:57:14,856 [INFO] Adding to zip: app/routes/image_routes.py
+2025-02-10 18:57:14,856 [INFO] Adding to zip: app/routes/image_routes.py
+2025-02-10 18:57:14,856 [INFO] Adding to zip: app/routes/__init__.py
+2025-02-10 18:57:14,856 [INFO] Adding to zip: app/routes/__init__.py
+2025-02-10 18:57:14,857 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-02-10 18:57:14,857 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-02-10 18:57:14,857 [INFO] Adding to zip: app/routes/job_routes.py
+2025-02-10 18:57:14,857 [INFO] Adding to zip: app/routes/job_routes.py
+2025-02-10 18:57:14,858 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-02-10 18:57:14,858 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-02-10 18:57:14,859 [INFO] Adding to zip: app/utils/job_utils.py
+2025-02-10 18:57:14,859 [INFO] Adding to zip: app/utils/job_utils.py
+2025-02-10 18:57:14,859 [INFO] Adding to zip: app/utils/material_utils.py
+2025-02-10 18:57:14,859 [INFO] Adding to zip: app/utils/material_utils.py
+2025-02-10 18:57:14,860 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-02-10 18:57:14,860 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-02-10 18:57:14,860 [INFO] Adding to zip: app/utils/__init__.py
+2025-02-10 18:57:14,860 [INFO] Adding to zip: app/utils/__init__.py
+2025-02-10 18:57:14,860 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-02-10 18:57:14,860 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-02-10 18:57:14,861 [INFO] Adding to zip: app/utils/error_utils.py
+2025-02-10 18:57:14,861 [INFO] Adding to zip: app/utils/error_utils.py
+2025-02-10 18:57:14,861 [INFO] Adding to zip: app/utils/image_utils.py
+2025-02-10 18:57:14,861 [INFO] Adding to zip: app/utils/image_utils.py
+2025-02-10 18:57:14,862 [INFO] Adding to zip: app/templates/customer_form.html
+2025-02-10 18:57:14,862 [INFO] Adding to zip: app/templates/customer_form.html
+2025-02-10 18:57:14,862 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-02-10 18:57:14,862 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-02-10 18:57:14,863 [INFO] Adding to zip: app/templates/job_details.html
+2025-02-10 18:57:14,863 [INFO] Adding to zip: app/templates/job_details.html
+2025-02-10 18:57:14,864 [INFO] Adding to zip: app/templates/invoice.html
+2025-02-10 18:57:14,864 [INFO] Adding to zip: app/templates/invoice.html
+2025-02-10 18:57:14,864 [INFO] Adding to zip: app/templates/job_form.html
+2025-02-10 18:57:14,864 [INFO] Adding to zip: app/templates/job_form.html
+2025-02-10 18:57:14,865 [INFO] Adding to zip: app/templates/customer_list.html
+2025-02-10 18:57:14,865 [INFO] Adding to zip: app/templates/customer_list.html
+2025-02-10 18:57:14,866 [INFO] Adding to zip: app/templates/500.html
+2025-02-10 18:57:14,866 [INFO] Adding to zip: app/templates/500.html
+2025-02-10 18:57:14,866 [INFO] Adding to zip: app/templates/base.html
+2025-02-10 18:57:14,866 [INFO] Adding to zip: app/templates/base.html
+2025-02-10 18:57:14,866 [INFO] Adding to zip: app/templates/job_list.html
+2025-02-10 18:57:14,866 [INFO] Adding to zip: app/templates/job_list.html
+2025-02-10 18:57:14,867 [INFO] Adding to zip: app/templates/404.html
+2025-02-10 18:57:14,867 [INFO] Adding to zip: app/templates/404.html
+2025-02-10 18:57:14,868 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-02-10 18:57:14,868 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-02-10 18:57:14,868 [INFO] Adding to zip: app/static/css/styles.css
+2025-02-10 18:57:14,868 [INFO] Adding to zip: app/static/css/styles.css
+2025-02-10 18:57:14,869 [INFO] Adding to zip: instance/images/job_4/img_20250210_144020_893259.jpg
+2025-02-10 18:57:14,869 [INFO] Adding to zip: instance/images/job_4/img_20250210_144020_893259.jpg
+2025-02-10 18:57:14,877 [INFO] Adding to zip: instance/images/job_4/img_20250210_144542_deb218.jpg
+2025-02-10 18:57:14,877 [INFO] Adding to zip: instance/images/job_4/img_20250210_144542_deb218.jpg
+2025-02-10 18:57:14,884 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144020_893259.jpg
+2025-02-10 18:57:14,884 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144020_893259.jpg
+2025-02-10 18:57:14,885 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144542_deb218.jpg
+2025-02-10 18:57:14,885 [INFO] Adding to zip: instance/images/job_4/thumbnails/img_20250210_144542_deb218.jpg
+2025-02-10 18:57:14,886 [INFO] Adding to zip: instance/images/job_11/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:57:14,886 [INFO] Adding to zip: instance/images/job_11/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:57:14,891 [INFO] Adding to zip: instance/images/job_11/thumbnails/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:57:14,891 [INFO] Adding to zip: instance/images/job_11/thumbnails/img_20250210_150544_ef0a77.jpg
+2025-02-10 18:57:14,893 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250210_1857.zip
+2025-02-10 18:57:14,893 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250210_1857.zip
+2025-02-10 18:57:14,893 [INFO] Backup file exists: True
+2025-02-10 18:57:14,893 [INFO] Backup file exists: True
+2025-02-10 18:57:14,893 [INFO] 192.168.2.56 - - [10/Feb/2025 18:57:14] "GET /job/backup/full HTTP/1.1" 200 -
+2025-02-11 07:41:19,272 [INFO] Starting Job Manager application
+2025-02-11 07:41:19,272 [INFO] Starting Job Manager application
+2025-02-11 07:41:19,282 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.2.75:5000
+2025-02-11 07:41:19,282 [INFO] [33mPress CTRL+C to quit[0m
+2025-02-11 07:41:19,285 [INFO]  * Restarting with stat
+2025-02-11 07:41:19,517 [INFO] Starting Job Manager application
+2025-02-11 07:41:19,517 [INFO] Starting Job Manager application
+2025-02-11 07:41:19,525 [WARNING]  * Debugger is active!
+2025-02-11 07:41:19,525 [INFO]  * Debugger PIN: 719-273-389
+2025-02-11 07:51:59,583 [INFO] 192.168.2.64 - - [11/Feb/2025 07:51:59] "GET / HTTP/1.1" 200 -
+2025-02-11 07:51:59,686 [INFO] 192.168.2.64 - - [11/Feb/2025 07:51:59] "GET /static/css/styles.css HTTP/1.1" 200 -
+2025-02-11 07:51:59,698 [INFO] 192.168.2.64 - - [11/Feb/2025 07:51:59] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 07:52:07,660 [INFO] 192.168.2.64 - - [11/Feb/2025 07:52:07] "GET /job/add/5 HTTP/1.1" 200 -
+2025-02-11 07:52:07,702 [INFO] 192.168.2.64 - - [11/Feb/2025 07:52:07] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 07:52:07,703 [INFO] 192.168.2.64 - - [11/Feb/2025 07:52:07] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 07:53:04,416 [INFO] 192.168.2.64 - - [11/Feb/2025 07:53:04] "[32mPOST /job/add/5 HTTP/1.1[0m" 302 -
+2025-02-11 07:53:04,493 [INFO] 192.168.2.64 - - [11/Feb/2025 07:53:04] "GET /job/ HTTP/1.1" 200 -
+2025-02-11 07:53:04,534 [INFO] 192.168.2.64 - - [11/Feb/2025 07:53:04] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 07:53:04,535 [INFO] 192.168.2.64 - - [11/Feb/2025 07:53:04] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 07:53:08,813 [INFO] Starting timer for job 25
+2025-02-11 07:53:08,813 [INFO] Starting timer for job 25
+2025-02-11 07:53:08,813 [INFO] Stopping all active timers
+2025-02-11 07:53:08,813 [INFO] Stopping all active timers
+2025-02-11 07:53:08,939 [INFO] 192.168.2.64 - - [11/Feb/2025 07:53:08] "POST /timer/job/25/start_timer HTTP/1.1" 200 -
+2025-02-11 07:53:08,975 [INFO] 192.168.2.64 - - [11/Feb/2025 07:53:08] "GET /job/ HTTP/1.1" 200 -
+2025-02-11 07:53:09,024 [INFO] 192.168.2.64 - - [11/Feb/2025 07:53:09] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 07:53:09,024 [INFO] 192.168.2.64 - - [11/Feb/2025 07:53:09] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 07:53:17,898 [INFO] 192.168.2.64 - - [11/Feb/2025 07:53:17] "GET /job/details/25 HTTP/1.1" 200 -
+2025-02-11 07:53:17,933 [INFO] 192.168.2.64 - - [11/Feb/2025 07:53:17] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 07:53:17,934 [INFO] 192.168.2.64 - - [11/Feb/2025 07:53:17] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 07:53:35,898 [INFO] 192.168.2.64 - - [11/Feb/2025 07:53:35] "[32mPOST /job/details/25 HTTP/1.1[0m" 302 -
+2025-02-11 07:53:35,923 [INFO] 192.168.2.64 - - [11/Feb/2025 07:53:35] "GET /job/details/25 HTTP/1.1" 200 -
+2025-02-11 07:53:35,969 [INFO] 192.168.2.64 - - [11/Feb/2025 07:53:35] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 07:53:35,970 [INFO] 192.168.2.64 - - [11/Feb/2025 07:53:35] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 07:53:49,333 [INFO] 192.168.2.64 - - [11/Feb/2025 07:53:49] "GET /job/ HTTP/1.1" 200 -
+2025-02-11 07:53:49,379 [INFO] 192.168.2.64 - - [11/Feb/2025 07:53:49] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 07:53:49,379 [INFO] 192.168.2.64 - - [11/Feb/2025 07:53:49] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 07:55:32,854 [INFO] 192.168.2.54 - - [11/Feb/2025 07:55:32] "GET /job/quick_timer HTTP/1.1" 200 -
+2025-02-11 07:56:24,168 [INFO] 192.168.2.54 - - [11/Feb/2025 07:56:24] "POST /image/upload/direct/25 HTTP/1.1" 200 -
+2025-02-11 07:59:15,936 [INFO] 192.168.2.64 - - [11/Feb/2025 07:59:15] "GET /job/ HTTP/1.1" 200 -
+2025-02-11 07:59:16,056 [INFO] 192.168.2.64 - - [11/Feb/2025 07:59:16] "GET /static/css/styles.css HTTP/1.1" 200 -
+2025-02-11 07:59:16,067 [INFO] 192.168.2.64 - - [11/Feb/2025 07:59:16] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 08:03:27,477 [INFO] 192.168.2.64 - - [11/Feb/2025 08:03:27] "GET /job/details/25 HTTP/1.1" 200 -
+2025-02-11 08:03:27,540 [INFO] 192.168.2.64 - - [11/Feb/2025 08:03:27] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 08:03:27,541 [INFO] 192.168.2.64 - - [11/Feb/2025 08:03:27] "GET /image/serve/25/img_20250211_075623_25b991.jpg?thumbnail=True HTTP/1.1" 200 -
+2025-02-11 08:03:27,542 [INFO] 192.168.2.64 - - [11/Feb/2025 08:03:27] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 08:03:37,044 [INFO] 192.168.2.64 - - [11/Feb/2025 08:03:37] "GET /image/serve/25/img_20250211_075623_25b991.jpg HTTP/1.1" 200 -
+2025-02-11 08:03:48,380 [INFO] 192.168.2.64 - - [11/Feb/2025 08:03:48] "GET /job/25/invoice HTTP/1.1" 200 -
+2025-02-11 08:03:48,428 [INFO] 192.168.2.64 - - [11/Feb/2025 08:03:48] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 08:03:48,428 [INFO] 192.168.2.64 - - [11/Feb/2025 08:03:48] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 08:12:08,322 [INFO] 192.168.2.64 - - [11/Feb/2025 08:12:08] "GET / HTTP/1.1" 200 -
+2025-02-11 08:12:08,500 [INFO] 192.168.2.64 - - [11/Feb/2025 08:12:08] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 08:12:08,501 [INFO] 192.168.2.64 - - [11/Feb/2025 08:12:08] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 08:12:09,243 [INFO] 192.168.2.64 - - [11/Feb/2025 08:12:09] "GET /add HTTP/1.1" 200 -
+2025-02-11 08:12:09,555 [INFO] 192.168.2.64 - - [11/Feb/2025 08:12:09] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 08:12:09,556 [INFO] 192.168.2.64 - - [11/Feb/2025 08:12:09] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 08:16:01,944 [INFO] 192.168.2.64 - - [11/Feb/2025 08:16:01] "[32mPOST /add HTTP/1.1[0m" 302 -
+2025-02-11 08:16:01,995 [INFO] 192.168.2.64 - - [11/Feb/2025 08:16:01] "GET / HTTP/1.1" 200 -
+2025-02-11 08:16:02,031 [INFO] 192.168.2.64 - - [11/Feb/2025 08:16:02] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 08:16:02,043 [INFO] 192.168.2.64 - - [11/Feb/2025 08:16:02] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 08:16:07,616 [INFO] 192.168.2.64 - - [11/Feb/2025 08:16:07] "GET /job/add/10 HTTP/1.1" 200 -
+2025-02-11 08:16:07,660 [INFO] 192.168.2.64 - - [11/Feb/2025 08:16:07] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 08:16:07,661 [INFO] 192.168.2.64 - - [11/Feb/2025 08:16:07] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 08:18:28,772 [INFO] 192.168.2.64 - - [11/Feb/2025 08:18:28] "[32mPOST /job/add/10 HTTP/1.1[0m" 302 -
+2025-02-11 08:18:28,841 [INFO] 192.168.2.64 - - [11/Feb/2025 08:18:28] "GET /job/ HTTP/1.1" 200 -
+2025-02-11 08:18:28,878 [INFO] 192.168.2.64 - - [11/Feb/2025 08:18:28] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 08:18:28,879 [INFO] 192.168.2.64 - - [11/Feb/2025 08:18:28] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 08:18:40,464 [INFO] 192.168.2.64 - - [11/Feb/2025 08:18:40] "GET /job/details/26 HTTP/1.1" 200 -
+2025-02-11 08:18:40,500 [INFO] 192.168.2.64 - - [11/Feb/2025 08:18:40] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 08:18:40,511 [INFO] 192.168.2.64 - - [11/Feb/2025 08:18:40] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 08:18:47,988 [INFO] 192.168.2.64 - - [11/Feb/2025 08:18:47] "GET /job/26/invoice HTTP/1.1" 200 -
+2025-02-11 08:18:48,033 [INFO] 192.168.2.64 - - [11/Feb/2025 08:18:48] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 08:18:48,034 [INFO] 192.168.2.64 - - [11/Feb/2025 08:18:48] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 08:26:30,827 [INFO] 192.168.2.62 - - [11/Feb/2025 08:26:30] "GET / HTTP/1.1" 200 -
+2025-02-11 08:26:30,858 [INFO] 192.168.2.62 - - [11/Feb/2025 08:26:30] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 08:26:30,867 [INFO] 192.168.2.62 - - [11/Feb/2025 08:26:30] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 08:26:49,434 [INFO] 192.168.2.54 - - [11/Feb/2025 08:26:49] "GET /job/quick_timer HTTP/1.1" 200 -
+2025-02-11 08:26:52,739 [INFO] Stopping timer for job 25
+2025-02-11 08:26:52,739 [INFO] Stopping timer for job 25
+2025-02-11 08:26:52,854 [INFO] 192.168.2.54 - - [11/Feb/2025 08:26:52] "POST /timer/job/25/stop_timer HTTP/1.1" 200 -
+2025-02-11 08:26:52,921 [INFO] 192.168.2.54 - - [11/Feb/2025 08:26:52] "GET /job/quick_timer HTTP/1.1" 200 -
+2025-02-11 08:26:57,097 [INFO] Starting timer for job 10
+2025-02-11 08:26:57,097 [INFO] Starting timer for job 10
+2025-02-11 08:26:57,097 [INFO] Stopping all active timers
+2025-02-11 08:26:57,097 [INFO] Stopping all active timers
+2025-02-11 08:26:57,254 [INFO] 192.168.2.54 - - [11/Feb/2025 08:26:57] "POST /timer/job/10/start_timer HTTP/1.1" 200 -
+2025-02-11 08:26:57,314 [INFO] 192.168.2.54 - - [11/Feb/2025 08:26:57] "GET /job/quick_timer HTTP/1.1" 200 -
+2025-02-11 08:38:21,860 [INFO] 192.168.2.62 - - [11/Feb/2025 08:38:21] "GET /job/ HTTP/1.1" 200 -
+2025-02-11 08:38:21,896 [INFO] 192.168.2.62 - - [11/Feb/2025 08:38:21] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 08:38:21,905 [INFO] 192.168.2.62 - - [11/Feb/2025 08:38:21] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 08:38:24,200 [INFO] Starting timer for job 4
+2025-02-11 08:38:24,200 [INFO] Starting timer for job 4
+2025-02-11 08:38:24,200 [INFO] Stopping all active timers
+2025-02-11 08:38:24,200 [INFO] Stopping all active timers
+2025-02-11 08:38:24,357 [INFO] 192.168.2.62 - - [11/Feb/2025 08:38:24] "POST /timer/job/4/start_timer HTTP/1.1" 200 -
+2025-02-11 08:38:24,369 [INFO] 192.168.2.62 - - [11/Feb/2025 08:38:24] "GET /job/ HTTP/1.1" 200 -
+2025-02-11 08:38:24,387 [INFO] 192.168.2.62 - - [11/Feb/2025 08:38:24] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 08:38:24,397 [INFO] 192.168.2.62 - - [11/Feb/2025 08:38:24] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 08:38:52,432 [INFO] 192.168.2.62 - - [11/Feb/2025 08:38:52] "GET /job/details/4 HTTP/1.1" 200 -
+2025-02-11 08:38:52,456 [INFO] 192.168.2.62 - - [11/Feb/2025 08:38:52] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 08:38:52,468 [INFO] 192.168.2.62 - - [11/Feb/2025 08:38:52] "[36mGET /image/serve/4/img_20250210_144542_deb218.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 08:38:52,469 [INFO] 192.168.2.62 - - [11/Feb/2025 08:38:52] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 08:38:52,470 [INFO] 192.168.2.62 - - [11/Feb/2025 08:38:52] "[36mGET /image/serve/4/img_20250210_144020_893259.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 08:38:57,913 [INFO] 192.168.2.62 - - [11/Feb/2025 08:38:57] "GET /job/4/invoice HTTP/1.1" 200 -
+2025-02-11 08:38:57,942 [INFO] 192.168.2.62 - - [11/Feb/2025 08:38:57] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 08:38:57,952 [INFO] 192.168.2.62 - - [11/Feb/2025 08:38:57] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 08:39:01,067 [INFO] 192.168.2.62 - - [11/Feb/2025 08:39:01] "GET /job/ HTTP/1.1" 200 -
+2025-02-11 08:39:01,101 [INFO] 192.168.2.62 - - [11/Feb/2025 08:39:01] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 08:39:01,110 [INFO] 192.168.2.62 - - [11/Feb/2025 08:39:01] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 08:39:03,720 [INFO] 192.168.2.62 - - [11/Feb/2025 08:39:03] "GET /job/details/4 HTTP/1.1" 200 -
+2025-02-11 08:39:03,746 [INFO] 192.168.2.62 - - [11/Feb/2025 08:39:03] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 08:39:03,755 [INFO] 192.168.2.62 - - [11/Feb/2025 08:39:03] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 08:39:03,805 [INFO] 192.168.2.62 - - [11/Feb/2025 08:39:03] "[36mGET /image/serve/4/img_20250210_144542_deb218.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 08:39:03,806 [INFO] 192.168.2.62 - - [11/Feb/2025 08:39:03] "[36mGET /image/serve/4/img_20250210_144020_893259.jpg?thumbnail=True HTTP/1.1[0m" 304 -
+2025-02-11 08:39:13,778 [INFO] 192.168.2.62 - - [11/Feb/2025 08:39:13] "GET / HTTP/1.1" 200 -
+2025-02-11 08:39:13,806 [INFO] 192.168.2.62 - - [11/Feb/2025 08:39:13] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 08:39:13,817 [INFO] 192.168.2.62 - - [11/Feb/2025 08:39:13] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 08:39:15,107 [INFO] 192.168.2.62 - - [11/Feb/2025 08:39:15] "GET /job/ HTTP/1.1" 200 -
+2025-02-11 08:39:15,134 [INFO] 192.168.2.62 - - [11/Feb/2025 08:39:15] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 08:39:15,144 [INFO] 192.168.2.62 - - [11/Feb/2025 08:39:15] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 08:39:24,363 [INFO] 192.168.2.62 - - [11/Feb/2025 08:39:24] "GET /job/details/26 HTTP/1.1" 200 -
+2025-02-11 08:39:24,399 [INFO] 192.168.2.62 - - [11/Feb/2025 08:39:24] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 08:39:24,408 [INFO] 192.168.2.62 - - [11/Feb/2025 08:39:24] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 08:40:00,268 [INFO] 192.168.2.62 - - [11/Feb/2025 08:40:00] "[32mPOST /job/26/edit_material/39 HTTP/1.1[0m" 302 -
+2025-02-11 08:40:00,274 [INFO] 192.168.2.62 - - [11/Feb/2025 08:40:00] "GET /job/details/26 HTTP/1.1" 200 -
+2025-02-11 08:40:00,295 [INFO] 192.168.2.62 - - [11/Feb/2025 08:40:00] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 08:40:00,305 [INFO] 192.168.2.62 - - [11/Feb/2025 08:40:00] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 08:40:39,362 [INFO] 192.168.2.62 - - [11/Feb/2025 08:40:39] "[32mPOST /job/26/edit_material/38 HTTP/1.1[0m" 302 -
+2025-02-11 08:40:39,368 [INFO] 192.168.2.62 - - [11/Feb/2025 08:40:39] "GET /job/details/26 HTTP/1.1" 200 -
+2025-02-11 08:40:39,393 [INFO] 192.168.2.62 - - [11/Feb/2025 08:40:39] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 08:40:39,402 [INFO] 192.168.2.62 - - [11/Feb/2025 08:40:39] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 08:41:33,490 [INFO] 192.168.2.62 - - [11/Feb/2025 08:41:33] "[32mPOST /job/26/edit_material/37 HTTP/1.1[0m" 302 -
+2025-02-11 08:41:33,498 [INFO] 192.168.2.62 - - [11/Feb/2025 08:41:33] "GET /job/details/26 HTTP/1.1" 200 -
+2025-02-11 08:41:33,519 [INFO] 192.168.2.62 - - [11/Feb/2025 08:41:33] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 08:41:33,528 [INFO] 192.168.2.62 - - [11/Feb/2025 08:41:33] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 08:42:12,062 [INFO] 192.168.2.62 - - [11/Feb/2025 08:42:12] "[32mPOST /job/26/edit_material/38 HTTP/1.1[0m" 302 -
+2025-02-11 08:42:12,068 [INFO] 192.168.2.62 - - [11/Feb/2025 08:42:12] "GET /job/details/26 HTTP/1.1" 200 -
+2025-02-11 08:42:12,088 [INFO] 192.168.2.62 - - [11/Feb/2025 08:42:12] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 08:42:12,098 [INFO] 192.168.2.62 - - [11/Feb/2025 08:42:12] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 08:45:24,984 [INFO] 192.168.2.62 - - [11/Feb/2025 08:45:24] "[32mPOST /job/26/edit_material/35 HTTP/1.1[0m" 302 -
+2025-02-11 08:45:24,992 [INFO] 192.168.2.62 - - [11/Feb/2025 08:45:24] "GET /job/details/26 HTTP/1.1" 200 -
+2025-02-11 08:45:25,009 [INFO] 192.168.2.62 - - [11/Feb/2025 08:45:25] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 08:45:25,018 [INFO] 192.168.2.62 - - [11/Feb/2025 08:45:25] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 08:48:00,513 [INFO] 192.168.2.62 - - [11/Feb/2025 08:48:00] "[32mPOST /job/26/edit_material/37 HTTP/1.1[0m" 302 -
+2025-02-11 08:48:00,520 [INFO] 192.168.2.62 - - [11/Feb/2025 08:48:00] "GET /job/details/26 HTTP/1.1" 200 -
+2025-02-11 08:48:00,538 [INFO] 192.168.2.62 - - [11/Feb/2025 08:48:00] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 08:48:00,548 [INFO] 192.168.2.62 - - [11/Feb/2025 08:48:00] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 08:49:03,832 [INFO] 192.168.2.62 - - [11/Feb/2025 08:49:03] "[32mPOST /job/26/edit_material/36 HTTP/1.1[0m" 302 -
+2025-02-11 08:49:03,838 [INFO] 192.168.2.62 - - [11/Feb/2025 08:49:03] "GET /job/details/26 HTTP/1.1" 200 -
+2025-02-11 08:49:03,857 [INFO] 192.168.2.62 - - [11/Feb/2025 08:49:03] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 08:49:03,867 [INFO] 192.168.2.62 - - [11/Feb/2025 08:49:03] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 08:49:05,550 [INFO] 192.168.2.62 - - [11/Feb/2025 08:49:05] "GET /job/26/invoice HTTP/1.1" 200 -
+2025-02-11 08:49:05,574 [INFO] 192.168.2.62 - - [11/Feb/2025 08:49:05] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 08:49:05,583 [INFO] 192.168.2.62 - - [11/Feb/2025 08:49:05] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 08:49:32,135 [INFO] 192.168.2.62 - - [11/Feb/2025 08:49:32] "[32mPOST /job/26/edit_material/34 HTTP/1.1[0m" 302 -
+2025-02-11 08:49:32,142 [INFO] 192.168.2.62 - - [11/Feb/2025 08:49:32] "GET /job/details/26 HTTP/1.1" 200 -
+2025-02-11 08:49:32,164 [INFO] 192.168.2.62 - - [11/Feb/2025 08:49:32] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 08:49:32,173 [INFO] 192.168.2.62 - - [11/Feb/2025 08:49:32] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 08:49:46,059 [INFO] 192.168.2.62 - - [11/Feb/2025 08:49:46] "[32mPOST /job/26/edit_material/35 HTTP/1.1[0m" 302 -
+2025-02-11 08:49:46,065 [INFO] 192.168.2.62 - - [11/Feb/2025 08:49:46] "GET /job/details/26 HTTP/1.1" 200 -
+2025-02-11 08:49:46,089 [INFO] 192.168.2.62 - - [11/Feb/2025 08:49:46] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 08:49:46,099 [INFO] 192.168.2.62 - - [11/Feb/2025 08:49:46] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 08:49:58,127 [INFO] 192.168.2.62 - - [11/Feb/2025 08:49:58] "[32mPOST /job/26/edit_material/38 HTTP/1.1[0m" 302 -
+2025-02-11 08:49:58,147 [INFO] 192.168.2.62 - - [11/Feb/2025 08:49:58] "GET /job/details/26 HTTP/1.1" 200 -
+2025-02-11 08:49:58,171 [INFO] 192.168.2.62 - - [11/Feb/2025 08:49:58] "GET /static/css/styles.css HTTP/1.1" 200 -
+2025-02-11 08:49:58,181 [INFO] 192.168.2.62 - - [11/Feb/2025 08:49:58] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 08:50:04,507 [INFO] 192.168.2.62 - - [11/Feb/2025 08:50:04] "GET /job/26/invoice HTTP/1.1" 200 -
+2025-02-11 08:50:04,534 [INFO] 192.168.2.62 - - [11/Feb/2025 08:50:04] "GET /static/css/styles.css HTTP/1.1" 200 -
+2025-02-11 08:50:04,544 [INFO] 192.168.2.62 - - [11/Feb/2025 08:50:04] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 08:50:22,508 [INFO] 192.168.2.62 - - [11/Feb/2025 08:50:22] "[32mPOST /job/details/26 HTTP/1.1[0m" 302 -
+2025-02-11 08:50:22,520 [INFO] 192.168.2.62 - - [11/Feb/2025 08:50:22] "GET /job/details/26 HTTP/1.1" 200 -
+2025-02-11 08:50:22,541 [INFO] 192.168.2.62 - - [11/Feb/2025 08:50:22] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 08:50:22,550 [INFO] 192.168.2.62 - - [11/Feb/2025 08:50:22] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 08:50:28,706 [INFO] 192.168.2.62 - - [11/Feb/2025 08:50:28] "GET /job/ HTTP/1.1" 200 -
+2025-02-11 08:50:28,721 [INFO] 192.168.2.62 - - [11/Feb/2025 08:50:28] "GET /static/css/styles.css HTTP/1.1" 200 -
+2025-02-11 08:50:28,730 [INFO] 192.168.2.62 - - [11/Feb/2025 08:50:28] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 08:50:45,066 [INFO] Starting timer for job 10
+2025-02-11 08:50:45,066 [INFO] Starting timer for job 10
+2025-02-11 08:50:45,066 [INFO] Stopping all active timers
+2025-02-11 08:50:45,066 [INFO] Stopping all active timers
+2025-02-11 08:50:45,188 [INFO] 192.168.2.62 - - [11/Feb/2025 08:50:45] "POST /timer/job/10/start_timer HTTP/1.1" 200 -
+2025-02-11 08:50:45,199 [INFO] 192.168.2.62 - - [11/Feb/2025 08:50:45] "GET /job/ HTTP/1.1" 200 -
+2025-02-11 08:50:45,215 [INFO] 192.168.2.62 - - [11/Feb/2025 08:50:45] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 08:50:45,224 [INFO] 192.168.2.62 - - [11/Feb/2025 08:50:45] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 09:03:21,265 [INFO] Starting timer for job 4
+2025-02-11 09:03:21,265 [INFO] Starting timer for job 4
+2025-02-11 09:03:21,266 [INFO] Stopping all active timers
+2025-02-11 09:03:21,266 [INFO] Stopping all active timers
+2025-02-11 09:03:21,466 [INFO] 192.168.2.54 - - [11/Feb/2025 09:03:21] "POST /timer/job/4/start_timer HTTP/1.1" 200 -
+2025-02-11 09:03:21,560 [INFO] 192.168.2.54 - - [11/Feb/2025 09:03:21] "GET /job/quick_timer HTTP/1.1" 200 -
+2025-02-11 09:03:55,363 [INFO] 192.168.2.62 - - [11/Feb/2025 09:03:55] "GET /job/ HTTP/1.1" 200 -
+2025-02-11 09:03:55,407 [INFO] 192.168.2.62 - - [11/Feb/2025 09:03:55] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-02-11 09:03:55,416 [INFO] 192.168.2.62 - - [11/Feb/2025 09:03:55] "GET /job/qr_code HTTP/1.1" 200 -
+2025-02-11 09:05:16,894 [INFO]  * Detected change in '/home/Jobmanager/app/routes/job_routes.py', reloading
+2025-02-11 09:05:16,946 [INFO]  * Restarting with stat
+2025-02-11 09:05:17,183 [INFO] Starting Job Manager application
+2025-02-11 09:05:17,183 [INFO] Starting Job Manager application
+2025-02-11 09:05:17,191 [WARNING]  * Debugger is active!
+2025-02-11 09:05:17,192 [INFO]  * Debugger PIN: 719-273-389
+2025-02-11 09:05:19,204 [INFO]  * Detected change in '/home/Jobmanager/app/routes/job_routes.py', reloading
+2025-02-11 09:05:19,255 [INFO]  * Restarting with stat
+2025-02-11 09:05:19,492 [INFO] Starting Job Manager application
+2025-02-11 09:05:19,492 [INFO] Starting Job Manager application
+2025-02-11 09:05:19,499 [WARNING]  * Debugger is active!
+2025-02-11 09:05:19,500 [INFO]  * Debugger PIN: 719-273-389
+2025-02-11 09:05:22,516 [INFO]  * Detected change in '/home/Jobmanager/app/routes/job_routes.py', reloading
+2025-02-11 09:05:22,562 [INFO]  * Restarting with stat
+2025-02-11 09:05:22,813 [INFO] Starting Job Manager application
+2025-02-11 09:05:22,813 [INFO] Starting Job Manager application
+2025-02-11 09:05:22,821 [WARNING]  * Debugger is active!
+2025-02-11 09:05:22,821 [INFO]  * Debugger PIN: 719-273-389
+2025-02-11 09:05:42,871 [INFO]  * Detected change in '/home/Jobmanager/app/routes/job_routes.py', reloading
+2025-02-11 09:05:42,918 [INFO]  * Restarting with stat
+2025-02-11 09:05:43,162 [INFO] Starting Job Manager application
+2025-02-11 09:05:43,162 [INFO] Starting Job Manager application
+2025-02-11 09:05:43,170 [WARNING]  * Debugger is active!
+2025-02-11 09:05:43,171 [INFO]  * Debugger PIN: 719-273-389
+2025-02-11 09:05:56,202 [INFO]  * Detected change in '/home/Jobmanager/app/routes/job_routes.py', reloading
+2025-02-11 09:05:56,249 [INFO]  * Restarting with stat
+2025-02-11 09:05:56,485 [INFO] Starting Job Manager application
+2025-02-11 09:05:56,485 [INFO] Starting Job Manager application
+2025-02-11 09:05:56,493 [WARNING]  * Debugger is active!
+2025-02-11 09:05:56,494 [INFO]  * Debugger PIN: 719-273-389
+2025-02-11 09:05:57,491 [INFO] Root path: /home/Jobmanager
+2025-02-11 09:05:57,491 [INFO] Root path: /home/Jobmanager
+2025-02-11 09:05:57,491 [INFO] Current working directory: /home/Jobmanager
+2025-02-11 09:05:57,491 [INFO] Current working directory: /home/Jobmanager
+2025-02-11 09:05:57,491 [INFO] Instance path: /home/Jobmanager/instance
+2025-02-11 09:05:57,491 [INFO] Instance path: /home/Jobmanager/instance
+2025-02-11 09:05:57,491 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250211_0905.zip
+2025-02-11 09:05:57,491 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250211_0905.zip
+2025-02-11 09:05:57,492 [INFO] Adding file: /home/Jobmanager/run.py
+2025-02-11 09:05:57,492 [INFO] Adding file: /home/Jobmanager/run.py
+2025-02-11 09:05:57,493 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-02-11 09:05:57,493 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-02-11 09:05:57,493 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-02-11 09:05:57,493 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-02-11 09:05:57,493 [INFO] Adding to zip: app/db.py
+2025-02-11 09:05:57,493 [INFO] Adding to zip: app/db.py
+2025-02-11 09:05:57,494 [INFO] Adding to zip: app/__init__.py
+2025-02-11 09:05:57,494 [INFO] Adding to zip: app/__init__.py
+2025-02-11 09:05:57,495 [INFO] Adding to zip: app/schema.sql
+2025-02-11 09:05:57,495 [INFO] Adding to zip: app/schema.sql
+2025-02-11 09:05:57,495 [INFO] Adding to zip: app/routes/image_routes.py
+2025-02-11 09:05:57,495 [INFO] Adding to zip: app/routes/image_routes.py
+2025-02-11 09:05:57,496 [INFO] Adding to zip: app/routes/__init__.py
+2025-02-11 09:05:57,496 [INFO] Adding to zip: app/routes/__init__.py
+2025-02-11 09:05:57,496 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-02-11 09:05:57,496 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-02-11 09:05:57,496 [INFO] Adding to zip: app/routes/job_routes.py
+2025-02-11 09:05:57,496 [INFO] Adding to zip: app/routes/job_routes.py
+2025-02-11 09:05:57,497 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-02-11 09:05:57,497 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-02-11 09:05:57,498 [INFO] Adding to zip: app/utils/job_utils.py
+2025-02-11 09:05:57,498 [INFO] Adding to zip: app/utils/job_utils.py
+2025-02-11 09:05:57,498 [INFO] Adding to zip: app/utils/material_utils.py
+2025-02-11 09:05:57,498 [INFO] Adding to zip: app/utils/material_utils.py
+2025-02-11 09:05:57,499 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-02-11 09:05:57,499 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-02-11 09:05:57,499 [INFO] Adding to zip: app/utils/__init__.py
+2025-02-11 09:05:57,499 [INFO] Adding to zip: app/utils/__init__.py
+2025-02-11 09:05:57,500 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-02-11 09:05:57,500 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-02-11 09:05:57,500 [INFO] Adding to zip: app/utils/error_utils.py
+2025-02-11 09:05:57,500 [INFO] Adding to zip: app/utils/error_utils.py
+2025-02-11 09:05:57,500 [INFO] Adding to zip: app/utils/image_utils.py
+2025-02-11 09:05:57,500 [INFO] Adding to zip: app/utils/image_utils.py
+2025-02-11 09:05:57,501 [INFO] Adding to zip: app/templates/customer_form.html
+2025-02-11 09:05:57,501 [INFO] Adding to zip: app/templates/customer_form.html
+2025-02-11 09:05:57,502 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-02-11 09:05:57,502 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-02-11 09:05:57,503 [INFO] Adding to zip: app/templates/job_details.html
+2025-02-11 09:05:57,503 [INFO] Adding to zip: app/templates/job_details.html
+2025-02-11 09:05:57,504 [INFO] Adding to zip: app/templates/invoice.html
+2025-02-11 09:05:57,504 [INFO] Adding to zip: app/templates/invoice.html
+2025-02-11 09:05:57,505 [INFO] Adding to zip: app/templates/job_form.html
+2025-02-11 09:05:57,505 [INFO] Adding to zip: app/templates/job_form.html
+2025-02-11 09:05:57,506 [INFO] Adding to zip: app/templates/customer_list.html
+2025-02-11 09:05:57,506 [INFO] Adding to zip: app/templates/customer_list.html
+2025-02-11 09:05:57,506 [INFO] Adding to zip: app/templates/500.html
+2025-02-11 09:05:57,506 [INFO] Adding to zip: app/templates/500.html
+2025-02-11 09:05:57,507 [INFO] Adding to zip: app/templates/base.html
+2025-02-11 09:05:57,507 [INFO] Adding to zip: app/templates/base.html
+2025-02-11 09:05:57,507 [INFO] Adding to zip: app/templates/job_list.html
+2025-02-11 09:05:57,507 [INFO] Adding to zip: app/templates/job_list.html
+2025-02-11 09:05:57,508 [INFO] Adding to zip: app/templates/404.html
+2025-02-11 09:05:57,508 [INFO] Adding to zip: app/templates/404.html
+2025-02-11 09:05:57,508 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-02-11 09:05:57,508 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-02-11 09:05:57,509 [INFO] Adding to zip: app/static/css/styles.css
+2025-02-11 09:05:57,509 [INFO] Adding to zip: app/static/css/styles.css
+2025-02-11 09:05:57,510 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250211_0905.zip
+2025-02-11 09:05:57,510 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250211_0905.zip
+2025-02-11 09:05:57,510 [INFO] Backup file exists: True
+2025-02-11 09:05:57,510 [INFO] Backup file exists: True
+2025-02-11 09:05:57,511 [INFO] 192.168.2.62 - - [11/Feb/2025 09:05:57] "GET /job/backup/full HTTP/1.1" 200 -
