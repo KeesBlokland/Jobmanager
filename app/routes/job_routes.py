@@ -8,6 +8,10 @@ from ..db import with_db
 from ..utils.job_utils import JobManager
 from ..utils.material_utils import MaterialManager
 import logging
+import qrcode
+import io
+from flask import send_file
+from urllib.parse import urljoin
 
 bp = Blueprint('job', __name__)
 
@@ -497,17 +501,24 @@ def quick_timer(db):
     ''').fetchall()
     return render_template('quick_timer.html', jobs=jobs)
 
-import qrcode
-import io
-from flask import send_file
-from urllib.parse import urljoin
 
 @bp.route('/qr_code')
 def generate_qr():
-    # Get the base URL from the request
-    base_url = request.url_root
-    # Create the full URL for the quick timer page
-    quick_timer_url = urljoin(base_url, url_for('job.quick_timer'))
+    import socket
+    
+    # Get local IP address
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    try:
+        # doesn't need to be reachable
+        s.connect(('10.255.255.255', 1))
+        local_ip = s.getsockname()[0]
+    except Exception:
+        local_ip = '127.0.0.1'
+    finally:
+        s.close()
+    
+    # Create the full URL with IP and port
+    quick_timer_url = f'http://{local_ip}:8080/job/quick_timer'
     
     # Create QR code
     qr = qrcode.QRCode(

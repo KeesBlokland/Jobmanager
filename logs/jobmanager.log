@@ -5072,3 +5072,138 @@ AttributeError: 'TimerManager' object has no attribute 'stop_all_active'
 2025-02-11 17:44:57,093 [INFO] Starting Job Manager application
 2025-02-11 17:44:57,101 [WARNING]  * Debugger is active!
 2025-02-11 17:44:57,101 [INFO]  * Debugger PIN: 719-273-389
+2025-02-11 18:46:13,823 [INFO] Root path: /home/Jobmanager
+2025-02-11 18:46:13,823 [INFO] Current working directory: /home/Jobmanager
+2025-02-11 18:46:13,823 [INFO] Instance path: /home/Jobmanager/instance
+2025-02-11 18:46:13,823 [INFO] DB Path: /home/Jobmanager/instance/jobmanager.db
+2025-02-11 18:46:13,823 [INFO] Backup Path: /home/Jobmanager/backups/db_backup_20250211_1846.db
+2025-02-11 18:46:13,824 [INFO] Database backup created at: /home/Jobmanager/backups/db_backup_20250211_1846.db
+2025-02-11 18:46:13,824 [INFO] Backup file exists: True
+2025-02-12 06:48:56,171 [INFO] Stopping timer for job 4
+2025-02-12 09:57:04,157 [INFO] Starting timer for job 12
+2025-02-12 09:57:04,157 [INFO] Stopping all active timers
+2025-02-12 10:11:38,720 [INFO] Stopping timer for job 12
+2025-02-12 11:36:37,090 [INFO] Starting timer for job 11
+2025-02-12 11:36:37,090 [INFO] Stopping all active timers
+2025-02-12 13:04:29,599 [INFO] Stopping timer for job 11
+2025-02-12 13:05:25,596 [INFO] Starting timer for job 25
+2025-02-12 13:05:25,597 [INFO] Stopping all active timers
+2025-02-12 13:20:43,545 [INFO] Starting timer for job 25
+2025-02-12 13:20:43,545 [INFO] Stopping all active timers
+2025-02-12 13:40:17,428 [INFO] Starting timer for job 11
+2025-02-12 13:40:17,429 [INFO] Stopping all active timers
+2025-02-12 15:24:28,288 [INFO] Stopping timer for job 11
+2025-02-12 17:51:43,154 [INFO] Starting timer for job 11
+2025-02-12 17:51:43,154 [INFO] Stopping all active timers
+2025-02-12 18:05:40,325 [INFO] Starting timer for job 12
+2025-02-12 18:05:40,325 [INFO] Stopping all active timers
+2025-02-12 18:05:41,886 [INFO] Starting timer for job 25
+2025-02-12 18:05:41,886 [INFO] Stopping all active timers
+2025-02-12 18:05:43,350 [INFO] Starting timer for job 11
+2025-02-12 18:05:43,350 [INFO] Stopping all active timers
+2025-02-12 18:05:47,524 [INFO] Starting timer for job 12
+2025-02-12 18:05:47,524 [INFO] Stopping all active timers
+2025-02-12 18:35:40,108 [INFO] Stopping timer for job 12
+2025-02-12 19:30:33,829 [INFO] Stopping timer for job 12
+2025-02-13 07:38:40,860 [INFO] Starting timer for job 10
+2025-02-13 07:38:40,860 [INFO] Stopping all active timers
+2025-02-13 09:06:57,994 [INFO] Stopping timer for job 10
+2025-02-13 09:22:06,893 [INFO] Starting timer for job 10
+2025-02-13 09:22:06,893 [INFO] Stopping all active timers
+2025-02-13 10:16:26,187 [INFO] Stopping timer for job 25
+2025-02-13 10:16:32,450 [INFO] Stopping timer for job 10
+2025-02-13 10:32:48,682 [INFO] Starting timer for job 4
+2025-02-13 10:32:48,682 [INFO] Stopping all active timers
+2025-02-13 12:00:39,100 [INFO] Starting timer for job 10
+2025-02-13 12:00:39,167 [INFO] Stopping all active timers
+2025-02-13 12:32:08,056 [INFO] Starting timer for job 4
+2025-02-13 12:32:08,056 [INFO] Stopping all active timers
+2025-02-13 12:59:44,427 [INFO] Root path: /home/Jobmanager
+2025-02-13 12:59:44,427 [INFO] Current working directory: /home/Jobmanager
+2025-02-13 12:59:44,427 [INFO] Instance path: /home/Jobmanager/instance
+2025-02-13 12:59:44,427 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250213_1259.zip
+2025-02-13 12:59:44,427 [INFO] Adding file: /home/Jobmanager/run.py
+2025-02-13 12:59:44,444 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-02-13 12:59:44,449 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-02-13 12:59:44,505 [INFO] Adding to zip: app/db.py
+2025-02-13 12:59:44,512 [INFO] Adding to zip: app/__init__.py
+2025-02-13 12:59:44,520 [INFO] Adding to zip: app/schema.sql
+2025-02-13 12:59:44,534 [INFO] Adding to zip: app/routes/image_routes.py
+2025-02-13 12:59:44,584 [INFO] Adding to zip: app/routes/__init__.py
+2025-02-13 12:59:44,597 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-02-13 12:59:44,622 [INFO] Adding to zip: app/routes/job_routes.py
+2025-02-13 12:59:44,623 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-02-13 12:59:44,624 [INFO] Adding to zip: app/utils/job_utils.py
+2025-02-13 12:59:44,650 [INFO] Adding to zip: app/utils/material_utils.py
+2025-02-13 12:59:44,665 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-02-13 12:59:44,679 [INFO] Adding to zip: app/utils/__init__.py
+2025-02-13 12:59:44,689 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-02-13 12:59:44,698 [INFO] Adding to zip: app/utils/error_utils.py
+2025-02-13 12:59:44,707 [INFO] Adding to zip: app/utils/image_utils.py
+2025-02-13 12:59:44,750 [INFO] Adding to zip: app/templates/customer_form.html
+2025-02-13 12:59:44,751 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-02-13 12:59:44,751 [INFO] Adding to zip: app/templates/job_details.html
+2025-02-13 12:59:44,751 [INFO] Adding to zip: app/templates/invoice.html
+2025-02-13 12:59:44,752 [INFO] Adding to zip: app/templates/job_form.html
+2025-02-13 12:59:44,760 [INFO] Adding to zip: app/templates/customer_list.html
+2025-02-13 12:59:44,761 [INFO] Adding to zip: app/templates/500.html
+2025-02-13 12:59:44,761 [INFO] Adding to zip: app/templates/base.html
+2025-02-13 12:59:44,762 [INFO] Adding to zip: app/templates/job_list.html
+2025-02-13 12:59:44,762 [INFO] Adding to zip: app/templates/404.html
+2025-02-13 12:59:44,763 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-02-13 12:59:44,774 [INFO] Adding to zip: app/static/css/styles.css
+2025-02-13 12:59:44,775 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250213_1259.zip
+2025-02-13 12:59:44,775 [INFO] Backup file exists: True
+2025-02-13 12:59:52,164 [INFO] Starting timer for job 10
+2025-02-13 12:59:52,164 [INFO] Stopping all active timers
+2025-02-13 13:46:00,491 [INFO] Stopping timer for job 4
+2025-02-13 13:46:02,746 [INFO] Stopping timer for job 10
+2025-02-13 16:47:50,541 [INFO] Starting timer for job 27
+2025-02-13 16:47:50,541 [INFO] Stopping all active timers
+2025-02-13 17:33:05,425 [INFO] Stopping timer for job 27
+2025-02-13 17:34:29,425 [INFO] Starting timer for job 27
+2025-02-13 17:34:29,425 [INFO] Stopping all active timers
+2025-02-13 17:36:13,385 [INFO] Stopping timer for job 27
+2025-02-13 17:39:34,599 [INFO] Root path: /home/Jobmanager
+2025-02-13 17:39:34,599 [INFO] Current working directory: /home/Jobmanager
+2025-02-13 17:39:34,599 [INFO] Instance path: /home/Jobmanager/instance
+2025-02-13 17:39:34,599 [INFO] DB Path: /home/Jobmanager/instance/jobmanager.db
+2025-02-13 17:39:34,600 [INFO] Backup Path: /home/Jobmanager/backups/db_backup_20250213_1739.db
+2025-02-13 17:39:34,600 [INFO] Database backup created at: /home/Jobmanager/backups/db_backup_20250213_1739.db
+2025-02-13 17:39:34,600 [INFO] Backup file exists: True
+2025-02-13 17:48:22,599 [INFO] Root path: /home/Jobmanager
+2025-02-13 17:48:22,599 [INFO] Current working directory: /home/Jobmanager
+2025-02-13 17:48:22,599 [INFO] Instance path: /home/Jobmanager/instance
+2025-02-13 17:48:22,599 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250213_1748.zip
+2025-02-13 17:48:22,600 [INFO] Adding file: /home/Jobmanager/run.py
+2025-02-13 17:48:22,600 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-02-13 17:48:22,601 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-02-13 17:48:22,601 [INFO] Adding to zip: app/db.py
+2025-02-13 17:48:22,602 [INFO] Adding to zip: app/__init__.py
+2025-02-13 17:48:22,602 [INFO] Adding to zip: app/schema.sql
+2025-02-13 17:48:22,602 [INFO] Adding to zip: app/routes/image_routes.py
+2025-02-13 17:48:22,603 [INFO] Adding to zip: app/routes/__init__.py
+2025-02-13 17:48:22,603 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-02-13 17:48:22,603 [INFO] Adding to zip: app/routes/job_routes.py
+2025-02-13 17:48:22,604 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-02-13 17:48:22,604 [INFO] Adding to zip: app/utils/job_utils.py
+2025-02-13 17:48:22,605 [INFO] Adding to zip: app/utils/material_utils.py
+2025-02-13 17:48:22,605 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-02-13 17:48:22,606 [INFO] Adding to zip: app/utils/__init__.py
+2025-02-13 17:48:22,606 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-02-13 17:48:22,606 [INFO] Adding to zip: app/utils/error_utils.py
+2025-02-13 17:48:22,606 [INFO] Adding to zip: app/utils/image_utils.py
+2025-02-13 17:48:22,607 [INFO] Adding to zip: app/templates/customer_form.html
+2025-02-13 17:48:22,607 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-02-13 17:48:22,608 [INFO] Adding to zip: app/templates/job_details.html
+2025-02-13 17:48:22,608 [INFO] Adding to zip: app/templates/invoice.html
+2025-02-13 17:48:22,608 [INFO] Adding to zip: app/templates/job_form.html
+2025-02-13 17:48:22,609 [INFO] Adding to zip: app/templates/customer_list.html
+2025-02-13 17:48:22,609 [INFO] Adding to zip: app/templates/500.html
+2025-02-13 17:48:22,610 [INFO] Adding to zip: app/templates/base.html
+2025-02-13 17:48:22,610 [INFO] Adding to zip: app/templates/job_list.html
+2025-02-13 17:48:22,610 [INFO] Adding to zip: app/templates/404.html
+2025-02-13 17:48:22,611 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-02-13 17:48:22,611 [INFO] Adding to zip: app/static/css/styles.css
+2025-02-13 17:48:22,612 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250213_1748.zip
+2025-02-13 17:48:22,612 [INFO] Backup file exists: True

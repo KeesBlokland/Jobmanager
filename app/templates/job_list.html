@@ -7,16 +7,16 @@
 
 <div class="search-section">
     <input type="text" id="searchInput" placeholder="Search in customer or description..." 
-           style="min-width: 250px; padding: 8px; height: 16px;">
-    <select id="statusFilter" style="height: 30px; padding: 4px 12px;">
+           style="max-width: 250px; padding: 4px 12px; height: 36px; box-sizing: border-box;">
+    <select id="statusFilter" class="action-btn" style="height: 30px; background: white; color: black;">
         <option value="">All Statuses</option>
         <option value="Active">Active</option>
         <option value="Pending">Pending</option>
         <option value="Completed">Completed</option>
     </select>
-    <button onclick="clearSearch()" style="height: 30px; padding: 4px 12px;">Clear</button>
+    <button onclick="clearSearch()" class="action-btn cancel-btn">Clear</button>
 </div>
-
+<hr>
 <div class="job-list">
     <table style="width: 100%; border-collapse: collapse;">
         <thead>

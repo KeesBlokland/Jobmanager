@@ -83,11 +83,12 @@
             <input type="text" name="material" value="{{ material.material }}" required style="flex-grow: 1;">
             <input type="number" name="quantity" value="{{ material.quantity }}" step="0.1" required style="width: 80px;">
             <input type="number" name="price" value="{{ material.price }}" step="0.01" required style="width: 80px;">
-            <div class="btn-group">
+            <div class="btn-group" style="display: flex; gap: 5px; flex-direction: row;">
                 <button type="submit" class="action-btn save-btn">Save</button>
                 <button type="button" onclick="hideMaterialEdit({{ material.id }})" class="action-btn cancel-btn">Cancel</button>
             </div>
         </form>
+    </div>
     </div>
    </div>
    {% endfor %}
