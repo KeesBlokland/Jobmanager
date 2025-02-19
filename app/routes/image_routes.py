@@ -55,7 +55,7 @@ def process_watch_folder(db, job_id):
     image_mgr = ImageManager(os.path.join(current_app.instance_path, 'images'))
     processed = []
     errors = []
-    
+    timestamp = (datetime.now() + timedelta(hours=1)).strftime('%y%m%d%H%M')
     for filename in os.listdir(watch_folder):
         if not allowed_file(filename):
             continue

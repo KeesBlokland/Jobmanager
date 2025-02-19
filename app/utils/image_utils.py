@@ -2,7 +2,8 @@
 from PIL import Image
 from PIL.ExifTags import TAGS
 import os
-from datetime import datetime
+import pytz
+from datetime import datetime, timedelta
 import sqlite3
 
 class ImageManager:
@@ -10,6 +11,13 @@ class ImageManager:
         self.base_path = base_path
         self.THUMBNAIL_SIZE = (300, 300)
         self.MAX_SIZE = (1024, 1024)
+        self.timezone = pytz.timezone('Europe/Berlin')  # German timezone
+        
+    def get_local_time(self):
+        """Get current time in German timezone"""
+        utc_time = datetime.now(timezone.utc)
+        return utc_time.astimezone(self.timezone)
+    
 
     def get_job_identifier(self, db, job_id):
         """Get invoice number or job ID to use in filename"""
@@ -23,14 +31,14 @@ class ImageManager:
             return result['invoice_number'].split('-')[1]
         return f"job{job_id}"
 
-    def process_image(self, job_id, image_file, db=None):
+     def process_image(self, job_id, image_file, db=None):
         # Create job directory if it doesn't exist
         job_path = os.path.join(self.base_path, f'job_{job_id}')
         thumb_path = os.path.join(job_path, 'thumbnails')
         os.makedirs(thumb_path, exist_ok=True)
 
-        # Generate filename with job identifier
-        timestamp = datetime.now().strftime('%y%m%d%H%M')
+        # Generate filename with job identifier and local time
+        timestamp = self.get_local_time().strftime('%y%m%d%H%M')
         job_identifier = self.get_job_identifier(db, job_id) if db else f"job{job_id}"
         filename = f'{job_identifier}-{timestamp}.jpg'
 

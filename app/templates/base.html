@@ -22,7 +22,9 @@
             <div class="nav-links">
                 <a href="{{ url_for('customer.index') }}" {% if request.endpoint == 'customer.index' %}class="active"{% endif %}>Customers</a>
                 <a href="{{ url_for('job.job_list') }}" {% if request.endpoint == 'job.job_list' %}class="active"{% endif %}>Jobs</a>
-                <a href="{{ url_for('customer.add_customer') }}" {% if request.endpoint == 'customer.add_customer' %}class="active"{% endif %}>Add Customer</a>
+                {% if request.endpoint == 'customer.index' %}
+                    <a href="{{ url_for('customer.add_customer') }}" {% if request.endpoint == 'customer.add_customer' %}class="active"{% endif %}>Add Customer</a>
+                {% endif %}
             </div>
         </div>
         <div class="backup-buttons">

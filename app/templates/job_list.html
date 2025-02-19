@@ -7,8 +7,8 @@
 
 <div class="search-section">
     <input type="text" id="searchInput" placeholder="Search in customer or description..." 
-           style="max-width: 250px; padding: 4px 12px; height: 36px; box-sizing: border-box;">
-    <select id="statusFilter" class="action-btn" style="height: 30px; background: white; color: black;">
+           style="max-width: 250px; padding: 4px 12px; height: 36px; box-sizing: border-box: border: 1px solid #ddd;">
+    <select id="statusFilter" class="action-btn" style="height: 36px; background: #ddd; color: black;">
         <option value="">All Statuses</option>
         <option value="Active">Active</option>
         <option value="Pending">Pending</option>
@@ -45,11 +45,6 @@
                 </td>
                 <td style="padding: 5px; border: 1px solid #ddd;">
                     <div class="btn-group">
-                        <a href="{{ url_for('job.job_details', id=job.id) }}" 
-                           class="action-btn edit-btn">Details</a>
-                        <a href="{{ url_for('job.edit_job', id=job.id) }}" 
-                           class="action-btn edit-btn">Edit</a>
-                           
                         {% if job.active_timer_id %}
                             <button onclick="stopTimer({{ job.id }})"
                                     class="action-btn timer-btn active">Stop Timer</button>
@@ -57,6 +52,12 @@
                             <button onclick="startTimer({{ job.id }})"
                                     class="action-btn timer-btn">Start Timer</button>
                         {% endif %}
+
+                        <a href="{{ url_for('job.job_details', id=job.id) }}" 
+                           class="action-btn edit-btn">Details</a>
+                        <a href="{{ url_for('job.edit_job', id=job.id) }}" 
+                           class="action-btn edit-btn">Edit</a>
+                           
                 
                         <form action="{{ url_for('job.delete_job', id=job.id) }}" 
                               method="post" style="display: inline;">
