@@ -22,14 +22,21 @@
             <div class="nav-links">
                 <a href="{{ url_for('customer.index') }}" {% if request.endpoint == 'customer.index' %}class="active"{% endif %}>Customers</a>
                 <a href="{{ url_for('job.job_list') }}" {% if request.endpoint == 'job.job_list' %}class="active"{% endif %}>Jobs</a>
+                <a href="{{ url_for('report.weekly_summary') }}" {% if request.endpoint == 'report.weekly_summary' %}class="active"{% endif %}>Weekly Summary</a>
                 {% if request.endpoint == 'customer.index' %}
                     <a href="{{ url_for('customer.add_customer') }}" {% if request.endpoint == 'customer.add_customer' %}class="active"{% endif %}>Add Customer</a>
                 {% endif %}
             </div>
         </div>
-        <div class="backup-buttons">
-            <button onclick="createBackup('db')" class="action-btn">Backup Database</button>
-            <button onclick="createBackup('full')" class="action-btn">Backup Full System</button>
+        <div class="system-buttons">
+            <div class="dropdown">
+                <button class="action-btn dropdown-toggle">System</button>
+                <div class="dropdown-content">
+                    <a href="{{ url_for('system.settings') }}">Settings</a>
+                    <button onclick="createBackup('db')" class="dropdown-item">Backup Database</button>
+                    <button onclick="createBackup('full')" class="dropdown-item">Backup Full System</button>
+                </div>
+            </div>
         </div>
     </div>
     {% block content %}{% endblock %}
@@ -49,6 +56,27 @@
             alert('Backup failed: ' + error.message);
         }
     }
+    
+    // Add dropdown behavior
+    document.addEventListener('DOMContentLoaded', function() {
+        const dropdownToggle = document.querySelector('.dropdown-toggle');
+        const dropdownContent = document.querySelector('.dropdown-content');
+        
+        if (dropdownToggle && dropdownContent) {
+            dropdownToggle.addEventListener('click', function() {
+                dropdownContent.classList.toggle('show');
+            });
+            
+            // Close dropdown when clicking outside
+            window.addEventListener('click', function(event) {
+                if (!event.target.matches('.dropdown-toggle')) {
+                    if (dropdownContent.classList.contains('show')) {
+                        dropdownContent.classList.remove('show');
+                    }
+                }
+            });
+        }
+    });
     </script>
 </body>
 </html>

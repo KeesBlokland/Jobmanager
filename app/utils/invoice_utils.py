@@ -56,12 +56,10 @@ class InvoiceManager:
         
         time_entries = self.db.execute('''
             SELECT *,
-            ROUND((julianday(COALESCE(end_time, CURRENT_TIMESTAMP)) - 
-                   julianday(start_time)) * 24, 2) as hours
+            (julianday(COALESCE(end_time, datetime('now'))) - julianday(start_time)) * 24 as hours
             FROM time_entry
             WHERE job_id = ? AND 
-            ROUND((julianday(COALESCE(end_time, CURRENT_TIMESTAMP)) - 
-                   julianday(start_time)) * 24, 2) > 0.03
+            (julianday(COALESCE(end_time, datetime('now'))) - julianday(start_time)) * 24 > 0.03
             ORDER BY start_time
         ''', (job_id,)).fetchall()
         

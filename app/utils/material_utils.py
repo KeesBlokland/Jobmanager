@@ -1,12 +1,12 @@
 # app/utils/material_utils.py
-from datetime import datetime
+from .time_utils import get_current_time
 
 class MaterialManager:
     def __init__(self, db):
         self.db = db
 
     def add_material(self, job_id, material_data):
-        now = datetime.now().isoformat()
+        now = get_current_time()  # Use centralized time function
         self.db.execute(
             'INSERT INTO job_material (job_id, material, quantity, price, timestamp) VALUES (?, ?, ?, ?, ?)',
             (job_id, material_data['material'], 

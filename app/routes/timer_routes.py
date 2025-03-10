@@ -1,5 +1,5 @@
 # app/routes/timer_routes.py
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify,redirect, url_for, request
 from ..db import with_db  # Changed from ..utils.db_utils
 from ..utils.timer_utils import TimerManager
 from datetime import datetime
@@ -11,6 +11,10 @@ bp = Blueprint('timer', __name__)
 def start_timer(db, id):
     timer = TimerManager(db)
     timer.start(id)
+    # Return a redirect for form submissions from job details page
+    if request.headers.get('Accept', '').find('text/html') != -1:
+        return redirect(url_for('job.job_details', id=id))
+    # Otherwise return JSON for API calls
     return jsonify({'success': True})
 
 @bp.route('/job/<int:id>/stop_timer', methods=['POST'])
@@ -18,6 +22,10 @@ def start_timer(db, id):
 def stop_timer(db, id):
     timer = TimerManager(db)
     timer.stop(id)
+    # Return a redirect for form submissions from the job details page
+    if request.headers.get('Accept', '').find('text/html') != -1:
+        return redirect(url_for('job.job_details', id=id))
+    # Otherwise return JSON for API calls
     return jsonify({'success': True})
 
 @bp.route('/job/<int:id>/pause_timer', methods=['POST'])

@@ -1,0 +1,70 @@
+<!-- app/templates/shared_images.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shared Images</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body style="background-color: #f5f5f5; padding: 20px; margin: 0; font-family: Arial, sans-serif;">
+    <div class="shared-container">
+        <h1>Shared Images</h1>
+        <div class="job-info">
+            {% if share_data.customer_name %}
+                <strong>Customer:</strong> {{ share_data.customer_name }}<br>
+            {% endif %}
+            {% if share_data.job_description %}
+                <strong>Job:</strong> {{ share_data.job_description }}<br>
+            {% endif %}
+        </div>
+        <div class="expiry-info">
+            These images are available until: {{ share_data.expires[:16].replace('T', ' ') }}
+        </div>
+        
+        <a href="{{ url_for('image.download_images', token=token) }}" class="btn-download">
+            Download All Images (ZIP)
+        </a>
+        
+        <div class="image-grid">
+            {% for image in share_data.images %}
+            <div class="image-card">
+                <img src="{{ url_for('image.serve_image', job_id=share_data.job_id, filename=image.filename) }}" 
+                     alt="Shared image"
+                     onclick="openModal('{{ url_for('image.serve_image', job_id=share_data.job_id, filename=image.filename) }}')">
+                <div class="image-info">
+                    {{ image.filename }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <!-- Modal for full size image -->
+    <div id="imageModal" class="shared-modal">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <img class="shared-modal-content" id="modalImage">
+    </div>
+    
+    <script>
+        function openModal(imageSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            modal.style.display = "block";
+            modalImg.src = imageSrc;
+        }
+        
+        function closeModal() {
+            document.getElementById('imageModal').style.display = "none";
+        }
+        
+        // Close modal when clicking outside the image
+        window.onclick = function(event) {
+            const modal = document.getElementById('imageModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>

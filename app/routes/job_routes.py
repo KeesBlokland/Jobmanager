@@ -7,6 +7,8 @@ from flask import Blueprint, render_template, request, redirect, url_for, jsonif
 from ..db import with_db
 from ..utils.job_utils import JobManager
 from ..utils.material_utils import MaterialManager
+from ..utils.time_utils import get_current_time, format_time
+
 import logging
 import qrcode
 import io
@@ -130,40 +132,40 @@ def create_backup(db, type):
 @with_db
 def job_list(db):
     jobs = db.execute('''
-        WITH job_hours AS (
-            SELECT 
-                job_id,
-                SUM(
-                    CASE 
-                        WHEN end_time IS NULL THEN
-                            (julianday(datetime('now')) - julianday(start_time)) * 24
-                        ELSE
-                            (julianday(end_time) - julianday(start_time)) * 24
-                    END
-                ) as hours
-            FROM time_entry
-            GROUP BY job_id
-        )
+    WITH job_hours AS (
         SELECT 
-            job.*,
-            customer.name as customer_name,
-            te_active.id as active_timer_id,
-            te_active.start_time as timer_start,
-            COALESCE(job_hours.hours, 0) as accumulated_hours
-        FROM job 
-        JOIN customer ON job.customer_id = customer.id 
-        LEFT JOIN time_entry te_active ON job.id = te_active.job_id 
-            AND te_active.end_time IS NULL
-        LEFT JOIN job_hours ON job_hours.job_id = job.id
-        ORDER BY 
-            te_active.id IS NOT NULL DESC,
-            CASE job.status
-                WHEN 'Active' THEN 1
-                WHEN 'Pending' THEN 2
-                WHEN 'Completed' THEN 3
-            END,
-            job.last_active DESC NULLS LAST,
-            job.creation_date DESC
+            job_id,
+            SUM(
+                CASE 
+                    WHEN end_time IS NULL THEN
+                        (julianday(datetime('now')) - julianday(start_time)) * 24
+                    ELSE
+                        (julianday(end_time) - julianday(start_time)) * 24
+                END
+            ) as hours
+        FROM time_entry
+        GROUP BY job_id
+    )
+    SELECT 
+        job.*,
+        customer.name as customer_name,
+        te_active.id as active_timer_id,
+        te_active.start_time as timer_start,
+        COALESCE(job_hours.hours, 0) as accumulated_hours
+    FROM job 
+    JOIN customer ON job.customer_id = customer.id 
+    LEFT JOIN time_entry te_active ON job.id = te_active.job_id 
+        AND te_active.end_time IS NULL
+    LEFT JOIN job_hours ON job_hours.job_id = job.id
+    ORDER BY 
+        te_active.id IS NOT NULL DESC,
+        CASE job.status
+            WHEN 'Active' THEN 1
+            WHEN 'Pending' THEN 2
+            WHEN 'Completed' THEN 3
+        END,
+        job.last_active DESC NULLS LAST,
+        job.creation_date DESC
     ''').fetchall()
     return render_template('job_list.html', jobs=jobs)
 
@@ -185,7 +187,7 @@ def add_job(db, customer_id):
                 'base_rate, estimated_hours, is_template, template_name)'
                 ' VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
                 (customer_id, request.form['description'], request.form['status'],
-                 datetime.now().isoformat(), 
+                 get_current_time(),  # Use centralized time function
                  float(request.form['base_rate']) if request.form.get('base_rate') else None,
                  float(request.form['estimated_hours']) if request.form.get('estimated_hours') else None,
                  is_template,
@@ -207,7 +209,7 @@ def add_job(db, customer_id):
                         (job_id, material.strip(), 
                          float(quantity) if quantity else 1.0,
                          float(price) if price else 0.0,
-                         datetime.now().isoformat())
+                         get_current_time())  # Use centralized time function
                     )
             
             db.commit()
@@ -225,6 +227,7 @@ def add_job(db, customer_id):
     ''').fetchall()
     
     return render_template('job_form.html', customer=customer, templates=templates)
+
 
 @bp.route('/<int:id>/edit', methods=['GET', 'POST'])
 @with_db
@@ -253,7 +256,7 @@ def delete_job(db, id):
 def add_note(db, id):
     note = request.form.get('note', '').strip()
     if note:
-        now = datetime.now().isoformat()
+        now = get_current_time()  # Use centralized time function
         db.execute(
             'INSERT INTO job_note (job_id, note, timestamp) VALUES (?, ?, ?)',
             (id, note, now)
@@ -265,6 +268,8 @@ def add_note(db, id):
         db.commit()
         
     return jsonify({"success": True})
+
+# Updated job_details route in app/routes/job_routes.py
 
 @bp.route('/details/<int:id>', methods=['GET', 'POST'])
 @with_db
@@ -292,29 +297,31 @@ def job_details(db, id):
         return redirect(url_for('job.job_details', id=id))
     
     job = db.execute('''
-        WITH job_hours AS (
-            SELECT job_id,
-                SUM((julianday(COALESCE(end_time, datetime('now'))) - julianday(start_time)) * 24) as hours
-            FROM time_entry
-            GROUP BY job_id
-        )
-        SELECT job.*, 
-               customer.name as customer_name,
-               COALESCE(job_hours.hours, 0) as accumulated_hours
-        FROM job 
-        JOIN customer ON job.customer_id = customer.id 
-        LEFT JOIN job_hours ON job_hours.job_id = job.id
-        WHERE job.id = ?
-    ''', [id]).fetchone()
-    
+    WITH job_hours AS (
+        SELECT job_id,
+            SUM((julianday(COALESCE(end_time, datetime('now'))) - julianday(start_time)) * 24) as hours
+        FROM time_entry
+        GROUP BY job_id
+    )
+    SELECT job.*, 
+           customer.name as customer_name,
+           COALESCE(job_hours.hours, 0) as accumulated_hours
+    FROM job 
+    JOIN customer ON job.customer_id = customer.id 
+    LEFT JOIN job_hours ON job_hours.job_id = job.id
+    WHERE job.id = ?
+''', [id]).fetchone()
+
+    # Modified to include time entries with null end_time
     time_entries = db.execute('''
-        SELECT *, 
-        (julianday(COALESCE(end_time, datetime('now'))) - julianday(start_time)) * 24 as hours
-        FROM time_entry 
-        WHERE job_id = ? 
+        SELECT *,
+            (julianday(COALESCE(end_time, datetime('now'))) - julianday(start_time)) * 24 as hours
+        FROM time_entry
+        WHERE job_id = ? AND 
+            (julianday(COALESCE(end_time, datetime('now'))) - julianday(start_time)) * 24 > 0
         ORDER BY start_time DESC
     ''', [id]).fetchall()
-    
+        
     total_hours = sum(entry['hours'] for entry in time_entries)
     total_amount = total_hours * (job['base_rate'] or 0)
     
@@ -347,19 +354,37 @@ def job_details(db, id):
                          combined_notes=combined_notes,
                          total_hours=total_hours,
                          total_amount=total_amount,
-                         images=images)  # Add images to template context
+                         images=images)
 
 @bp.route('/<int:job_id>/edit_time_entry/<int:entry_id>', methods=['POST'])
 @with_db
 def edit_time_entry(db, job_id, entry_id):
-    db.execute('''
-        UPDATE time_entry 
-        SET start_time = ?, end_time = ? 
-        WHERE id = ? AND job_id = ?
-    ''', [request.form['start_time'], request.form['end_time'], 
-          entry_id, job_id])
-    db.commit()
-    return redirect(url_for('job.job_details', id=job_id))
+    try:
+        # Get start time and end time from form
+        start_time = request.form['start_time']
+        end_time = request.form['end_time']
+        
+        # Convert to ISO format strings
+        if start_time:
+            start_time = datetime.fromisoformat(start_time).isoformat()
+        
+        if end_time:
+            end_time = datetime.fromisoformat(end_time).isoformat()
+        
+        # Update the time entry
+        db.execute('''
+            UPDATE time_entry 
+            SET start_time = ?, end_time = ? 
+            WHERE id = ? AND job_id = ?
+        ''', [start_time, end_time, entry_id, job_id])
+        
+        db.commit()
+        
+        return redirect(url_for('job.job_details', id=job_id))
+    except Exception as e:
+        current_app.logger.error(f"Error updating time entry: {str(e)}", exc_info=True)
+        return redirect(url_for('job.job_details', id=job_id, error=f"Error updating time entry: {str(e)}"))
+
 
 @bp.route('/<int:id>/add_material', methods=['POST'])
 @with_db
@@ -405,6 +430,8 @@ def delete_time_entry(db, id, entry_id):
     db.commit()
     return redirect(url_for('job.job_details', id=id))
 
+# Update this function in app/routes/job_routes.py
+
 @bp.route('/<int:id>/invoice')
 @with_db
 def invoice(db, id):
@@ -415,12 +442,15 @@ def invoice(db, id):
         WHERE job.id = ?
     ''', [id]).fetchone()
     
+    # Modified query to work with ISO format timestamps
     time_entries = db.execute('''
         SELECT *,
-        (julianday(COALESCE(end_time, datetime('now'))) - julianday(start_time)) * 24 as hours
+        (julianday(COALESCE(end_time, datetime('now'))) - 
+         julianday(start_time)) * 24 as hours
         FROM time_entry
         WHERE job_id = ? AND 
-              (julianday(COALESCE(end_time, datetime('now'))) - julianday(start_time)) * 24 > 0
+              (julianday(COALESCE(end_time, datetime('now'))) - 
+               julianday(start_time)) * 24 > 0
         ORDER BY start_time
     ''', [id]).fetchall()
     
@@ -473,9 +503,9 @@ def quick_timer(db):
     jobs = db.execute('''
         WITH job_hours AS (
             SELECT 
-                job_id,
-                SUM((julianday(COALESCE(end_time, datetime('now'))) - julianday(start_time)) * 24) as hours
-            FROM time_entry
+            job_id,
+            SUM((julianday(COALESCE(end_time, datetime('now'))) - julianday(start_time)) * 24) as hours
+        FROM time_entry
             GROUP BY job_id
         )
         SELECT 

@@ -10,7 +10,7 @@
     </div>
     <div class="invoice-details" style="flex: 1; text-align: right;">
         <h1>Invoice</h1>
-        <p>Invoice #: {{ invoice_number }}<br>Date: {{ job.creation_date[:10] }}</p>
+        <p>Invoice #: {{ invoice_number }}<br>Date: {% if job.creation_date %}{{ job.creation_date[:10] }}{% else %}{{ now().strftime('%Y-%m-%d') }}{% endif %}</p>
     </div>
 </div>
 
@@ -39,7 +39,35 @@
     </tr>
     {% set ns = namespace(current_week='', weekly_hours=0, today=None) %}
     {% for entry in time_entries %}
-        {% set entry_date = entry.start_time[0:10] %}
+        {% set entry_date = '' %}
+        {% set entry_start = '' %}
+        {% set entry_end = '' %}
+        
+        {% if entry.start_time is string and '-' in entry.start_time %}
+            {% set entry_date = entry.start_time[0:10] %}
+            {% set entry_start = entry.start_time[11:16] %}
+            {% set entry_month = entry.start_time[5:7] %}
+            {% set entry_day = entry.start_time[8:10] %}
+            {% set entry_year = entry.start_time[0:4] %}
+        {% elif entry.start_time is number or (entry.start_time is string and entry.start_time.isdigit()) %}
+            {% set timestamp = entry.start_time|int %}
+            {% set dt = timestamp|timestamp_to_datetime %}
+            {% set entry_date = dt.strftime('%Y-%m-%d') %}
+            {% set entry_start = dt.strftime('%H:%M') %}
+            {% set entry_month = dt.strftime('%m') %}
+            {% set entry_day = dt.strftime('%d') %}
+            {% set entry_year = dt.strftime('%Y') %}
+        {% endif %}
+        
+        {% if entry.end_time %}
+            {% if entry.end_time is string and '-' in entry.end_time %}
+                {% set entry_end = entry.end_time[11:16] %}
+            {% elif entry.end_time is number or (entry.end_time is string and entry.end_time.isdigit()) %}
+                {% set timestamp = entry.end_time|int %}
+                {% set dt = timestamp|timestamp_to_datetime %}
+                {% set entry_end = dt.strftime('%H:%M') %}
+            {% endif %}
+        {% endif %}
         
         {# Set today's date on first iteration #}
         {% if loop.first %}
@@ -48,12 +76,12 @@
         
         {# Calculate week number (Monday-based) #}
         {% set week_number = ((loop.index0 // 7) + 1)|string %}
-        {% set current_week = entry_date[0:4] + "-W" + week_number %}
+        {% set current_week = entry_year + "-W" + week_number %}
         
         {% if entry_date == ns.today %}
             {# Show individual entries for today #}
             <tr>
-                <td>{{ entry_date[8:10] }} {{ entry_date[5:7]|month_name }} {{ entry_date[0:4] }} {{ entry.start_time[11:16] }}-{{ entry.end_time[11:16] if entry.end_time else 'ongoing' }}</td>
+                <td>{{ entry_day }} {{ entry_month|month_name }} {{ entry_year }} {{ entry_start }}-{{ entry_end if entry_end else 'ongoing' }}</td>
                 <td>{{ "%d:%02d"|format(entry.hours|int, (entry.hours % 1 * 60)|int) }}</td>
                 <td>€{{ "%.2f"|format(job.base_rate) }}</td>
                 <td class="amount-column">€{{ "%.2f"|format(entry.hours * job.base_rate) }}</td>
@@ -63,7 +91,7 @@
             {% if ns.current_week and ns.current_week != current_week %}
                 {% set rounded_hours = ((ns.weekly_hours * 60 + 4) // 5 * 5) / 60 %}
                 <tr>
-                    <td>Week {{ ns.current_week[-2:] }}, {{ entry_date[0:4] }}</td>
+                    <td>Week {{ ns.current_week[-2:] }}, {{ entry_year }}</td>
                     <td>{{ "%d:%02d"|format(rounded_hours|int, (rounded_hours % 1 * 60)|int) }}</td>
                     <td>€{{ "%.2f"|format(job.base_rate) }}</td>
                     <td class="amount-column">€{{ "%.2f"|format(rounded_hours * job.base_rate) }}</td>
@@ -79,7 +107,7 @@
     {% if ns.weekly_hours > 0 %}
         {% set rounded_hours = ((ns.weekly_hours * 60 + 4) // 5 * 5) / 60 %}
         <tr>
-            <td>Week {{ ns.current_week[-2:] }}, {{ time_entries[-1].start_time[0:4] }}</td>
+            <td>Week {{ ns.current_week[-2:] }}, {{ time_entries[-1].start_time[0:4] if time_entries[-1].start_time is string and '-' in time_entries[-1].start_time else now().strftime('%Y') }}</td>
             <td>{{ "%d:%02d"|format(rounded_hours|int, (rounded_hours % 1 * 60)|int) }}</td>
             <td>€{{ "%.2f"|format(job.base_rate) }}</td>
             <td class="amount-column">€{{ "%.2f"|format(rounded_hours * job.base_rate) }}</td>
@@ -87,7 +115,6 @@
     {% endif %}
 </table>
 
-{# Rest of the template remains the same #}
 <hr>
 {% if materials %}
 <h3>Materials</h3>

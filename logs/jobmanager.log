@@ -1,4 +1,4 @@
-2025-02-18 18:04:24,586 [ERROR] Exception on /job/details/4 [GET]
+2025-03-09 08:04:19,116 [ERROR] Exception on /report/weekly_summary [GET]
 Traceback (most recent call last):
   File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
     response = self.full_dispatch_request()
@@ -15,7 +15,2230 @@ Traceback (most recent call last):
   File "/home/Jobmanager/app/db.py", line 31, in decorated_function
     return f(db, *args, **kwargs)
            ^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/Jobmanager/app/routes/job_routes.py", line 342, in job_details
+  File "/home/Jobmanager/app/routes/report_routes.py", line 217, in weekly_summary
+    return render_template('weekly_summary.html',
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 147, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 130, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "/home/Jobmanager/app/templates/base.html", line 42, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 14, in block 'content'
+    Week {{ week.week_str.split('-W')[1] }}, {{ week.week_str.split('-W')[0] }}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/utils.py", line 86, in from_obj
+    if hasattr(obj, "jinja_pass_arg"):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'int object' has no attribute 'split'
+2025-03-09 08:28:30,588 [INFO] Stopping timer for job 4
+2025-03-09 08:28:37,053 [INFO] Starting timer for job 44
+2025-03-09 08:28:37,053 [INFO] Stopping all active timers
+2025-03-09 09:10:05,544 [INFO] Starting timer for job 45
+2025-03-09 09:10:05,544 [INFO] Stopping all active timers
+2025-03-09 10:10:28,520 [INFO] Root path: /home/Jobmanager
+2025-03-09 10:10:28,520 [INFO] Current working directory: /home/Jobmanager
+2025-03-09 10:10:28,520 [INFO] Instance path: /home/Jobmanager/instance
+2025-03-09 10:10:28,520 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250309_1010.zip
+2025-03-09 10:10:28,520 [INFO] Adding file: /home/Jobmanager/run.py
+2025-03-09 10:10:28,521 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-03-09 10:10:28,521 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-03-09 10:10:28,521 [INFO] Adding to zip: app/db.py
+2025-03-09 10:10:28,522 [INFO] Adding to zip: app/__init__.py
+2025-03-09 10:10:28,522 [INFO] Adding to zip: app/schema.sql
+2025-03-09 10:10:28,522 [INFO] Adding to zip: app/routes/image_routes.py
+2025-03-09 10:10:28,523 [INFO] Adding to zip: app/routes/system_routes.py
+2025-03-09 10:10:28,523 [INFO] Adding to zip: app/routes/__init__.py
+2025-03-09 10:10:28,524 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-03-09 10:10:28,524 [INFO] Adding to zip: app/routes/job_routes.py
+2025-03-09 10:10:28,525 [INFO] Adding to zip: app/routes/report_routes.py
+2025-03-09 10:10:28,525 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-03-09 10:10:28,526 [INFO] Adding to zip: app/utils/date_helper.py
+2025-03-09 10:10:28,526 [INFO] Adding to zip: app/utils/time_utils.py
+2025-03-09 10:10:28,526 [INFO] Adding to zip: app/utils/job_utils.py
+2025-03-09 10:10:28,527 [INFO] Adding to zip: app/utils/material_utils.py
+2025-03-09 10:10:28,527 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-03-09 10:10:28,527 [INFO] Adding to zip: app/utils/__init__.py
+2025-03-09 10:10:28,527 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-03-09 10:10:28,528 [INFO] Adding to zip: app/utils/error_utils.py
+2025-03-09 10:10:28,528 [INFO] Adding to zip: app/utils/image_utils.py
+2025-03-09 10:10:28,528 [INFO] Adding to zip: app/templates/customer_form.html
+2025-03-09 10:10:28,529 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-03-09 10:10:28,529 [INFO] Adding to zip: app/templates/system_settings.html
+2025-03-09 10:10:28,530 [INFO] Adding to zip: app/templates/shared_images.html
+2025-03-09 10:10:28,530 [INFO] Adding to zip: app/templates/weekly_summary.html
+2025-03-09 10:10:28,530 [INFO] Adding to zip: app/templates/job_details.html
+2025-03-09 10:10:28,531 [INFO] Adding to zip: app/templates/invoice.html
+2025-03-09 10:10:28,532 [INFO] Adding to zip: app/templates/job_form.html
+2025-03-09 10:10:28,532 [INFO] Adding to zip: app/templates/customer_list.html
+2025-03-09 10:10:28,532 [INFO] Adding to zip: app/templates/500.html
+2025-03-09 10:10:28,533 [INFO] Adding to zip: app/templates/base.html
+2025-03-09 10:10:28,533 [INFO] Adding to zip: app/templates/job_list.html
+2025-03-09 10:10:28,533 [INFO] Adding to zip: app/templates/404.html
+2025-03-09 10:10:28,534 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-03-09 10:10:28,534 [INFO] Adding to zip: app/static/css/styles.css
+2025-03-09 10:10:28,535 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250309_1010.zip
+2025-03-09 10:10:28,535 [INFO] Backup file exists: True
+2025-03-09 10:10:35,319 [ERROR] Exception on /job/details/45 [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/db.py", line 31, in decorated_function
+    return f(db, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/routes/job_routes.py", line 323, in job_details
+    total_hours = sum(entry['hours'] for entry in time_entries)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: unsupported operand type(s) for +: 'int' and 'NoneType'
+2025-03-09 10:10:38,555 [INFO] Stopping timer for job 45
+2025-03-09 10:10:40,199 [INFO] Starting timer for job 45
+2025-03-09 10:10:40,199 [INFO] Stopping all active timers
+2025-03-09 10:10:43,355 [ERROR] Exception on /job/details/45 [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/db.py", line 31, in decorated_function
+    return f(db, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/routes/job_routes.py", line 323, in job_details
+    total_hours = sum(entry['hours'] for entry in time_entries)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: unsupported operand type(s) for +: 'int' and 'NoneType'
+2025-03-09 10:45:27,092 [ERROR] Error processing entry 401: Invalid isoformat string: '1741511440'
+2025-03-09 10:46:13,588 [ERROR] Exception on /job/details/45 [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/db.py", line 31, in decorated_function
+    return f(db, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/routes/job_routes.py", line 323, in job_details
+    total_hours = sum(entry['hours'] for entry in time_entries)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: unsupported operand type(s) for +: 'int' and 'NoneType'
+2025-03-09 10:46:22,539 [INFO] Stopping timer for job 45
+2025-03-09 10:46:28,011 [INFO] Starting timer for job 4
+2025-03-09 10:46:28,030 [INFO] Stopping all active timers
+2025-03-09 10:46:39,536 [ERROR] Exception on /favicon.ico [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1785, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1767, in raise_routing_exception
+    raise request.routing_exception  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/ctx.py", line 351, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/werkzeug/routing/map.py", line 624, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1666, in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1606, in handle_http_exception
+    return self.ensure_sync(handler)(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/__init__.py", line 46, in page_not_found
+    return app.render_template('404.html'), 404
+           ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Flask' object has no attribute 'render_template'
+2025-03-09 10:46:51,637 [ERROR] Error processing entry 401: Invalid isoformat string: '1741511440'
+2025-03-09 10:46:51,637 [ERROR] Error processing entry 402: Invalid isoformat string: '1741513588'
+2025-03-09 10:47:11,360 [INFO] Time synchronized with NTP servers
+2025-03-09 10:47:15,760 [INFO] Time synchronized with NTP servers
+2025-03-09 10:47:21,504 [INFO] Time synchronized with NTP servers
+2025-03-09 10:47:27,015 [INFO] Time synchronized with NTP servers
+2025-03-09 10:57:34,483 [ERROR] Error processing entry 401: Invalid isoformat string: '1741511440'
+2025-03-09 10:57:34,484 [ERROR] Error processing entry 402: Invalid isoformat string: '1741513588'
+2025-03-09 17:57:30,156 [INFO] Stopping timer for job 4
+2025-03-09 19:11:20,315 [ERROR] Error processing entry 401: Invalid isoformat string: '1741511440'
+2025-03-09 19:11:20,315 [ERROR] Error processing entry 402: Invalid isoformat string: '1741513588'
+2025-03-09 19:21:54,896 [ERROR] Error processing entry 400: unsupported operand type(s) for +=: 'int' and 'NoneType'
+2025-03-09 19:21:54,923 [ERROR] Unhandled exception in weekly_summary: unsupported operand type(s) for %: 'NoneType' and 'int'
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 248, in weekly_summary
+    return render_template('weekly_summary.html',
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 147, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 130, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "/home/Jobmanager/app/templates/base.html", line 42, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 186, in block 'content'
+    ({{ "%d:%02d"|format(entry.hours|int, ((entry.hours % 1) * 60)|round|int) }})
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: unsupported operand type(s) for %: 'NoneType' and 'int'
+2025-03-09 19:22:02,691 [ERROR] Error processing entry 400: unsupported operand type(s) for +=: 'int' and 'NoneType'
+2025-03-09 19:22:02,718 [ERROR] Unhandled exception in weekly_summary: unsupported operand type(s) for %: 'NoneType' and 'int'
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 248, in weekly_summary
+    return render_template('weekly_summary.html',
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 147, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 130, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "/home/Jobmanager/app/templates/base.html", line 42, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 186, in block 'content'
+    ({{ "%d:%02d"|format(entry.hours|int, ((entry.hours % 1) * 60)|round|int) }})
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: unsupported operand type(s) for %: 'NoneType' and 'int'
+2025-03-09 19:22:16,346 [INFO] Starting timer for job 4
+2025-03-09 19:22:16,346 [INFO] Stopping all active timers
+2025-03-09 19:22:24,410 [ERROR] Error processing entry 400: unsupported operand type(s) for +=: 'int' and 'NoneType'
+2025-03-09 19:22:24,412 [ERROR] Unhandled exception in weekly_summary: unsupported operand type(s) for %: 'NoneType' and 'int'
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 248, in weekly_summary
+    return render_template('weekly_summary.html',
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 147, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 130, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "/home/Jobmanager/app/templates/base.html", line 42, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 186, in block 'content'
+    ({{ "%d:%02d"|format(entry.hours|int, ((entry.hours % 1) * 60)|round|int) }})
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: unsupported operand type(s) for %: 'NoneType' and 'int'
+2025-03-09 19:23:55,813 [ERROR] Error processing entry 400: unsupported operand type(s) for +=: 'int' and 'NoneType'
+2025-03-09 19:23:55,814 [ERROR] Unhandled exception in weekly_summary: unsupported operand type(s) for %: 'NoneType' and 'int'
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 248, in weekly_summary
+    return render_template('weekly_summary.html',
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 147, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 130, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "/home/Jobmanager/app/templates/base.html", line 42, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 186, in block 'content'
+    ({{ "%d:%02d"|format(entry.hours|int, ((entry.hours % 1) * 60)|round|int) }})
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: unsupported operand type(s) for %: 'NoneType' and 'int'
+2025-03-09 19:29:53,467 [ERROR] Error processing entry 400: unsupported operand type(s) for +=: 'int' and 'NoneType'
+2025-03-09 19:29:53,468 [ERROR] Unhandled exception in weekly_summary: unsupported operand type(s) for %: 'NoneType' and 'int'
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 248, in weekly_summary
+    }
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 147, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 130, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "/home/Jobmanager/app/templates/base.html", line 42, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 186, in block 'content'
+    {{ entry.start_time[11:16] }} -
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: unsupported operand type(s) for %: 'NoneType' and 'int'
+2025-03-09 19:30:30,739 [ERROR] Error generating all weeks data: '<' not supported between instances of 'str' and 'NoneType'
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 120, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+2025-03-09 19:30:30,774 [ERROR] Unhandled exception in weekly_summary: 'start_date' is undefined
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 120, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 129, in weekly_summary
+    return render_template('weekly_summary.html',
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 147, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 130, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 7, in top-level template code
+    {{ "%d:%02d"|format(hours_value|int, ((hours_value % 1) * 60)|round|int) }}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/base.html", line 42, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 101, in block 'content'
+    <h3>{{ start_date.strftime('%d %b') }} - {{ end_date.strftime('%d %b %Y') }}</h3>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 485, in getattr
+    return getattr(obj, attribute)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'start_date' is undefined
+2025-03-09 19:40:06,370 [ERROR] Error generating all weeks data: '<' not supported between instances of 'str' and 'NoneType'
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 120, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+2025-03-09 19:40:06,371 [ERROR] Unhandled exception in weekly_summary: 'start_date' is undefined
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 120, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 129, in weekly_summary
+    return render_template('weekly_summary.html',
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 147, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 130, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 7, in top-level template code
+    {{ "%d:%02d"|format(hours_value|int, ((hours_value % 1) * 60)|round|int) }}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/base.html", line 42, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 101, in block 'content'
+    <h3>{{ start_date.strftime('%d %b') }} - {{ end_date.strftime('%d %b %Y') }}</h3>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 485, in getattr
+    return getattr(obj, attribute)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'start_date' is undefined
+2025-03-09 20:45:43,639 [INFO] Stopping timer for job 4
+2025-03-09 20:47:42,242 [ERROR] Error generating all weeks data: '<' not supported between instances of 'str' and 'NoneType'
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 120, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+2025-03-09 20:47:42,270 [ERROR] Unhandled exception in weekly_summary: 'start_date' is undefined
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 120, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 129, in weekly_summary
+    return render_template('weekly_summary.html',
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 147, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 130, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 7, in top-level template code
+    {{ "%d:%02d"|format(hours_value|int, ((hours_value % 1) * 60)|round|int) }}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/base.html", line 42, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 101, in block 'content'
+    <h3>{{ start_date.strftime('%d %b') }} - {{ end_date.strftime('%d %b %Y') }}</h3>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 485, in getattr
+    return getattr(obj, attribute)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'start_date' is undefined
+2025-03-09 20:47:56,766 [INFO] Root path: /home/Jobmanager
+2025-03-09 20:47:56,766 [INFO] Current working directory: /home/Jobmanager
+2025-03-09 20:47:56,766 [INFO] Instance path: /home/Jobmanager/instance
+2025-03-09 20:47:56,767 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250309_2047.zip
+2025-03-09 20:47:56,767 [INFO] Adding file: /home/Jobmanager/run.py
+2025-03-09 20:47:56,767 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-03-09 20:47:56,767 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-03-09 20:47:56,768 [INFO] Adding to zip: app/db.py
+2025-03-09 20:47:56,768 [INFO] Adding to zip: app/__init__.py
+2025-03-09 20:47:56,769 [INFO] Adding to zip: app/schema.sql
+2025-03-09 20:47:56,769 [INFO] Adding to zip: app/routes/image_routes.py
+2025-03-09 20:47:56,770 [INFO] Adding to zip: app/routes/system_routes.py
+2025-03-09 20:47:56,770 [INFO] Adding to zip: app/routes/__init__.py
+2025-03-09 20:47:56,770 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-03-09 20:47:56,771 [INFO] Adding to zip: app/routes/job_routes.py
+2025-03-09 20:47:56,771 [INFO] Adding to zip: app/routes/report_routes.py
+2025-03-09 20:47:56,772 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-03-09 20:47:56,772 [INFO] Adding to zip: app/utils/date_helper.py
+2025-03-09 20:47:56,773 [INFO] Adding to zip: app/utils/time_utils.py
+2025-03-09 20:47:56,773 [INFO] Adding to zip: app/utils/job_utils.py
+2025-03-09 20:47:56,773 [INFO] Adding to zip: app/utils/material_utils.py
+2025-03-09 20:47:56,773 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-03-09 20:47:56,774 [INFO] Adding to zip: app/utils/__init__.py
+2025-03-09 20:47:56,774 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-03-09 20:47:56,774 [INFO] Adding to zip: app/utils/error_utils.py
+2025-03-09 20:47:56,775 [INFO] Adding to zip: app/utils/image_utils.py
+2025-03-09 20:47:56,775 [INFO] Adding to zip: app/templates/customer_form.html
+2025-03-09 20:47:56,775 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-03-09 20:47:56,776 [INFO] Adding to zip: app/templates/system_settings.html
+2025-03-09 20:47:56,776 [INFO] Adding to zip: app/templates/shared_images.html
+2025-03-09 20:47:56,777 [INFO] Adding to zip: app/templates/weekly_summary.html
+2025-03-09 20:47:56,777 [INFO] Adding to zip: app/templates/job_details.html
+2025-03-09 20:47:56,778 [INFO] Adding to zip: app/templates/invoice.html
+2025-03-09 20:47:56,778 [INFO] Adding to zip: app/templates/job_form.html
+2025-03-09 20:47:56,779 [INFO] Adding to zip: app/templates/customer_list.html
+2025-03-09 20:47:56,779 [INFO] Adding to zip: app/templates/500.html
+2025-03-09 20:47:56,779 [INFO] Adding to zip: app/templates/base.html
+2025-03-09 20:47:56,780 [INFO] Adding to zip: app/templates/job_list.html
+2025-03-09 20:47:56,780 [INFO] Adding to zip: app/templates/404.html
+2025-03-09 20:47:56,780 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-03-09 20:47:56,781 [INFO] Adding to zip: app/static/css/styles.css
+2025-03-09 20:47:56,782 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250309_2047.zip
+2025-03-09 20:47:56,782 [INFO] Backup file exists: True
+2025-03-09 20:51:12,093 [ERROR] Error generating all weeks data: '<' not supported between instances of 'str' and 'NoneType'
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 120, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+2025-03-09 20:51:12,094 [ERROR] Unhandled exception in weekly_summary: 'start_date' is undefined
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 120, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 129, in weekly_summary
+    return render_template('weekly_summary.html',
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 147, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 130, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 7, in top-level template code
+    {{ "%d:%02d"|format(hours_value|int, ((hours_value % 1) * 60)|round|int) }}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/base.html", line 42, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 101, in block 'content'
+    <h3>{{ start_date.strftime('%d %b') }} - {{ end_date.strftime('%d %b %Y') }}</h3>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 485, in getattr
+    return getattr(obj, attribute)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'start_date' is undefined
+2025-03-09 20:52:15,394 [ERROR] Exception on /apple-touch-icon.png [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1785, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1767, in raise_routing_exception
+    raise request.routing_exception  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/ctx.py", line 351, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/werkzeug/routing/map.py", line 624, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1666, in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1606, in handle_http_exception
+    return self.ensure_sync(handler)(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/__init__.py", line 46, in page_not_found
+    return app.render_template('404.html'), 404
+           ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Flask' object has no attribute 'render_template'
+2025-03-09 20:52:15,394 [ERROR] Exception on /favicon.ico [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1785, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1767, in raise_routing_exception
+    raise request.routing_exception  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/ctx.py", line 351, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/werkzeug/routing/map.py", line 624, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1666, in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1606, in handle_http_exception
+    return self.ensure_sync(handler)(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/__init__.py", line 46, in page_not_found
+    return app.render_template('404.html'), 404
+           ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Flask' object has no attribute 'render_template'
+2025-03-09 20:52:15,394 [ERROR] Exception on /apple-touch-icon-precomposed.png [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1785, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1767, in raise_routing_exception
+    raise request.routing_exception  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/ctx.py", line 351, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/werkzeug/routing/map.py", line 624, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1666, in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1606, in handle_http_exception
+    return self.ensure_sync(handler)(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/__init__.py", line 46, in page_not_found
+    return app.render_template('404.html'), 404
+           ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Flask' object has no attribute 'render_template'
+2025-03-09 20:52:15,449 [ERROR] Exception on /apple-touch-icon-precomposed.png [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1785, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1767, in raise_routing_exception
+    raise request.routing_exception  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/ctx.py", line 351, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/werkzeug/routing/map.py", line 624, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1666, in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1606, in handle_http_exception
+    return self.ensure_sync(handler)(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/__init__.py", line 46, in page_not_found
+    return app.render_template('404.html'), 404
+           ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Flask' object has no attribute 'render_template'
+2025-03-09 20:52:15,451 [ERROR] Exception on /apple-touch-icon.png [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1785, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1767, in raise_routing_exception
+    raise request.routing_exception  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/ctx.py", line 351, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/werkzeug/routing/map.py", line 624, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1666, in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1606, in handle_http_exception
+    return self.ensure_sync(handler)(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/__init__.py", line 46, in page_not_found
+    return app.render_template('404.html'), 404
+           ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Flask' object has no attribute 'render_template'
+2025-03-09 20:52:15,453 [ERROR] Exception on /favicon.ico [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1785, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1767, in raise_routing_exception
+    raise request.routing_exception  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/ctx.py", line 351, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/werkzeug/routing/map.py", line 624, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1666, in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1606, in handle_http_exception
+    return self.ensure_sync(handler)(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/__init__.py", line 46, in page_not_found
+    return app.render_template('404.html'), 404
+           ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Flask' object has no attribute 'render_template'
+2025-03-09 21:00:45,776 [ERROR] Error generating all weeks data: '<' not supported between instances of 'str' and 'NoneType'
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 120, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+2025-03-09 21:00:45,777 [ERROR] Unhandled exception in weekly_summary: 'start_date' is undefined
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 120, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 129, in weekly_summary
+    return render_template('weekly_summary.html',
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 147, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 130, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 7, in top-level template code
+    {{ "%d:%02d"|format(hours_value|int, ((hours_value % 1) * 60)|round|int) }}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/base.html", line 42, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 101, in block 'content'
+    <h3>{{ start_date.strftime('%d %b') }} - {{ end_date.strftime('%d %b %Y') }}</h3>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 485, in getattr
+    return getattr(obj, attribute)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'start_date' is undefined
+2025-03-10 06:52:13,502 [ERROR] Error generating all weeks data: '<' not supported between instances of 'str' and 'NoneType'
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 120, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+2025-03-10 06:52:13,503 [ERROR] Unhandled exception in weekly_summary: 'start_date' is undefined
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 120, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 129, in weekly_summary
+    return render_template('weekly_summary.html',
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 147, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 130, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 7, in top-level template code
+    {{ "%d:%02d"|format(hours_value|int, ((hours_value % 1) * 60)|round|int) }}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/base.html", line 42, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 101, in block 'content'
+    <h3>{{ start_date.strftime('%d %b') }} - {{ end_date.strftime('%d %b %Y') }}</h3>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 485, in getattr
+    return getattr(obj, attribute)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'start_date' is undefined
+2025-03-10 06:52:27,448 [ERROR] Error generating all weeks data: '<' not supported between instances of 'str' and 'NoneType'
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 120, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+2025-03-10 06:52:27,449 [ERROR] Unhandled exception in weekly_summary: 'start_date' is undefined
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 120, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 129, in weekly_summary
+    return render_template('weekly_summary.html',
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 147, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 130, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 7, in top-level template code
+    {{ "%d:%02d"|format(hours_value|int, ((hours_value % 1) * 60)|round|int) }}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/base.html", line 42, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 101, in block 'content'
+    <h3>{{ start_date.strftime('%d %b') }} - {{ end_date.strftime('%d %b %Y') }}</h3>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 485, in getattr
+    return getattr(obj, attribute)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'start_date' is undefined
+2025-03-10 06:55:37,773 [ERROR] Exception on /apple-touch-icon-precomposed.png [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1785, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1767, in raise_routing_exception
+    raise request.routing_exception  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/ctx.py", line 351, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/werkzeug/routing/map.py", line 624, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1666, in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1606, in handle_http_exception
+    return self.ensure_sync(handler)(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/__init__.py", line 46, in page_not_found
+    return app.render_template('404.html'), 404
+           ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Flask' object has no attribute 'render_template'
+2025-03-10 06:55:37,783 [ERROR] Exception on /apple-touch-icon.png [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1785, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1767, in raise_routing_exception
+    raise request.routing_exception  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/ctx.py", line 351, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/werkzeug/routing/map.py", line 624, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1666, in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1606, in handle_http_exception
+    return self.ensure_sync(handler)(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/__init__.py", line 46, in page_not_found
+    return app.render_template('404.html'), 404
+           ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Flask' object has no attribute 'render_template'
+2025-03-10 06:55:37,785 [ERROR] Exception on /favicon.ico [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1785, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1767, in raise_routing_exception
+    raise request.routing_exception  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/ctx.py", line 351, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/werkzeug/routing/map.py", line 624, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1666, in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1606, in handle_http_exception
+    return self.ensure_sync(handler)(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/__init__.py", line 46, in page_not_found
+    return app.render_template('404.html'), 404
+           ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Flask' object has no attribute 'render_template'
+2025-03-10 06:55:37,841 [ERROR] Exception on /apple-touch-icon-precomposed.png [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1785, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1767, in raise_routing_exception
+    raise request.routing_exception  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/ctx.py", line 351, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/werkzeug/routing/map.py", line 624, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1666, in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1606, in handle_http_exception
+    return self.ensure_sync(handler)(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/__init__.py", line 46, in page_not_found
+    return app.render_template('404.html'), 404
+           ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Flask' object has no attribute 'render_template'
+2025-03-10 06:55:37,841 [ERROR] Exception on /apple-touch-icon.png [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1785, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1767, in raise_routing_exception
+    raise request.routing_exception  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/ctx.py", line 351, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/werkzeug/routing/map.py", line 624, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1666, in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1606, in handle_http_exception
+    return self.ensure_sync(handler)(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/__init__.py", line 46, in page_not_found
+    return app.render_template('404.html'), 404
+           ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Flask' object has no attribute 'render_template'
+2025-03-10 06:55:37,842 [ERROR] Exception on /favicon.ico [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1785, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1767, in raise_routing_exception
+    raise request.routing_exception  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/ctx.py", line 351, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/werkzeug/routing/map.py", line 624, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1666, in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1606, in handle_http_exception
+    return self.ensure_sync(handler)(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/__init__.py", line 46, in page_not_found
+    return app.render_template('404.html'), 404
+           ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Flask' object has no attribute 'render_template'
+2025-03-10 08:57:46,592 [INFO] Starting timer for job 47
+2025-03-10 08:57:46,592 [INFO] Stopping all active timers
+2025-03-10 09:00:39,544 [ERROR] Error generating all weeks data: '<' not supported between instances of 'str' and 'NoneType'
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 120, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+2025-03-10 09:00:39,545 [ERROR] Unhandled exception in weekly_summary: 'start_date' is undefined
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 120, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 129, in weekly_summary
+    return render_template('weekly_summary.html',
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 147, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 130, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 7, in top-level template code
+    {{ "%d:%02d"|format(hours_value|int, ((hours_value % 1) * 60)|round|int) }}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/base.html", line 42, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 101, in block 'content'
+    <h3>{{ start_date.strftime('%d %b') }} - {{ end_date.strftime('%d %b %Y') }}</h3>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 485, in getattr
+    return getattr(obj, attribute)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'start_date' is undefined
+2025-03-10 09:01:47,880 [ERROR] Error generating all weeks data: '<' not supported between instances of 'str' and 'NoneType'
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 120, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+2025-03-10 09:01:47,881 [ERROR] Unhandled exception in weekly_summary: 'start_date' is undefined
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 120, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 129, in weekly_summary
+    return render_template('weekly_summary.html',
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 147, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 130, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 7, in top-level template code
+    {{ "%d:%02d"|format(hours_value|int, ((hours_value % 1) * 60)|round|int) }}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/base.html", line 42, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 101, in block 'content'
+    <h3>{{ start_date.strftime('%d %b') }} - {{ end_date.strftime('%d %b %Y') }}</h3>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 485, in getattr
+    return getattr(obj, attribute)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'start_date' is undefined
+2025-03-10 09:03:01,084 [ERROR] Error generating all weeks data: '<' not supported between instances of 'str' and 'NoneType'
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 120, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+2025-03-10 09:03:01,085 [ERROR] Unhandled exception in weekly_summary: 'start_date' is undefined
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 120, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 129, in weekly_summary
+    return render_template('weekly_summary.html',
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 147, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 130, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 7, in top-level template code
+    {{ "%d:%02d"|format(hours_value|int, ((hours_value % 1) * 60)|round|int) }}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/base.html", line 42, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 101, in block 'content'
+    <h3>{{ start_date.strftime('%d %b') }} - {{ end_date.strftime('%d %b %Y') }}</h3>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 485, in getattr
+    return getattr(obj, attribute)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'start_date' is undefined
+2025-03-10 09:09:16,013 [ERROR] Error generating all weeks data: '<' not supported between instances of 'str' and 'NoneType'
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 123, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+2025-03-10 09:09:16,048 [ERROR] Unhandled exception in weekly_summary: 'start_date' is undefined
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 123, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 132, in weekly_summary
+    return render_template('weekly_summary.html',
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 147, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 130, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 7, in top-level template code
+    {{ "%d:%02d"|format(hours_value|int, ((hours_value % 1) * 60)|round|int) }}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/base.html", line 42, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 101, in block 'content'
+    <h3>{{ start_date.strftime('%d %b') }} - {{ end_date.strftime('%d %b %Y') }}</h3>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 485, in getattr
+    return getattr(obj, attribute)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'start_date' is undefined
+2025-03-10 09:09:19,737 [ERROR] Error generating all weeks data: '<' not supported between instances of 'str' and 'NoneType'
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 123, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+2025-03-10 09:09:19,739 [ERROR] Unhandled exception in weekly_summary: 'start_date' is undefined
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 123, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 132, in weekly_summary
+    return render_template('weekly_summary.html',
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 147, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 130, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 7, in top-level template code
+    {{ "%d:%02d"|format(hours_value|int, ((hours_value % 1) * 60)|round|int) }}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/base.html", line 42, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 101, in block 'content'
+    <h3>{{ start_date.strftime('%d %b') }} - {{ end_date.strftime('%d %b %Y') }}</h3>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 485, in getattr
+    return getattr(obj, attribute)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'start_date' is undefined
+2025-03-10 09:09:23,097 [ERROR] Error generating all weeks data: '<' not supported between instances of 'str' and 'NoneType'
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 123, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+2025-03-10 09:09:23,098 [ERROR] Unhandled exception in weekly_summary: 'start_date' is undefined
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 123, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 132, in weekly_summary
+    return render_template('weekly_summary.html',
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 147, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 130, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 7, in top-level template code
+    {{ "%d:%02d"|format(hours_value|int, ((hours_value % 1) * 60)|round|int) }}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/base.html", line 42, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 101, in block 'content'
+    <h3>{{ start_date.strftime('%d %b') }} - {{ end_date.strftime('%d %b %Y') }}</h3>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 485, in getattr
+    return getattr(obj, attribute)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'start_date' is undefined
+2025-03-10 09:09:43,128 [ERROR] Error generating all weeks data: '<' not supported between instances of 'str' and 'NoneType'
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 123, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+2025-03-10 09:09:43,129 [ERROR] Unhandled exception in weekly_summary: 'start_date' is undefined
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 123, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 132, in weekly_summary
+    return render_template('weekly_summary.html',
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 147, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 130, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 7, in top-level template code
+    {{ "%d:%02d"|format(hours_value|int, ((hours_value % 1) * 60)|round|int) }}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/base.html", line 42, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 101, in block 'content'
+    <h3>{{ start_date.strftime('%d %b') }} - {{ end_date.strftime('%d %b %Y') }}</h3>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 485, in getattr
+    return getattr(obj, attribute)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'start_date' is undefined
+2025-03-10 09:09:48,310 [ERROR] Error generating all weeks data: '<' not supported between instances of 'str' and 'NoneType'
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 123, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+2025-03-10 09:09:48,312 [ERROR] Unhandled exception in weekly_summary: 'start_date' is undefined
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 123, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 132, in weekly_summary
+    return render_template('weekly_summary.html',
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 147, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 130, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 7, in top-level template code
+    {{ "%d:%02d"|format(hours_value|int, ((hours_value % 1) * 60)|round|int) }}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/base.html", line 42, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 101, in block 'content'
+    <h3>{{ start_date.strftime('%d %b') }} - {{ end_date.strftime('%d %b %Y') }}</h3>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 485, in getattr
+    return getattr(obj, attribute)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'start_date' is undefined
+2025-03-10 09:11:44,262 [ERROR] Error generating all weeks data: '<' not supported between instances of 'str' and 'NoneType'
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 123, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+2025-03-10 09:11:44,264 [ERROR] Unhandled exception in weekly_summary: 'start_date' is undefined
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 123, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 132, in weekly_summary
+    return render_template('weekly_summary.html',
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 147, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 130, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 7, in top-level template code
+    {{ "%d:%02d"|format(hours_value|int, ((hours_value % 1) * 60)|round|int) }}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/base.html", line 42, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 101, in block 'content'
+    <h3>{{ start_date.strftime('%d %b') }} - {{ end_date.strftime('%d %b %Y') }}</h3>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 485, in getattr
+    return getattr(obj, attribute)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'start_date' is undefined
+2025-03-10 09:13:08,735 [ERROR] Error generating all weeks data: '<' not supported between instances of 'str' and 'NoneType'
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 123, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+2025-03-10 09:13:08,771 [ERROR] Unhandled exception in weekly_summary: 'week_total_hours' is undefined
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 123, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 132, in weekly_summary
+    return render_template('weekly_summary.html',
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 147, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 130, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 7, in top-level template code
+    {{ "%d:%02d"|format(hours_value|int, ((hours_value % 1) * 60)|round|int) }}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/base.html", line 42, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 108, in block 'content'
+    <div class="stat-value">{{ "%.1f"|format(week_total_hours) }}</div>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/filters.py", line 1021, in do_format
+    return soft_str(value) % (kwargs or args)
+           ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~
+jinja2.exceptions.UndefinedError: 'week_total_hours' is undefined
+2025-03-10 09:13:31,783 [ERROR] Error generating all weeks data: '<' not supported between instances of 'str' and 'NoneType'
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 123, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+2025-03-10 09:13:31,812 [ERROR] Unhandled exception in weekly_summary: 'week_total_hours' is undefined
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 123, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 132, in weekly_summary
+    return render_template('weekly_summary.html',
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 147, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 130, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 7, in top-level template code
+    {{ "%d:%02d"|format(hours_value|int, ((hours_value % 1) * 60)|round|int) }}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/base.html", line 42, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 108, in block 'content'
+    <div class="stat-value">{{ "%.1f"|format(week_total_hours) }}</div>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/filters.py", line 1021, in do_format
+    return soft_str(value) % (kwargs or args)
+           ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~
+jinja2.exceptions.UndefinedError: 'week_total_hours' is undefined
+2025-03-10 09:13:36,550 [ERROR] Error generating all weeks data: '<' not supported between instances of 'str' and 'NoneType'
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 123, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+2025-03-10 09:13:36,551 [ERROR] Unhandled exception in weekly_summary: 'week_total_hours' is undefined
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 123, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 132, in weekly_summary
+    return render_template('weekly_summary.html',
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 147, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 130, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 7, in top-level template code
+    {{ "%d:%02d"|format(hours_value|int, ((hours_value % 1) * 60)|round|int) }}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/base.html", line 42, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 108, in block 'content'
+    <div class="stat-value">{{ "%.1f"|format(week_total_hours) }}</div>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/filters.py", line 1021, in do_format
+    return soft_str(value) % (kwargs or args)
+           ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~
+jinja2.exceptions.UndefinedError: 'week_total_hours' is undefined
+2025-03-10 09:14:14,985 [ERROR] Error generating all weeks data: '<' not supported between instances of 'str' and 'NoneType'
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 123, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+2025-03-10 09:14:14,987 [ERROR] Unhandled exception in weekly_summary: 'week_total_hours' is undefined
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 123, in weekly_summary
+    sorted_weeks = sorted(weeks_summary.items(), key=lambda x: x[0], reverse=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'NoneType'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/report_routes.py", line 132, in weekly_summary
+    return render_template('weekly_summary.html',
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 147, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 130, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 7, in top-level template code
+    {{ "%d:%02d"|format(hours_value|int, ((hours_value % 1) * 60)|round|int) }}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/base.html", line 42, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/weekly_summary.html", line 108, in block 'content'
+    <div class="stat-value">{{ "%.1f"|format(week_total_hours) }}</div>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/filters.py", line 1021, in do_format
+    return soft_str(value) % (kwargs or args)
+           ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~
+jinja2.exceptions.UndefinedError: 'week_total_hours' is undefined
+2025-03-10 09:16:09,863 [INFO] Fetching available weeks
+2025-03-10 09:16:09,864 [INFO] Found 34 distinct dates with time entries
+2025-03-10 09:16:09,864 [WARNING] Error processing date None: fromisoformat: argument must be str
+2025-03-10 09:16:09,864 [INFO] Processed 5 unique weeks
+2025-03-10 09:16:09,864 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 09:16:09,864 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 09:16:09,864 [INFO] Found 0 time entries for week 2025-W11
+2025-03-10 09:16:13,833 [INFO] Fetching available weeks
+2025-03-10 09:16:13,834 [INFO] Found 34 distinct dates with time entries
+2025-03-10 09:16:13,834 [WARNING] Error processing date None: fromisoformat: argument must be str
+2025-03-10 09:16:13,834 [INFO] Processed 5 unique weeks
+2025-03-10 09:16:13,834 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 09:16:13,834 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 09:16:13,835 [ERROR] Error processing entry for week summary: fromisoformat: argument must be str
+2025-03-10 09:16:13,835 [ERROR] Error processing entry for week summary: fromisoformat: argument must be str
+2025-03-10 09:16:13,836 [INFO] Generated summary for 5 weeks
+2025-03-10 09:16:16,725 [INFO] Fetching available weeks
+2025-03-10 09:16:16,725 [INFO] Found 34 distinct dates with time entries
+2025-03-10 09:16:16,725 [WARNING] Error processing date None: fromisoformat: argument must be str
+2025-03-10 09:16:16,725 [INFO] Processed 5 unique weeks
+2025-03-10 09:16:16,725 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 09:16:16,725 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 09:16:16,726 [ERROR] Error processing entry for week summary: fromisoformat: argument must be str
+2025-03-10 09:16:16,727 [ERROR] Error processing entry for week summary: fromisoformat: argument must be str
+2025-03-10 09:16:16,727 [INFO] Generated summary for 5 weeks
+2025-03-10 09:16:32,296 [INFO] Fetching available weeks
+2025-03-10 09:16:32,297 [INFO] Found 34 distinct dates with time entries
+2025-03-10 09:16:32,297 [WARNING] Error processing date None: fromisoformat: argument must be str
+2025-03-10 09:16:32,297 [INFO] Processed 5 unique weeks
+2025-03-10 09:16:32,298 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 09:16:32,298 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 09:16:32,299 [ERROR] Error processing entry for week summary: fromisoformat: argument must be str
+2025-03-10 09:16:32,299 [ERROR] Error processing entry for week summary: fromisoformat: argument must be str
+2025-03-10 09:16:32,299 [INFO] Generated summary for 5 weeks
+2025-03-10 09:16:33,953 [INFO] Fetching available weeks
+2025-03-10 09:16:33,953 [INFO] Found 34 distinct dates with time entries
+2025-03-10 09:16:33,953 [WARNING] Error processing date None: fromisoformat: argument must be str
+2025-03-10 09:16:33,953 [INFO] Processed 5 unique weeks
+2025-03-10 09:16:33,953 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 09:16:33,953 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 09:16:33,954 [INFO] Found 0 time entries for week 2025-W11
+2025-03-10 09:16:52,554 [INFO] Root path: /home/Jobmanager
+2025-03-10 09:16:52,554 [INFO] Current working directory: /home/Jobmanager
+2025-03-10 09:16:52,554 [INFO] Instance path: /home/Jobmanager/instance
+2025-03-10 09:16:52,555 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250310_0916.zip
+2025-03-10 09:16:52,555 [INFO] Adding file: /home/Jobmanager/run.py
+2025-03-10 09:16:52,555 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-03-10 09:16:52,555 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-03-10 09:16:52,556 [INFO] Adding to zip: app/db.py
+2025-03-10 09:16:52,556 [INFO] Adding to zip: app/__init__.py
+2025-03-10 09:16:52,557 [INFO] Adding to zip: app/schema.sql
+2025-03-10 09:16:52,557 [INFO] Adding to zip: app/routes/image_routes.py
+2025-03-10 09:16:52,558 [INFO] Adding to zip: app/routes/system_routes.py
+2025-03-10 09:16:52,558 [INFO] Adding to zip: app/routes/__init__.py
+2025-03-10 09:16:52,558 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-03-10 09:16:52,559 [INFO] Adding to zip: app/routes/job_routes.py
+2025-03-10 09:16:52,559 [INFO] Adding to zip: app/routes/report_routes.py
+2025-03-10 09:16:52,560 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-03-10 09:16:52,560 [INFO] Adding to zip: app/utils/date_helper.py
+2025-03-10 09:16:52,561 [INFO] Adding to zip: app/utils/time_utils.py
+2025-03-10 09:16:52,561 [INFO] Adding to zip: app/utils/job_utils.py
+2025-03-10 09:16:52,561 [INFO] Adding to zip: app/utils/material_utils.py
+2025-03-10 09:16:52,561 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-03-10 09:16:52,562 [INFO] Adding to zip: app/utils/__init__.py
+2025-03-10 09:16:52,562 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-03-10 09:16:52,562 [INFO] Adding to zip: app/utils/error_utils.py
+2025-03-10 09:16:52,563 [INFO] Adding to zip: app/utils/image_utils.py
+2025-03-10 09:16:52,563 [INFO] Adding to zip: app/templates/customer_form.html
+2025-03-10 09:16:52,563 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-03-10 09:16:52,564 [INFO] Adding to zip: app/templates/system_settings.html
+2025-03-10 09:16:52,564 [INFO] Adding to zip: app/templates/shared_images.html
+2025-03-10 09:16:52,565 [INFO] Adding to zip: app/templates/weekly_summary.html
+2025-03-10 09:16:52,565 [INFO] Adding to zip: app/templates/job_details.html
+2025-03-10 09:16:52,566 [INFO] Adding to zip: app/templates/invoice.html
+2025-03-10 09:16:52,566 [INFO] Adding to zip: app/templates/job_form.html
+2025-03-10 09:16:52,567 [INFO] Adding to zip: app/templates/customer_list.html
+2025-03-10 09:16:52,567 [INFO] Adding to zip: app/templates/500.html
+2025-03-10 09:16:52,567 [INFO] Adding to zip: app/templates/base.html
+2025-03-10 09:16:52,568 [INFO] Adding to zip: app/templates/job_list.html
+2025-03-10 09:16:52,568 [INFO] Adding to zip: app/templates/404.html
+2025-03-10 09:16:52,568 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-03-10 09:16:52,569 [INFO] Adding to zip: app/static/css/styles.css
+2025-03-10 09:16:52,570 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250310_0916.zip
+2025-03-10 09:16:52,570 [INFO] Backup file exists: True
+2025-03-10 09:30:26,325 [INFO] Stopping timer for job 47
+2025-03-10 09:30:37,756 [INFO] Starting timer for job 47
+2025-03-10 09:30:37,756 [INFO] Stopping all active timers
+2025-03-10 09:30:44,950 [INFO] Fetching available weeks
+2025-03-10 09:30:44,951 [INFO] Found 35 distinct dates with time entries
+2025-03-10 09:30:44,951 [WARNING] Error processing date None: fromisoformat: argument must be str
+2025-03-10 09:30:44,951 [INFO] Processed 6 unique weeks
+2025-03-10 09:30:44,951 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 09:30:44,951 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 09:30:44,952 [INFO] Found 1 time entries for week 2025-W11
+2025-03-10 09:30:52,120 [INFO] Fetching available weeks
+2025-03-10 09:30:52,121 [INFO] Found 35 distinct dates with time entries
+2025-03-10 09:30:52,121 [WARNING] Error processing date None: fromisoformat: argument must be str
+2025-03-10 09:30:52,121 [INFO] Processed 6 unique weeks
+2025-03-10 09:30:52,121 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 09:30:52,121 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 09:30:52,122 [ERROR] Error processing entry for week summary: fromisoformat: argument must be str
+2025-03-10 09:30:52,122 [ERROR] Error processing entry for week summary: fromisoformat: argument must be str
+2025-03-10 09:30:52,122 [INFO] Generated summary for 6 weeks
+2025-03-10 09:52:50,703 [INFO] Fetching available weeks
+2025-03-10 09:52:50,703 [INFO] Found 34 distinct dates with time entries
+2025-03-10 09:52:50,703 [INFO] Processed 6 unique weeks
+2025-03-10 09:52:50,704 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 09:52:50,704 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 09:52:50,704 [INFO] Found 2 time entries for week 2025-W11
+2025-03-10 09:53:18,055 [INFO] Stopping timer for job 47
+2025-03-10 09:53:47,567 [INFO] Fetching available weeks
+2025-03-10 09:53:47,568 [INFO] Found 34 distinct dates with time entries
+2025-03-10 09:53:47,568 [INFO] Processed 6 unique weeks
+2025-03-10 09:53:47,568 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 09:53:47,568 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 09:53:47,569 [INFO] Found 1 time entries for week 2025-W11
+2025-03-10 09:54:24,609 [INFO] Fetching available weeks
+2025-03-10 09:54:24,609 [INFO] Found 34 distinct dates with time entries
+2025-03-10 09:54:24,609 [INFO] Processed 6 unique weeks
+2025-03-10 09:54:24,609 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 09:54:24,609 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 09:54:24,610 [INFO] Found 1 time entries for week 2025-W11
+2025-03-10 10:00:17,624 [INFO] Fetching available weeks
+2025-03-10 10:00:17,625 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:00:17,625 [INFO] Processed 6 unique weeks
+2025-03-10 10:00:17,625 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:00:17,625 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:00:17,626 [INFO] Found 1 time entries for week 2025-W11
+2025-03-10 10:00:24,447 [INFO] Fetching available weeks
+2025-03-10 10:00:24,448 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:00:24,448 [INFO] Processed 6 unique weeks
+2025-03-10 10:00:24,448 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:00:24,448 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:00:24,449 [INFO] Generated summary for 6 weeks
+2025-03-10 10:00:32,070 [INFO] Fetching available weeks
+2025-03-10 10:00:32,071 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:00:32,071 [INFO] Processed 6 unique weeks
+2025-03-10 10:00:32,071 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:00:32,071 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:00:32,073 [INFO] Generated summary for 6 weeks
+2025-03-10 10:00:33,650 [INFO] Fetching available weeks
+2025-03-10 10:00:33,651 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:00:33,651 [INFO] Processed 6 unique weeks
+2025-03-10 10:00:33,651 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:00:33,651 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:00:33,651 [INFO] Found 1 time entries for week 2025-W11
+2025-03-10 10:00:35,091 [INFO] Fetching available weeks
+2025-03-10 10:00:35,092 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:00:35,092 [INFO] Processed 6 unique weeks
+2025-03-10 10:00:35,092 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:00:35,092 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:00:35,093 [INFO] Found 1 time entries for week 2025-W11
+2025-03-10 10:00:37,541 [INFO] Fetching available weeks
+2025-03-10 10:00:37,541 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:00:37,541 [INFO] Processed 6 unique weeks
+2025-03-10 10:00:37,541 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:00:37,541 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:00:37,542 [INFO] Generated summary for 6 weeks
+2025-03-10 10:00:43,366 [INFO] Fetching available weeks
+2025-03-10 10:00:43,367 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:00:43,367 [INFO] Processed 6 unique weeks
+2025-03-10 10:00:43,367 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:00:43,367 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:00:43,367 [INFO] Found 1 time entries for week 2025-W11
+2025-03-10 10:00:45,411 [INFO] Fetching available weeks
+2025-03-10 10:00:45,411 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:00:45,412 [INFO] Processed 6 unique weeks
+2025-03-10 10:00:45,412 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:00:45,412 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:00:45,413 [INFO] Generated summary for 6 weeks
+2025-03-10 10:00:48,630 [INFO] Fetching available weeks
+2025-03-10 10:00:48,630 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:00:48,630 [INFO] Processed 6 unique weeks
+2025-03-10 10:00:48,630 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:00:48,630 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:00:48,631 [INFO] Found 1 time entries for week 2025-W11
+2025-03-10 10:00:50,031 [INFO] Fetching available weeks
+2025-03-10 10:00:50,031 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:00:50,031 [INFO] Processed 6 unique weeks
+2025-03-10 10:00:50,032 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:00:50,032 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:00:50,033 [INFO] Generated summary for 6 weeks
+2025-03-10 10:00:51,264 [INFO] Fetching available weeks
+2025-03-10 10:00:51,265 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:00:51,265 [INFO] Processed 6 unique weeks
+2025-03-10 10:00:51,265 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:00:51,265 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:00:51,265 [INFO] Found 1 time entries for week 2025-W11
+2025-03-10 10:00:53,725 [INFO] Fetching available weeks
+2025-03-10 10:00:53,726 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:00:53,726 [INFO] Processed 6 unique weeks
+2025-03-10 10:00:53,726 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:00:53,726 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:00:53,727 [INFO] Generated summary for 6 weeks
+2025-03-10 10:01:00,354 [INFO] Fetching available weeks
+2025-03-10 10:01:00,354 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:01:00,354 [INFO] Processed 6 unique weeks
+2025-03-10 10:01:00,355 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:01:00,355 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:01:00,355 [INFO] Found 1 time entries for week 2025-W11
+2025-03-10 10:01:03,376 [INFO] Fetching available weeks
+2025-03-10 10:01:03,377 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:01:03,377 [INFO] Processed 6 unique weeks
+2025-03-10 10:01:03,377 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:01:03,377 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:01:03,378 [INFO] Generated summary for 6 weeks
+2025-03-10 10:01:09,590 [INFO] Root path: /home/Jobmanager
+2025-03-10 10:01:09,591 [INFO] Current working directory: /home/Jobmanager
+2025-03-10 10:01:09,591 [INFO] Instance path: /home/Jobmanager/instance
+2025-03-10 10:01:09,591 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250310_1001.zip
+2025-03-10 10:01:09,591 [INFO] Adding file: /home/Jobmanager/run.py
+2025-03-10 10:01:09,591 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-03-10 10:01:09,592 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-03-10 10:01:09,592 [INFO] Adding to zip: app/db.py
+2025-03-10 10:01:09,592 [INFO] Adding to zip: app/__init__.py
+2025-03-10 10:01:09,593 [INFO] Adding to zip: app/schema.sql
+2025-03-10 10:01:09,593 [INFO] Adding to zip: app/routes/image_routes.py
+2025-03-10 10:01:09,594 [INFO] Adding to zip: app/routes/system_routes.py
+2025-03-10 10:01:09,594 [INFO] Adding to zip: app/routes/__init__.py
+2025-03-10 10:01:09,594 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-03-10 10:01:09,595 [INFO] Adding to zip: app/routes/job_routes.py
+2025-03-10 10:01:09,596 [INFO] Adding to zip: app/routes/report_routes.py
+2025-03-10 10:01:09,596 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-03-10 10:01:09,597 [INFO] Adding to zip: app/utils/date_helper.py
+2025-03-10 10:01:09,597 [INFO] Adding to zip: app/utils/time_utils.py
+2025-03-10 10:01:09,597 [INFO] Adding to zip: app/utils/job_utils.py
+2025-03-10 10:01:09,598 [INFO] Adding to zip: app/utils/material_utils.py
+2025-03-10 10:01:09,598 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-03-10 10:01:09,598 [INFO] Adding to zip: app/utils/__init__.py
+2025-03-10 10:01:09,598 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-03-10 10:01:09,599 [INFO] Adding to zip: app/utils/error_utils.py
+2025-03-10 10:01:09,599 [INFO] Adding to zip: app/utils/image_utils.py
+2025-03-10 10:01:09,599 [INFO] Adding to zip: app/templates/customer_form.html
+2025-03-10 10:01:09,600 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-03-10 10:01:09,600 [INFO] Adding to zip: app/templates/system_settings.html
+2025-03-10 10:01:09,601 [INFO] Adding to zip: app/templates/shared_images.html
+2025-03-10 10:01:09,601 [INFO] Adding to zip: app/templates/weekly_summary.html
+2025-03-10 10:01:09,601 [INFO] Adding to zip: app/templates/job_details.html
+2025-03-10 10:01:09,602 [INFO] Adding to zip: app/templates/invoice.html
+2025-03-10 10:01:09,603 [INFO] Adding to zip: app/templates/job_form.html
+2025-03-10 10:01:09,603 [INFO] Adding to zip: app/templates/customer_list.html
+2025-03-10 10:01:09,603 [INFO] Adding to zip: app/templates/500.html
+2025-03-10 10:01:09,604 [INFO] Adding to zip: app/templates/base.html
+2025-03-10 10:01:09,604 [INFO] Adding to zip: app/templates/job_list.html
+2025-03-10 10:01:09,605 [INFO] Adding to zip: app/templates/404.html
+2025-03-10 10:01:09,605 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-03-10 10:01:09,605 [INFO] Adding to zip: app/static/css/styles.css
+2025-03-10 10:01:09,606 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250310_1001.zip
+2025-03-10 10:01:09,606 [INFO] Backup file exists: True
+2025-03-10 10:01:36,854 [INFO] Fetching available weeks
+2025-03-10 10:01:36,854 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:01:36,854 [INFO] Processed 6 unique weeks
+2025-03-10 10:01:36,854 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:01:36,854 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:01:36,855 [INFO] Found 1 time entries for week 2025-W11
+2025-03-10 10:01:39,416 [INFO] Fetching available weeks
+2025-03-10 10:01:39,417 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:01:39,417 [INFO] Processed 6 unique weeks
+2025-03-10 10:01:39,417 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:01:39,417 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:01:39,418 [INFO] Generated summary for 6 weeks
+2025-03-10 10:03:26,417 [INFO] Fetching available weeks
+2025-03-10 10:03:26,418 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:03:26,418 [INFO] Processed 6 unique weeks
+2025-03-10 10:03:26,418 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:03:26,418 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:03:26,418 [INFO] Found 1 time entries for week 2025-W11
+2025-03-10 10:03:29,360 [INFO] Fetching available weeks
+2025-03-10 10:03:29,361 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:03:29,361 [INFO] Processed 6 unique weeks
+2025-03-10 10:03:29,361 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:03:29,361 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:03:29,362 [INFO] Generated summary for 6 weeks
+2025-03-10 10:03:38,658 [INFO] Fetching available weeks
+2025-03-10 10:03:38,659 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:03:38,659 [INFO] Processed 6 unique weeks
+2025-03-10 10:03:38,659 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:03:38,659 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:03:38,661 [INFO] Generated summary for 6 weeks
+2025-03-10 10:03:40,169 [INFO] Fetching available weeks
+2025-03-10 10:03:40,170 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:03:40,170 [INFO] Processed 6 unique weeks
+2025-03-10 10:03:40,170 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:03:40,170 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:03:40,171 [INFO] Found 23 time entries for week 2025-W10
+2025-03-10 10:03:42,211 [INFO] Fetching available weeks
+2025-03-10 10:03:42,211 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:03:42,212 [INFO] Processed 6 unique weeks
+2025-03-10 10:03:42,212 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:03:42,212 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:03:42,213 [INFO] Generated summary for 6 weeks
+2025-03-10 10:03:44,113 [INFO] Fetching available weeks
+2025-03-10 10:03:44,114 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:03:44,114 [INFO] Processed 6 unique weeks
+2025-03-10 10:03:44,114 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:03:44,114 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:03:44,115 [INFO] Found 32 time entries for week 2025-W09
+2025-03-10 10:03:55,908 [INFO] Fetching available weeks
+2025-03-10 10:03:55,909 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:03:55,909 [INFO] Processed 6 unique weeks
+2025-03-10 10:03:55,909 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:03:55,909 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:03:55,910 [INFO] Generated summary for 6 weeks
+2025-03-10 10:04:05,974 [INFO] Fetching available weeks
+2025-03-10 10:04:05,975 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:04:05,975 [INFO] Processed 6 unique weeks
+2025-03-10 10:04:05,975 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:04:05,975 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:04:05,976 [INFO] Found 36 time entries for week 2025-W06
+2025-03-10 10:04:22,922 [INFO] Fetching available weeks
+2025-03-10 10:04:22,923 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:04:22,923 [INFO] Processed 6 unique weeks
+2025-03-10 10:04:22,923 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:04:22,923 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:04:22,924 [INFO] Generated summary for 6 weeks
+2025-03-10 10:04:30,571 [INFO] Fetching available weeks
+2025-03-10 10:04:30,572 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:04:30,572 [INFO] Processed 6 unique weeks
+2025-03-10 10:04:30,572 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:04:30,572 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:04:30,573 [INFO] Found 37 time entries for week 2025-W08
+2025-03-10 10:04:42,753 [INFO] Fetching available weeks
+2025-03-10 10:04:42,754 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:04:42,754 [INFO] Processed 6 unique weeks
+2025-03-10 10:04:42,754 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:04:42,754 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:04:42,755 [INFO] Generated summary for 6 weeks
+2025-03-10 10:04:46,232 [INFO] Fetching available weeks
+2025-03-10 10:04:46,232 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:04:46,232 [INFO] Processed 6 unique weeks
+2025-03-10 10:04:46,233 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:04:46,233 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:04:46,233 [INFO] Found 32 time entries for week 2025-W09
+2025-03-10 10:04:49,243 [INFO] Fetching available weeks
+2025-03-10 10:04:49,244 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:04:49,244 [INFO] Processed 6 unique weeks
+2025-03-10 10:04:49,244 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:04:49,244 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:04:49,245 [INFO] Generated summary for 6 weeks
+2025-03-10 10:04:51,722 [INFO] Fetching available weeks
+2025-03-10 10:04:51,722 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:04:51,722 [INFO] Processed 6 unique weeks
+2025-03-10 10:04:51,722 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:04:51,722 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:04:51,723 [INFO] Found 37 time entries for week 2025-W08
+2025-03-10 10:04:54,835 [INFO] Fetching available weeks
+2025-03-10 10:04:54,836 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:04:54,836 [INFO] Processed 6 unique weeks
+2025-03-10 10:04:54,836 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:04:54,836 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:04:54,837 [INFO] Generated summary for 6 weeks
+2025-03-10 10:04:55,861 [INFO] Fetching available weeks
+2025-03-10 10:04:55,861 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:04:55,862 [INFO] Processed 6 unique weeks
+2025-03-10 10:04:55,862 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:04:55,862 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:04:55,862 [INFO] Found 32 time entries for week 2025-W09
+2025-03-10 10:04:58,734 [INFO] Fetching available weeks
+2025-03-10 10:04:58,735 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:04:58,735 [INFO] Processed 6 unique weeks
+2025-03-10 10:04:58,735 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:04:58,735 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:04:58,736 [INFO] Generated summary for 6 weeks
+2025-03-10 10:05:03,527 [INFO] Fetching available weeks
+2025-03-10 10:05:03,527 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:05:03,527 [INFO] Processed 6 unique weeks
+2025-03-10 10:05:03,527 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:05:03,527 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:05:03,528 [INFO] Found 51 time entries for week 2025-W07
+2025-03-10 10:05:12,421 [INFO] Fetching available weeks
+2025-03-10 10:05:12,422 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:05:12,422 [INFO] Processed 6 unique weeks
+2025-03-10 10:05:12,422 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:05:12,422 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:05:12,423 [INFO] Generated summary for 6 weeks
+2025-03-10 10:05:13,479 [INFO] Fetching available weeks
+2025-03-10 10:05:13,479 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:05:13,479 [INFO] Processed 6 unique weeks
+2025-03-10 10:05:13,479 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:05:13,480 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:05:13,480 [INFO] Found 23 time entries for week 2025-W10
+2025-03-10 10:05:27,787 [INFO] Fetching available weeks
+2025-03-10 10:05:27,787 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:05:27,788 [INFO] Processed 6 unique weeks
+2025-03-10 10:05:27,788 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:05:27,788 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:05:27,789 [INFO] Generated summary for 6 weeks
+2025-03-10 10:05:30,928 [INFO] Fetching available weeks
+2025-03-10 10:05:30,928 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:05:30,928 [INFO] Processed 6 unique weeks
+2025-03-10 10:05:30,929 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:05:30,929 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:05:30,929 [INFO] Found 32 time entries for week 2025-W09
+2025-03-10 10:06:01,931 [INFO] Fetching available weeks
+2025-03-10 10:06:01,932 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:06:01,932 [INFO] Processed 6 unique weeks
+2025-03-10 10:06:01,932 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:06:01,932 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:06:01,933 [INFO] Generated summary for 6 weeks
+2025-03-10 10:06:47,571 [INFO] Fetching available weeks
+2025-03-10 10:06:47,571 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:06:47,571 [INFO] Processed 6 unique weeks
+2025-03-10 10:06:47,571 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:06:47,571 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:06:47,572 [INFO] Found 37 time entries for week 2025-W08
+2025-03-10 10:07:11,083 [INFO] Fetching available weeks
+2025-03-10 10:07:11,084 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:07:11,084 [INFO] Processed 6 unique weeks
+2025-03-10 10:07:11,084 [INFO] Final dropdown contains 6 weeks, current week is 2025-W11
+2025-03-10 10:07:11,084 [INFO] First few weeks: ['2025-W11', '2025-W10', '2025-W09', '2025-W08', '2025-W07']
+2025-03-10 10:07:11,085 [INFO] Generated summary for 6 weeks
+2025-03-10 10:13:28,525 [INFO] Weekly summary request - selected_week: 2025-W09, show_all: True
+2025-03-10 10:13:28,526 [INFO] Fetching available weeks
+2025-03-10 10:13:28,526 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:13:28,526 [INFO] Processed 6 unique weeks
+2025-03-10 10:13:28,527 [INFO] Final view settings - selected_week: 2025-W09, show_all: True
+2025-03-10 10:13:28,528 [INFO] Generated summary for 6 weeks
+2025-03-10 10:13:30,812 [INFO] Weekly summary request - selected_week: 2025-W09, show_all: False
+2025-03-10 10:13:30,812 [INFO] Fetching available weeks
+2025-03-10 10:13:30,813 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:13:30,813 [INFO] Processed 6 unique weeks
+2025-03-10 10:13:30,813 [INFO] Final view settings - selected_week: 2025-W09, show_all: False
+2025-03-10 10:13:30,814 [INFO] Found 32 time entries for week 2025-W09
+2025-03-10 10:13:33,106 [INFO] Weekly summary request - selected_week: 2025-W08, show_all: False
+2025-03-10 10:13:33,106 [INFO] Fetching available weeks
+2025-03-10 10:13:33,107 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:13:33,107 [INFO] Processed 6 unique weeks
+2025-03-10 10:13:33,107 [INFO] Week selected from dropdown: 2025-W08, setting show_all=False
+2025-03-10 10:13:33,107 [INFO] Final view settings - selected_week: 2025-W08, show_all: False
+2025-03-10 10:13:33,108 [INFO] Found 37 time entries for week 2025-W08
+2025-03-10 10:13:36,043 [INFO] Weekly summary request - selected_week: 2025-W06, show_all: False
+2025-03-10 10:13:36,043 [INFO] Fetching available weeks
+2025-03-10 10:13:36,044 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:13:36,044 [INFO] Processed 6 unique weeks
+2025-03-10 10:13:36,044 [INFO] Week selected from dropdown: 2025-W06, setting show_all=False
+2025-03-10 10:13:36,044 [INFO] Final view settings - selected_week: 2025-W06, show_all: False
+2025-03-10 10:13:36,045 [INFO] Found 36 time entries for week 2025-W06
+2025-03-10 10:15:10,856 [INFO] Root path: /home/Jobmanager
+2025-03-10 10:15:10,856 [INFO] Current working directory: /home/Jobmanager
+2025-03-10 10:15:10,856 [INFO] Instance path: /home/Jobmanager/instance
+2025-03-10 10:15:10,856 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250310_1015.zip
+2025-03-10 10:15:10,856 [INFO] Adding file: /home/Jobmanager/run.py
+2025-03-10 10:15:10,857 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-03-10 10:15:10,857 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-03-10 10:15:10,857 [INFO] Adding to zip: app/db.py
+2025-03-10 10:15:10,858 [INFO] Adding to zip: app/__init__.py
+2025-03-10 10:15:10,858 [INFO] Adding to zip: app/schema.sql
+2025-03-10 10:15:10,858 [INFO] Adding to zip: app/routes/image_routes.py
+2025-03-10 10:15:10,859 [INFO] Adding to zip: app/routes/system_routes.py
+2025-03-10 10:15:10,859 [INFO] Adding to zip: app/routes/__init__.py
+2025-03-10 10:15:10,859 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-03-10 10:15:10,860 [INFO] Adding to zip: app/routes/job_routes.py
+2025-03-10 10:15:10,860 [INFO] Adding to zip: app/routes/report_routes.py
+2025-03-10 10:15:10,861 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-03-10 10:15:10,861 [INFO] Adding to zip: app/utils/date_helper.py
+2025-03-10 10:15:10,861 [INFO] Adding to zip: app/utils/time_utils.py
+2025-03-10 10:15:10,862 [INFO] Adding to zip: app/utils/job_utils.py
+2025-03-10 10:15:10,862 [INFO] Adding to zip: app/utils/material_utils.py
+2025-03-10 10:15:10,862 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-03-10 10:15:10,862 [INFO] Adding to zip: app/utils/__init__.py
+2025-03-10 10:15:10,863 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-03-10 10:15:10,863 [INFO] Adding to zip: app/utils/error_utils.py
+2025-03-10 10:15:10,863 [INFO] Adding to zip: app/utils/image_utils.py
+2025-03-10 10:15:10,863 [INFO] Adding to zip: app/templates/customer_form.html
+2025-03-10 10:15:10,864 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-03-10 10:15:10,864 [INFO] Adding to zip: app/templates/system_settings.html
+2025-03-10 10:15:10,864 [INFO] Adding to zip: app/templates/shared_images.html
+2025-03-10 10:15:10,865 [INFO] Adding to zip: app/templates/weekly_summary.html
+2025-03-10 10:15:10,865 [INFO] Adding to zip: app/templates/job_details.html
+2025-03-10 10:15:10,866 [INFO] Adding to zip: app/templates/invoice.html
+2025-03-10 10:15:10,866 [INFO] Adding to zip: app/templates/job_form.html
+2025-03-10 10:15:10,867 [INFO] Adding to zip: app/templates/customer_list.html
+2025-03-10 10:15:10,867 [INFO] Adding to zip: app/templates/500.html
+2025-03-10 10:15:10,867 [INFO] Adding to zip: app/templates/base.html
+2025-03-10 10:15:10,867 [INFO] Adding to zip: app/templates/job_list.html
+2025-03-10 10:15:10,868 [INFO] Adding to zip: app/templates/404.html
+2025-03-10 10:15:10,868 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-03-10 10:15:10,868 [INFO] Adding to zip: app/static/css/styles.css
+2025-03-10 10:15:10,869 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250310_1015.zip
+2025-03-10 10:15:10,869 [INFO] Backup file exists: True
+2025-03-10 10:16:41,078 [INFO] Weekly summary request - selected_week: 2025-W10, show_all: False
+2025-03-10 10:16:41,078 [INFO] Fetching available weeks
+2025-03-10 10:16:41,079 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:16:41,079 [INFO] Processed 6 unique weeks
+2025-03-10 10:16:41,079 [INFO] Week selected from dropdown: 2025-W10, setting show_all=False
+2025-03-10 10:16:41,079 [INFO] Final view settings - selected_week: 2025-W10, show_all: False
+2025-03-10 10:16:41,079 [INFO] Found 23 time entries for week 2025-W10
+2025-03-10 10:16:50,991 [INFO] Weekly summary request - selected_week: 2025-W11, show_all: False
+2025-03-10 10:16:50,991 [INFO] Fetching available weeks
+2025-03-10 10:16:50,992 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:16:50,992 [INFO] Processed 6 unique weeks
+2025-03-10 10:16:50,992 [INFO] Week selected from dropdown: 2025-W11, setting show_all=False
+2025-03-10 10:16:50,992 [INFO] Final view settings - selected_week: 2025-W11, show_all: False
+2025-03-10 10:16:50,992 [INFO] Found 1 time entries for week 2025-W11
+2025-03-10 10:17:08,809 [INFO] Root path: /home/Jobmanager
+2025-03-10 10:17:08,809 [INFO] Current working directory: /home/Jobmanager
+2025-03-10 10:17:08,809 [INFO] Instance path: /home/Jobmanager/instance
+2025-03-10 10:17:08,809 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250310_1017.zip
+2025-03-10 10:17:08,809 [INFO] Adding file: /home/Jobmanager/run.py
+2025-03-10 10:17:08,809 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-03-10 10:17:08,810 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-03-10 10:17:08,810 [INFO] Adding to zip: app/db.py
+2025-03-10 10:17:08,810 [INFO] Adding to zip: app/__init__.py
+2025-03-10 10:17:08,811 [INFO] Adding to zip: app/schema.sql
+2025-03-10 10:17:08,811 [INFO] Adding to zip: app/routes/image_routes.py
+2025-03-10 10:17:08,811 [INFO] Adding to zip: app/routes/system_routes.py
+2025-03-10 10:17:08,812 [INFO] Adding to zip: app/routes/__init__.py
+2025-03-10 10:17:08,812 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-03-10 10:17:08,812 [INFO] Adding to zip: app/routes/job_routes.py
+2025-03-10 10:17:08,813 [INFO] Adding to zip: app/routes/report_routes.py
+2025-03-10 10:17:08,814 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-03-10 10:17:08,814 [INFO] Adding to zip: app/utils/date_helper.py
+2025-03-10 10:17:08,814 [INFO] Adding to zip: app/utils/time_utils.py
+2025-03-10 10:17:08,814 [INFO] Adding to zip: app/utils/job_utils.py
+2025-03-10 10:17:08,815 [INFO] Adding to zip: app/utils/material_utils.py
+2025-03-10 10:17:08,815 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-03-10 10:17:08,815 [INFO] Adding to zip: app/utils/__init__.py
+2025-03-10 10:17:08,815 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-03-10 10:17:08,816 [INFO] Adding to zip: app/utils/error_utils.py
+2025-03-10 10:17:08,816 [INFO] Adding to zip: app/utils/image_utils.py
+2025-03-10 10:17:08,816 [INFO] Adding to zip: app/templates/customer_form.html
+2025-03-10 10:17:08,816 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-03-10 10:17:08,817 [INFO] Adding to zip: app/templates/system_settings.html
+2025-03-10 10:17:08,817 [INFO] Adding to zip: app/templates/shared_images.html
+2025-03-10 10:17:08,817 [INFO] Adding to zip: app/templates/weekly_summary.html
+2025-03-10 10:17:08,818 [INFO] Adding to zip: app/templates/job_details.html
+2025-03-10 10:17:08,818 [INFO] Adding to zip: app/templates/invoice.html
+2025-03-10 10:17:08,819 [INFO] Adding to zip: app/templates/job_form.html
+2025-03-10 10:17:08,819 [INFO] Adding to zip: app/templates/customer_list.html
+2025-03-10 10:17:08,819 [INFO] Adding to zip: app/templates/500.html
+2025-03-10 10:17:08,820 [INFO] Adding to zip: app/templates/base.html
+2025-03-10 10:17:08,820 [INFO] Adding to zip: app/templates/job_list.html
+2025-03-10 10:17:08,820 [INFO] Adding to zip: app/templates/404.html
+2025-03-10 10:17:08,821 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-03-10 10:17:08,821 [INFO] Adding to zip: app/static/css/styles.css
+2025-03-10 10:17:08,822 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250310_1017.zip
+2025-03-10 10:17:08,822 [INFO] Backup file exists: True
+2025-03-10 10:17:11,723 [INFO] Root path: /home/Jobmanager
+2025-03-10 10:17:11,723 [INFO] Current working directory: /home/Jobmanager
+2025-03-10 10:17:11,723 [INFO] Instance path: /home/Jobmanager/instance
+2025-03-10 10:17:11,723 [INFO] DB Path: /home/Jobmanager/instance/jobmanager.db
+2025-03-10 10:17:11,723 [INFO] Backup Path: /home/Jobmanager/backups/db_backup_20250310_1017.db
+2025-03-10 10:17:11,724 [INFO] Database backup created at: /home/Jobmanager/backups/db_backup_20250310_1017.db
+2025-03-10 10:17:11,724 [INFO] Backup file exists: True
+2025-03-10 10:17:14,759 [INFO] Weekly summary request - selected_week: None, show_all: False
+2025-03-10 10:17:14,760 [INFO] No week selected, using current week: 2025-W11
+2025-03-10 10:17:14,760 [INFO] Fetching available weeks
+2025-03-10 10:17:14,760 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:17:14,760 [INFO] Processed 6 unique weeks
+2025-03-10 10:17:14,760 [INFO] Final view settings - selected_week: 2025-W11, show_all: False
+2025-03-10 10:17:14,761 [INFO] Found 1 time entries for week 2025-W11
+2025-03-10 10:17:17,095 [INFO] Weekly summary request - selected_week: 2025-W11, show_all: True
+2025-03-10 10:17:17,095 [INFO] Fetching available weeks
+2025-03-10 10:17:17,096 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:17:17,096 [INFO] Processed 6 unique weeks
+2025-03-10 10:17:17,096 [INFO] Final view settings - selected_week: 2025-W11, show_all: True
+2025-03-10 10:17:17,097 [INFO] Generated summary for 6 weeks
+2025-03-10 10:17:24,115 [INFO] Weekly summary request - selected_week: 2025-W11, show_all: False
+2025-03-10 10:17:24,115 [INFO] Fetching available weeks
+2025-03-10 10:17:24,115 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:17:24,115 [INFO] Processed 6 unique weeks
+2025-03-10 10:17:24,115 [INFO] Final view settings - selected_week: 2025-W11, show_all: False
+2025-03-10 10:17:24,116 [INFO] Found 1 time entries for week 2025-W11
+2025-03-10 10:17:26,001 [INFO] Weekly summary request - selected_week: 2025-W09, show_all: False
+2025-03-10 10:17:26,001 [INFO] Fetching available weeks
+2025-03-10 10:17:26,001 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:17:26,001 [INFO] Processed 6 unique weeks
+2025-03-10 10:17:26,001 [INFO] Week selected from dropdown: 2025-W09, setting show_all=False
+2025-03-10 10:17:26,002 [INFO] Final view settings - selected_week: 2025-W09, show_all: False
+2025-03-10 10:17:26,002 [INFO] Found 32 time entries for week 2025-W09
+2025-03-10 10:17:36,395 [INFO] Starting timer for job 4
+2025-03-10 10:17:36,395 [INFO] Stopping all active timers
+2025-03-10 10:40:36,399 [ERROR] Exception on /job/details/4 [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/db.py", line 31, in decorated_function
+    return f(db, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/routes/job_routes.py", line 349, in job_details
     return render_template('job_details.html',
           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "/usr/lib/python3/dist-packages/flask/templating.py", line 146, in render_template
@@ -37,83 +2260,237 @@ Traceback (most recent call last):
     self.handle_exception(source=source_hint)
   File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
     raise rewrite_traceback_stack(source=source)
-  File "/home/Jobmanager/app/templates/job_details.html", line 58, in template
-    {% do weekly_groups.setdefault(current_week, {'entries': [], 'total_hours': 0}) %}
-    ^^^^^^^^^^^^^^^^^^^^^^^^^
-jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'do'. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.
-2025-02-18 18:07:18,720 [INFO] Root path: /home/Jobmanager
-2025-02-18 18:07:18,721 [INFO] Current working directory: /home/Jobmanager
-2025-02-18 18:07:18,721 [INFO] Instance path: /home/Jobmanager/instance
-2025-02-18 18:07:18,721 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250218_1807.zip
-2025-02-18 18:07:18,721 [INFO] Adding file: /home/Jobmanager/run.py
-2025-02-18 18:07:18,721 [INFO] Adding file: /home/Jobmanager/init_db.py
-2025-02-18 18:07:18,722 [INFO] Adding file: /home/Jobmanager/gitback.sh
-2025-02-18 18:07:18,722 [INFO] Adding to zip: app/db.py
-2025-02-18 18:07:18,723 [INFO] Adding to zip: app/__init__.py
-2025-02-18 18:07:18,723 [INFO] Adding to zip: app/schema.sql
-2025-02-18 18:07:18,723 [INFO] Adding to zip: app/routes/image_routes.py
-2025-02-18 18:07:18,724 [INFO] Adding to zip: app/routes/__init__.py
-2025-02-18 18:07:18,724 [INFO] Adding to zip: app/routes/customer_routes.py
-2025-02-18 18:07:18,724 [INFO] Adding to zip: app/routes/job_routes.py
-2025-02-18 18:07:18,725 [INFO] Adding to zip: app/routes/timer_routes.py
-2025-02-18 18:07:18,726 [INFO] Adding to zip: app/utils/job_utils.py
-2025-02-18 18:07:18,726 [INFO] Adding to zip: app/utils/material_utils.py
-2025-02-18 18:07:18,726 [INFO] Adding to zip: app/utils/timer_utils.py
-2025-02-18 18:07:18,726 [INFO] Adding to zip: app/utils/__init__.py
-2025-02-18 18:07:18,727 [INFO] Adding to zip: app/utils/invoice_utils.py
-2025-02-18 18:07:18,727 [INFO] Adding to zip: app/utils/error_utils.py
-2025-02-18 18:07:18,727 [INFO] Adding to zip: app/utils/image_utils.py
-2025-02-18 18:07:18,728 [INFO] Adding to zip: app/templates/customer_form.html
-2025-02-18 18:07:18,728 [INFO] Adding to zip: app/templates/quick_timer.html
-2025-02-18 18:07:18,728 [INFO] Adding to zip: app/templates/job_details.html
-2025-02-18 18:07:18,729 [INFO] Adding to zip: app/templates/invoice.html
-2025-02-18 18:07:18,729 [INFO] Adding to zip: app/templates/job_form.html
-2025-02-18 18:07:18,730 [INFO] Adding to zip: app/templates/customer_list.html
-2025-02-18 18:07:18,730 [INFO] Adding to zip: app/templates/500.html
-2025-02-18 18:07:18,731 [INFO] Adding to zip: app/templates/base.html
-2025-02-18 18:07:18,731 [INFO] Adding to zip: app/templates/job_list.html
-2025-02-18 18:07:18,731 [INFO] Adding to zip: app/templates/404.html
-2025-02-18 18:07:18,732 [INFO] Adding to zip: app/static/qr-quick_timer.svg
-2025-02-18 18:07:18,732 [INFO] Adding to zip: app/static/css/styles.css
-2025-02-18 18:07:18,733 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250218_1807.zip
-2025-02-18 18:07:18,733 [INFO] Backup file exists: True
-2025-02-18 18:27:57,461 [ERROR] Upload failed: name 'timedelta' is not defined
+  File "/home/Jobmanager/app/templates/job_details.html", line 30, in template
+    {% break %}
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'break'. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.
+2025-03-10 10:40:39,812 [INFO] Weekly summary request - selected_week: None, show_all: False
+2025-03-10 10:40:39,812 [INFO] No week selected, using current week: 2025-W11
+2025-03-10 10:40:39,812 [INFO] Fetching available weeks
+2025-03-10 10:40:39,813 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:40:39,813 [INFO] Processed 6 unique weeks
+2025-03-10 10:40:39,813 [INFO] Final view settings - selected_week: 2025-W11, show_all: False
+2025-03-10 10:40:39,813 [INFO] Found 2 time entries for week 2025-W11
+2025-03-10 10:40:56,384 [INFO] Weekly summary request - selected_week: None, show_all: False
+2025-03-10 10:40:56,384 [INFO] No week selected, using current week: 2025-W11
+2025-03-10 10:40:56,384 [INFO] Fetching available weeks
+2025-03-10 10:40:56,384 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:40:56,385 [INFO] Processed 6 unique weeks
+2025-03-10 10:40:56,385 [INFO] Final view settings - selected_week: 2025-W11, show_all: False
+2025-03-10 10:40:56,385 [INFO] Found 2 time entries for week 2025-W11
+2025-03-10 10:40:58,875 [INFO] Weekly summary request - selected_week: 2025-W10, show_all: False
+2025-03-10 10:40:58,875 [INFO] Fetching available weeks
+2025-03-10 10:40:58,876 [INFO] Found 34 distinct dates with time entries
+2025-03-10 10:40:58,876 [INFO] Processed 6 unique weeks
+2025-03-10 10:40:58,876 [INFO] Week selected from dropdown: 2025-W10, setting show_all=False
+2025-03-10 10:40:58,876 [INFO] Final view settings - selected_week: 2025-W10, show_all: False
+2025-03-10 10:40:58,876 [INFO] Found 23 time entries for week 2025-W10
+2025-03-10 10:41:04,068 [ERROR] Exception on /job/details/4 [GET]
 Traceback (most recent call last):
-  File "/home/Jobmanager/app/routes/image_routes.py", line 32, in upload_direct
-    filename = image_mgr.process_image(job_id, file, db)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/Jobmanager/app/utils/image_utils.py", line 33, in process_image
-    timestamp = (datetime.now() + timedelta(hours=1)).strftime('%y%m%d%H%M')
-                                  ^^^^^^^^^
-NameError: name 'timedelta' is not defined
-2025-02-18 18:29:11,712 [ERROR] Upload failed: name 'timedelta' is not defined
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/db.py", line 31, in decorated_function
+    return f(db, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/routes/job_routes.py", line 349, in job_details
+    return render_template('job_details.html',
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 146, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1081, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1010, in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 969, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 768, in compile
+    self.handle_exception(source=source_hint)
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/job_details.html", line 30, in template
+    {% break %}
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'break'. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.
+2025-03-10 10:43:11,460 [ERROR] Exception on /job/details/4 [GET]
 Traceback (most recent call last):
-  File "/home/Jobmanager/app/routes/image_routes.py", line 32, in upload_direct
-    filename = image_mgr.process_image(job_id, file, db)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/Jobmanager/app/utils/image_utils.py", line 33, in process_image
-    timestamp = (datetime.now() + timedelta(hours=1)).strftime('%y%m%d%H%M')
-                                  ^^^^^^^^^
-NameError: name 'timedelta' is not defined
-2025-02-18 19:40:59,406 [INFO] Stopping timer for job 4
-2025-02-19 11:52:29,198 [INFO] Starting timer for job 28
-2025-02-19 11:52:29,199 [INFO] Stopping all active timers
-2025-02-19 12:14:41,326 [INFO] Starting timer for job 26
-2025-02-19 12:14:41,326 [INFO] Stopping all active timers
-2025-02-19 12:42:52,465 [INFO] Starting timer for job 31
-2025-02-19 12:42:52,465 [INFO] Stopping all active timers
-2025-02-19 13:00:04,910 [INFO] Stopping timer for job 31
-2025-02-19 13:07:49,116 [INFO] Starting timer for job 12
-2025-02-19 13:07:49,116 [INFO] Starting timer for job 12
-2025-02-19 13:07:49,116 [INFO] Stopping all active timers
-2025-02-19 13:07:49,116 [INFO] Stopping all active timers
-2025-02-19 13:08:43,700 [INFO] Starting timer for job 31
-2025-02-19 13:08:43,700 [INFO] Stopping all active timers
-2025-02-19 13:53:50,045 [INFO] Stopping timer for job 31
-2025-02-19 14:29:03,386 [INFO] Starting timer for job 28
-2025-02-19 14:29:03,386 [INFO] Stopping all active timers
-2025-02-19 14:38:27,753 [INFO] Starting timer for job 25
-2025-02-19 14:38:27,753 [INFO] Stopping all active timers
-2025-02-19 15:20:01,772 [INFO] Stopping timer for job 25
-2025-02-19 17:43:05,625 [INFO] Starting timer for job 4
-2025-02-19 17:43:05,625 [INFO] Stopping all active timers
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/db.py", line 31, in decorated_function
+    return f(db, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/routes/job_routes.py", line 349, in job_details
+    return render_template('job_details.html',
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 146, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1081, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1010, in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 969, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 768, in compile
+    self.handle_exception(source=source_hint)
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/job_details.html", line 30, in template
+    {% break %}
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'break'. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.
+2025-03-10 10:43:13,101 [ERROR] Exception on /job/details/4 [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/db.py", line 31, in decorated_function
+    return f(db, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/routes/job_routes.py", line 349, in job_details
+    return render_template('job_details.html',
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 146, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1081, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1010, in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 969, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 768, in compile
+    self.handle_exception(source=source_hint)
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/job_details.html", line 30, in template
+    {% break %}
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'break'. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.
+2025-03-10 10:43:18,339 [ERROR] Exception on /job/details/4 [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/db.py", line 31, in decorated_function
+    return f(db, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/routes/job_routes.py", line 349, in job_details
+    return render_template('job_details.html',
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 146, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1081, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1010, in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 969, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 768, in compile
+    self.handle_exception(source=source_hint)
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/job_details.html", line 30, in template
+    {% break %}
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'break'. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.
+2025-03-10 10:43:22,016 [ERROR] Exception on /job/details/47 [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/db.py", line 31, in decorated_function
+    return f(db, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/routes/job_routes.py", line 349, in job_details
+    return render_template('job_details.html',
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 146, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1081, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1010, in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 969, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 768, in compile
+    self.handle_exception(source=source_hint)
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/job_details.html", line 30, in template
+    {% break %}
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'break'. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.

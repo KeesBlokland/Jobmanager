@@ -1,0 +1,216 @@
+{% extends "base.html" %}
+
+{% macro format_hours(hours_value) %}
+    {% if hours_value is none %}
+        00:00
+    {% else %}
+        {{ "%d:%02d"|format(hours_value|int, ((hours_value % 1) * 60)|round|int) }}
+    {% endif %}
+{% endmacro %}
+
+{% block content %}
+<div class="summary-container">
+    <h2>Weekly Summary Report</h2>
+    
+<!-- Improved week selection controls for weekly_summary.html -->
+<div class="summary-controls">
+    <!-- Week selection dropdown (separate form to immediately submit) -->
+    {% if not show_all %}
+        <form action="{{ url_for('report.weekly_summary') }}" method="get" class="flex-row" id="week-select-form">
+            <label for="week">Select week:</label>
+            <select name="week" id="week" onchange="this.form.submit()" class="form-control" style="max-width: 200px;">
+                {% for week_item in available_weeks %}
+                    {% if week_item is mapping and week_item.week_str is defined %}
+                        <option value="{{ week_item.week_str }}" {% if week_item.week_str == selected_week %}selected{% endif %}>
+                            {% if week_item.week_str is string and '-W' in week_item.week_str %}
+                                Week {{ week_item.week_str.split('-W')[1] }}, {{ week_item.week_str.split('-W')[0] }}
+                            {% else %}
+                                {{ week_item.week_str }}
+                            {% endif %}
+                        </option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </form>
+    {% endif %}
+    
+    <!-- Toggle view button (separate form) -->
+    <form action="{{ url_for('report.weekly_summary') }}" method="get" class="flex-row">
+        <input type="hidden" name="week" value="{{ selected_week }}">
+        <input type="hidden" name="show_all" value="{% if show_all %}false{% else %}true{% endif %}">
+        <button type="submit" class="action-btn">
+            {% if show_all %}Show Single Week{% else %}Show All Weeks{% endif %}
+        </button>
+    </form>
+</div>
+    
+    {% if show_all %}
+        <!-- All weeks summary view -->
+        <h3>All Weeks Summary</h3>
+        
+        {% for week_str, week_data in all_weeks %}
+            <div class="week-card">
+                <div class="week-header">
+                    <h4>
+                        {% if week_str is string and '-W' in week_str %}
+                            Week {{ week_str.split('-W')[1] }}, {{ week_str.split('-W')[0] }}
+                        {% else %}
+                            {{ week_str }}
+                        {% endif %}
+                    </h4>
+                    <div class="week-total">
+                        <span>{{ "%.1f"|format(week_data.total_hours) }} hours</span>
+                        {% if week_data.total_amount > 0 %}
+                        <span>€{{ "%.2f"|format(week_data.total_amount) }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <!-- Jobs for this week -->
+                <table class="summary-table">
+                    <thead>
+                        <tr>
+                            <th>Customer</th>
+                            <th>Job</th>
+                            <th>Hours</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for job_key, job in week_data.job_totals.items() %}
+                        <tr>
+                            <td>{{ job.customer }}</td>
+                            <td>
+                                <a href="{{ url_for('job.job_details', id=job.job_id) }}">
+                                    {{ job.description }}
+                                </a>
+                            </td>
+                            <td>{{ "%.1f"|format(job.hours) }}</td>
+                            <td>{% if job.amount > 0 %}€{{ "%.2f"|format(job.amount) }}{% else %}-{% endif %}</td>
+                        </tr>
+                        {% endfor %}
+                        <tr class="total-row">
+                            <td colspan="2"><strong>Total</strong></td>
+                            <td><strong>{{ "%.1f"|format(week_data.total_hours) }}</strong></td>
+                            <td><strong>€{{ "%.2f"|format(week_data.total_amount) }}</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        {% endfor %}
+        
+    {% else %}
+        <!-- Single week detailed view -->
+        <!-- Week overview -->
+        <div class="week-overview">
+            {% if start_date and end_date %}
+            <h3>{{ start_date.strftime('%d %b') }} - {{ end_date.strftime('%d %b %Y') }}</h3>
+            {% else %}
+            <h3>Week {{ selected_week.split('-W')[1] }}, {{ selected_week.split('-W')[0] }}</h3>
+            {% endif %}
+            <div class="week-stats">
+                <div class="stat-box">
+                    <div class="stat-value">{{ "%.1f"|format(week_total_hours) }}</div>
+                    <div class="stat-label">Hours</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">€{{ "%.2f"|format(week_total_amount) }}</div>
+                    <div class="stat-label">Income</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">{{ job_totals|length }}</div>
+                    <div class="stat-label">Jobs</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Jobs summary -->
+        <div class="jobs-summary">
+            <h3>Jobs This Week</h3>
+            <table class="summary-table">
+                <thead>
+                    <tr>
+                        <th>Customer</th>
+                        <th>Job</th>
+                        <th>Hours</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for job_key, job in job_totals.items() %}
+                    <tr>
+                        <td>{{ job.customer }}</td>
+                        <td>
+                            <a href="{{ url_for('job.job_details', id=job.job_id) }}">
+                                {{ job.description }}
+                            </a>
+                        </td>
+                        <td>{{ "%.1f"|format(job.hours) }}</td>
+                        <td>{% if job.amount > 0 %}€{{ "%.2f"|format(job.amount) }}{% else %}-{% endif %}</td>
+                    </tr>
+                    {% endfor %}
+                    <tr class="total-row">
+                        <td colspan="2"><strong>Total</strong></td>
+                        <td><strong>{{ "%.1f"|format(week_total_hours) }}</strong></td>
+                        <td><strong>€{{ "%.2f"|format(week_total_amount) }}</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Daily breakdown -->
+        <div class="daily-breakdown">
+            <h3>Daily Breakdown</h3>
+            
+            {% for day_str, day_data in days %}
+            <div class="day-card">
+                <div class="day-header">
+                    <h4>{{ day_data.day_name }}, {{ day_data.date.strftime('%d %b') }}</h4>
+                    <div class="day-total">
+                        <span>{{ "%.1f"|format(day_data.total_hours) }} hours</span>
+                        {% if day_data.total_amount > 0 %}
+                        <span>€{{ "%.2f"|format(day_data.total_amount) }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="day-jobs">
+                    {% for job_key, job in day_data.jobs.items() %}
+                    <div class="job-entry">
+                        <div class="job-info">
+                            <strong>{{ job.customer }}:</strong> {{ job.description }}
+                        </div>
+                        <div class="job-time">
+                            {{ "%.1f"|format(job.hours) }} hours
+                            {% if job.amount > 0 %}
+                            (€{{ "%.2f"|format(job.amount) }})
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Time entries for this job on this day -->
+                        <div class="time-entries">
+                            {% for entry in job.entries %}
+                            <div class="time-entry">
+                                <span class="entry-time">
+                                    {{ entry.start_time[11:16] }} - 
+                                    {% if entry.end_time %}
+                                        {{ entry.end_time[11:16] }}
+                                    {% else %}
+                                        ongoing
+                                    {% endif %}
+                                </span>
+                                <span class="entry-duration">
+                                    ({{ format_hours(entry.hours) }})
+                                </span>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

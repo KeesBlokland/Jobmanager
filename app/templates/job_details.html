@@ -13,56 +13,69 @@
     <a href="{{ url_for('job.invoice', id=job.id) }}" 
        class="action-btn timer-btn">Show Invoice</a>
 </div>
+<hr>
 
-{# This section replaces everything between <div class="detail-section"> and </div> for time entries #}
 <div class="detail-section">
     <h3>Time Entries</h3>
     <div>
         {% set ns = namespace(current_week='', weekly_entries=[], today=none) %}
         {% set weekly_groups = {} %}
+        {% set today_date = now().date().isoformat() %}
         
-        {# First pass: Group entries by week #}
+        {# Check for active timer first #}
+        {% set active_timer = none %}
         {% for entry in time_entries %}
-            {% set entry_date = entry.start_time[0:10] %}
-            
-            {% if loop.first %}
-                {% set ns.today = entry_date %}
+            {% if entry.end_time is none %}
+                {% set active_timer = entry %}
+                {% break %}
             {% endif %}
-            
-            {% set week_number = ((loop.index0 // 7) + 1)|string %}
-            {% set current_week = entry_date[0:4] + "-W" + week_number %}
-            
-            {% if entry_date == ns.today %}
-                <div class="item-row" id="time-entry-{{ entry.id }}" style="display: flex; align-items: center;">
-                    <div style="display: flex; gap: 5px; margin-right: 15px;">
-                        <button onclick="showTimeEdit({{ entry.id }})" class="action-btn edit-btn">Edit</button>
-                        <form action="{{ url_for('job.delete_time_entry', id=job.id, entry_id=entry.id) }}" method="post" style="display: inline;">
-                            <button type="submit" class="action-btn delete-btn" onclick="return confirm('Delete this time entry?')">Delete</button>
-                        </form>
-                    </div>
-                    <div class="display-view" style="flex-grow: 1;">
-                        <span>
-                            {{ entry.start_time[11:16] }} - {{ entry.end_time[11:16] if entry.end_time else 'Ongoing' }}
-                            ({{ "%d:%02d"|format(entry.hours|int, ((entry.hours % 1) * 60)|round|int) }})
-                        </span>
-                    </div>
-                    <div class="edit-view" style="display: none; width: 50%;">
-                        <form action="{{ url_for('job.edit_time_entry', job_id=job.id, entry_id=entry.id) }}" method="post" style="display: flex; gap: 10px; align-items: center;">
-                            <input type="datetime-local" name="start_time" value="{{ entry.start_time[:16] }}" required>
-                            <input type="datetime-local" name="end_time" value="{{ entry.end_time[:16] if entry.end_time else '' }}" required>
-                            <button type="submit" class="action-btn save-btn">Save</button>
-                            <button type="button" onclick="hideTimeEdit({{ entry.id }})" class="action-btn cancel-btn">Cancel</button>
-                        </form>
-                    </div>
+        {% endfor %}
+        
+        {# Display active timer if present #}
+        {% if active_timer %}
+        <div class="active-timer-section">
+            <div class="item-row timer-active" style="display: flex; align-items: center;">
+                <div style="display: flex; gap: 5px; margin-right: 15px;">
+                    <form action="{{ url_for('timer.stop_timer', id=job.id) }}" method="post" style="display: inline;">
+                        <button type="submit" class="action-btn stop-timer">Stop Timer</button>
+                    </form>
                 </div>
-            {% else %}
+                <div class="timer-info">
+                    <strong>Timer running since:</strong> {{ active_timer.start_time[11:16] }} on {{ active_timer.start_time[8:10] }} {{ active_timer.start_time[5:7]|month_name }}
+                    <span class="timer-duration" data-start="{{ active_timer.start_time }}">
+                        {% set seconds_running = (now().timestamp() - datetime.fromisoformat(active_timer.start_time).timestamp())|int %}
+                        {% set hours = (seconds_running // 3600)|int %}
+                        {% set minutes = ((seconds_running % 3600) // 60)|int %}
+                        {% set seconds = (seconds_running % 60)|int %}
+                        ({{ "%02d:%02d:%02d"|format(hours, minutes, seconds) }})
+                    </span>
+                </div>
+            </div>
+        </div>
+        <hr>
+        {% endif %}
+
+        {# First pass: Group entries by ISO calendar week #}
+        {% for entry in time_entries %}
+            {% if entry.end_time %}  {# Only process completed entries here #}
+                {% set entry_date = entry.start_time[0:10] %}
+                
+                {# Calculate standard ISO week number using the filter #}
+                {% set week_number = entry_date|iso_week %}
+                {% set week_year = entry_date|iso_week_year %}
+                
+                {# Use zero-padded week number for consistent sorting #}
+                {% set current_week = week_year|string + "-W" + "%02d"|format(week_number) %}
+                
+                {# Group all entries by week #}
                 {% if current_week not in weekly_groups %}
-                    {% set _ = weekly_groups.update({current_week: {'entries': [], 'total_hours': 0}}) %}
+                    {% set _ = weekly_groups.update({current_week: {'entries': [], 'total_hours': 0, 'is_current': false}}) %}
                 {% endif %}
                 {% set _ = weekly_groups[current_week]['entries'].append(entry) %}
                 {% set _ = weekly_groups.update({current_week: {
                     'entries': weekly_groups[current_week]['entries'],
-                    'total_hours': weekly_groups[current_week]['total_hours'] + entry.hours
+                    'total_hours': weekly_groups[current_week]['total_hours'] + entry.hours,
+                    'is_current': today_date == entry_date
                 }}) %}
             {% endif %}
         {% endfor %}
@@ -70,15 +83,18 @@
         {# Display weekly groups #}
         {% for week, data in weekly_groups|dictsort(reverse=true) %}
             {% set rounded_hours = ((data.total_hours * 60 + 4) // 5 * 5) / 60 %}
+            {% set is_current_week = data.is_current %}
+            
             <div class="week-group" id="week-{{ week }}">
-                <div class="week-header item-row" onclick="toggleWeek('{{ week }}')">
+                <div class="week-header item-row{% if is_current_week %} current-week{% endif %}" onclick="toggleWeek('{{ week }}')">
                     <span style="cursor: pointer;">
-                        <span class="toggle-icon">▶</span>
-                        Week {{ week[-2:] }}, {{ week[:4] }}: 
+                        <span class="toggle-icon">{% if is_current_week %}▼{% else %}▶{% endif %}</span>
+                        {{ week|format_week }}: 
                         {{ "%d:%02d"|format(rounded_hours|int, (rounded_hours % 1 * 60)|int) }} hours
+                        {% if is_current_week %}<span class="current-marker">(This week)</span>{% endif %}
                     </span>
                 </div>
-                <div class="week-entries" id="entries-{{ week }}" style="display: none; margin-left: 20px;">
+                <div class="week-entries" id="entries-{{ week }}" style="display: {% if is_current_week %}block{% else %}none{% endif %}; margin-left: 20px;">
                     {% for entry in data.entries|sort(attribute='start_time', reverse=true) %}
                         <div class="item-row" id="time-entry-{{ entry.id }}" style="display: flex; align-items: center;">
                             <div style="display: flex; gap: 5px; margin-right: 15px;">
@@ -117,83 +133,74 @@
     </div>
 </div>
 
-<div class="detail-section">
-    <h3>Materials Used</h3>
-    <div class="new-material-form form-section">
-        <form action="{{ url_for('job.add_material', id=job.id) }}" method="post">
-            <div class="btn-group">
-                <button type="submit" class="action-btn save-btn">Add Material</button>
-                <input type="text" name="material" placeholder="Material description" required class="form-control" style="width: 30%;">
-                <input type="number" name="quantity" placeholder="Qty" step="0.1" required class="form-control" style="width: 80px;">
-                <input type="number" name="price" placeholder="€/item" step="0.01" required class="form-control" style="width: 80px;">
-            </div>
-        </form>
-    </div>
-    {% for material in materials %}
-    <div class="item-row" id="material-{{ material.id }}" style="display: flex; align-items: center;">
-       <div style="display: flex; gap: 5px; margin-right: 15px;">
-           <button onclick="showMaterialEdit({{ material.id }})" class="action-btn edit-btn">Edit</button>
-           <form action="{{ url_for('job.delete_material', id=job.id, material_id=material.id) }}" method="post" style="display: inline;">
-               <button type="submit" class="action-btn delete-btn" onclick="return confirm('Delete this material?')">Delete</button>
-           </form>
-       </div>
-       <div class="display-view" style="flex-grow: 1;">
-           <span>{{ material.material }} ({{ material.quantity }}) - €{{ "%.2f"|format(material.price) }}/item</span>
-       </div>
-       <div class="edit-view" style="display: none; width: 50%;">
-        <form action="{{ url_for('job.edit_material', id=job.id, material_id=material.id) }}" method="post" style="display: flex; gap: 5px; align-items: center;">
-            <input type="text" name="material" value="{{ material.material }}" required style="flex-grow: 1;">
-            <input type="number" name="quantity" value="{{ material.quantity }}" step="0.1" required style="width: 80px;">
-            <input type="number" name="price" value="{{ material.price }}" step="0.01" required style="width: 80px;">
-            <div class="btn-group" style="display: flex; gap: 5px; flex-direction: row;">
-                <button type="submit" class="action-btn save-btn">Save</button>
-                <button type="button" onclick="hideMaterialEdit({{ material.id }})" class="action-btn cancel-btn">Cancel</button>
-            </div>
-        </form>
-    </div>
-    </div>
-   {% endfor %}
-</div>
-
-<div class="detail-section">
-    <h3>Notes</h3>
-    <form action="{{ url_for('job.job_details', id=job.id) }}" method="post">
-        <textarea name="notes" style="width: 50%; min-height: 200px; padding: 10px; margin-bottom: 10px; font-family: monospace;">{{ combined_notes }}</textarea>
-        <div class="btn-group">
-            <button type="submit" class="action-btn save-btn">Save Notes</button>
-        </div>
-    </form>
-</div>
-
-<div class="detail-section">
-    <h3>Photos</h3>
-    {% if images %}
-        <div class="image-grid">
-            {% for image in images %}
-            <div class="image-card">
-                <img src="{{ url_for('image.serve_image', job_id=job.id, filename=image.filename, thumbnail=true) }}" 
-                    alt="Job photo"
-                    onclick="showFullImage('{{ url_for('image.serve_image', job_id=job.id, filename=image.filename) }}')">
-                <div class="image-info">
-                    {{ image.timestamp[0:16] }}
-                    {% if image.description %}
-                        <br>{{ image.description }}
-                    {% endif %}
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        <p>No photos uploaded yet.</p>
-        <p>Use the mobile quick-timer interface to take photos for this job.</p>
-    {% endif %}
-</div>
-
-<div id="imageModal" class="modal" onclick="this.style.display='none'">
-    <img id="fullImage">
-</div>
+<style>
+    .current-week {
+        background-color: #f0f7ff;
+        border-left: 3px solid #4CAF50;
+    }
+    .current-marker {
+        font-size: 0.9em;
+        color: #4CAF50;
+        font-weight: bold;
+        margin-left: 8px;
+    }
+    .active-timer-section {
+        background-color: #e8f5e9;
+        border-left: 3px solid #f44336;
+        padding: 5px;
+        margin-bottom: 10px;
+    }
+    .timer-active {
+        background-color: #e8f5e9;
+    }
+    .timer-duration {
+        font-weight: bold;
+        color: #f44336;
+    }
+    .stop-timer {
+        background-color: #f44336;
+    }
+</style>
 
 <script>
+    // Update active timer duration
+    function updateTimerDuration() {
+        const timerElements = document.querySelectorAll('.timer-duration');
+        
+        timerElements.forEach(element => {
+            const startTimeStr = element.getAttribute('data-start');
+            if (!startTimeStr) return;
+            
+            const startTime = new Date(startTimeStr);
+            const now = new Date();
+            const diffSeconds = Math.floor((now - startTime) / 1000);
+            
+            const hours = Math.floor(diffSeconds / 3600);
+            const minutes = Math.floor((diffSeconds % 3600) / 60);
+            const seconds = diffSeconds % 60;
+            
+            element.textContent = `(${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')})`;
+        });
+    }
+    
+    // Update timer every second
+    if (document.querySelector('.timer-duration')) {
+        setInterval(updateTimerDuration, 1000);
+        updateTimerDuration(); // Initial update
+    }
+    
+    function toggleWeek(week) {
+        const entriesDiv = document.getElementById(`entries-${week}`);
+        const toggleIcon = document.querySelector(`#week-${week} .toggle-icon`);
+        if (entriesDiv.style.display === 'none') {
+            entriesDiv.style.display = 'block';
+            toggleIcon.textContent = '▼';
+        } else {
+            entriesDiv.style.display = 'none';
+            toggleIcon.textContent = '▶';
+        }
+    }
+    
     function showTimeEdit(id) {
         const row = document.getElementById(`time-entry-${id}`);
         row.querySelector('.display-view').style.display = 'none';
@@ -206,42 +213,314 @@
         row.querySelector('.edit-view').style.display = 'none';
     }
 
-    function showMaterialEdit(id) {
-        const row = document.getElementById(`material-${id}`);
-        row.querySelector('.display-view').style.display = 'none';
-        row.querySelector('.edit-view').style.display = 'block';
-    }
-
-    function hideMaterialEdit(id) {
-        const row = document.getElementById(`material-${id}`);
-        row.querySelector('.display-view').style.display = 'block';
-        row.querySelector('.edit-view').style.display = 'none';
-    }
-
-    function showFullImage(src) {
-        const modal = document.getElementById('imageModal');
-        const img = document.getElementById('fullImage');
-        img.src = src;
-        modal.style.display = 'flex';
-    }
-
-    function toggleWeek(week) {
-        const entriesDiv = document.getElementById(`entries-${week}`);
-        const toggleIcon = document.querySelector(`#week-${week} .toggle-icon`);
-        if (entriesDiv.style.display === 'none') {
-            entriesDiv.style.display = 'block';
-            toggleIcon.textContent = '▼';
-        } else {
-            entriesDiv.style.display = 'none';
-            toggleIcon.textContent = '▶';
-        }
-    }
-
-    // Add styles to make week headers look clickable
-    document.querySelectorAll('.week-header').forEach(header => {
-        header.style.cursor = 'pointer';
-        header.addEventListener('mouseover', () => header.style.backgroundColor = '#f5f5f5');
-        header.addEventListener('mouseout', () => header.style.backgroundColor = '');
+    // Initialize when document is ready
+    document.addEventListener('DOMContentLoaded', function() {
+        // Make week headers look clickable
+        document.querySelectorAll('.week-header').forEach(header => {
+            header.style.cursor = 'pointer';
+            header.addEventListener('mouseover', () => header.style.backgroundColor = '#f5f5f5');
+            header.addEventListener('mouseout', () => header.style.backgroundColor = '');
+        });
     });
 </script>
-{% endblock %}
+<hr>
+    <div class="detail-section">
+        <h3>Materials Used</h3>
+        <div class="new-material-form form-section">
+            <form action="{{ url_for('job.add_material', id=job.id) }}" method="post">
+                <div class="btn-group">
+                    <button type="submit" class="action-btn save-btn">Add Material</button>
+                    <input type="text" name="material" placeholder="Material description" required class="form-control" style="width: 30%;">
+                    <input type="number" name="quantity" placeholder="Qty" step="0.1" required class="form-control" style="width: 80px;">
+                    <input type="number" name="price" placeholder="€/item" step="0.01" required class="form-control" style="width: 80px;">
+                </div>
+            </form>
+        </div>
+        {% for material in materials %}
+        <div class="item-row" id="material-{{ material.id }}" style="display: flex; align-items: center;">
+           <div style="display: flex; gap: 5px; margin-right: 15px;">
+               <button onclick="showMaterialEdit({{ material.id }})" class="action-btn edit-btn">Edit</button>
+               <form action="{{ url_for('job.delete_material', id=job.id, material_id=material.id) }}" method="post" style="display: inline;">
+                   <button type="submit" class="action-btn delete-btn" onclick="return confirm('Delete this material?')">Delete</button>
+               </form>
+           </div>
+           <div class="display-view" style="flex-grow: 1;">
+               <span>{{ material.material }} ({{ material.quantity }}) - €{{ "%.2f"|format(material.price) }}/item</span>
+           </div>
+           <div class="edit-view" style="display: none; width: 50%;">
+            <form action="{{ url_for('job.edit_material', id=job.id, material_id=material.id) }}" method="post" style="display: flex; gap: 5px; align-items: center;">
+                <input type="text" name="material" value="{{ material.material }}" required style="flex-grow: 1;">
+                <input type="number" name="quantity" value="{{ material.quantity }}" step="0.1" required style="width: 80px;">
+                <input type="number" name="price" value="{{ material.price }}" step="0.01" required style="width: 80px;">
+                <div class="btn-group" style="display: flex; gap: 5px; flex-direction: row;">
+                    <button type="submit" class="action-btn save-btn">Save</button>
+                    <button type="button" onclick="hideMaterialEdit({{ material.id }})" class="action-btn cancel-btn">Cancel</button>
+                </div>
+            </form>
+        </div>
+        </div>
+       {% endfor %}
+    </div>
+    <hr>
+    <div class="detail-section">
+        <h3>Notes</h3>
+        <form action="{{ url_for('job.job_details', id=job.id) }}" method="post">
+            <textarea name="notes" style="width: 50%; min-height: 200px; padding: 10px; margin-bottom: 10px; font-family: monospace;">{{ combined_notes }}</textarea>
+            <div class="btn-group">
+                <button type="submit" class="action-btn save-btn">Save Notes</button>
+            </div>
+        </form>
+    </div>
+    
+    <!-- Photos section identical to original -->
+     <hr>
+    <div class="detail-section">
+        <h3>Photos</h3>
+        {% if request.args.get('error') %}
+            <div class="error-message">
+                Error: {{ request.args.get('error') }}
+            </div>
+        {% endif %}
+        
+        {% if images %}
+            <div class="share-controls">
+                <button id="toggleSelectBtn" onclick="toggleSelectMode()" class="action-btn">Select Photos</button>
+                <div id="shareControls" style="display: none;">
+                    <button onclick="shareSelected()" class="action-btn save-btn">Share Selected</button>
+                    <button onclick="deleteSelected()" class="action-btn delete-btn">Delete Selected</button>
+                    <button onclick="cancelSelect()" class="action-btn cancel-btn">Cancel</button>
+                </div>
+            </div>
+            
+            <div class="image-grid" id="imageGrid">
+                {% for image in images %}
+                <div class="image-card" data-id="{{ image.id }}">
+                    <div class="select-overlay">
+                        <input type="checkbox" class="image-select" data-id="{{ image.id }}">
+                    </div>
+                    <img src="{{ url_for('image.serve_image', job_id=job.id, filename=image.filename, thumbnail=true) }}" 
+                        alt="Job photo"
+                        onclick="handleImageClick(event, '{{ url_for('image.serve_image', job_id=job.id, filename=image.filename) }}', {{ image.id }})">
+                    <div class="image-info">
+                        {{ image.timestamp[0:16] }}
+                        {% if image.description %}
+                            <br>{{ image.description }}
+                        {% endif %}
+                        <div class="image-actions">
+                            <form action="{{ url_for('image.delete_image', job_id=job.id, image_id=image.id) }}" 
+                                  method="post" onsubmit="return confirm('Delete this image?');">
+                                <button type="submit" class="action-btn delete-btn">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <!-- Share dialog -->
+            <div id="shareDialog" class="modal">
+                <div class="modal-content">
+                    <h3>Share Images</h3>
+                    <p>Create a temporary link to share these images:</p>
+                    <div class="form-group">
+                        <label>Link expiry:</label>
+                        <select id="expirySelect">
+                            <option value="24">24 hours</option>
+                            <option value="48">2 days</option>
+                            <option value="168">1 week</option>
+                            <option value="720">30 days</option>
+                        </select>
+                    </div>
+                    <div id="shareResult" style="display: none;">
+                        <p>Share this link:</p>
+                        <input type="text" id="shareLink" readonly onclick="this.select()">
+                        <p>Expires: <span id="expiryTime"></span></p>
+                    </div>
+                    <div class="btn-group">
+                        <button id="createShareBtn" onclick="createShareLink()" class="action-btn save-btn">Create Share Link</button>
+                        <button onclick="closeShareDialog()" class="action-btn cancel-btn">Close</button>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p>No photos uploaded yet.</p>
+            <p>Use the mobile quick-timer interface to take photos for this job.</p>
+        {% endif %}
+    </div>
+    
+    <div id="imageModal" class="modal" onclick="this.style.display='none'">
+        <img id="fullImage">
+    </div>
+    
+    <script>
+        let selectMode = false;
+        const selectedImages = new Set();
+        
+        function toggleSelectMode() {
+            selectMode = !selectMode;
+            const toggleBtn = document.getElementById('toggleSelectBtn');
+            
+            if (selectMode) {
+                toggleBtn.textContent = 'Cancel Selection';
+                toggleBtn.classList.add('active');
+            } else {
+                toggleBtn.textContent = 'Select Photos';
+                toggleBtn.classList.remove('active');
+            }
+            
+            document.getElementById('shareControls').style.display = selectMode ? 'block' : 'none';
+            
+            // Show/hide checkboxes
+            const overlays = document.querySelectorAll('.select-overlay');
+            overlays.forEach(overlay => {
+                overlay.style.display = selectMode ? 'block' : 'none';
+            });
+            
+            // Clear selection when exiting select mode
+            if (!selectMode) {
+                selectedImages.clear();
+                document.querySelectorAll('.image-select').forEach(cb => {
+                    cb.checked = false;
+                });
+            }
+        }
+        
+        function handleImageClick(event, src, imageId) {
+            if (selectMode) {
+                // Handle selection
+                const checkbox = event.currentTarget.parentElement.querySelector('.image-select');
+                checkbox.checked = !checkbox.checked;
+                
+                if (checkbox.checked) {
+                    selectedImages.add(imageId);
+                } else {
+                    selectedImages.delete(imageId);
+                }
+                
+                event.preventDefault();
+                return false;
+            } else {
+                // Show full image
+                const modal = document.getElementById('imageModal');
+                const img = document.getElementById('fullImage');
+                img.src = src;
+                modal.style.display = 'flex';
+            }
+        }
+        
+        function cancelSelect() {
+            toggleSelectMode();
+        }
+        
+        function shareSelected() {
+            if (selectedImages.size === 0) {
+                alert('Please select at least one image to share.');
+                return;
+            }
+            
+            // Show share dialog
+            document.getElementById('shareDialog').style.display = 'flex';
+            document.getElementById('shareResult').style.display = 'none';
+        }
+        
+        function createShareLink() {
+            const expiryHours = document.getElementById('expirySelect').value;
+            const imageIds = Array.from(selectedImages);
+            
+            fetch('{{ url_for("image.create_share_link", job_id=job.id) }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    image_ids: imageIds,
+                    expiry_hours: parseInt(expiryHours)
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('shareLink').value = data.share_url;
+                    document.getElementById('expiryTime').textContent = data.expires.replace('T', ' ').substring(0, 16);
+                    document.getElementById('shareResult').style.display = 'block';
+                    document.getElementById('createShareBtn').style.display = 'none';
+                } else {
+                    alert('Error creating share link: ' + data.error);
+                }
+            })
+            .catch(error => {
+                alert('Error: ' + error);
+            });
+        }
+        
+        function closeShareDialog() {
+            document.getElementById('shareDialog').style.display = 'none';
+            document.getElementById('createShareBtn').style.display = 'block';
+        }
+        
+        function deleteSelected() {
+            if (selectedImages.size === 0) {
+                alert('Please select at least one image to delete.');
+                return;
+            }
+            
+            if (confirm(`Delete ${selectedImages.size} selected image(s)?`)) {
+                let deletedCount = 0;
+                const totalCount = selectedImages.size;
+                
+                // Convert to array and process sequentially to avoid simultaneous requests
+                const imageIds = Array.from(selectedImages);
+                deleteNextImage(imageIds, 0, totalCount);
+            }
+        }
+        
+        function deleteNextImage(imageIds, index, total) {
+            if (index >= imageIds.length) {
+                // All deletions completed
+                window.location.reload();
+                return;
+            }
+            
+            const imageId = imageIds[index];
+            fetch('{{ url_for("image.delete_image", job_id=job.id, image_id=0) }}'.replace('0', imageId), {
+                method: 'POST'
+            })
+            .then(response => {
+                // Process next image regardless of success/failure
+                deleteNextImage(imageIds, index + 1, total);
+            })
+            .catch(error => {
+                console.error(`Error deleting image ${imageId}:`, error);
+                // Continue with next image anyway
+                deleteNextImage(imageIds, index + 1, total);
+            });
+        }
+    
+        function showMaterialEdit(id) {
+            const row = document.getElementById(`material-${id}`);
+            row.querySelector('.display-view').style.display = 'none';
+            row.querySelector('.edit-view').style.display = 'block';
+        }
+    
+        function hideMaterialEdit(id) {
+            const row = document.getElementById(`material-${id}`);
+            row.querySelector('.display-view').style.display = 'block';
+            row.querySelector('.edit-view').style.display = 'none';
+        }
+    
+        // Initialize selection mode
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hide all select overlays initially
+            document.querySelectorAll('.select-overlay').forEach(overlay => {
+                overlay.style.display = 'none';
+            });
+            
+            // Make week headers look clickable
+            document.querySelectorAll('.week-header').forEach(header => {
+                header.style.cursor = 'pointer';
+                header.addEventListener('mouseover', () => header.style.backgroundColor = '#f5f5f5');
+                header.addEventListener('mouseout', () => header.style.backgroundColor = '');
+            });
+        });
+    </script>
+    {% endblock %}
