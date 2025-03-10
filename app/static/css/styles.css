@@ -732,7 +732,7 @@ tbody tr:hover {
 
 /* Weekly Summary */
 .week-selector {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .week-stats {
@@ -742,17 +742,17 @@ tbody tr:hover {
 }
 
 .stat-box {
-    background: white;
+    background: rgb(230, 230, 230);
     border-radius: var(--border-radius);
-    padding: 15px;
-    min-width: 100px;
+    padding: 8px;
+    min-width: 80px;
     text-align: center;
     box-shadow: var(--shadow-sm);
     flex: 1;
 }
 
 .stat-value {
-    font-size: 24px;
+    font-size: 18px;
     font-weight: bold;
     color: var(--text-dark);
 }
@@ -766,7 +766,7 @@ tbody tr:hover {
     background: white;
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     overflow: hidden;
     box-shadow: var(--shadow-sm);
 }

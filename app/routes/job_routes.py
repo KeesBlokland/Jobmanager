@@ -386,12 +386,29 @@ def edit_time_entry(db, job_id, entry_id):
         return redirect(url_for('job.job_details', id=job_id, error=f"Error updating time entry: {str(e)}"))
 
 
+# app/routes/job_routes.py
+
 @bp.route('/<int:id>/add_material', methods=['POST'])
 @with_db
 def add_material(db, id):
     material = request.form.get('material', '').strip()
-    quantity = request.form.get('quantity', 0, type=float)
-    price = request.form.get('price', 0, type=float)
+    
+    # Safely parse quantity and price, handling both decimal point and comma
+    try:
+        quantity_str = request.form.get('quantity', '0')
+        # Replace comma with period if present (for European number format)
+        quantity_str = quantity_str.replace(',', '.')
+        quantity = float(quantity_str) if quantity_str else 0.0
+    except ValueError:
+        quantity = 0.0
+    
+    try:
+        price_str = request.form.get('price', '0')
+        # Replace comma with period if present
+        price_str = price_str.replace(',', '.')
+        price = float(price_str) if price_str else 0.0
+    except ValueError:
+        price = 0.0
     
     if material:
         material_mgr = MaterialManager(db)
@@ -410,15 +427,35 @@ def delete_material(db, id, material_id):
     db.commit()
     return redirect(url_for('job.job_details', id=id))
 
+# app/routes/job_routes.py
+
 @bp.route('/<int:id>/edit_material/<int:material_id>', methods=['POST'])
 @with_db
 def edit_material(db, id, material_id):
+    material = request.form.get('material', '').strip()
+    
+    # Safely parse quantity and price, handling both decimal point and comma
+    try:
+        quantity_str = request.form.get('quantity', '0')
+        # Replace comma with period if present (for European number format)
+        quantity_str = quantity_str.replace(',', '.')
+        quantity = float(quantity_str) if quantity_str else 0.0
+    except ValueError:
+        quantity = 0.0
+    
+    try:
+        price_str = request.form.get('price', '0')
+        # Replace comma with period if present
+        price_str = price_str.replace(',', '.')
+        price = float(price_str) if price_str else 0.0
+    except ValueError:
+        price = 0.0
+    
     db.execute('''
         UPDATE job_material 
         SET material = ?, quantity = ?, price = ?
         WHERE id = ? AND job_id = ?
-    ''', [request.form['material'], request.form['quantity'], 
-          request.form['price'], material_id, id])
+    ''', [material, quantity, price, material_id, id])
     db.commit()
     return redirect(url_for('job.job_details', id=id))
 
@@ -432,9 +469,28 @@ def delete_time_entry(db, id, entry_id):
 
 # Update this function in app/routes/job_routes.py
 
+# app/routes/job_routes.py - Update the invoice route
+
 @bp.route('/<int:id>/invoice')
 @with_db
 def invoice(db, id):
+    # Get invoice date from query parameter, default to None
+    invoice_date_param = request.args.get('invoice_date')
+    
+    # If parameter is 'today', use today's date
+    if invoice_date_param == 'today':
+        invoice_date = datetime.now().strftime('%Y-%m-%d')
+    # If it's a valid date string, use it
+    elif invoice_date_param and len(invoice_date_param) == 10:
+        try:
+            # Validate date format with datetime
+            datetime.strptime(invoice_date_param, '%Y-%m-%d')
+            invoice_date = invoice_date_param
+        except ValueError:
+            invoice_date = None
+    else:
+        invoice_date = None
+        
     job = db.execute('''
         SELECT job.*, customer.*
         FROM job
@@ -466,7 +522,8 @@ def invoice(db, id):
                          job=job,
                          time_entries=time_entries,
                          materials=materials,
-                         invoice_number=invoice_number)
+                         invoice_number=invoice_number,
+                         invoice_date=invoice_date)
     
 @bp.route('/template/<int:template_id>')
 @with_db

@@ -10,7 +10,27 @@
     </div>
     <div class="invoice-details" style="flex: 1; text-align: right;">
         <h1>Invoice</h1>
-        <p>Invoice #: {{ invoice_number }}<br>Date: {% if job.creation_date %}{{ job.creation_date[:10] }}{% else %}{{ now().strftime('%Y-%m-%d') }}{% endif %}</p>
+        <p>Invoice #: {{ invoice_number }}</p>
+        <div class="invoice-date-container">
+            <p>Date: 
+                <span id="invoice-date-display">
+                    {% if invoice_date %}
+                        {{ invoice_date }}
+                    {% elif job.creation_date %}
+                        {{ job.creation_date[:10] }}
+                    {% else %}
+                        {{ now().strftime('%Y-%m-%d') }}
+                    {% endif %}
+                </span>
+                <button type="button" id="edit-date-btn" class="action-btn edit-btn" style="margin-left: 10px;">Edit</button>
+            </p>
+            <div id="date-edit-controls" style="display: none; margin-top: 5px;">
+                <input type="date" id="invoice-date-input" class="form-control" style="display: inline-block; width: auto;">
+                <button id="set-today-btn" class="action-btn save-btn">Set Today</button>
+                <button id="save-date-btn" class="action-btn save-btn">Save</button>
+                <button id="cancel-date-btn" class="action-btn cancel-btn">Cancel</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -83,8 +103,8 @@
             <tr>
                 <td>{{ entry_day }} {{ entry_month|month_name }} {{ entry_year }} {{ entry_start }}-{{ entry_end if entry_end else 'ongoing' }}</td>
                 <td>{{ "%d:%02d"|format(entry.hours|int, (entry.hours % 1 * 60)|int) }}</td>
-                <td>€{{ "%.2f"|format(job.base_rate) }}</td>
-                <td class="amount-column">€{{ "%.2f"|format(entry.hours * job.base_rate) }}</td>
+                <td>{% if job.base_rate is not none %}€{{ "%.2f"|format(job.base_rate) }}{% else %}€0.00{% endif %}</td>
+                <td class="amount-column">{% if job.base_rate is not none %}€{{ "%.2f"|format(entry.hours * job.base_rate) }}{% else %}€0.00{% endif %}</td>
             </tr>
         {% else %}
             {# Accumulate hours for past weeks #}
@@ -93,8 +113,8 @@
                 <tr>
                     <td>Week {{ ns.current_week[-2:] }}, {{ entry_year }}</td>
                     <td>{{ "%d:%02d"|format(rounded_hours|int, (rounded_hours % 1 * 60)|int) }}</td>
-                    <td>€{{ "%.2f"|format(job.base_rate) }}</td>
-                    <td class="amount-column">€{{ "%.2f"|format(rounded_hours * job.base_rate) }}</td>
+                    <td>{% if job.base_rate is not none %}€{{ "%.2f"|format(job.base_rate) }}{% else %}€0.00{% endif %}</td>
+                    <td class="amount-column">{% if job.base_rate is not none %}€{{ "%.2f"|format(rounded_hours * job.base_rate) }}{% else %}€0.00{% endif %}</td>
                 </tr>
                 {% set ns.weekly_hours = 0 %}
             {% endif %}
@@ -109,8 +129,8 @@
         <tr>
             <td>Week {{ ns.current_week[-2:] }}, {{ time_entries[-1].start_time[0:4] if time_entries[-1].start_time is string and '-' in time_entries[-1].start_time else now().strftime('%Y') }}</td>
             <td>{{ "%d:%02d"|format(rounded_hours|int, (rounded_hours % 1 * 60)|int) }}</td>
-            <td>€{{ "%.2f"|format(job.base_rate) }}</td>
-            <td class="amount-column">€{{ "%.2f"|format(rounded_hours * job.base_rate) }}</td>
+            <td>{% if job.base_rate is not none %}€{{ "%.2f"|format(job.base_rate) }}{% else %}€0.00{% endif %}</td>
+            <td class="amount-column">{% if job.base_rate is not none %}€{{ "%.2f"|format(rounded_hours * job.base_rate) }}{% else %}€0.00{% endif %}</td>
         </tr>
     {% endif %}
 </table>
@@ -141,7 +161,7 @@
     {% for entry in time_entries %}
         {% set rounded_hours = ((entry.hours * 60 + 4) // 5 * 5) / 60 %}
         {% set ns.total_hours = ns.total_hours + rounded_hours %}
-        {% set ns.total_amount = ns.total_amount + (rounded_hours * job.base_rate) %}
+        {% set ns.total_amount = ns.total_amount + (rounded_hours * (job.base_rate or 0)) %}
     {% endfor %}
 
     {% set materials_total = namespace(value=0.0) %}
@@ -156,8 +176,79 @@
     <p><strong>Total Amount: €{{ "%.2f"|format(ns.total_amount + materials_total.value) }}</strong></p>
 </div>
 
-<div class="btn-group" style="margin-top: 20px; justify-content: flex-end;">
-    <button onclick="window.print()" class="action-btn">Print Invoice</button>
-    <button onclick="window.history.back()" class="action-btn cancel-btn">Back</button>
+<div class="btn-group" style="margin-top: 20px; justify-content: flex-end;" class="no-print">
+    <button onclick="window.print()" class="action-btn no-print">Print Invoice</button>
+    <button onclick="window.history.back()" class="action-btn cancel-btn no-print">Back</button>
 </div>
+
+<div class="invoice-footer" style="margin-top: 30px; border-top: 1px solid #ddd; padding-top: 10px; font-size: 0.7em; color: #666; page-break-inside: avoid;">
+    <p>Diese Rechnung ist keine Rechnung im Sinne des Umsatzsteuergesetzes und enthält gemäß § 19 UStG keine Umsatzsteuer, da der Rechnungssteller Kleinunternehmer ist.</p>
+    
+</div>
+
+<style>
+@media print {
+    .invoice-footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: white;
+        padding: 15px;
+        border-top: 1px solid #ddd;
+    }
+    
+    .no-print {
+        display: none !important;
+    }
+    
+    /* Add some bottom margin to the content to prevent overlap with footer */
+    .invoice-total {
+        margin-bottom: 150px;
+    }
+}
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const editBtn = document.getElementById('edit-date-btn');
+        const dateControls = document.getElementById('date-edit-controls');
+        const dateDisplay = document.getElementById('invoice-date-display');
+        const dateInput = document.getElementById('invoice-date-input');
+        const setTodayBtn = document.getElementById('set-today-btn');
+        const saveDateBtn = document.getElementById('save-date-btn');
+        const cancelDateBtn = document.getElementById('cancel-date-btn');
+        
+        // Current URL for building links
+        const currentUrl = window.location.href.split('?')[0];
+        
+        // Initialize date input with current displayed date
+        dateInput.value = dateDisplay.textContent.trim();
+        
+        // Show date edit controls
+        editBtn.addEventListener('click', function() {
+            editBtn.style.display = 'none';
+            dateControls.style.display = 'block';
+        });
+        
+        // Set to today's date
+        setTodayBtn.addEventListener('click', function() {
+            window.location.href = `${currentUrl}?invoice_date=today`;
+        });
+        
+        // Save custom date
+        saveDateBtn.addEventListener('click', function() {
+            const selectedDate = dateInput.value;
+            if (selectedDate) {
+                window.location.href = `${currentUrl}?invoice_date=${selectedDate}`;
+            }
+        });
+        
+        // Cancel editing
+        cancelDateBtn.addEventListener('click', function() {
+            dateControls.style.display = 'none';
+            editBtn.style.display = 'inline-block';
+        });
+    });
+</script>
 {% endblock %}

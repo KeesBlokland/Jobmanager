@@ -27,7 +27,7 @@
         {% for entry in time_entries %}
             {% if entry.end_time is none %}
                 {% set active_timer = entry %}
-                {% break %}
+                
             {% endif %}
         {% endfor %}
         
