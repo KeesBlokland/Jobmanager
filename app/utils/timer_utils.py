@@ -25,16 +25,22 @@ class TimerManager:
             (job_id, now_iso, 'auto')
         )
         
-        # Update job's status to Active if it was Pending, and update last_active timestamp
-        self.db.execute('''
-            UPDATE job 
-            SET last_active = ?,
-                status = CASE 
-                    WHEN status = 'Pending' THEN 'Active'
-                    ELSE status
-                END
-            WHERE id = ?
-        ''', (now_iso, job_id))
+        # Get the current job status
+        job = self.db.execute('SELECT status FROM job WHERE id = ?', (job_id,)).fetchone()
+        
+        # Update job's status to Active if it's not already Active
+        if job and job['status'] != 'Active':
+            self.logger.info(f"Updating job {job_id} status from '{job['status']}' to 'Active'")
+            self.db.execute(
+                'UPDATE job SET status = ?, last_active = ? WHERE id = ?',
+                ('Active', now_iso, job_id)
+            )
+        else:
+            # Just update the last_active timestamp
+            self.db.execute(
+                'UPDATE job SET last_active = ? WHERE id = ?',
+                (now_iso, job_id)
+            )
         
         self.db.commit()
 

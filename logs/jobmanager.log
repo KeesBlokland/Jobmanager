@@ -741,3 +741,72 @@ TypeError: must be real number, not NoneType
 2025-03-10 17:09:38,199 [INFO] Adding to zip: app/static/css/styles.css
 2025-03-10 17:09:38,200 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250310_1709.zip
 2025-03-10 17:09:38,200 [INFO] Backup file exists: True
+2025-03-10 17:10:42,040 [INFO] Weekly summary request - selected_week: None, show_all: False
+2025-03-10 17:10:42,040 [INFO] No week selected, using current week: 2025-W11
+2025-03-10 17:10:42,040 [INFO] Fetching available weeks
+2025-03-10 17:10:42,040 [INFO] Found 34 distinct dates with time entries
+2025-03-10 17:10:42,040 [INFO] Processed 6 unique weeks
+2025-03-10 17:10:42,040 [INFO] Final view settings - selected_week: 2025-W11, show_all: False
+2025-03-10 17:10:42,041 [INFO] Found 4 time entries for week 2025-W11
+2025-03-10 17:11:24,329 [INFO] Weekly summary request - selected_week: None, show_all: False
+2025-03-10 17:11:24,329 [INFO] No week selected, using current week: 2025-W11
+2025-03-10 17:11:24,329 [INFO] Fetching available weeks
+2025-03-10 17:11:24,329 [INFO] Found 34 distinct dates with time entries
+2025-03-10 17:11:24,329 [INFO] Processed 6 unique weeks
+2025-03-10 17:11:24,330 [INFO] Final view settings - selected_week: 2025-W11, show_all: False
+2025-03-10 17:11:24,330 [INFO] Found 4 time entries for week 2025-W11
+2025-03-10 17:11:26,228 [INFO] Weekly summary request - selected_week: 2025-W11, show_all: True
+2025-03-10 17:11:26,228 [INFO] Fetching available weeks
+2025-03-10 17:11:26,228 [INFO] Found 34 distinct dates with time entries
+2025-03-10 17:11:26,229 [INFO] Processed 6 unique weeks
+2025-03-10 17:11:26,229 [INFO] Final view settings - selected_week: 2025-W11, show_all: True
+2025-03-10 17:11:26,230 [INFO] Generated summary for 6 weeks
+2025-03-10 17:18:22,831 [INFO] Starting timer for job 29
+2025-03-10 17:18:22,831 [INFO] Stopping all active timers
+2025-03-10 17:18:22,832 [INFO] Updating job 29 status from 'Pending' to 'Active'
+2025-03-10 17:18:30,245 [INFO] Stopping timer for job 29
+2025-03-10 18:38:41,545 [INFO] Starting timer for job 4
+2025-03-10 18:38:41,545 [INFO] Stopping all active timers
+2025-03-10 18:43:41,183 [INFO] Root path: /home/Jobmanager
+2025-03-10 18:43:41,183 [INFO] Current working directory: /home/Jobmanager
+2025-03-10 18:43:41,183 [INFO] Instance path: /home/Jobmanager/instance
+2025-03-10 18:43:41,183 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250310_1843.zip
+2025-03-10 18:43:41,183 [INFO] Adding file: /home/Jobmanager/run.py
+2025-03-10 18:43:41,184 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-03-10 18:43:41,184 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-03-10 18:43:41,184 [INFO] Adding to zip: app/db.py
+2025-03-10 18:43:41,185 [INFO] Adding to zip: app/__init__.py
+2025-03-10 18:43:41,185 [INFO] Adding to zip: app/schema.sql
+2025-03-10 18:43:41,186 [INFO] Adding to zip: app/routes/image_routes.py
+2025-03-10 18:43:41,186 [INFO] Adding to zip: app/routes/system_routes.py
+2025-03-10 18:43:41,187 [INFO] Adding to zip: app/routes/__init__.py
+2025-03-10 18:43:41,187 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-03-10 18:43:41,187 [INFO] Adding to zip: app/routes/job_routes.py
+2025-03-10 18:43:41,188 [INFO] Adding to zip: app/routes/report_routes.py
+2025-03-10 18:43:41,189 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-03-10 18:43:41,189 [INFO] Adding to zip: app/utils/date_helper.py
+2025-03-10 18:43:41,189 [INFO] Adding to zip: app/utils/time_utils.py
+2025-03-10 18:43:41,190 [INFO] Adding to zip: app/utils/job_utils.py
+2025-03-10 18:43:41,190 [INFO] Adding to zip: app/utils/material_utils.py
+2025-03-10 18:43:41,190 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-03-10 18:43:41,191 [INFO] Adding to zip: app/utils/__init__.py
+2025-03-10 18:43:41,191 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-03-10 18:43:41,191 [INFO] Adding to zip: app/utils/error_utils.py
+2025-03-10 18:43:41,192 [INFO] Adding to zip: app/utils/image_utils.py
+2025-03-10 18:43:41,192 [INFO] Adding to zip: app/templates/customer_form.html
+2025-03-10 18:43:41,192 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-03-10 18:43:41,193 [INFO] Adding to zip: app/templates/system_settings.html
+2025-03-10 18:43:41,193 [INFO] Adding to zip: app/templates/shared_images.html
+2025-03-10 18:43:41,194 [INFO] Adding to zip: app/templates/weekly_summary.html
+2025-03-10 18:43:41,194 [INFO] Adding to zip: app/templates/job_details.html
+2025-03-10 18:43:41,195 [INFO] Adding to zip: app/templates/invoice.html
+2025-03-10 18:43:41,195 [INFO] Adding to zip: app/templates/job_form.html
+2025-03-10 18:43:41,196 [INFO] Adding to zip: app/templates/customer_list.html
+2025-03-10 18:43:41,196 [INFO] Adding to zip: app/templates/500.html
+2025-03-10 18:43:41,197 [INFO] Adding to zip: app/templates/base.html
+2025-03-10 18:43:41,197 [INFO] Adding to zip: app/templates/job_list.html
+2025-03-10 18:43:41,197 [INFO] Adding to zip: app/templates/404.html
+2025-03-10 18:43:41,198 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-03-10 18:43:41,198 [INFO] Adding to zip: app/static/css/styles.css
+2025-03-10 18:43:41,199 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250310_1843.zip
+2025-03-10 18:43:41,199 [INFO] Backup file exists: True

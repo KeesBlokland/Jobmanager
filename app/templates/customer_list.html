@@ -3,6 +3,14 @@
 
 {% block content %}
 <div>
+    <div class="search-section">
+        <input type="text" id="searchInput" placeholder="Search customer by name, email, phone, or location..." 
+               style="max-width: 350px; padding: 4px 12px; height: 36px; box-sizing: border-box; border: 1px solid #ddd;">
+        <button onclick="clearSearch()" class="action-btn cancel-btn">Clear</button>
+        <a href="{{ url_for('customer.add_customer') }}" class="action-btn save-btn">Add Customer</a>
+    </div>
+    <hr>
+    
     <table style="width: 100%; border-collapse: collapse;">
         <thead>
             <tr style="background: #f5f5f5;">
@@ -14,7 +22,12 @@
         </thead>
         <tbody>
             {% for customer in customers %}
-            <tr>
+            <tr class="customer-row" 
+                data-name="{{ customer.name|lower }}"
+                data-email="{{ customer.email|lower if customer.email else '' }}"
+                data-phone="{{ customer.phone if customer.phone else '' }}"
+                data-city="{{ customer.city|lower if customer.city else '' }}"
+                data-country="{{ customer.country|lower if customer.country else '' }}">
                 <td style="padding: 10px; border: 1px solid #ddd;">{{ customer.name }}</td>
                 <td style="padding: 10px; border: 1px solid #ddd;">
                     {% if customer.email %}Email: {{ customer.email }}<br>{% endif %}
@@ -43,4 +56,62 @@
         </tbody>
     </table>
 </div>
+
+<script>
+    // Save search state to localStorage when it changes
+    function saveSearchState() {
+        const searchTerm = document.getElementById('searchInput').value;
+        localStorage.setItem('customerSearchTerm', searchTerm);
+    }
+    
+    function filterCustomers() {
+        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+        const rows = document.getElementsByClassName('customer-row');
+        let visible = 0;
+        
+        for (let row of rows) {
+            const name = row.getAttribute('data-name');
+            const email = row.getAttribute('data-email');
+            const phone = row.getAttribute('data-phone');
+            const city = row.getAttribute('data-city');
+            const country = row.getAttribute('data-country');
+            
+            // Check if any field contains the search term
+            const matchesSearch = searchTerm === '' || 
+                                name.includes(searchTerm) || 
+                                email.includes(searchTerm) || 
+                                phone.includes(searchTerm) || 
+                                city.includes(searchTerm) || 
+                                country.includes(searchTerm);
+            
+            if (matchesSearch) {
+                row.classList.remove('hidden');
+                visible++;
+            } else {
+                row.classList.add('hidden');
+            }
+        }
+        
+        saveSearchState();
+    }
+    
+    function clearSearch() {
+        document.getElementById('searchInput').value = '';
+        localStorage.removeItem('customerSearchTerm');
+        filterCustomers();
+    }
+    
+    // Add event listeners
+    document.getElementById('searchInput').addEventListener('input', filterCustomers);
+    
+    // Restore search state on page load
+    window.addEventListener('load', function() {
+        const savedSearchTerm = localStorage.getItem('customerSearchTerm');
+        
+        if (savedSearchTerm) {
+            document.getElementById('searchInput').value = savedSearchTerm;
+            filterCustomers();
+        }
+    });
+</script>
 {% endblock %}
