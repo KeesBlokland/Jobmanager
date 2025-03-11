@@ -9,6 +9,8 @@ ENV/
 
 # Flask
 instance/
+logs/
+backups/
 .webassets-cache
 
 # IDEs
