@@ -5,8 +5,11 @@
 
 <div class="header" style="display: flex; justify-content: space-between; gap: 20px; margin-bottom: 20px;">
     <div class="business-details" style="flex: 1;">
-        <h2>Kees Blokland</h2>
-        <p>Prz-Claus-Str 29<br>46446 Elten<br>Email: kees@blokland.net<br>Phone: +49(0)1745607840</p>
+        <h2>{{ user_profile.business_name }}</h2>
+        <p>{{ user_profile.address.street }}<br>
+           {{ user_profile.address.postal_code }} {{ user_profile.address.city }}<br>
+           Email: {{ user_profile.contact.email }}<br>
+           Phone: {{ user_profile.contact.phone }}</p>
     </div>
     <div class="invoice-details" style="flex: 1; text-align: right;">
         <h1>Invoice</h1>
@@ -181,9 +184,18 @@
     <button onclick="window.history.back()" class="action-btn cancel-btn no-print">Back</button>
 </div>
 
-<div class="invoice-footer" style="margin-top: 30px; border-top: 1px solid #ddd; padding-top: 10px; font-size: 0.7em; color: #666; page-break-inside: avoid;">
+<div class="invoice-footer" style="margin-top: 40px; border-top: 1px solid #ddd; padding-top: 15px; font-size: 0.9em; color: #666; page-break-inside: avoid;">
     <p>Diese Rechnung ist keine Rechnung im Sinne des Umsatzsteuergesetzes und enthält gemäß § 19 UStG keine Umsatzsteuer, da der Rechnungssteller Kleinunternehmer ist.</p>
+    <p><em>This invoice is not an invoice within the meaning of the VAT Act and does not contain VAT according to § 19 of the German VAT law, as the issuer is a small business owner.</em></p>
     
+    {% if user_profile.banking.iban %}
+    <div class="banking-info" style="margin-top: 15px;">
+        <p><strong>Payment Information:</strong><br>
+        Account holder: {{ user_profile.banking.account_holder }}<br>
+        IBAN: {{ user_profile.banking.iban }}<br>
+        {% if user_profile.banking.bic %}BIC: {{ user_profile.banking.bic }}{% endif %}</p>
+    </div>
+    {% endif %}
 </div>
 
 <style>

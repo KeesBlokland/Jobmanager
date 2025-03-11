@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="settings-container">
+    <h2>User Profile Settings</h2>
+    
+    {% if message %}
+    <div class="status-message {{ message_type }}">
+        {{ message }}
+    </div>
+    {% endif %}
+    
+    <form method="post" class="profile-form">
+        <div class="form-section">
+            <h3>Business Information</h3>
+            <div class="form-group">
+                <label>Business Name</label>
+                <input type="text" name="business_name" value="{{ profile.business_name }}" class="form-control">
+            </div>
+        </div>
+        
+        <div class="form-section">
+            <h3>Address</h3>
+            <div class="form-grid">
+                <div class="form-group" style="grid-column: span 2;">
+                    <label>Street</label>
+                    <input type="text" name="street" value="{{ profile.address.street }}" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <label>City</label>
+                    <input type="text" name="city" value="{{ profile.address.city }}" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <label>Postal Code</label>
+                    <input type="text" name="postal_code" value="{{ profile.address.postal_code }}" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <label>Country</label>
+                    <select name="country" class="form-control">
+                        <option value="DE" {% if profile.address.country == 'DE' %}selected{% endif %}>Germany (DE)</option>
+                        <option value="NL" {% if profile.address.country == 'NL' %}selected{% endif %}>Netherlands (NL)</option>
+                        <option value="BE" {% if profile.address.country == 'BE' %}selected{% endif %}>Belgium (BE)</option>
+                        <option value="AT" {% if profile.address.country == 'AT' %}selected{% endif %}>Austria (AT)</option>
+                        <option value="FR" {% if profile.address.country == 'FR' %}selected{% endif %}>France (FR)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-section">
+            <h3>Contact Information</h3>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" value="{{ profile.contact.email }}" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="tel" name="phone" value="{{ profile.contact.phone }}" class="form-control">
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-section">
+            <h3>Tax Information</h3>
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" name="is_small_business" value="true" {% if profile.tax_info.is_small_business %}checked{% endif %}>
+                    I am a small business owner (Kleinunternehmer) according to § 19 UStG
+                </label>
+            </div>
+            
+            <div class="form-group">
+                <label>VAT ID (if applicable)</label>
+                <input type="text" name="vat_id" value="{{ profile.tax_info.vat_id }}" class="form-control">
+            </div>
+        </div>
+        
+        <div class="form-section">
+            <h3>Banking Information</h3>
+            <div class="form-grid">
+                <div class="form-group" style="grid-column: span 2;">
+                    <label>Account Holder</label>
+                    <input type="text" name="account_holder" value="{{ profile.banking.account_holder }}" class="form-control">
+                </div>
+                
+                <div class="form-group" style="grid-column: span 2;">
+                    <label>IBAN</label>
+                    <input type="text" name="iban" value="{{ profile.banking.iban }}" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <label>BIC/SWIFT</label>
+                    <input type="text" name="bic" value="{{ profile.banking.bic }}" class="form-control">
+                </div>
+            </div>
+        </div>
+        
+        <div class="btn-group">
+            <button type="submit" class="action-btn save-btn">Save Profile</button>
+            <a href="{{ url_for('system.settings') }}" class="action-btn cancel-btn">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

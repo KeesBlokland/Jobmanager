@@ -85,3 +85,54 @@ def sync_ntp():
     except Exception as e:
         logger.error(f"Error syncing with NTP: {str(e)}", exc_info=True)
         return jsonify({'success': False, 'message': str(e)})
+    
+
+# Add to app/routes/system_routes.py
+
+@bp.route('/profile', methods=['GET', 'POST'])
+def profile_settings():
+    """Render and handle user profile settings."""
+    from ..utils.profile_utils import profile_manager
+    
+    if request.method == 'POST':
+        # Build profile object from form data
+        profile = {
+            "business_name": request.form.get('business_name', ''),
+            "address": {
+                "street": request.form.get('street', ''),
+                "city": request.form.get('city', ''),
+                "postal_code": request.form.get('postal_code', ''),
+                "country": request.form.get('country', 'DE')
+            },
+            "contact": {
+                "email": request.form.get('email', ''),
+                "phone": request.form.get('phone', '')
+            },
+            "tax_info": {
+                "is_small_business": request.form.get('is_small_business') == 'true',
+                "vat_id": request.form.get('vat_id', '')
+            },
+            "banking": {
+                "account_holder": request.form.get('account_holder', ''),
+                "iban": request.form.get('iban', ''),
+                "bic": request.form.get('bic', '')
+            }
+        }
+        
+        # Save the profile
+        success = profile_manager.save_profile(profile)
+        
+        if success:
+            return render_template('profile_settings.html', 
+                                  profile=profile, 
+                                  message="Profile saved successfully",
+                                  message_type="success")
+        else:
+            return render_template('profile_settings.html', 
+                                  profile=profile, 
+                                  message="Error saving profile",
+                                  message_type="error")
+    
+    # GET method - display profile form
+    profile = profile_manager.get_profile()
+    return render_template('profile_settings.html', profile=profile)
