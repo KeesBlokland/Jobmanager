@@ -1333,3 +1333,399 @@ AttributeError: 'Flask' object has no attribute 'render_template'
 2025-03-11 07:53:48,678 [INFO] Starting timer for job 28
 2025-03-11 07:53:48,678 [INFO] Stopping all active timers
 2025-03-11 09:10:55,396 [INFO] Stopping timer for job 28
+2025-03-11 09:46:06,755 [INFO] Starting timer for job 28
+2025-03-11 09:46:06,755 [INFO] Stopping all active timers
+2025-03-11 09:57:51,286 [INFO] Starting timer for job 4
+2025-03-11 09:57:51,287 [INFO] Stopping all active timers
+2025-03-11 10:02:18,173 [INFO] Stopping timer for job 4
+2025-03-11 10:02:20,269 [INFO] Starting timer for job 4
+2025-03-11 10:02:20,270 [INFO] Stopping all active timers
+2025-03-11 10:51:46,980 [ERROR] Exception on /job/details/4 [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/db.py", line 31, in decorated_function
+    return f(db, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/routes/job_routes.py", line 349, in job_details
+    return render_template('job_details.html',
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 147, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 130, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/job_details.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "/home/Jobmanager/app/templates/base.html", line 42, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/job_details.html", line 321, in block 'content'
+    <img src="{{ url_for('image.serve_image', job_id=job.id, filename=image.filename, thumbnail=true) }}"
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2031, in url_for
+    return self.handle_url_build_error(error, endpoint, values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2020, in url_for
+    rv = url_adapter.build(  # type: ignore[union-attr]
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/werkzeug/routing/map.py", line 917, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'image.serve_image' with values ['filename', 'job_id', 'thumbnail']. Did you mean 'image.serve_file' instead?
+2025-03-11 10:51:49,992 [ERROR] Exception on /job/details/4 [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/db.py", line 31, in decorated_function
+    return f(db, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/routes/job_routes.py", line 349, in job_details
+    return render_template('job_details.html',
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 147, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 130, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/job_details.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "/home/Jobmanager/app/templates/base.html", line 42, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/job_details.html", line 321, in block 'content'
+    <img src="{{ url_for('image.serve_image', job_id=job.id, filename=image.filename, thumbnail=true) }}"
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2031, in url_for
+    return self.handle_url_build_error(error, endpoint, values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2020, in url_for
+    rv = url_adapter.build(  # type: ignore[union-attr]
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/werkzeug/routing/map.py", line 917, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'image.serve_image' with values ['filename', 'job_id', 'thumbnail']. Did you mean 'image.serve_file' instead?
+2025-03-11 10:51:53,413 [ERROR] Exception on /job/details/4 [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/db.py", line 31, in decorated_function
+    return f(db, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/routes/job_routes.py", line 349, in job_details
+    return render_template('job_details.html',
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 147, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 130, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/job_details.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "/home/Jobmanager/app/templates/base.html", line 42, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/job_details.html", line 321, in block 'content'
+    <img src="{{ url_for('image.serve_image', job_id=job.id, filename=image.filename, thumbnail=true) }}"
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2031, in url_for
+    return self.handle_url_build_error(error, endpoint, values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2020, in url_for
+    rv = url_adapter.build(  # type: ignore[union-attr]
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/werkzeug/routing/map.py", line 917, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'image.serve_image' with values ['filename', 'job_id', 'thumbnail']. Did you mean 'image.serve_file' instead?
+2025-03-11 10:51:58,255 [ERROR] Exception on /job/details/28 [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/db.py", line 31, in decorated_function
+    return f(db, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/routes/job_routes.py", line 349, in job_details
+    return render_template('job_details.html',
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 147, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 130, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/job_details.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "/home/Jobmanager/app/templates/base.html", line 42, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/job_details.html", line 321, in block 'content'
+    <img src="{{ url_for('image.serve_image', job_id=job.id, filename=image.filename, thumbnail=true) }}"
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2031, in url_for
+    return self.handle_url_build_error(error, endpoint, values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2020, in url_for
+    rv = url_adapter.build(  # type: ignore[union-attr]
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/werkzeug/routing/map.py", line 917, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'image.serve_image' with values ['filename', 'job_id', 'thumbnail']. Did you mean 'image.serve_file' instead?
+2025-03-11 10:52:00,488 [ERROR] Exception on /job/details/28 [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/db.py", line 31, in decorated_function
+    return f(db, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/routes/job_routes.py", line 349, in job_details
+    return render_template('job_details.html',
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 147, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 130, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/job_details.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "/home/Jobmanager/app/templates/base.html", line 42, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/job_details.html", line 321, in block 'content'
+    <img src="{{ url_for('image.serve_image', job_id=job.id, filename=image.filename, thumbnail=true) }}"
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2031, in url_for
+    return self.handle_url_build_error(error, endpoint, values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2020, in url_for
+    rv = url_adapter.build(  # type: ignore[union-attr]
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/werkzeug/routing/map.py", line 917, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'image.serve_image' with values ['filename', 'job_id', 'thumbnail']. Did you mean 'image.serve_file' instead?
+2025-03-11 10:59:20,040 [INFO] Deleting image job28-2503111059.jpg (ID: 56) from job 28
+2025-03-11 10:59:20,041 [INFO] Deleted main image file: /home/Jobmanager/instance/images/job_28/job28-2503111059.jpg
+2025-03-11 10:59:20,041 [INFO] Deleted thumbnail file: /home/Jobmanager/instance/images/job_28/thumbnails/job28-2503111059.jpg
+2025-03-11 10:59:20,145 [INFO] Deleted image record from database: 56
+2025-03-11 10:59:58,718 [INFO] Weekly summary request - selected_week: None, show_all: False
+2025-03-11 10:59:58,718 [INFO] No week selected, using current week: 2025-W11
+2025-03-11 10:59:58,718 [INFO] Fetching available weeks
+2025-03-11 10:59:58,719 [INFO] Found 35 distinct dates with time entries
+2025-03-11 10:59:58,719 [INFO] Processed 6 unique weeks
+2025-03-11 10:59:58,719 [INFO] Final view settings - selected_week: 2025-W11, show_all: False
+2025-03-11 10:59:58,720 [INFO] Found 10 time entries for week 2025-W11
+2025-03-11 11:01:25,053 [INFO] Stopping timer for job 4
+2025-03-11 11:01:27,163 [INFO] Starting timer for job 28
+2025-03-11 11:01:27,163 [INFO] Stopping all active timers
+2025-03-11 11:01:40,301 [INFO] Root path: /home/Jobmanager
+2025-03-11 11:01:40,301 [INFO] Current working directory: /home/Jobmanager
+2025-03-11 11:01:40,301 [INFO] Instance path: /home/Jobmanager/instance
+2025-03-11 11:01:40,301 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250311_1101.zip
+2025-03-11 11:01:40,301 [INFO] Adding file: /home/Jobmanager/run.py
+2025-03-11 11:01:40,302 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-03-11 11:01:40,302 [INFO] Adding to zip: app/db.py
+2025-03-11 11:01:40,302 [INFO] Adding to zip: app/__init__.py
+2025-03-11 11:01:40,303 [INFO] Adding to zip: app/schema.sql
+2025-03-11 11:01:40,303 [INFO] Adding to zip: app/routes/image_routes.py
+2025-03-11 11:01:40,304 [INFO] Adding to zip: app/routes/system_routes.py
+2025-03-11 11:01:40,304 [INFO] Adding to zip: app/routes/__init__.py
+2025-03-11 11:01:40,304 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-03-11 11:01:40,305 [INFO] Adding to zip: app/routes/job_routes.py
+2025-03-11 11:01:40,305 [INFO] Adding to zip: app/routes/report_routes.py
+2025-03-11 11:01:40,306 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-03-11 11:01:40,306 [INFO] Adding to zip: app/utils/date_helper.py
+2025-03-11 11:01:40,307 [INFO] Adding to zip: app/utils/time_utils.py
+2025-03-11 11:01:40,307 [INFO] Adding to zip: app/utils/job_utils.py
+2025-03-11 11:01:40,307 [INFO] Adding to zip: app/utils/material_utils.py
+2025-03-11 11:01:40,307 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-03-11 11:01:40,308 [INFO] Adding to zip: app/utils/__init__.py
+2025-03-11 11:01:40,308 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-03-11 11:01:40,308 [INFO] Adding to zip: app/utils/error_utils.py
+2025-03-11 11:01:40,308 [INFO] Adding to zip: app/utils/profile_utils.py
+2025-03-11 11:01:40,309 [INFO] Adding to zip: app/utils/image_utils.py
+2025-03-11 11:01:40,309 [INFO] Adding to zip: app/templates/customer_form.html
+2025-03-11 11:01:40,309 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-03-11 11:01:40,310 [INFO] Adding to zip: app/templates/system_settings.html
+2025-03-11 11:01:40,310 [INFO] Adding to zip: app/templates/shared_images.html
+2025-03-11 11:01:40,310 [INFO] Adding to zip: app/templates/weekly_summary.html
+2025-03-11 11:01:40,311 [INFO] Adding to zip: app/templates/job_details.html
+2025-03-11 11:01:40,312 [INFO] Adding to zip: app/templates/invoice.html
+2025-03-11 11:01:40,312 [INFO] Adding to zip: app/templates/job_form.html
+2025-03-11 11:01:40,313 [INFO] Adding to zip: app/templates/customer_list.html
+2025-03-11 11:01:40,313 [INFO] Adding to zip: app/templates/500.html
+2025-03-11 11:01:40,313 [INFO] Adding to zip: app/templates/base.html
+2025-03-11 11:01:40,313 [INFO] Adding to zip: app/templates/profile_settings.html
+2025-03-11 11:01:40,314 [INFO] Adding to zip: app/templates/job_list.html
+2025-03-11 11:01:40,314 [INFO] Adding to zip: app/templates/404.html
+2025-03-11 11:01:40,314 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-03-11 11:01:40,315 [INFO] Adding to zip: app/static/css/styles.css
+2025-03-11 11:01:40,315 [INFO] Adding to zip: instance/user_profile.json
+2025-03-11 11:01:40,316 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250311_1101.zip
+2025-03-11 11:01:40,316 [INFO] Backup file exists: True
+2025-03-11 11:07:28,539 [INFO] Deleting image doc_2503111107.pdf (ID: 57) from job 28
+2025-03-11 11:07:28,540 [INFO] Deleted PDF file: /home/Jobmanager/instance/images/job_28/doc_2503111107.pdf
+2025-03-11 11:07:28,724 [INFO] Deleted image record from database: 57
+2025-03-11 11:45:22,548 [INFO] Stopping timer for job 4
+2025-03-11 11:45:25,185 [INFO] Stopping timer for job 28
+2025-03-11 12:24:32,677 [INFO] Starting timer for job 28
+2025-03-11 12:24:32,677 [INFO] Stopping all active timers
+2025-03-11 12:29:11,026 [INFO] Starting timer for job 4
+2025-03-11 12:29:11,026 [INFO] Stopping all active timers
+2025-03-11 12:29:24,287 [INFO] Deleting image 25-2503111051.jpg (ID: 55) from job 4
+2025-03-11 12:29:24,287 [INFO] Deleted main image file: /home/Jobmanager/instance/images/job_4/25-2503111051.jpg
+2025-03-11 12:29:24,287 [INFO] Deleted thumbnail file: /home/Jobmanager/instance/images/job_4/thumbnails/25-2503111051.jpg
+2025-03-11 12:29:24,400 [INFO] Deleted image record from database: 55
+2025-03-11 12:29:42,844 [INFO] Weekly summary request - selected_week: None, show_all: False
+2025-03-11 12:29:42,844 [INFO] No week selected, using current week: 2025-W11
+2025-03-11 12:29:42,844 [INFO] Fetching available weeks
+2025-03-11 12:29:42,845 [INFO] Found 35 distinct dates with time entries
+2025-03-11 12:29:42,845 [INFO] Processed 6 unique weeks
+2025-03-11 12:29:42,845 [INFO] Final view settings - selected_week: 2025-W11, show_all: False
+2025-03-11 12:29:42,846 [INFO] Found 13 time entries for week 2025-W11
+2025-03-11 12:29:45,797 [INFO] Weekly summary request - selected_week: 2025-W11, show_all: True
+2025-03-11 12:29:45,797 [INFO] Fetching available weeks
+2025-03-11 12:29:45,798 [INFO] Found 35 distinct dates with time entries
+2025-03-11 12:29:45,798 [INFO] Processed 6 unique weeks
+2025-03-11 12:29:45,798 [INFO] Final view settings - selected_week: 2025-W11, show_all: True
+2025-03-11 12:29:45,799 [INFO] Generated summary for 6 weeks
+2025-03-11 12:33:15,276 [INFO] Weekly summary request - selected_week: 2025-W11, show_all: True
+2025-03-11 12:33:15,276 [INFO] Fetching available weeks
+2025-03-11 12:33:15,277 [INFO] Found 35 distinct dates with time entries
+2025-03-11 12:33:15,277 [INFO] Processed 6 unique weeks
+2025-03-11 12:33:15,277 [INFO] Final view settings - selected_week: 2025-W11, show_all: True
+2025-03-11 12:33:15,278 [INFO] Generated summary for 6 weeks
+2025-03-11 12:33:49,929 [INFO] Weekly summary request - selected_week: 2025-W11, show_all: True
+2025-03-11 12:33:49,929 [INFO] Fetching available weeks
+2025-03-11 12:33:49,929 [INFO] Found 35 distinct dates with time entries
+2025-03-11 12:33:49,929 [INFO] Processed 6 unique weeks
+2025-03-11 12:33:49,930 [INFO] Final view settings - selected_week: 2025-W11, show_all: True
+2025-03-11 12:33:49,931 [INFO] Generated summary for 6 weeks
+2025-03-11 12:36:12,979 [INFO] Weekly summary request - selected_week: 2025-W11, show_all: True
+2025-03-11 12:36:12,979 [INFO] Fetching available weeks
+2025-03-11 12:36:12,980 [INFO] Found 35 distinct dates with time entries
+2025-03-11 12:36:12,980 [INFO] Processed 6 unique weeks
+2025-03-11 12:36:12,980 [INFO] Final view settings - selected_week: 2025-W11, show_all: True
+2025-03-11 12:36:12,981 [INFO] Generated summary for 6 weeks
+2025-03-11 12:36:23,841 [INFO] Weekly summary request - selected_week: 2025-W11, show_all: False
+2025-03-11 12:36:23,841 [INFO] Fetching available weeks
+2025-03-11 12:36:23,842 [INFO] Found 35 distinct dates with time entries
+2025-03-11 12:36:23,842 [INFO] Processed 6 unique weeks
+2025-03-11 12:36:23,842 [INFO] Final view settings - selected_week: 2025-W11, show_all: False
+2025-03-11 12:36:23,842 [INFO] Found 13 time entries for week 2025-W11
+2025-03-11 12:41:04,621 [INFO] Root path: /home/Jobmanager
+2025-03-11 12:41:04,621 [INFO] Current working directory: /home/Jobmanager
+2025-03-11 12:41:04,621 [INFO] Instance path: /home/Jobmanager/instance
+2025-03-11 12:41:04,621 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250311_1241.zip
+2025-03-11 12:41:04,622 [INFO] Adding file: /home/Jobmanager/run.py
+2025-03-11 12:41:04,622 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-03-11 12:41:04,622 [INFO] Adding to zip: app/db.py
+2025-03-11 12:41:04,623 [INFO] Adding to zip: app/__init__.py
+2025-03-11 12:41:04,623 [INFO] Adding to zip: app/schema.sql
+2025-03-11 12:41:04,623 [INFO] Adding to zip: app/routes/image_routes.py
+2025-03-11 12:41:04,624 [INFO] Adding to zip: app/routes/system_routes.py
+2025-03-11 12:41:04,624 [INFO] Adding to zip: app/routes/__init__.py
+2025-03-11 12:41:04,624 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-03-11 12:41:04,625 [INFO] Adding to zip: app/routes/job_routes.py
+2025-03-11 12:41:04,625 [INFO] Adding to zip: app/routes/report_routes.py
+2025-03-11 12:41:04,626 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-03-11 12:41:04,626 [INFO] Adding to zip: app/utils/date_helper.py
+2025-03-11 12:41:04,627 [INFO] Adding to zip: app/utils/time_utils.py
+2025-03-11 12:41:04,627 [INFO] Adding to zip: app/utils/job_utils.py
+2025-03-11 12:41:04,627 [INFO] Adding to zip: app/utils/material_utils.py
+2025-03-11 12:41:04,627 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-03-11 12:41:04,628 [INFO] Adding to zip: app/utils/__init__.py
+2025-03-11 12:41:04,628 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-03-11 12:41:04,628 [INFO] Adding to zip: app/utils/error_utils.py
+2025-03-11 12:41:04,628 [INFO] Adding to zip: app/utils/profile_utils.py
+2025-03-11 12:41:04,629 [INFO] Adding to zip: app/utils/image_utils.py
+2025-03-11 12:41:04,629 [INFO] Adding to zip: app/templates/customer_form.html
+2025-03-11 12:41:04,629 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-03-11 12:41:04,630 [INFO] Adding to zip: app/templates/system_settings.html
+2025-03-11 12:41:04,630 [INFO] Adding to zip: app/templates/shared_images.html
+2025-03-11 12:41:04,630 [INFO] Adding to zip: app/templates/weekly_summary.html
+2025-03-11 12:41:04,631 [INFO] Adding to zip: app/templates/job_details.html
+2025-03-11 12:41:04,632 [INFO] Adding to zip: app/templates/invoice.html
+2025-03-11 12:41:04,632 [INFO] Adding to zip: app/templates/job_form.html
+2025-03-11 12:41:04,633 [INFO] Adding to zip: app/templates/customer_list.html
+2025-03-11 12:41:04,633 [INFO] Adding to zip: app/templates/500.html
+2025-03-11 12:41:04,633 [INFO] Adding to zip: app/templates/base.html
+2025-03-11 12:41:04,633 [INFO] Adding to zip: app/templates/profile_settings.html
+2025-03-11 12:41:04,634 [INFO] Adding to zip: app/templates/job_list.html
+2025-03-11 12:41:04,634 [INFO] Adding to zip: app/templates/404.html
+2025-03-11 12:41:04,634 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-03-11 12:41:04,635 [INFO] Adding to zip: app/static/css/styles.css
+2025-03-11 12:41:04,635 [INFO] Adding to zip: instance/user_profile.json
+2025-03-11 12:41:04,636 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250311_1241.zip
+2025-03-11 12:41:04,636 [INFO] Backup file exists: True

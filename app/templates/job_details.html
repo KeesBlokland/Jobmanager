@@ -272,19 +272,34 @@
         </form>
     </div>
     
-    <!-- Photos section identical to original -->
-     <hr>
+    <!-- Files section -->
+    <hr>
     <div class="detail-section">
-        <h3>Photos</h3>
+        <h3>Files & Photos</h3>
         {% if request.args.get('error') %}
             <div class="error-message">
                 Error: {{ request.args.get('error') }}
             </div>
         {% endif %}
         
+        <!-- New upload form -->
+        <div class="form-section">
+            <form action="{{ url_for('image.upload_direct', job_id=job.id) }}" method="post" enctype="multipart/form-data">
+                <div class="btn-group">
+                    <input type="file" name="file" id="fileInput" accept=".jpg,.jpeg,.png,.gif,.pdf" class="form-control" style="width: 300px;">
+                    <input type="text" name="description" placeholder="File description (optional)" class="form-control" style="width: 250px;">
+                    <input type="hidden" name="_redirect" value="true">
+                    <button type="submit" class="action-btn save-btn">Upload File</button>
+                </div>
+                <div class="file-type-hint" style="margin-top: 5px; font-size: 0.8em; color: #666;">
+                    Accepted file types: JPG, PNG, GIF, PDF
+                </div>
+            </form>
+        </div>
+        
         {% if images %}
             <div class="share-controls">
-                <button id="toggleSelectBtn" onclick="toggleSelectMode()" class="action-btn">Select Photos</button>
+                <button id="toggleSelectBtn" onclick="toggleSelectMode()" class="action-btn">Select Files</button>
                 <div id="shareControls" style="display: none;">
                     <button onclick="shareSelected()" class="action-btn save-btn">Share Selected</button>
                     <button onclick="deleteSelected()" class="action-btn delete-btn">Delete Selected</button>
@@ -292,23 +307,32 @@
                 </div>
             </div>
             
-            <div class="image-grid" id="imageGrid">
+            <div class="file-grid" id="fileGrid">
                 {% for image in images %}
-                <div class="image-card" data-id="{{ image.id }}">
+                <div class="file-card" data-id="{{ image.id }}" data-type="{{ 'pdf' if image.filename.lower().endswith('.pdf') else 'image' }}">
                     <div class="select-overlay">
-                        <input type="checkbox" class="image-select" data-id="{{ image.id }}">
+                        <input type="checkbox" class="file-select" data-id="{{ image.id }}">
                     </div>
-                    <img src="{{ url_for('image.serve_image', job_id=job.id, filename=image.filename, thumbnail=true) }}" 
-                        alt="Job photo"
-                        onclick="handleImageClick(event, '{{ url_for('image.serve_image', job_id=job.id, filename=image.filename) }}', {{ image.id }})">
-                    <div class="image-info">
-                        {{ image.timestamp[0:16] }}
+                    {% if image.filename.lower().endswith('.pdf') %}
+                        <div class="pdf-preview" onclick="viewPdf('{{ url_for('image.serve_file', job_id=job.id, filename=image.filename) }}')">
+                            <div class="pdf-icon">PDF</div>
+                        </div>
+                    {% else %}
+                        <img src="{{ url_for('image.serve_image', job_id=job.id, filename=image.filename, thumbnail=true) }}" 
+                            alt="Job file"
+                            onclick="handleFileClick(event, '{{ url_for('image.serve_image', job_id=job.id, filename=image.filename) }}', {{ image.id }})">
+                    {% endif %}
+                    <div class="file-info">
+                        {{ image.filename|truncate(20) }}
+                        <br>{{ image.timestamp[0:16] }}
                         {% if image.description %}
                             <br>{{ image.description }}
                         {% endif %}
-                        <div class="image-actions">
+                        <div class="file-actions">
+                            <a href="{{ url_for('image.serve_file', job_id=job.id, filename=image.filename) }}" 
+                               download="{{ image.filename }}" class="action-btn edit-btn">Download</a>
                             <form action="{{ url_for('image.delete_image', job_id=job.id, image_id=image.id) }}" 
-                                  method="post" onsubmit="return confirm('Delete this image?');">
+                                  method="post" onsubmit="return confirm('Delete this file?');">
                                 <button type="submit" class="action-btn delete-btn">Delete</button>
                             </form>
                         </div>
@@ -320,8 +344,8 @@
             <!-- Share dialog -->
             <div id="shareDialog" class="modal">
                 <div class="modal-content">
-                    <h3>Share Images</h3>
-                    <p>Create a temporary link to share these images:</p>
+                    <h3>Share Files</h3>
+                    <p>Create a temporary link to share these files:</p>
                     <div class="form-group">
                         <label>Link expiry:</label>
                         <select id="expirySelect">
@@ -343,18 +367,18 @@
                 </div>
             </div>
         {% else %}
-            <p>No photos uploaded yet.</p>
-            <p>Use the mobile quick-timer interface to take photos for this job.</p>
+            <p>No files uploaded yet.</p>
         {% endif %}
     </div>
     
-    <div id="imageModal" class="modal" onclick="this.style.display='none'">
+    <div id="fileModal" class="modal" onclick="this.style.display='none'">
         <img id="fullImage">
+        <iframe id="pdfViewer" style="display: none; width: 90%; height: 90%; margin: auto;"></iframe>
     </div>
     
     <script>
         let selectMode = false;
-        const selectedImages = new Set();
+        const selectedFiles = new Set();
         
         function toggleSelectMode() {
             selectMode = !selectMode;
@@ -364,7 +388,7 @@
                 toggleBtn.textContent = 'Cancel Selection';
                 toggleBtn.classList.add('active');
             } else {
-                toggleBtn.textContent = 'Select Photos';
+                toggleBtn.textContent = 'Select Files';
                 toggleBtn.classList.remove('active');
             }
             
@@ -378,34 +402,56 @@
             
             // Clear selection when exiting select mode
             if (!selectMode) {
-                selectedImages.clear();
-                document.querySelectorAll('.image-select').forEach(cb => {
+                selectedFiles.clear();
+                document.querySelectorAll('.file-select').forEach(cb => {
                     cb.checked = false;
                 });
             }
         }
         
-        function handleImageClick(event, src, imageId) {
+        function handleFileClick(event, src, fileId) {
             if (selectMode) {
                 // Handle selection
-                const checkbox = event.currentTarget.parentElement.querySelector('.image-select');
+                const checkbox = event.currentTarget.parentElement.querySelector('.file-select');
                 checkbox.checked = !checkbox.checked;
                 
                 if (checkbox.checked) {
-                    selectedImages.add(imageId);
+                    selectedFiles.add(fileId);
                 } else {
-                    selectedImages.delete(imageId);
+                    selectedFiles.delete(fileId);
                 }
                 
                 event.preventDefault();
                 return false;
             } else {
                 // Show full image
-                const modal = document.getElementById('imageModal');
+                const modal = document.getElementById('fileModal');
                 const img = document.getElementById('fullImage');
+                const pdfViewer = document.getElementById('pdfViewer');
+                
+                // Show image, hide PDF viewer
+                img.style.display = 'block';
+                pdfViewer.style.display = 'none';
+                
                 img.src = src;
                 modal.style.display = 'flex';
             }
+        }
+        
+        function viewPdf(src) {
+            // Don't open PDF viewer in select mode
+            if (selectMode) return;
+            
+            const modal = document.getElementById('fileModal');
+            const img = document.getElementById('fullImage');
+            const pdfViewer = document.getElementById('pdfViewer');
+            
+            // Show PDF viewer, hide image
+            img.style.display = 'none';
+            pdfViewer.style.display = 'block';
+            
+            pdfViewer.src = src;
+            modal.style.display = 'flex';
         }
         
         function cancelSelect() {
@@ -413,8 +459,8 @@
         }
         
         function shareSelected() {
-            if (selectedImages.size === 0) {
-                alert('Please select at least one image to share.');
+            if (selectedFiles.size === 0) {
+                alert('Please select at least one file to share.');
                 return;
             }
             
@@ -425,7 +471,7 @@
         
         function createShareLink() {
             const expiryHours = document.getElementById('expirySelect').value;
-            const imageIds = Array.from(selectedImages);
+            const fileIds = Array.from(selectedFiles);
             
             fetch('{{ url_for("image.create_share_link", job_id=job.id) }}', {
                 method: 'POST',
@@ -433,7 +479,7 @@
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    image_ids: imageIds,
+                    image_ids: fileIds,
                     expiry_hours: parseInt(expiryHours)
                 })
             })
@@ -459,40 +505,40 @@
         }
         
         function deleteSelected() {
-            if (selectedImages.size === 0) {
-                alert('Please select at least one image to delete.');
+            if (selectedFiles.size === 0) {
+                alert('Please select at least one file to delete.');
                 return;
             }
             
-            if (confirm(`Delete ${selectedImages.size} selected image(s)?`)) {
+            if (confirm(`Delete ${selectedFiles.size} selected file(s)?`)) {
                 let deletedCount = 0;
-                const totalCount = selectedImages.size;
+                const totalCount = selectedFiles.size;
                 
                 // Convert to array and process sequentially to avoid simultaneous requests
-                const imageIds = Array.from(selectedImages);
-                deleteNextImage(imageIds, 0, totalCount);
+                const fileIds = Array.from(selectedFiles);
+                deleteNextFile(fileIds, 0, totalCount);
             }
         }
         
-        function deleteNextImage(imageIds, index, total) {
-            if (index >= imageIds.length) {
+        function deleteNextFile(fileIds, index, total) {
+            if (index >= fileIds.length) {
                 // All deletions completed
                 window.location.reload();
                 return;
             }
             
-            const imageId = imageIds[index];
-            fetch('{{ url_for("image.delete_image", job_id=job.id, image_id=0) }}'.replace('0', imageId), {
+            const fileId = fileIds[index];
+            fetch('{{ url_for("image.delete_image", job_id=job.id, image_id=0) }}'.replace('0', fileId), {
                 method: 'POST'
             })
             .then(response => {
-                // Process next image regardless of success/failure
-                deleteNextImage(imageIds, index + 1, total);
+                // Process next file regardless of success/failure
+                deleteNextFile(fileIds, index + 1, total);
             })
             .catch(error => {
-                console.error(`Error deleting image ${imageId}:`, error);
-                // Continue with next image anyway
-                deleteNextImage(imageIds, index + 1, total);
+                console.error(`Error deleting file ${fileId}:`, error);
+                // Continue with next file anyway
+                deleteNextFile(fileIds, index + 1, total);
             });
         }
     
@@ -523,4 +569,5 @@
             });
         });
     </script>
-    {% endblock %}
+
+{% endblock %}

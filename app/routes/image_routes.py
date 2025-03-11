@@ -10,11 +10,12 @@ import io
 from ..db import with_db
 from ..utils.image_utils import ImageManager
 import logging
+import mimetypes
 
 bp = Blueprint('image', __name__)
 logger = logging.getLogger('jobmanager')
 
-ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'gif'}
+ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'gif', 'pdf'}
 UPLOAD_FOLDER = 'instance/uploads'
 
 # Store temporary share links
@@ -23,10 +24,13 @@ SHARE_LINKS = {}
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+def is_pdf(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() == 'pdf'
+
 @bp.route('/upload/direct/<int:job_id>', methods=['POST'])
 @with_db
 def upload_direct(db, job_id):
-    """Handle direct file uploads from mobile/desktop"""
+    """Handle direct file uploads from web/mobile"""
     if 'file' not in request.files:
         return jsonify({'error': 'No file part'}), 400
         
@@ -35,8 +39,28 @@ def upload_direct(db, job_id):
         return jsonify({'error': 'Invalid file type'}), 400
 
     try:
-        image_mgr = ImageManager(os.path.join(current_app.instance_path, 'images'))
-        filename = image_mgr.process_image(job_id, file, db)
+        # Generate a secure filename
+        original_filename = secure_filename(file.filename)
+        file_ext = original_filename.rsplit('.', 1)[1].lower() if '.' in original_filename else ''
+        
+        # Handle PDFs and images differently
+        if file_ext == 'pdf':
+            # For PDFs, we just store the file directly
+            # Create job directory if it doesn't exist
+            job_path = os.path.join(current_app.instance_path, 'images', f'job_{job_id}')
+            os.makedirs(job_path, exist_ok=True)
+            
+            # Generate filename with timestamp
+            timestamp = datetime.now().strftime('%y%m%d%H%M')
+            filename = f'doc_{timestamp}.pdf'
+            
+            # Save the file
+            file_path = os.path.join(job_path, filename)
+            file.save(file_path)
+        else:
+            # For images, use the image manager
+            image_mgr = ImageManager(os.path.join(current_app.instance_path, 'images'))
+            filename = image_mgr.process_image(job_id, file, db)
         
         # Store in database
         db.execute(
@@ -45,6 +69,10 @@ def upload_direct(db, job_id):
         )
         db.commit()
         
+        # Redirect back to job details if it's a form submission (not AJAX)
+        if request.form.get('_redirect') == 'true':
+            return redirect(url_for('job.job_details', id=job_id))
+            
         return jsonify({'success': True, 'filename': filename})
     except Exception as e:
         logger.error(f"Upload failed: {str(e)}", exc_info=True)
@@ -105,16 +133,54 @@ def setup_watch_folder(job_id):
     except Exception as e:
         logger.error(f"Watch folder setup failed: {str(e)}", exc_info=True)
         return jsonify({'error': str(e)}), 500
+
+@bp.route('/serve_file/<int:job_id>/<path:filename>')
+def serve_file(job_id, filename):
+    """Serve any file (image or PDF)"""
+    try:
+        job_path = os.path.join(current_app.instance_path, 'images', f'job_{job_id}')
+        file_path = os.path.join(job_path, filename)
+        
+        if not os.path.exists(file_path):
+            abort(404)
+        
+        # Determine the content type
+        content_type = None
+        if filename.lower().endswith('.pdf'):
+            content_type = 'application/pdf'
+        else:
+            content_type = mimetypes.guess_type(filename)[0]
+        
+        return send_file(
+            file_path,
+            mimetype=content_type,
+            as_attachment=request.args.get('download', '').lower() == 'true'
+        )
+    except FileNotFoundError:
+        abort(404)
+    except Exception as e:
+        logger.error(f"Error serving file: {str(e)}", exc_info=True)
+        abort(500)
     
-@bp.route('/serve/<int:job_id>/<path:filename>')
+@bp.route('/serve_image/<int:job_id>/<path:filename>')
 def serve_image(job_id, filename):
     """Serve an image file"""
     try:
         thumbnail = request.args.get('thumbnail', 'false').lower() == 'true'
         image_mgr = ImageManager(os.path.join(current_app.instance_path, 'images'))
+        
+        # Determine file extension and content type
+        ext = filename.rsplit('.', 1)[1].lower() if '.' in filename else 'jpg'
+        content_type = {
+            'jpg': 'image/jpeg',
+            'jpeg': 'image/jpeg',
+            'png': 'image/png',
+            'gif': 'image/gif'
+        }.get(ext, 'image/jpeg')
+        
         return send_file(
             image_mgr.get_image_path(job_id, filename, thumbnail),
-            mimetype='image/jpeg'
+            mimetype=content_type
         )
     except FileNotFoundError:
         abort(404)
@@ -141,21 +207,32 @@ def delete_image(db, job_id, image_id):
         # Delete physical files
         image_mgr = ImageManager(os.path.join(current_app.instance_path, 'images'))
         try:
-            # Delete main image
-            main_path = image_mgr.get_image_path(job_id, filename)
-            if os.path.exists(main_path):
-                os.remove(main_path)
-                logger.info(f"Deleted main image file: {main_path}")
+            job_path = os.path.join(current_app.instance_path, 'images', f'job_{job_id}')
+            
+            # For PDFs, only delete the main file
+            if filename.lower().endswith('.pdf'):
+                file_path = os.path.join(job_path, filename)
+                if os.path.exists(file_path):
+                    os.remove(file_path)
+                    logger.info(f"Deleted PDF file: {file_path}")
+                else:
+                    logger.warning(f"PDF file not found: {file_path}")
             else:
-                logger.warning(f"Main image file not found: {main_path}")
-                
-            # Delete thumbnail
-            thumb_path = image_mgr.get_image_path(job_id, filename, thumbnail=True)
-            if os.path.exists(thumb_path):
-                os.remove(thumb_path)
-                logger.info(f"Deleted thumbnail file: {thumb_path}")
-            else:
-                logger.warning(f"Thumbnail file not found: {thumb_path}")
+                # For images, delete both main file and thumbnail
+                main_path = image_mgr.get_image_path(job_id, filename)
+                if os.path.exists(main_path):
+                    os.remove(main_path)
+                    logger.info(f"Deleted main image file: {main_path}")
+                else:
+                    logger.warning(f"Main image file not found: {main_path}")
+                    
+                # Delete thumbnail
+                thumb_path = image_mgr.get_image_path(job_id, filename, thumbnail=True)
+                if os.path.exists(thumb_path):
+                    os.remove(thumb_path)
+                    logger.info(f"Deleted thumbnail file: {thumb_path}")
+                else:
+                    logger.warning(f"Thumbnail file not found: {thumb_path}")
         except OSError as e:
             logger.error(f"Error deleting image files: {str(e)}")
             # Continue to delete database record even if file deletion fails
@@ -248,7 +325,7 @@ def shared_images(token):
 
 @bp.route('/download/<token>')
 def download_images(token):
-    """Download all shared images as ZIP"""
+    """Download all shared files as ZIP"""
     if token not in SHARE_LINKS:
         abort(404)
         
@@ -263,18 +340,19 @@ def download_images(token):
         # Create in-memory ZIP file
         memory_file = io.BytesIO()
         job_id = share_data['job_id']
-        image_mgr = ImageManager(os.path.join(current_app.instance_path, 'images'))
+        job_path = os.path.join(current_app.instance_path, 'images', f'job_{job_id}')
         
         with zipfile.ZipFile(memory_file, 'w', zipfile.ZIP_DEFLATED) as zf:
             for img in share_data['images']:
-                image_path = image_mgr.get_image_path(job_id, img['filename'])
-                if os.path.exists(image_path):
-                    zf.write(image_path, img['filename'])
+                # For all file types, use the direct file path
+                file_path = os.path.join(job_path, img['filename'])
+                if os.path.exists(file_path):
+                    zf.write(file_path, img['filename'])
         
         # Reset file pointer and send file
         memory_file.seek(0)
         job_identifier = f"job_{job_id}"
-        filename = f"{job_identifier}_images_{datetime.now().strftime('%Y%m%d')}.zip"
+        filename = f"{job_identifier}_files_{datetime.now().strftime('%Y%m%d')}.zip"
         
         return send_file(
             memory_file,

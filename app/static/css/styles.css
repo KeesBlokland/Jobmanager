@@ -1018,3 +1018,142 @@ td .btn-group {
         margin-bottom: 4px;
     }
 }
+
+/* PDF and File Styles - Add to app/static/css/styles.css */
+
+/* File Grid - Updated version of image-grid */
+.file-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    padding: 1rem 0;
+}
+
+.file-card {
+    position: relative;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 0.5rem;
+    background: white;
+    transition: transform 0.2s;
+    box-shadow: var(--shadow-sm);
+}
+
+.file-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.file-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.pdf-preview {
+    width: 100%;
+    height: 200px;
+    background-color: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.pdf-icon {
+    background-color: #e74c3c;
+    color: white;
+    font-weight: bold;
+    padding: 30px 40px;
+    border-radius: 4px;
+    font-size: 24px;
+}
+
+.file-info {
+    margin-top: 0.5rem;
+    font-size: 0.9em;
+    color: var(--text-muted);
+    word-break: break-word;
+}
+
+.file-actions {
+    margin-top: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.file-select {
+    transform: scale(1.5);
+    cursor: pointer;
+}
+
+/* PDF viewer in modal */
+#pdfViewer {
+    width: 90%;
+    height: 90%;
+    margin: auto;
+    border: none;
+    background-color: white;
+}
+
+/* File type hint */
+.file-type-hint {
+    margin-top: 5px;
+    font-size: 0.8em;
+    color: var(--text-muted);
+}
+
+/* Fixed width columns for tables */
+.summary-table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.summary-table th,
+.summary-table td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Column widths */
+.summary-table th:nth-child(1),
+.summary-table td:nth-child(1) {
+    width: 20%; /* Customer column */
+}
+
+.summary-table th:nth-child(2),
+.summary-table td:nth-child(2) {
+    width: 45%; /* Job description column */
+}
+
+.summary-table th:nth-child(3),
+.summary-table td:nth-child(3) {
+    width: 15%; /* Hours column */
+    text-align: right;
+}
+
+.summary-table th:nth-child(4),
+.summary-table td:nth-child(4) {
+    width: 15%; /* Amount column */
+    text-align: right;
+}
+
+/* Make job description wrap on hover for longer descriptions */
+.summary-table td:nth-child(2):hover {
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+/* Right align totals */
+.total-row td {
+    text-align: right;
+}
+
+/* Make sure the total label is left-aligned */
+.total-row td:first-child {
+    text-align: left;
+}

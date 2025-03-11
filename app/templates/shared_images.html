@@ -4,12 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shared Images</title>
+    <title>Shared Files</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
 </head>
 <body style="background-color: #f5f5f5; padding: 20px; margin: 0; font-family: Arial, sans-serif;">
     <div class="shared-container">
-        <h1>Shared Images</h1>
+        <h1>Shared Files</h1>
         <div class="job-info">
             {% if share_data.customer_name %}
                 <strong>Customer:</strong> {{ share_data.customer_name }}<br>
@@ -19,22 +20,39 @@
             {% endif %}
         </div>
         <div class="expiry-info">
-            These images are available until: {{ share_data.expires[:16].replace('T', ' ') }}
+            These files are available until: {{ share_data.expires[:16].replace('T', ' ') }}
         </div>
         
         <a href="{{ url_for('image.download_images', token=token) }}" class="btn-download">
-            Download All Images (ZIP)
+            Download All Files (ZIP)
         </a>
         
         <div class="image-grid">
             {% for image in share_data.images %}
             <div class="image-card">
-                <img src="{{ url_for('image.serve_image', job_id=share_data.job_id, filename=image.filename) }}" 
-                     alt="Shared image"
-                     onclick="openModal('{{ url_for('image.serve_image', job_id=share_data.job_id, filename=image.filename) }}')">
-                <div class="image-info">
-                    {{ image.filename }}
-                </div>
+                {% if image.filename.lower().endswith('.pdf') %}
+                    <div class="pdf-preview" onclick="viewPdf('{{ url_for('image.serve_file', job_id=share_data.job_id, filename=image.filename) }}')">
+                        <div class="pdf-icon">PDF</div>
+                    </div>
+                    <div class="image-info">
+                        {{ image.filename }}
+                        <div class="image-actions">
+                            <a href="{{ url_for('image.serve_file', job_id=share_data.job_id, filename=image.filename, download=true) }}" 
+                               class="action-btn edit-btn">Download</a>
+                        </div>
+                    </div>
+                {% else %}
+                    <img src="{{ url_for('image.serve_image', job_id=share_data.job_id, filename=image.filename) }}" 
+                         alt="Shared image"
+                         onclick="openModal('{{ url_for('image.serve_image', job_id=share_data.job_id, filename=image.filename) }}')">
+                    <div class="image-info">
+                        {{ image.filename }}
+                        <div class="image-actions">
+                            <a href="{{ url_for('image.serve_image', job_id=share_data.job_id, filename=image.filename, download=true) }}" 
+                               class="action-btn edit-btn">Download</a>
+                        </div>
+                    </div>
+                {% endif %}
             </div>
             {% endfor %}
         </div>
@@ -44,6 +62,12 @@
     <div id="imageModal" class="shared-modal">
         <span class="modal-close" onclick="closeModal()">&times;</span>
         <img class="shared-modal-content" id="modalImage">
+    </div>
+    
+    <!-- Modal for PDF viewer -->
+    <div id="pdfModal" class="shared-modal">
+        <span class="modal-close" onclick="closePdfModal()">&times;</span>
+        <iframe id="pdfViewer" style="width: 90%; height: 90%; margin: auto;"></iframe>
     </div>
     
     <script>
@@ -58,11 +82,27 @@
             document.getElementById('imageModal').style.display = "none";
         }
         
-        // Close modal when clicking outside the image
+        function viewPdf(pdfSrc) {
+            const modal = document.getElementById('pdfModal');
+            const pdfViewer = document.getElementById('pdfViewer');
+            modal.style.display = "block";
+            pdfViewer.src = pdfSrc;
+        }
+        
+        function closePdfModal() {
+            document.getElementById('pdfModal').style.display = "none";
+        }
+        
+        // Close modals when clicking outside the content
         window.onclick = function(event) {
-            const modal = document.getElementById('imageModal');
-            if (event.target == modal) {
+            const imageModal = document.getElementById('imageModal');
+            const pdfModal = document.getElementById('pdfModal');
+            
+            if (event.target == imageModal) {
                 closeModal();
+            }
+            if (event.target == pdfModal) {
+                closePdfModal();
             }
         }
     </script>

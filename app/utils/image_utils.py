@@ -4,6 +4,7 @@ from PIL.ExifTags import TAGS
 import os
 from datetime import datetime
 import sqlite3
+import mimetypes
 from .time_utils import get_current_time
 
 class ImageManager:
@@ -25,58 +26,82 @@ class ImageManager:
         return f"job{job_id}"
 
     def process_image(self, job_id, image_file, db=None):
+        # Get the file extension
+        original_filename = image_file.filename
+        ext = original_filename.rsplit('.', 1)[1].lower() if '.' in original_filename else 'jpg'
+        
         # Create job directory if it doesn't exist
         job_path = os.path.join(self.base_path, f'job_{job_id}')
         thumb_path = os.path.join(job_path, 'thumbnails')
+        os.makedirs(job_path, exist_ok=True)
         os.makedirs(thumb_path, exist_ok=True)
 
         # Generate filename with job identifier and current time
         current_time = datetime.now()
         timestamp = current_time.strftime('%y%m%d%H%M')
         job_identifier = self.get_job_identifier(db, job_id) if db else f"job{job_id}"
-        filename = f'{job_identifier}-{timestamp}.jpg'
+        
+        # PDF files get a different prefix
+        if ext == 'pdf':
+            filename = f'doc_{timestamp}.pdf'
+            
+            # Reset file pointer
+            image_file.seek(0)
+            
+            # Save PDF directly without processing
+            file_path = os.path.join(job_path, filename)
+            image_file.save(file_path)
+            
+            return filename
+        else:
+            # For images, process normally
+            filename = f'{job_identifier}-{timestamp}.{ext}'
 
-        # Reset file pointer
-        image_file.seek(0)
+            # Reset file pointer
+            image_file.seek(0)
 
-        # Open and process image
-        with Image.open(image_file) as img:
-            # Auto-rotate based on EXIF
-            try:
-                for orientation in TAGS.keys():
-                    if TAGS[orientation] == 'Orientation':
-                        break
-                exif = dict(img._getexif().items())
-                if exif[orientation] == 3:
-                    img = img.rotate(180, expand=True)
-                elif exif[orientation] == 6:
-                    img = img.rotate(270, expand=True)
-                elif exif[orientation] == 8:
-                    img = img.rotate(90, expand=True)
-            except (AttributeError, KeyError, IndexError):
-                pass
+            # Open and process image
+            with Image.open(image_file) as img:
+                # Auto-rotate based on EXIF
+                try:
+                    for orientation in TAGS.keys():
+                        if TAGS[orientation] == 'Orientation':
+                            break
+                    exif = dict(img._getexif().items())
+                    if exif[orientation] == 3:
+                        img = img.rotate(180, expand=True)
+                    elif exif[orientation] == 6:
+                        img = img.rotate(270, expand=True)
+                    elif exif[orientation] == 8:
+                        img = img.rotate(90, expand=True)
+                except (AttributeError, KeyError, IndexError):
+                    pass
 
-            # Resize if needed
-            if img.size[0] > self.MAX_SIZE[0] or img.size[1] > self.MAX_SIZE[1]:
-                img.thumbnail(self.MAX_SIZE, Image.LANCZOS)
+                # Resize if needed
+                if img.size[0] > self.MAX_SIZE[0] or img.size[1] > self.MAX_SIZE[1]:
+                    img.thumbnail(self.MAX_SIZE, Image.LANCZOS)
 
-            # Save main image
-            img.save(os.path.join(job_path, filename), 
-                    'JPEG', 
-                    quality=85, 
-                    optimize=True)
+                # Save main image
+                img.save(os.path.join(job_path, filename), 
+                        'JPEG' if ext in ['jpg', 'jpeg'] else ext.upper(), 
+                        quality=85, 
+                        optimize=True)
 
-            # Create thumbnail
-            img.thumbnail(self.THUMBNAIL_SIZE, Image.LANCZOS)
-            img.save(os.path.join(thumb_path, filename),
-                    'JPEG',
-                    quality=70,
-                    optimize=True)
+                # Create thumbnail
+                img.thumbnail(self.THUMBNAIL_SIZE, Image.LANCZOS)
+                img.save(os.path.join(thumb_path, filename),
+                        'JPEG' if ext in ['jpg', 'jpeg'] else ext.upper(),
+                        quality=70,
+                        optimize=True)
 
         return filename
 
     def get_image_path(self, job_id, filename, thumbnail=False):
         base = os.path.join(self.base_path, f'job_{job_id}')
         if thumbnail:
-            return os.path.join(base, 'thumbnails', filename)
+            thumb_path = os.path.join(base, 'thumbnails', filename)
+            # For PDFs, there might not be a thumbnail, so check if it exists
+            if filename.lower().endswith('.pdf') and not os.path.exists(thumb_path):
+                return os.path.join(base, filename)
+            return thumb_path
         return os.path.join(base, filename)
