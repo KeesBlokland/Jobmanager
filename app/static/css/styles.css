@@ -1,29 +1,42 @@
 /* Variables */
 :root {
+    /* Core Colors */
     --primary: #4CAF50;
     --primary-dark: #388E3C;
     --primary-light: #C8E6C9;
+    
     --secondary: #2196F3;
     --secondary-dark: #1976D2;
     --secondary-light: #BBDEFB;
+    
     --danger: #f44336;
     --danger-dark: #d32f2f;
     --danger-light: #FFCDD2;
+    
     --neutral: #757575;
     --neutral-dark: #616161;
     --neutral-light: #E0E0E0;
-    --timer: #FF9800;
-    --timer-dark: #F57C00;
-    --timer-light: #FFE0B2;
+    
+    --accent: #FF9800;  /* Formerly timer */
+    --accent-dark: #F57C00;
+    --accent-light: #FFE0B2;
+    
+    /* Backgrounds and Borders */
     --border-color: #ddd;
     --background-light: #f9f9f9;
     --background-hover: #f5f5f5;
+    
+    /* Text Colors */
     --text-dark: #333;
     --text-muted: #666;
     --text-light: #777;
+    
+    /* Effects */
     --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     --shadow-md: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     --shadow-lg: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    
+    /* Other */
     --border-radius: 4px;
     --transition-speed: 0.3s;
 }
@@ -73,7 +86,9 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     align-items: center;
     gap: 10px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 5px;
 }
 
 .container, .form-container, .settings-container, .shared-container, .summary-container {
@@ -102,12 +117,11 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 0;
+    padding: 10px 15px;
     margin-bottom: 20px;
     background: white;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-sm);
-    padding: 10px 15px;
 }
 
 .nav-menu {
@@ -117,8 +131,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .nav-menu h1 {
-    margin: 0;
-    margin-right: 20px;
+    margin: 0 20px 0 0;
     font-size: 1.8rem;
 }
 
@@ -128,21 +141,53 @@ h1, h2, h3, h4, h5, h6 {
     flex-wrap: wrap;
 }
 
-.nav-menu a, .system-buttons .dropdown-toggle {
-    padding: 8px 16px;
-    background: var(--secondary);
-    color: white;
-    border-radius: var(--border-radius);
-    text-decoration: none;
-    line-height: 1.5;
-    height: 36px;
-    box-sizing: border-box;
+.system-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* Unified Button Styles */
+.btn,
+.action-btn {
     display: inline-flex;
     align-items: center;
-    font-weight: 500;
-    transition: background-color var(--transition-speed);
-    min-width: 100px;
     justify-content: center;
+    padding: 2px 4px;
+    border-radius: var(--border-radius);
+    color: white;
+    margin-right: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1.5;
+    min-width: 60px;
+    height: 28px;
+    text-align: center;
+    transition: all var(--transition-speed);
+    font-weight: 400;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
+    text-transform: none;
+    margin-bottom: 2px;
+    white-space: nowrap;
+}
+
+.btn:hover,
+.action-btn:hover {
+    box-shadow: var(--shadow-sm);
+}
+
+/* Navigation specific buttons */
+.nav-menu a, 
+.system-buttons .dropdown-toggle {
+    padding: 4px 8px;
+    height: 28px;
+    min-width: 70px;
+    font-weight: 400;
+    background: var(--secondary);
+    color: white;
 }
 
 .nav-menu a:hover,
@@ -150,13 +195,106 @@ h1, h2, h3, h4, h5, h6 {
     background: var(--secondary-dark);
 }
 
-.system-buttons {
-    display: flex;
-    gap: 10px;
-    align-items: center;
+/* Button Colors */
+.btn-primary, 
+.save-btn,
+.add-btn,
+.btn-download { 
+    background: var(--primary); 
 }
 
-/* Forms */
+.btn-primary:hover, 
+.save-btn:hover,
+.add-btn:hover,
+.btn-download:hover { 
+    background: var(--primary-dark);
+}
+
+.btn-secondary, 
+.edit-btn { 
+    background: var(--secondary); 
+}
+
+.btn-secondary:hover, 
+.edit-btn:hover { 
+    background: var(--secondary-dark); 
+}
+
+.btn-danger, 
+.delete-btn,
+.remove-btn { 
+    background: var(--danger); 
+}
+
+.btn-danger:hover, 
+.delete-btn:hover,
+.remove-btn:hover { 
+    background: var(--danger-dark); 
+}
+
+.btn-neutral, 
+.cancel-btn,
+.back-btn { 
+    background: var(--neutral); 
+}
+
+.btn-neutral:hover, 
+.cancel-btn:hover,
+.back-btn:hover { 
+    background: var(--neutral-dark); 
+}
+
+.timer-btn { 
+    background: var(--accent); 
+}
+
+.timer-btn:hover { 
+    background: var(--accent-dark); 
+}
+
+.timer-btn.active { 
+    background: var(--primary); 
+}
+
+.stop-timer {
+    background-color: var(--danger);
+}
+
+/* Feature-specific buttons */
+#toggleSelectBtn {
+    min-width: 90px;
+    padding: 2px 4px;
+    height: 28px;
+    background: var(--accent);
+    color: white;
+    font-weight: 500;
+}
+
+#toggleSelectBtn:hover {
+    background: var(--accent-dark);
+}
+
+#toggleSelectBtn.active {
+    background: var(--neutral);
+    color: white;
+}
+
+.btn-download {
+    height: 28px;
+    min-width: 90px;
+    padding: 2px 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    border-radius: var(--border-radius);
+    margin-bottom: 20px;
+    font-weight: 500;
+    box-shadow: var(--shadow-sm);
+}
+
+/* Form Elements */
 .form-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -175,7 +313,9 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--text-dark);
 }
 
-.form-control, .form-group input,
+/* Unified form control styles */
+.form-control, 
+.form-group input,
 .form-group textarea,
 .form-group select,
 input[type="text"],
@@ -186,17 +326,20 @@ input[type="tel"],
 input[type="date"],
 input[type="datetime-local"] {
     width: 100%;
-    padding: 8px 12px;
+    padding: 2px 6px;
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
     font-size: 14px;
-    height: 36px;
+    height: 28px;
     box-sizing: border-box;
     transition: border-color var(--transition-speed);
     background-color: white;
 }
 
-.form-control:focus, input:focus, select:focus, textarea:focus {
+.form-control:focus, 
+input:focus, 
+select:focus, 
+textarea:focus {
     outline: none;
     border-color: var(--secondary);
     box-shadow: 0 0 0 3px var(--secondary-light);
@@ -206,140 +349,6 @@ input[type="datetime-local"] {
     height: 100px;
     resize: vertical;
     font-family: inherit;
-}
-
-input[name="material_description"] {
-    height: 36px;
-    box-sizing: border-box;
-    vertical-align: middle;
-}
-
-/* Buttons - Compact Version */
-.action-btn,
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2px 4px;
-    border-radius: var(--border-radius);
-    color: white;
-    margin-right: 5px;  /* Reduced from 10px */
-    border: none;
-    cursor: pointer;
-    font-size: 14px;
-    line-height: 1.5;
-    min-width: 60px;  /* Reduced from 100px */
-    height: 28px;     /* Reduced from 36px */
-    text-align: center;
-    transition: all var(--transition-speed);
-    font-weight: 400; /* Reduced from 500 */
-    box-shadow: var(--shadow-sm);
-    position: relative;
-    overflow: hidden;
-    text-transform: none;
-    margin-bottom: 2px; /* Reduced from 5px */
-    white-space: nowrap;
-}
-
-.action-btn:hover,
-.btn:hover {
-    box-shadow: var(--shadow-sm);
-    transform: none;  /* Removed the transform effect */
-}
-
-.action-btn:active,
-.btn:active {
-    box-shadow: var(--shadow-sm);
-    transform: none;
-}
-
-/* Navigation buttons can be slightly larger */
-.nav-menu a, .system-buttons .dropdown-toggle {
-    padding: 4px 8px;
-    height: 28px;
-    min-width: 70px;
-    font-weight: 400;
-}
-
-.btn-sm {
-    padding: 4px 10px;
-    min-width: 80px;
-    height: 30px;
-    font-size: 13px;
-}
-
-/* Make form elements match button heights */
-.form-control, .form-group input,
-.form-group textarea,
-.form-group select,
-input[type="text"],
-input[type="number"],
-input[type="email"],
-input[type="password"],
-input[type="tel"],
-input[type="date"],
-input[type="datetime-local"] {
-    padding: 2px 6px;
-    height: 28px;
-}
-
-
-
-/* Button Colors */
-.save-btn,
-.add-btn,
-.btn-primary, 
-.btn-download { 
-    background: var(--primary); 
-}
-
-.save-btn:hover,
-.add-btn:hover,
-.btn-primary:hover,
-.btn-download:hover { 
-    background: var(--primary-dark);
-}
-
-.edit-btn,
-.btn-secondary { 
-    background: var(--secondary); 
-}
-
-.edit-btn:hover,
-.btn-secondary:hover { 
-    background: var(--secondary-dark); 
-}
-
-.delete-btn,
-.remove-btn { 
-    background: var(--danger); 
-}
-
-.delete-btn:hover,
-.remove-btn:hover { 
-    background: var(--danger-dark); 
-}
-
-.cancel-btn,
-.back-btn { 
-    background: var(--neutral); 
-}
-
-.cancel-btn:hover,
-.back-btn:hover { 
-    background: var(--neutral-dark); 
-}
-
-.timer-btn { 
-    background: var(--timer); 
-}
-
-.timer-btn:hover { 
-    background: var(--timer-dark); 
-}
-
-.timer-btn.active { 
-    background: var(--primary); 
 }
 
 /* Tables */
@@ -380,17 +389,23 @@ tbody tr:hover {
     text-align: right; 
 }
 
-.summary-table {
-    margin: 20px 0;
-}
-
 /* Job Status & List */
 .timer-active {
-    background-color: var(--timer-light);
+    background-color: var(--accent-light);
 }
 
 .job-row {
     transition: background-color 0.3s;
+}
+
+.job-row td {
+    padding: 6px 8px;
+}
+
+.job-row td .btn-group {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
 }
 
 .status-Active { 
@@ -399,7 +414,7 @@ tbody tr:hover {
 }
 
 .status-Pending { 
-    color: var(--timer-dark);
+    color: var(--accent-dark);
     font-weight: 600;
 }
 
@@ -428,11 +443,24 @@ tbody tr:hover {
     margin-top: 0;
 }
 
+/* Timer Specific Styles */
+.active-timer-section {
+    background-color: var(--primary-light);
+    border-left: 3px solid var(--danger);
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.timer-duration {
+    font-weight: bold;
+    color: var(--danger);
+}
+
 /* Animations */
 @keyframes pulse {
-    0% { background-color: var(--timer-light); }
-    50% { background-color: var(--timer); } 
-    100% { background-color: var(--timer-dark); }
+    0% { background-color: var(--accent-light); }
+    50% { background-color: var(--accent); } 
+    100% { background-color: var(--accent-dark); }
 }
 
 .timer-active .timer-btn {
@@ -440,6 +468,7 @@ tbody tr:hover {
 }
 
 /* Image & Photo Styles */
+.file-grid,
 .image-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -447,6 +476,7 @@ tbody tr:hover {
     padding: 1rem 0;
 }
 
+.file-card,
 .image-card {
     position: relative;
     border: 1px solid var(--border-color);
@@ -457,11 +487,13 @@ tbody tr:hover {
     box-shadow: var(--shadow-sm);
 }
 
+.file-card:hover,
 .image-card:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
 }
 
+.file-card img,
 .image-card img {
     width: 100%;
     height: 200px;
@@ -470,16 +502,19 @@ tbody tr:hover {
     cursor: pointer;
 }
 
+.file-info,
 .image-info {
     margin-top: 0.5rem;
     font-size: 0.9em;
     color: var(--text-muted);
+    word-break: break-word;
 }
 
+.file-actions,
 .image-actions {
     margin-top: 0.5rem;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
 }
 
 .select-overlay {
@@ -493,17 +528,50 @@ tbody tr:hover {
     box-shadow: var(--shadow-sm);
 }
 
+.file-select,
 .image-select {
     transform: scale(1.5);
     cursor: pointer;
 }
 
-.share-controls {
-    margin-bottom: 1rem;
+/* PDF Elements */
+.pdf-preview {
+    width: 100%;
+    height: 200px;
+    background-color: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.pdf-icon {
+    background-color: var(--danger);
+    color: white;
+    font-weight: bold;
+    padding: 30px 40px;
+    border-radius: 4px;
+    font-size: 24px;
+}
+
+#pdfViewer {
+    width: 90%;
+    height: 90%;
+    margin: auto;
+    border: none;
+    background-color: white;
+}
+
+.file-type-hint {
+    margin-top: 5px;
+    font-size: 0.8em;
+    color: var(--text-muted);
 }
 
 /* Modals */
-.modal, .shared-modal {
+.modal, 
+.shared-modal {
     display: none;
     position: fixed;
     top: 0;
@@ -526,23 +594,25 @@ tbody tr:hover {
     box-shadow: var(--shadow-lg);
 }
 
-.modal img, #imageModal img {
-    max-width: 90%;
-    max-height: 90%;
-    margin: auto;
-    display: block;
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow-lg);
-}
-
+.modal img, 
+#imageModal img,
 .shared-modal-content {
     max-width: 90%;
     max-height: 90%;
     margin: auto;
     display: block;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-lg);
+}
+
+.modal img, 
+#imageModal img {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.shared-modal-content {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -564,7 +634,11 @@ tbody tr:hover {
     color: #bbb;
 }
 
-/* Forms & Inputs */
+/* Share controls */
+.share-controls {
+    margin-bottom: 1rem;
+}
+
 #shareLink {
     width: 100%;
     padding: 8px;
@@ -577,8 +651,9 @@ tbody tr:hover {
     margin-top: 15px;
 }
 
-/* Messages */
-.status-message, .error-message {
+/* Status Messages */
+.status-message, 
+.error-message {
     padding: 15px;
     border-radius: var(--border-radius);
     margin-top: 20px;
@@ -591,7 +666,8 @@ tbody tr:hover {
     border: 1px solid var(--primary);
 }
 
-.status-message.error, .error-message {
+.status-message.error, 
+.error-message {
     background: var(--danger-light);
     color: var(--danger-dark);
     border: 1px solid var(--danger);
@@ -618,7 +694,7 @@ tbody tr:hover {
 .dropdown-content a,
 .dropdown-content button.dropdown-item {
     color: var(--text-dark);
-    padding: 12px 16px;
+    padding: 8px 12px;
     text-decoration: none;
     display: block;
     text-align: left;
@@ -656,83 +732,18 @@ tbody tr:hover {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Photo Button Styles */
-#toggleSelectBtn {
-    background: var(--timer);
-    color: white;
-    font-weight: 500;
-    padding: 8px 16px;
-    min-width: 120px;
-}
-
-#toggleSelectBtn:hover {
-    background: var(--timer-dark);
-}
-
-#toggleSelectBtn.active {
-    background: var(--neutral);
-    color: white;
-}
-
-/* Shared Images & Expiry */
-.shared-container h1 {
-    color: var(--text-dark);
-    margin-top: 0;
-}
-
-.expiry-info {
-    color: var(--text-muted);
-    font-style: italic;
-    margin-bottom: 20px;
-}
-
-.btn-download {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    padding: 8px 16px;
-    text-decoration: none;
-    border-radius: var(--border-radius);
-    margin-bottom: 20px;
-    font-weight: 500;
-    box-shadow: var(--shadow-sm);
-    transition: all var(--transition-speed);
-    height: 36px;
-    min-width: 120px;
-}
-
-.btn-download:hover {
-    background-color: var(--primary-dark);
-    box-shadow: var(--shadow-md);
-    transform: translateY(-1px);
-}
-
-/* System Settings */
-.settings-section {
-    background: white;
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius);
-    padding: 15px;
-    margin-bottom: 20px;
-    box-shadow: var(--shadow-sm);
-}
-
-.settings-section h3 {
-    margin-top: 0;
-    color: var(--text-dark);
-    font-size: 1.2rem;
-}
-
-#system-info {
-    background: var(--background-light);
-    padding: 15px;
-    border-radius: var(--border-radius);
-}
-
-/* Weekly Summary */
+/* Weekly Summary Styles */
 .week-selector {
     margin-bottom: 10px;
+}
+
+.summary-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .week-stats {
@@ -762,7 +773,8 @@ tbody tr:hover {
     margin-top: 5px;
 }
 
-.day-card, .week-card {
+.day-card, 
+.week-card {
     background: white;
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
@@ -771,8 +783,9 @@ tbody tr:hover {
     box-shadow: var(--shadow-sm);
 }
 
-.day-header, .week-header {
-    padding: 12px 15px;
+.day-header, 
+.week-header {
+    padding: 8px 10px;
     background: var(--background-light);
     border-bottom: 1px solid var(--border-color);
     display: flex;
@@ -780,12 +793,14 @@ tbody tr:hover {
     align-items: center;
 }
 
-.day-header h4, .week-header h4 {
+.day-header h4, 
+.week-header h4 {
     margin: 0;
     font-weight: 600;
 }
 
-.day-total, .week-total {
+.day-total, 
+.week-total {
     color: var(--text-muted);
     font-weight: 500;
 }
@@ -837,6 +852,19 @@ tbody tr:hover {
     font-weight: 500;
 }
 
+/* Current week indicator */
+.current-week {
+    background-color: #f0f7ff;
+    border-left: 3px solid var(--primary);
+}
+
+.current-marker {
+    font-size: 0.9em;
+    color: var(--primary);
+    font-weight: bold;
+    margin-left: 8px;
+}
+
 /* Invoice */
 .invoice-total {
     text-align: right;
@@ -852,6 +880,54 @@ tbody tr:hover {
 
 .invoice-total strong {
     color: var(--text-dark);
+}
+
+/* Table Column Widths */
+.summary-table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.summary-table th,
+.summary-table td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.summary-table th:nth-child(1),
+.summary-table td:nth-child(1) {
+    width: 20%; /* Customer column */
+}
+
+.summary-table th:nth-child(2),
+.summary-table td:nth-child(2) {
+    width: 45%; /* Job description column */
+}
+
+.summary-table th:nth-child(3),
+.summary-table td:nth-child(3) {
+    width: 15%; /* Hours column */
+    text-align: right;
+}
+
+.summary-table th:nth-child(4),
+.summary-table td:nth-child(4) {
+    width: 15%; /* Amount column */
+    text-align: right;
+}
+
+.summary-table td:nth-child(2):hover {
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+.total-row td {
+    text-align: right;
+}
+
+.total-row td:first-child {
+    text-align: left;
 }
 
 /* Utilities */
@@ -871,23 +947,14 @@ tbody tr:hover {
     flex: 1;
 }
 
-/* Summary controls */
-.summary-controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
 /* Print Styles */
 @media print {
     .header-nav,
     .nav-menu,
     .action-btn,
-    .btn {
-        display: none;
+    .btn,
+    .no-print {
+        display: none !important;
     }
     
     body {
@@ -896,7 +963,9 @@ tbody tr:hover {
         background: white;
     }
     
-    .container, .settings-container, .summary-container {
+    .container, 
+    .settings-container, 
+    .summary-container {
         box-shadow: none;
         max-width: 100%;
     }
@@ -905,13 +974,29 @@ tbody tr:hover {
         box-shadow: none;
     }
     
-    .item-row, .day-card, .week-card {
+    .item-row, 
+    .day-card, 
+    .week-card {
         box-shadow: none;
         page-break-inside: avoid;
     }
+    
+    .invoice-footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: white;
+        padding: 15px;
+        border-top: 1px solid #ddd;
+    }
+    
+    .invoice-total {
+        margin-bottom: 150px;
+    }
 }
 
-/* Responsive adaptations */
+/* Responsive Adaptations */
 @media (max-width: 768px) {
     .form-grid {
         grid-template-columns: 1fr;
@@ -943,69 +1028,13 @@ tbody tr:hover {
     
     .btn-group {
         justify-content: center;
+        flex-wrap: wrap;
     }
     
-    .day-header, .week-header {
+    .day-header, 
+    .week-header {
         flex-direction: column;
         gap: 5px;
-    }
-}
-
-
-/* Adjust button groups to prevent wrapping */
-.btn-group {
-    flex-wrap: nowrap;
-    overflow-x: auto;  /* Allow horizontal scrolling on small screens */
-    padding-bottom: 5px; /* Space for scrollbar */
-}
-
-/* Adjust tables to prevent button wrapping */
-td .btn-group {
-    white-space: nowrap;
-    display: flex;
-}
-
-/* Adjustments for specific buttons */
-#toggleSelectBtn {
-    min-width: 90px;    /* Reduced from 120px */
-    padding: 2px 4px;
-    height: 28px;
-}
-
-.btn-download {
-    height: 28px;
-    min-width: 90px;    /* Reduced from 120px */
-    padding: 2px 4px;
-}
-
-/* Compact version of day/week headers */
-.day-header, .week-header {
-    padding: 8px 10px;  /* Reduced from 12px 15px */
-}
-
-/* Ensure dropdown menu items are small but clickable */
-.dropdown-content a,
-.dropdown-content button.dropdown-item {
-    padding: 8px 12px;  /* Reduced from 12px 16px */
-}
-
-/* Ensure button wrapping doesn't happen in job lists */
-.job-row td .btn-group {
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-}
-
-/* Make sure job list rows have enough height */
-.job-row td {
-    padding: 6px 8px;  /* Reduced padding */
-}
-
-/* Adjustments for mobile */
-@media (max-width: 768px) {
-    /* Allow button wrapping on very small screens */
-    .btn-group {
-        flex-wrap: wrap;
     }
     
     /* Stack buttons in job entries on mobile */
@@ -1017,143 +1046,4 @@ td .btn-group {
     .job-row td .action-btn {
         margin-bottom: 4px;
     }
-}
-
-/* PDF and File Styles - Add to app/static/css/styles.css */
-
-/* File Grid - Updated version of image-grid */
-.file-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1rem;
-    padding: 1rem 0;
-}
-
-.file-card {
-    position: relative;
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius);
-    padding: 0.5rem;
-    background: white;
-    transition: transform 0.2s;
-    box-shadow: var(--shadow-sm);
-}
-
-.file-card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-}
-
-.file-card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 2px;
-    cursor: pointer;
-}
-
-.pdf-preview {
-    width: 100%;
-    height: 200px;
-    background-color: #f8f9fa;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 2px;
-    cursor: pointer;
-}
-
-.pdf-icon {
-    background-color: #e74c3c;
-    color: white;
-    font-weight: bold;
-    padding: 30px 40px;
-    border-radius: 4px;
-    font-size: 24px;
-}
-
-.file-info {
-    margin-top: 0.5rem;
-    font-size: 0.9em;
-    color: var(--text-muted);
-    word-break: break-word;
-}
-
-.file-actions {
-    margin-top: 0.5rem;
-    display: flex;
-    justify-content: space-between;
-}
-
-.file-select {
-    transform: scale(1.5);
-    cursor: pointer;
-}
-
-/* PDF viewer in modal */
-#pdfViewer {
-    width: 90%;
-    height: 90%;
-    margin: auto;
-    border: none;
-    background-color: white;
-}
-
-/* File type hint */
-.file-type-hint {
-    margin-top: 5px;
-    font-size: 0.8em;
-    color: var(--text-muted);
-}
-
-/* Fixed width columns for tables */
-.summary-table {
-    table-layout: fixed;
-    width: 100%;
-}
-
-.summary-table th,
-.summary-table td {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-/* Column widths */
-.summary-table th:nth-child(1),
-.summary-table td:nth-child(1) {
-    width: 20%; /* Customer column */
-}
-
-.summary-table th:nth-child(2),
-.summary-table td:nth-child(2) {
-    width: 45%; /* Job description column */
-}
-
-.summary-table th:nth-child(3),
-.summary-table td:nth-child(3) {
-    width: 15%; /* Hours column */
-    text-align: right;
-}
-
-.summary-table th:nth-child(4),
-.summary-table td:nth-child(4) {
-    width: 15%; /* Amount column */
-    text-align: right;
-}
-
-/* Make job description wrap on hover for longer descriptions */
-.summary-table td:nth-child(2):hover {
-    white-space: normal;
-    word-wrap: break-word;
-}
-
-/* Right align totals */
-.total-row td {
-    text-align: right;
-}
-
-/* Make sure the total label is left-aligned */
-.total-row td:first-child {
-    text-align: left;
 }

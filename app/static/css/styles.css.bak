@@ -1,0 +1,816 @@
+/* Variables */
+:root {
+    --primary: #4CAF50;
+    --primary-dark: #388E3C;
+    --primary-light: #C8E6C9;
+    --secondary: #2196F3;
+    --secondary-dark: #1976D2;
+    --secondary-light: #BBDEFB;
+    --danger: #f44336;
+    --danger-dark: #d32f2f;
+    --danger-light: #FFCDD2;
+    --neutral: #757575;
+    --neutral-dark: #616161;
+    --neutral-light: #E0E0E0;
+    --timer: #FF9800;
+    --timer-dark: #F57C00;
+    --timer-light: #FFE0B2;
+    --border-color: #ddd;
+    --background-light: #f9f9f9;
+    --background-hover: #f5f5f5;
+    --text-dark: #333;
+    --text-muted: #666;
+    --text-light: #777;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    --shadow-md: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    --shadow-lg: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    --border-radius: 4px;
+    --transition-speed: 0.3s;
+}
+
+/* Reset & Base */
+a {
+    text-decoration: none;
+    color: var(--secondary);
+}
+
+a:hover {
+    color: var(--secondary-dark);
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 1200px;
+    color: var(--text-dark);
+    line-height: 1.5;
+    background-color: #f5f5f5;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+/* Layout Components */
+.flex-row {
+    display: flex;
+    align-items: center;
+    backdrop-filter: blur(3px);
+}
+
+.modal-content {
+    background: white;
+    width: 90%;
+    max-width: 500px;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-lg);
+}
+
+.modal img, #imageModal img, #fullImage {
+    max-width: 90%;
+    max-height: 90%;
+    margin: auto;
+    display: block;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-lg);
+}
+
+.shared-modal-content {
+    max-width: 90%;
+    max-height: 90%;
+    margin: auto;
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: white;
+    font-size: 35px;
+    font-weight: bold;
+    cursor: pointer;
+    text-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+
+.modal-close:hover {
+    color: #bbb;
+}
+
+/* PDF viewer in modal */
+#pdfViewer {
+    width: 90%;
+    height: 90%;
+    margin: auto;
+    border: none;
+    background-color: white;
+}
+
+/* Forms & Inputs */
+#shareLink {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+}
+
+#shareResult {
+    margin-top: 15px;
+}
+
+/* Messages */
+.status-message, .error-message {
+    padding: 15px;
+    border-radius: var(--border-radius);
+    margin-top: 20px;
+    box-shadow: var(--shadow-sm);
+}
+
+.status-message.success {
+    background: var(--primary-light);
+    color: var(--primary-dark);
+    border: 1px solid var(--primary);
+}
+
+.status-message.error, .error-message {
+    background: var(--danger-light);
+    color: var(--danger-dark);
+    border: 1px solid var(--danger);
+}
+
+/* Dropdowns */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: white;
+    min-width: 200px;
+    box-shadow: var(--shadow-md);
+    z-index: 1;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+.dropdown-content a,
+.dropdown-content button.dropdown-item {
+    color: var(--text-dark);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    background: none;
+    border: none;
+    width: 100%;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color var(--transition-speed);
+}
+
+.dropdown-content a:hover,
+.dropdown-content button.dropdown-item:hover {
+    background-color: var(--background-hover);
+}
+
+.dropdown-toggle::after {
+    content: "▼";
+    font-size: 10px;
+    margin-left: 5px;
+    transition: transform var(--transition-speed);
+}
+
+.dropdown-toggle.active::after {
+    transform: rotate(180deg);
+}
+
+.show {
+    display: block;
+    animation: fadeIn 0.2s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Photo Button Styles */
+#toggleSelectBtn {
+    background: var(--timer);
+    color: white;
+    font-weight: 500;
+    padding: 8px 16px;
+    min-width: 120px;
+}
+
+#toggleSelectBtn:hover {
+    background: var(--timer-dark);
+}
+
+#toggleSelectBtn.active {
+    background: var(--neutral);
+    color: white;
+}
+
+/* Shared Images & Expiry */
+.shared-container h1 {
+    color: var(--text-dark);
+    margin-top: 0;
+}
+
+.expiry-info {
+    color: var(--text-muted);
+    font-style: italic;
+    margin-bottom: 20px;
+}
+
+.btn-download {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: var(--border-radius);
+    margin-bottom: 20px;
+    font-weight: 500;
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-speed);
+    height: 36px;
+    min-width: 120px;
+}
+
+.btn-download:hover {
+    background-color: var(--primary-dark);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+}
+
+/* System Settings */
+.settings-section {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-sm);
+}
+
+.settings-section h3 {
+    margin-top: 0;
+    color: var(--text-dark);
+    font-size: 1.2rem;
+}
+
+#system-info {
+    background: var(--background-light);
+    padding: 15px;
+    border-radius: var(--border-radius);
+}
+
+/* Weekly Summary */
+.week-selector {
+    margin-bottom: 10px;
+}
+
+.week-stats {
+    display: flex;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.stat-box {
+    background: rgb(230, 230, 230);
+    border-radius: var(--border-radius);
+    padding: 8px;
+    min-width: 80px;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    flex: 1;
+}
+
+.stat-value {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--text-dark);
+}
+
+.stat-label {
+    color: var(--text-muted);
+    margin-top: 5px;
+}
+
+.day-card, .week-card {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    margin-bottom: 10px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.day-header, .week-header {
+    padding: 12px 15px;
+    background: var(--background-light);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.day-header h4, .week-header h4 {
+    margin: 0;
+    font-weight: 600;
+}
+
+.day-total, .week-total {
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.day-jobs {
+    padding: 10px 15px;
+}
+
+.job-entry {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.job-entry:last-child {
+    border-bottom: none;
+}
+
+.job-info {
+    margin-bottom: 5px;
+}
+
+.job-info strong {
+    color: var(--text-dark);
+}
+
+.job-time {
+    color: var(--text-muted);
+    font-size: 0.9em;
+    margin-bottom: 8px;
+}
+
+.time-entries {
+    margin-left: 15px;
+    font-size: 0.85em;
+    color: var(--text-light);
+    background: var(--background-light);
+    padding: 8px;
+    border-radius: var(--border-radius);
+}
+
+.time-entry {
+    display: flex;
+    gap: 5px;
+    padding: 2px 0;
+}
+
+.entry-time {
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+/* Invoice */
+.invoice-total {
+    text-align: right;
+    margin-top: 20px;
+    padding: 15px;
+    background: var(--background-light);
+    border-radius: var(--border-radius);
+}
+
+.invoice-total p {
+    margin: 5px 0;
+}
+
+.invoice-total strong {
+    color: var(--text-dark);
+}
+
+/* Invoice header styles */
+.header {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.business-details, .invoice-details {
+    flex: 1;
+}
+
+.invoice-details {
+    text-align: right;
+}
+
+.invoice-date-container {
+    margin-top: 10px;
+}
+
+.customer-details {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.billing-info, .job-info {
+    flex: 1;
+}
+
+.invoice-footer {
+    margin-top: 40px;
+    border-top: 1px solid #ddd;
+    padding-top: 15px;
+    font-size: 0.9em;
+    color: #666;
+    page-break-inside: avoid;
+}
+
+.banking-info {
+    margin-top: 15px;
+}
+
+/* Job Details Styles */
+.current-week {
+    background-color: #f0f7ff;
+    border-left: 3px solid #4CAF50;
+}
+
+.current-marker {
+    font-size: 0.9em;
+    color: #4CAF50;
+    font-weight: bold;
+    margin-left: 8px;
+}
+
+.active-timer-section {
+    background-color: #e8f5e9;
+    border-left: 3px solid #f44336;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.timer-active {
+    background-color: #e8f5e9;
+}
+
+.timer-duration {
+    font-weight: bold;
+    color: #f44336;
+}
+
+.stop-timer {
+    background-color: #f44336;
+}
+
+/* Quick Timer Mobile View */
+.job-card {
+    background: white;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+.active-timer {
+    background: #b6e6ba;
+}
+
+.customer-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.job-description {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.timer-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1em;
+    cursor: pointer;
+}
+
+.start-timer {
+    background: #4CAF50;
+    color: white;
+}
+
+.stop-timer {
+    background: #f44336;
+    color: white;
+}
+
+.hours {
+    float: right;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.refresh-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    background: #2196F3;
+    color: white;
+    border: none;
+    font-size: 24px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    cursor: pointer;
+}
+
+.photo-btn {
+    position: absolute;
+    right: 70px;
+    top: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    font-size: 20px;
+    line-height: 40px;
+    text-align: center;
+}
+
+#uploadProgress {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    display: none;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* Utilities */
+.hidden {
+    display: none;
+}
+
+/* Material Row */
+.material-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.material-row input {
+    flex: 1;
+}
+
+/* Summary controls */
+.summary-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Error page styles */
+.error-page {
+    text-align: center;
+    padding: 20px;
+}
+
+.error-page a {
+    display: inline-block;
+    padding: 10px 20px;
+    background: var(--primary);
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-top: 20px;
+}
+
+/* Fixed width columns for tables */
+.summary-table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.summary-table th,
+.summary-table td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Column widths */
+.summary-table th:nth-child(1),
+.summary-table td:nth-child(1) {
+    width: 20%; /* Customer column */
+}
+
+.summary-table th:nth-child(2),
+.summary-table td:nth-child(2) {
+    width: 45%; /* Job description column */
+}
+
+.summary-table th:nth-child(3),
+.summary-table td:nth-child(3) {
+    width: 15%; /* Hours column */
+    text-align: right;
+}
+
+.summary-table th:nth-child(4),
+.summary-table td:nth-child(4) {
+    width: 15%; /* Amount column */
+    text-align: right;
+}
+
+/* Make job description wrap on hover for longer descriptions */
+.summary-table td:nth-child(2):hover {
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+/* Right align totals */
+.total-row td {
+    text-align: right;
+}
+
+/* Make sure the total label is left-aligned */
+.total-row td:first-child {
+    text-align: left;
+}
+
+/* Print Styles */
+@media print {
+    .header-nav,
+    .nav-menu,
+    .action-btn,
+    .btn,
+    .no-print {
+        display: none !important;
+    }
+    
+    body {
+        margin: 0;
+        padding: 0;
+        background: white;
+    }
+    
+    .container, .settings-container, .summary-container {
+        box-shadow: none;
+        max-width: 100%;
+    }
+    
+    table {
+        box-shadow: none;
+    }
+    
+    .item-row, .day-card, .week-card {
+        box-shadow: none;
+        page-break-inside: avoid;
+    }
+    
+    .invoice-footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: white;
+        padding: 15px;
+        border-top: 1px solid #ddd;
+    }
+    
+    /* Add some bottom margin to the content to prevent overlap with footer */
+    .invoice-total {
+        margin-bottom: 150px;
+    }
+}
+
+/* Responsive adaptations */
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .week-stats {
+        flex-direction: column;
+    }
+    
+    .header-nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .nav-menu {
+        flex-direction: column;
+    }
+    
+    .nav-links {
+        flex-direction: row;
+        justify-content: center;
+        width: 100%;
+    }
+    
+    .system-buttons {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .btn-group {
+        justify-content: center;
+    }
+    
+    .day-header, .week-header {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    /* Adjust button groups to prevent wrapping */
+    .btn-group {
+        flex-wrap: nowrap;
+        overflow-x: auto;  /* Allow horizontal scrolling on small screens */
+        padding-bottom: 5px; /* Space for scrollbar */
+    }
+    
+    /* Adjust tables to prevent button wrapping */
+    td .btn-group {
+        white-space: nowrap;
+        display: flex;
+    }
+    
+    /* Adjustments for specific buttons */
+    #toggleSelectBtn {
+        min-width: 90px;    /* Reduced from 120px */
+        padding: 2px 4px;
+        height: 28px;
+    }
+    
+    .btn-download {
+        height: 28px;
+        min-width: 90px;    /* Reduced from 120px */
+        padding: 2px 4px;
+    }
+    
+    /* Compact version of day/week headers */
+    .day-header, .week-header {
+        padding: 8px 10px;  /* Reduced from 12px 15px */
+    }
+    
+    /* Ensure dropdown menu items are small but clickable */
+    .dropdown-content a,
+    .dropdown-content button.dropdown-item {
+        padding: 8px 12px;  /* Reduced from 12px 16px */
+    }
+    
+    /* Allow button wrapping on very small screens */
+    .btn-group {
+        flex-wrap: wrap;
+    }
+    
+    /* Stack buttons in job entries on mobile */
+    .job-row td .btn-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .job-row td .action-btn {
+        margin-bottom: 4px;
+    }
+}

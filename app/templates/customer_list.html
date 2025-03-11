@@ -5,19 +5,19 @@
 <div>
     <div class="search-section">
         <input type="text" id="searchInput" placeholder="Search customer by name, email, phone, or location..." 
-               style="max-width: 350px; padding: 4px 12px; height: 36px; box-sizing: border-box; border: 1px solid #ddd;">
+               class="form-control" style="max-width: 350px;">
         <button onclick="clearSearch()" class="action-btn cancel-btn">Clear</button>
         <a href="{{ url_for('customer.add_customer') }}" class="action-btn save-btn">Add Customer</a>
     </div>
     <hr>
     
-    <table style="width: 100%; border-collapse: collapse;">
+    <table>
         <thead>
-            <tr style="background: #f5f5f5;">
-                <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Name</th>
-                <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Contact</th>
-                <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Location</th>
-                <th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Actions</th>
+            <tr>
+                <th>Name</th>
+                <th>Contact</th>
+                <th>Location</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -28,16 +28,16 @@
                 data-phone="{{ customer.phone if customer.phone else '' }}"
                 data-city="{{ customer.city|lower if customer.city else '' }}"
                 data-country="{{ customer.country|lower if customer.country else '' }}">
-                <td style="padding: 10px; border: 1px solid #ddd;">{{ customer.name }}</td>
-                <td style="padding: 10px; border: 1px solid #ddd;">
+                <td>{{ customer.name }}</td>
+                <td>
                     {% if customer.email %}Email: {{ customer.email }}<br>{% endif %}
                     {% if customer.phone %}Phone: {{ customer.phone }}{% endif %}
                 </td>
-                <td style="padding: 10px; border: 1px solid #ddd;">
+                <td>
                     {% if customer.city %}{{ customer.city }}{% endif %}
                     {% if customer.country %}, {{ customer.country }}{% endif %}
                 </td>
-                <td style="padding: 10px; border: 1px solid #ddd;">
+                <td>
                     <div class="btn-group">
                         <a href="{{ url_for('customer.edit_customer', id=customer.id) }}" 
                            class="action-btn edit-btn">Edit</a>
