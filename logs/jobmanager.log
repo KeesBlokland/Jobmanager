@@ -2377,3 +2377,50 @@ Traceback (most recent call last):
     return app.render_template('404.html'), 404
            ^^^^^^^^^^^^^^^^^^^
 AttributeError: 'Flask' object has no attribute 'render_template'
+2025-03-12 16:03:39,341 [ERROR] Exception on /static/js/file-upload.js [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 713, in <lambda>
+    view_func=lambda **kw: self_ref().send_static_file(**kw),  # type: ignore # noqa: B950
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/scaffold.py", line 331, in send_static_file
+    return send_from_directory(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/helpers.py", line 590, in send_from_directory
+    return werkzeug.utils.send_from_directory(  # type: ignore[return-value]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/werkzeug/utils.py", line 586, in send_from_directory
+    raise NotFound()
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1666, in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1606, in handle_http_exception
+    return self.ensure_sync(handler)(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/__init__.py", line 93, in page_not_found
+    return app.render_template('404.html'), 404
+           ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Flask' object has no attribute 'render_template'
+2025-03-12 16:20:01,921 [INFO] Weekly summary request - selected_week: None, show_all: False
+2025-03-12 16:20:01,922 [INFO] No week selected, using current week: 2025-W11
+2025-03-12 16:20:01,922 [INFO] Fetching available weeks
+2025-03-12 16:20:01,922 [INFO] Found 36 distinct dates with time entries
+2025-03-12 16:20:01,922 [INFO] Processed 6 unique weeks
+2025-03-12 16:20:01,922 [INFO] Final view settings - selected_week: 2025-W11, show_all: False
+2025-03-12 16:20:01,923 [INFO] Found 20 time entries for week 2025-W11
