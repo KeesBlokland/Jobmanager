@@ -5,14 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jobs</title>
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    {% block head %}{% endblock %}
 </head>
 <body>
     <div class="header-nav">
         <div class="nav-menu">
-            <div class="flex-row">
-                <div>
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <div style="text-align: center;">
                     <img src="{{ url_for('job.generate_qr') }}" 
                          alt="Quick Timer QR Code" 
                          style="width: 80px; height: 80px; background: white; padding: 5px; border-radius: 4px;">
@@ -79,5 +79,6 @@
         }
     });
     </script>
+    {% block scripts %}{% endblock %}
 </body>
 </html>

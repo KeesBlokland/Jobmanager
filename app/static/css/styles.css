@@ -1226,3 +1226,26 @@ tbody tr:hover {
     color: var(--text-dark);
     padding: 4px;
 }
+
+/* file-upload.css - Save in app/static/css/ directory */
+.custom-file-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.custom-file-button {
+    /* Inherits styles from .action-btn and .edit-btn */
+    /* Added min-width to match other buttons */
+    min-width: 80px;
+}
+
+.file-name-display {
+    font-size: 0.9em;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
+

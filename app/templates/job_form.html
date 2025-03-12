@@ -9,7 +9,7 @@
     {% if templates %}
     <div class="form-section">
         <h3>Load from Template</h3>
-        <select id="template-select" onchange="loadTemplate(this.value)">
+        <select id="template-select" onchange="loadTemplate(this.value)" style="background: var(--secondary); color: white; border: none; border-radius: var(--border-radius);">
             <option value="">Select a template...</option>
             {% for template in templates %}
             <option value="{{ template.id }}">{{ template.template_name }}</option>
@@ -56,12 +56,12 @@
                     <input type="text" name="materials[]" value="{{ material.material }}" placeholder="Material description">
                     <input type="number" name="quantities[]" value="{{ material.quantity }}" placeholder="Qty" step="0.1" style="width: 80px;">
                     <input type="number" name="prices[]" value="{{ material.price }}" placeholder="€/item" step="0.01" style="width: 80px;">
-                    <button type="button" onclick="removeMaterial(this)">Remove</button>
+                    <button type="button" onclick="removeMaterial(this)" class="action-btn delete-btn">Remove</button>
                 </div>
                 {% endfor %}
                 {% endif %}
             </div>
-            <button type="button" onclick="addMaterial()" class="btn btn-primary">Add Material</button>
+            <button type="button" onclick="addMaterial()" class="action-btn save-btn">Add Material</button>
         </div>
 
         <div class="form-section">
@@ -78,13 +78,13 @@
         </div>
         
         <div class="btn-group">
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="action-btn save-btn">
                 {% if job %}Save Changes{% else %}Create Job{% endif %}
             </button>
-            <a href="{{ url_for('job.job_list') }}" class="btn btn-secondary">Cancel</a>
+            <a href="{{ url_for('job.job_list') }}" class="action-btn cancel-btn">Cancel</a>
             
             {% if job %}
-            <button type="button" onclick="confirmDelete()" class="btn delete-btn">Delete Job</button>
+            <button type="button" onclick="confirmDelete()" class="action-btn delete-btn">Delete Job</button>
             {% endif %}
         </div>
     </form>
@@ -104,7 +104,7 @@ function addMaterial() {
         <input type="text" name="materials[]" placeholder="Material description">
         <input type="number" name="quantities[]" placeholder="Qty" step="0.1" style="width: 80px;">
         <input type="number" name="prices[]" placeholder="€/item" step="0.01" style="width: 80px;">
-        <button type="button" onclick="removeMaterial(this)">Remove</button>
+        <button type="button" onclick="removeMaterial(this)" class="action-btn delete-btn">Remove</button>
     `;
     container.appendChild(row);
 }
@@ -170,7 +170,7 @@ function loadTemplate(templateId) {
                     <input type="text" name="materials[]" value="${material.material}">
                     <input type="number" name="quantities[]" value="${material.quantity}" step="0.1" style="width: 80px;">
                     <input type="number" name="prices[]" value="${material.price}" step="0.01" style="width: 80px;">
-                    <button type="button" onclick="removeMaterial(this)">Remove</button>
+                    <button type="button" onclick="removeMaterial(this)" class="action-btn delete-btn">Remove</button>
                 `;
                 container.appendChild(row);
             });

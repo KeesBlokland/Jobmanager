@@ -1,0 +1,19 @@
+/* Fix for the Upload File button width */
+.form-section .btn-group button[type="submit"] {
+    min-width: 100px;  /* Match the width of other action buttons */
+    padding: 4px 12px; /* Add more horizontal padding */
+}
+
+/* Fix for the Choose File button */
+.custom-file-button {
+    min-width: 100px; /* Match the width of other action buttons */
+    padding: 4px 12px; /* Add more horizontal padding */
+}
+
+/* Ensure the button heights are consistent */
+.btn-group button, 
+.custom-file-button, 
+.form-control {
+    height: 28px;
+    box-sizing: border-box;
+}

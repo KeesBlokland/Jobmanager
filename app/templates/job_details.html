@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 
+{% block head %}
+<!-- Add this inside the head block -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/file-upload.css') }}">
+<script src="{{ url_for('static', filename='js/file-upload.js') }}" defer></script>
+{% endblock %}
+
 {% block content %}
 {% set month_names = {
     '01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr',
@@ -286,7 +292,8 @@
         <div class="form-section">
             <form action="{{ url_for('image.upload_direct', job_id=job.id) }}" method="post" enctype="multipart/form-data">
                 <div class="btn-group">
-                    <input type="file" name="file" id="fileInput" accept=".jpg,.jpeg,.png,.gif,.pdf" class="form-control" style="width: 300px;">
+                    <!-- The file input will be transformed by our JS -->
+                    <input type="file" name="file" id="fileInput" accept=".jpg,.jpeg,.png,.gif,.pdf" class="form-control">
                     <input type="text" name="description" placeholder="File description (optional)" class="form-control" style="width: 250px;">
                     <input type="hidden" name="_redirect" value="true">
                     <button type="submit" class="action-btn save-btn">Upload File</button>
