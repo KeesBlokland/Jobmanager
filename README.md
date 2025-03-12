@@ -16,8 +16,8 @@
 - Smart behaviors reduce administrative overhead
 - Design for workshop environment
 - Future-proof for billing and automation
-- Support for work breaks via pause function
-- Comprehensive search across all data
+- Support for work breaks via pause function (not implemented)
+- Comprehensive search across all data (partly done)
 
 ## Main Entities
 
@@ -32,7 +32,6 @@
   - City
   - Postal Code
   - Country
-- VAT/Tax Number
 - Payment Terms
 - Notes
 ```
@@ -44,13 +43,12 @@
 - Description
 - Status (Active/Pending/Completed)
 - Creation Date
-- Deadline
+- Deadline (not implemented)
 - Rate Information
-  - Base Rate
-  - Custom Rate (if different)
 - Estimated Hours
 - Total Hours Accumulated
 - Last Active
+- Images store
 ```
 
 ### TimeEntry
@@ -65,7 +63,7 @@
 - Adjusted By (if corrected)
 - Adjustment Reason
 - Location (future: for RFID integration)
-- Break Duration
+
 ```
 
 ## User Interface Design
@@ -95,17 +93,15 @@
 ### Mobile Considerations
 - Touch-friendly large tap targets
 - Responsive design (no horizontal scrolling)
-- Simplified views for small screens
-- Bottom navigation for thumb reach
-- Swipe gestures for common actions
+- Only active jobs displayed
 
 ### Smart Behaviors
-- Drag job to top = Start timer
+- Start timer, puts job on top
 - Auto-stop previous job when new one started
 - Click to expand/collapse details
 - Double-click for quick edits
 - Color coding for status/alerts
-- Break tracking with pause button
+- Break tracking with pause button (maybe someday)
 - Global search across all fields
 
 ### Expanded Job View

@@ -153,7 +153,7 @@ h1, h2, h3, h4, h5, h6 {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 4px 8px;
+    padding: 2px 4px;
     border-radius: var(--border-radius);
     color: white;
     margin-right: 5px;
@@ -172,7 +172,6 @@ h1, h2, h3, h4, h5, h6 {
     text-transform: none;
     margin-bottom: 2px;
     white-space: nowrap;
-    box-sizing: border-box;
 }
 
 .btn:hover,
@@ -180,61 +179,20 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: var(--shadow-sm);
 }
 
-/* Normalize top navigation buttons */
-.header-nav .nav-links a,
-.header-nav .system-buttons .dropdown-toggle {
+/* Navigation specific buttons */
+.nav-menu a, 
+.system-buttons .dropdown-toggle {
     padding: 4px 8px;
     height: 28px;
     min-width: 70px;
     font-weight: 400;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin: 0 3px;
-    line-height: 1;
-    font-size: 14px;
-    box-sizing: border-box;
-    border-radius: var(--border-radius);
     background: var(--secondary);
     color: white;
-}
-
-/* Ensure spacing between nav buttons is consistent */
-.nav-links a {
-    margin-right: 5px;
-}
-
-.nav-links a:last-child {
-    margin-right: 0;
 }
 
 .nav-menu a:hover,
 .nav-menu a.active {
     background: var(--secondary-dark);
-}
-
-/* Normalize adjacent button heights in main interface */
-.job-row .btn-group .action-btn,
-.item-row .btn-group .action-btn,
-.detail-section .btn-group .action-btn {
-    padding: 4px 8px;
-    height: 28px;
-    line-height: 20px;
-    box-sizing: border-box;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    vertical-align: middle;
-    margin: 0 3px;
-    border: none;
-}
-
-/* Ensure timer buttons align with adjacent buttons */
-.timer-btn:not(.quick-timer .timer-btn) {
-    height: 28px;
-    padding: 4px 8px;
-    line-height: 20px;
 }
 
 /* Button Colors */
@@ -305,7 +263,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Feature-specific buttons */
 #toggleSelectBtn {
     min-width: 90px;
-    padding: 4px 8px;
+    padding: 2px 4px;
     height: 28px;
     background: var(--accent);
     color: white;
@@ -324,7 +282,7 @@ h1, h2, h3, h4, h5, h6 {
 .btn-download {
     height: 28px;
     min-width: 90px;
-    padding: 4px 8px;
+    padding: 2px 4px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -715,64 +673,24 @@ tbody tr:hover {
     border: 1px solid var(--danger);
 }
 
-/* Standardized Dropdown Styling */
-/* Dropdown container */
+/* Dropdowns */
 .dropdown {
     position: relative;
     display: inline-block;
 }
 
-/* Dropdown toggle button */
-.dropdown-toggle {
-    height: 28px;
-    padding: 4px 8px;
-    border-radius: var(--border-radius);
-    background: var(--secondary);
-    color: white;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 1;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    border: none;
-    box-shadow: var(--shadow-sm);
-    min-width: 70px;
-}
-
-.dropdown-toggle:hover {
-    background: var(--secondary-dark);
-}
-
-/* Dropdown arrow indicator */
-.dropdown-toggle::after {
-    content: "▼";
-    font-size: 10px;
-    margin-left: 5px;
-    transition: transform var(--transition-speed);
-}
-
-.dropdown-toggle.active::after {
-    transform: rotate(180deg);
-}
-
-/* Dropdown menu */
 .dropdown-content {
     display: none;
     position: absolute;
     right: 0;
-    top: 32px; /* Fixed position below toggle button */
     background-color: white;
-    min-width: 180px;
+    min-width: 200px;
     box-shadow: var(--shadow-md);
-    z-index: 100;
+    z-index: 1;
     border-radius: var(--border-radius);
     overflow: hidden;
-    border: 1px solid var(--border-color);
 }
 
-/* Dropdown items */
 .dropdown-content a,
 .dropdown-content button.dropdown-item {
     color: var(--text-dark);
@@ -786,24 +704,31 @@ tbody tr:hover {
     font-size: 14px;
     cursor: pointer;
     transition: background-color var(--transition-speed);
-    margin: 0;
 }
 
 .dropdown-content a:hover,
 .dropdown-content button.dropdown-item:hover {
     background-color: var(--background-hover);
-    color: var(--text-dark);
 }
 
-/* Active state for menu */
+.dropdown-toggle::after {
+    content: "▼";
+    font-size: 10px;
+    margin-left: 5px;
+    transition: transform var(--transition-speed);
+}
+
+.dropdown-toggle.active::after {
+    transform: rotate(180deg);
+}
+
 .show {
     display: block;
     animation: fadeIn 0.2s;
 }
 
-/* Ensure consistent animation */
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-5px); }
+    from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
@@ -1022,26 +947,6 @@ tbody tr:hover {
     flex: 1;
 }
 
-/* Quick Timer (mobile view) */
-.quick-timer .timer-btn {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 6px;
-    font-size: 1.1em;
-    cursor: pointer;
-}
-
-.quick-timer .start-timer {
-    background: var(--primary);
-    color: white;
-}
-
-.quick-timer .stop-timer {
-    background: var(--danger);
-    color: white;
-}
-
 /* Print Styles */
 @media print {
     .header-nav,
@@ -1141,88 +1046,4 @@ tbody tr:hover {
     .job-row td .action-btn {
         margin-bottom: 4px;
     }
-}
-
-/* Weekly Summary Compact Design */
-.summary-controls {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-    gap: 10px;
-    flex-wrap: nowrap;
-    background: var(--background-light);
-    padding: 8px 12px;
-    border-radius: var(--border-radius);
-}
-
-.summary-controls .flex-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin: 0;
-}
-
-.summary-controls label {
-    margin: 0;
-    white-space: nowrap;
-    font-weight: normal;
-}
-
-.summary-controls select {
-    min-width: 120px;
-    max-width: 150px;
-    height: 28px;
-    padding: 2px 5px;
-}
-
-.summary-controls .current-week-display {
-    font-weight: 500;
-    color: var(--primary-dark);
-    margin-right: 8px;
-    white-space: nowrap;
-}
-
-/* Ensure buttons stay on one line */
-.summary-controls form {
-    margin: 0;
-    white-space: nowrap;
-}
-
-.summary-controls .action-btn {
-    margin: 0 0 0 8px;
-    height: 28px;
-    white-space: nowrap;
-}
-
-/* Make the controls stay on one line longer */
-@media (max-width: 768px) {
-    .summary-controls {
-        overflow-x: auto;
-        flex-wrap: nowrap;
-        padding-right: 16px;
-    }
-}
-
-/* Status Filter Dropdown Fix */
-#statusFilter {
-    height: 28px !important;
-    padding: 2px 6px !important;
-    font-size: 14px !important;
-    line-height: 1.5 !important;
-    background: var(--secondary) !important;
-    color: white !important;
-    border: none !important;
-    border-radius: var(--border-radius) !important;
-    box-sizing: border-box !important;
-    min-width: 120px !important;
-}
-
-#statusFilter:hover {
-    background: var(--secondary-dark) !important;
-}
-
-#statusFilter option {
-    background: white;
-    color: var(--text-dark);
-    padding: 4px;
 }

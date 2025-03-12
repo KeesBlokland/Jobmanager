@@ -13,28 +13,38 @@
     <h2>Weekly Summary Report</h2>
     
 <!-- Improved week selection controls for weekly_summary.html -->
+<!-- Updated Summary Controls -->
 <div class="summary-controls">
-    <!-- Week selection dropdown (separate form to immediately submit) -->
     {% if not show_all %}
-        <form action="{{ url_for('report.weekly_summary') }}" method="get" class="flex-row" id="week-select-form">
-            <label for="week">Select week:</label>
-            <select name="week" id="week" onchange="this.form.submit()" class="form-control" style="max-width: 200px;">
-                {% for week_item in available_weeks %}
-                    {% if week_item is mapping and week_item.week_str is defined %}
-                        <option value="{{ week_item.week_str }}" {% if week_item.week_str == selected_week %}selected{% endif %}>
-                            {% if week_item.week_str is string and '-W' in week_item.week_str %}
-                                Week {{ week_item.week_str.split('-W')[1] }}, {{ week_item.week_str.split('-W')[0] }}
-                            {% else %}
-                                {{ week_item.week_str }}
-                            {% endif %}
-                        </option>
-                    {% endif %}
-                {% endfor %}
-            </select>
-        </form>
+        <!-- Display current week info -->
+        <div class="current-week-display">
+            {% if start_date and end_date %}
+                Current: {{ start_date.strftime('%d %b') }} - {{ end_date.strftime('%d %b') }}
+            {% else %}
+                Week {{ selected_week.split('-W')[1] }}, {{ selected_week.split('-W')[0] }}
+            {% endif %}
+        </div>
     {% endif %}
     
-    <!-- Toggle view button (separate form) -->
+    <!-- Week selection dropdown -->
+    <form action="{{ url_for('report.weekly_summary') }}" method="get" class="flex-row" id="week-select-form">
+        <label for="week">Select:</label>
+        <select name="week" id="week" onchange="this.form.submit()" class="form-control">
+            {% for week_item in available_weeks %}
+                {% if week_item is mapping and week_item.week_str is defined %}
+                    <option value="{{ week_item.week_str }}" {% if week_item.week_str == selected_week %}selected{% endif %}>
+                        {% if week_item.week_str is string and '-W' in week_item.week_str %}
+                            Week {{ week_item.week_str.split('-W')[1] }}, {{ week_item.week_str.split('-W')[0] }}
+                        {% else %}
+                            {{ week_item.week_str }}
+                        {% endif %}
+                    </option>
+                {% endif %}
+            {% endfor %}
+        </select>
+    </form>
+    
+    <!-- Toggle view button -->
     <form action="{{ url_for('report.weekly_summary') }}" method="get" class="flex-row">
         <input type="hidden" name="week" value="{{ selected_week }}">
         <input type="hidden" name="show_all" value="{% if show_all %}false{% else %}true{% endif %}">
@@ -104,7 +114,7 @@
         <!-- Week overview -->
         <div class="week-overview">
             {% if start_date and end_date %}
-            <h3>{{ start_date.strftime('%d %b') }} - {{ end_date.strftime('%d %b %Y') }}</h3>
+           <!-- <h3>{{ start_date.strftime('%d %b') }} - {{ end_date.strftime('%d %b %Y') }}</h3> -->
             {% else %}
             <h3>Week {{ selected_week.split('-W')[1] }}, {{ selected_week.split('-W')[0] }}</h3>
             {% endif %}
