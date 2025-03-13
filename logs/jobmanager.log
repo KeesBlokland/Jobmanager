@@ -1,26 +1,11 @@
-2025-03-13 08:22:46,123 [ERROR] Exception on /static/js/file-upload.js [GET]
-Traceback (most recent call last):
-  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3/dist-packages/flask/app.py", line 713, in <lambda>
-    view_func=lambda **kw: self_ref().send_static_file(**kw),  # type: ignore # noqa: B950
-                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3/dist-packages/flask/scaffold.py", line 331, in send_static_file
-    return send_from_directory(
-           ^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3/dist-packages/flask/helpers.py", line 590, in send_from_directory
-    return werkzeug.utils.send_from_directory(  # type: ignore[return-value]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3/dist-packages/werkzeug/utils.py", line 586, in send_from_directory
-    raise NotFound()
-werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
-
-During handling of the above exception, another exception occurred:
-
+2025-03-13 15:05:36,359 [INFO] Weekly summary request - selected_week: None, show_all: False
+2025-03-13 15:05:36,359 [INFO] No week selected, using current week: 2025-W11
+2025-03-13 15:05:36,359 [INFO] Fetching available weeks
+2025-03-13 15:05:36,360 [INFO] Found 37 distinct dates with time entries
+2025-03-13 15:05:36,362 [INFO] Processed 6 unique weeks
+2025-03-13 15:05:36,362 [INFO] Final view settings - selected_week: 2025-W11, show_all: False
+2025-03-13 15:05:36,362 [INFO] Found 26 time entries for week 2025-W11
+2025-03-13 15:09:58,061 [ERROR] Exception on /job/50/invoice [GET]
 Traceback (most recent call last):
   File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
     response = self.full_dispatch_request()
@@ -28,208 +13,37 @@ Traceback (most recent call last):
   File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
     rv = self.handle_user_exception(e)
          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3/dist-packages/flask/app.py", line 1666, in handle_user_exception
-    return self.handle_http_exception(e)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3/dist-packages/flask/app.py", line 1606, in handle_http_exception
-    return self.ensure_sync(handler)(e)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/Jobmanager/app/__init__.py", line 93, in page_not_found
-    return app.render_template('404.html'), 404
-           ^^^^^^^^^^^^^^^^^^^
-AttributeError: 'Flask' object has no attribute 'render_template'
-2025-03-13 08:22:54,404 [INFO] Weekly summary request - selected_week: None, show_all: False
-2025-03-13 08:22:54,404 [INFO] No week selected, using current week: 2025-W11
-2025-03-13 08:22:54,404 [INFO] Fetching available weeks
-2025-03-13 08:22:54,404 [INFO] Found 37 distinct dates with time entries
-2025-03-13 08:22:54,406 [INFO] Processed 6 unique weeks
-2025-03-13 08:22:54,406 [INFO] Final view settings - selected_week: 2025-W11, show_all: False
-2025-03-13 08:22:54,407 [INFO] Found 22 time entries for week 2025-W11
-2025-03-13 08:23:00,928 [INFO] Weekly summary request - selected_week: 2025-W11, show_all: True
-2025-03-13 08:23:00,929 [INFO] Fetching available weeks
-2025-03-13 08:23:00,929 [INFO] Found 37 distinct dates with time entries
-2025-03-13 08:23:00,931 [INFO] Processed 6 unique weeks
-2025-03-13 08:23:00,931 [INFO] Final view settings - selected_week: 2025-W11, show_all: True
-2025-03-13 08:23:00,933 [INFO] Generated summary for 6 weeks
-2025-03-13 08:23:03,608 [ERROR] Exception on /static/js/file-upload.js [GET]
-Traceback (most recent call last):
   File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
     rv = self.dispatch_request()
          ^^^^^^^^^^^^^^^^^^^^^^^
   File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3/dist-packages/flask/app.py", line 713, in <lambda>
-    view_func=lambda **kw: self_ref().send_static_file(**kw),  # type: ignore # noqa: B950
-                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3/dist-packages/flask/scaffold.py", line 331, in send_static_file
-    return send_from_directory(
-           ^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3/dist-packages/flask/helpers.py", line 590, in send_from_directory
-    return werkzeug.utils.send_from_directory(  # type: ignore[return-value]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3/dist-packages/werkzeug/utils.py", line 586, in send_from_directory
-    raise NotFound()
-werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
-    response = self.full_dispatch_request()
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3/dist-packages/flask/app.py", line 1666, in handle_user_exception
-    return self.handle_http_exception(e)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3/dist-packages/flask/app.py", line 1606, in handle_http_exception
-    return self.ensure_sync(handler)(e)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/Jobmanager/app/__init__.py", line 93, in page_not_found
-    return app.render_template('404.html'), 404
-           ^^^^^^^^^^^^^^^^^^^
-AttributeError: 'Flask' object has no attribute 'render_template'
-2025-03-13 08:23:10,247 [INFO] Root path: /home/Jobmanager
-2025-03-13 08:23:10,247 [INFO] Current working directory: /home/Jobmanager
-2025-03-13 08:23:10,247 [INFO] Instance path: /home/Jobmanager/instance
-2025-03-13 08:23:10,247 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250313_0823.zip
-2025-03-13 08:23:10,248 [INFO] Adding file: /home/Jobmanager/run.py
-2025-03-13 08:23:10,248 [INFO] Adding file: /home/Jobmanager/init_db.py
-2025-03-13 08:23:10,248 [INFO] Adding to zip: app/db.py
-2025-03-13 08:23:10,249 [INFO] Adding to zip: app/__init__.py
-2025-03-13 08:23:10,249 [INFO] Adding to zip: app/schema.sql
-2025-03-13 08:23:10,250 [INFO] Adding to zip: app/routes/image_routes.py
-2025-03-13 08:23:10,250 [INFO] Adding to zip: app/routes/system_routes.py
-2025-03-13 08:23:10,251 [INFO] Adding to zip: app/routes/__init__.py
-2025-03-13 08:23:10,251 [INFO] Adding to zip: app/routes/customer_routes.py
-2025-03-13 08:23:10,251 [INFO] Adding to zip: app/routes/job_routes.py
-2025-03-13 08:23:10,252 [INFO] Adding to zip: app/routes/report_routes.py
-2025-03-13 08:23:10,253 [INFO] Adding to zip: app/routes/timer_routes.py
-2025-03-13 08:23:10,253 [INFO] Adding to zip: app/utils/date_helper.py
-2025-03-13 08:23:10,254 [INFO] Adding to zip: app/utils/time_utils.py
-2025-03-13 08:23:10,254 [INFO] Adding to zip: app/utils/job_utils.py
-2025-03-13 08:23:10,254 [INFO] Adding to zip: app/utils/material_utils.py
-2025-03-13 08:23:10,255 [INFO] Adding to zip: app/utils/timer_utils.py
-2025-03-13 08:23:10,255 [INFO] Adding to zip: app/utils/__init__.py
-2025-03-13 08:23:10,255 [INFO] Adding to zip: app/utils/invoice_utils.py
-2025-03-13 08:23:10,256 [INFO] Adding to zip: app/utils/error_utils.py
-2025-03-13 08:23:10,256 [INFO] Adding to zip: app/utils/profile_utils.py
-2025-03-13 08:23:10,256 [INFO] Adding to zip: app/utils/image_utils.py
-2025-03-13 08:23:10,257 [INFO] Adding to zip: app/templates/customer_form.html
-2025-03-13 08:23:10,257 [INFO] Adding to zip: app/templates/quick_timer.html
-2025-03-13 08:23:10,258 [INFO] Adding to zip: app/templates/system_settings.html
-2025-03-13 08:23:10,258 [INFO] Adding to zip: app/templates/shared_images.html
-2025-03-13 08:23:10,258 [INFO] Adding to zip: app/templates/weekly_summary.html
-2025-03-13 08:23:10,259 [INFO] Adding to zip: app/templates/job_details.html
-2025-03-13 08:23:10,260 [INFO] Adding to zip: app/templates/invoice.html
-2025-03-13 08:23:10,260 [INFO] Adding to zip: app/templates/job_form.html
-2025-03-13 08:23:10,261 [INFO] Adding to zip: app/templates/customer_list.html
-2025-03-13 08:23:10,261 [INFO] Adding to zip: app/templates/500.html
-2025-03-13 08:23:10,262 [INFO] Adding to zip: app/templates/base.html
-2025-03-13 08:23:10,262 [INFO] Adding to zip: app/templates/profile_settings.html
-2025-03-13 08:23:10,262 [INFO] Adding to zip: app/templates/job_list.html
-2025-03-13 08:23:10,263 [INFO] Adding to zip: app/templates/404.html
-2025-03-13 08:23:10,263 [INFO] Adding to zip: app/static/favicon.ico
-2025-03-13 08:23:10,263 [INFO] Adding to zip: app/static/qr-quick_timer.svg
-2025-03-13 08:23:10,264 [INFO] Adding to zip: app/static/js/file_upload.js
-2025-03-13 08:23:10,264 [INFO] Adding to zip: app/static/css/styles.css
-2025-03-13 08:23:10,265 [INFO] Adding to zip: app/static/css/file-upload.css
-2025-03-13 08:23:10,265 [INFO] Adding to zip: instance/user_profile.json
-2025-03-13 08:23:10,266 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250313_0823.zip
-2025-03-13 08:23:10,266 [INFO] Backup file exists: True
-2025-03-13 08:23:15,787 [ERROR] Exception on /static/js/file-upload.js [GET]
-Traceback (most recent call last):
-  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3/dist-packages/flask/app.py", line 713, in <lambda>
-    view_func=lambda **kw: self_ref().send_static_file(**kw),  # type: ignore # noqa: B950
-                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3/dist-packages/flask/scaffold.py", line 331, in send_static_file
-    return send_from_directory(
-           ^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3/dist-packages/flask/helpers.py", line 590, in send_from_directory
-    return werkzeug.utils.send_from_directory(  # type: ignore[return-value]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3/dist-packages/werkzeug/utils.py", line 586, in send_from_directory
-    raise NotFound()
-werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
-    response = self.full_dispatch_request()
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3/dist-packages/flask/app.py", line 1666, in handle_user_exception
-    return self.handle_http_exception(e)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3/dist-packages/flask/app.py", line 1606, in handle_http_exception
-    return self.ensure_sync(handler)(e)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/Jobmanager/app/__init__.py", line 93, in page_not_found
-    return app.render_template('404.html'), 404
-           ^^^^^^^^^^^^^^^^^^^
-AttributeError: 'Flask' object has no attribute 'render_template'
-2025-03-13 08:24:08,667 [ERROR] Exception on /static/js/file-upload.js [GET]
-Traceback (most recent call last):
-  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3/dist-packages/flask/app.py", line 713, in <lambda>
-    view_func=lambda **kw: self_ref().send_static_file(**kw),  # type: ignore # noqa: B950
-                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3/dist-packages/flask/scaffold.py", line 331, in send_static_file
-    return send_from_directory(
-           ^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3/dist-packages/flask/helpers.py", line 590, in send_from_directory
-    return werkzeug.utils.send_from_directory(  # type: ignore[return-value]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3/dist-packages/werkzeug/utils.py", line 586, in send_from_directory
-    raise NotFound()
-werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
-    response = self.full_dispatch_request()
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3/dist-packages/flask/app.py", line 1666, in handle_user_exception
-    return self.handle_http_exception(e)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3/dist-packages/flask/app.py", line 1606, in handle_http_exception
-    return self.ensure_sync(handler)(e)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/Jobmanager/app/__init__.py", line 93, in page_not_found
-    return app.render_template('404.html'), 404
-           ^^^^^^^^^^^^^^^^^^^
-AttributeError: 'Flask' object has no attribute 'render_template'
-2025-03-13 08:25:06,839 [INFO] Starting timer for job 4
-2025-03-13 08:25:06,839 [INFO] Stopping all active timers
-2025-03-13 08:27:23,247 [INFO] Stopping timer for job 4
-2025-03-13 08:27:24,588 [INFO] Starting timer for job 4
-2025-03-13 08:27:24,589 [INFO] Stopping all active timers
-2025-03-13 08:27:51,378 [INFO] Stopping timer for job 4
-2025-03-13 08:27:52,224 [INFO] Starting timer for job 4
-2025-03-13 08:27:52,225 [INFO] Stopping all active timers
-2025-03-13 08:29:27,320 [INFO] Stopping timer for job 4
-2025-03-13 08:29:28,461 [INFO] Starting timer for job 4
-2025-03-13 08:29:28,461 [INFO] Stopping all active timers
-2025-03-13 08:31:03,949 [INFO] Stopping timer for job 4
-2025-03-13 08:31:05,317 [INFO] Starting timer for job 4
-2025-03-13 08:31:05,318 [INFO] Stopping all active timers
+  File "/home/Jobmanager/app/db.py", line 35, in decorated_function
+    return f(db, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/routes/job_routes.py", line 526, in invoice
+    return render_template('invoice.html',
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 147, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 130, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/invoice.html", line 2, in top-level template code
+    {% extends "base.html" %}
+  File "/home/Jobmanager/app/templates/base.html", line 43, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/invoice.html", line 101, in block 'content'
+    {% set entry_date_obj = datetime.strptime(entry_date, '%Y-%m-%d').date() %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 485, in getattr
+    return getattr(obj, attribute)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'datetime' is undefined

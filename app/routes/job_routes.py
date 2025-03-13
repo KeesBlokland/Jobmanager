@@ -528,7 +528,8 @@ def invoice(db, id):
                          time_entries=time_entries,
                          materials=materials,
                          invoice_number=invoice_number,
-                         invoice_date=invoice_date)
+                         invoice_date=invoice_date,
+                         datetime=datetime)
     
 @bp.route('/template/<int:template_id>')
 @with_db

@@ -1,4 +1,4 @@
-// file-upload.js - Save in app/static/js/ directory
+// file_upload.js - Place in app/static/js/ directory
 document.addEventListener('DOMContentLoaded', function() {
     // Replace file inputs with custom styled buttons
     const fileInputs = document.querySelectorAll('input[type="file"]');
