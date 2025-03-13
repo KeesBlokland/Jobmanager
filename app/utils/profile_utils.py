@@ -63,9 +63,30 @@ class ProfileManager:
             logger.error(f"Error loading user profile: {str(e)}")
             return DEFAULT_PROFILE
     
+    # Functions related to time in profile_utils.py
+    def get_last_modified_time():
+        """Get the last modification time of the profile.
+        
+        Returns:
+            str: ISO format timestamp of last modification
+        """
+        from datetime import datetime
+        return datetime.now().isoformat(timespec='seconds')
+
+    # When saving the profile
     def save_profile(self, profile):
-        """Save the user profile."""
+        """Save the user profile with last modified timestamp.
+        
+        Args:
+            profile: Profile data dictionary
+            
+        Returns:
+            bool: True if save was successful
+        """
         try:
+            # Add last modified timestamp
+            profile['last_modified'] = get_last_modified_time()
+            
             # Ensure instance directory exists
             os.makedirs(os.path.dirname(self.profile_path), exist_ok=True)
             

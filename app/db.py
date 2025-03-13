@@ -15,6 +15,10 @@ def get_db():
             detect_types=sqlite3.PARSE_DECLTYPES
         )
         g.db.row_factory = sqlite3.Row
+        
+        # Initialize custom time functions
+        g.db = init_db_time_functions(g.db)
+        
     return g.db
 
 def close_db(e=None):
@@ -86,7 +90,14 @@ def get_job_with_hours(db, job_id):
     ''', [job_id]).fetchone()
 
 def get_active_timer(db):
-    """Get currently active timer if any exists."""
+    """Get currently active timer if any exists.
+    
+    Args:
+        db: Database connection
+        
+    Returns:
+        dict: Active timer entry or None
+    """
     return db.execute('''
         SELECT time_entry.*, job.id as job_id
         FROM time_entry 
@@ -95,18 +106,18 @@ def get_active_timer(db):
     ''').fetchone()
 
 def calculate_job_total_hours(db, job_id):
-    """Calculate total hours for a job."""
+    """Calculate total hours for a job using custom time functions."""
     result = db.execute('''
-        SELECT SUM((julianday(COALESCE(end_time, datetime('now'))) - 
-                   julianday(start_time)) * 24) as total_hours
+        SELECT 
+            SUM(time_diff_hours(start_time, COALESCE(end_time, current_iso_time()))) as total_hours
         FROM time_entry
         WHERE job_id = ? AND 
-              ROUND((julianday(COALESCE(end_time, datetime('now'))) - 
-                    julianday(start_time)) * 24, 2) > 0.03
+              time_diff_hours(start_time, COALESCE(end_time, current_iso_time())) > 0.03
     ''', [job_id]).fetchone()
     
     total_hours = result['total_hours'] if result['total_hours'] else 0
     return round(total_hours * 12) / 12  # Round to nearest 5 minutes
+
 
 def get_job_materials(db, job_id):
     """Get all materials for a specific job."""
@@ -116,12 +127,66 @@ def get_job_materials(db, job_id):
         ORDER BY timestamp DESC
     ''', [job_id]).fetchall()
 
+# Use the custom functions in queries
 def get_job_time_entries(db, job_id):
-    """Get all time entries for a specific job."""
+    """Get all time entries for a specific job using custom time functions."""
     return db.execute('''
-        SELECT *, 
-        (julianday(COALESCE(end_time, datetime('now'))) - julianday(start_time)) * 24 as hours
+        SELECT 
+            time_entry.*,
+            time_diff_hours(start_time, COALESCE(end_time, current_iso_time())) as hours
         FROM time_entry 
         WHERE job_id = ? 
         ORDER BY start_time DESC
     ''', [job_id]).fetchall()
+
+
+def init_db_time_functions(db):
+    """Initialize SQLite with custom functions for time handling.
+    
+    This ensures consistent time handling across all database operations.
+    
+    Args:
+        db: SQLite database connection
+    """
+    from datetime import datetime
+    
+    # Register a custom function for getting current time in ISO format
+    def get_current_iso_time():
+        """Return current time in ISO format with seconds precision."""
+        return datetime.now().isoformat(timespec='seconds')
+    
+    # Register a custom function for calculating time difference in hours
+    def time_diff_hours(start_time, end_time=None):
+        """Calculate time difference in hours between two ISO timestamps.
+        
+        Args:
+            start_time: Start time as ISO string
+            end_time: End time as ISO string, or None for current time
+            
+        Returns:
+            float: Difference in hours
+        """
+        try:
+            start_dt = datetime.fromisoformat(start_time)
+            
+            if end_time:
+                end_dt = datetime.fromisoformat(end_time)
+            else:
+                end_dt = datetime.now()
+                
+            # Ensure both datetimes are naive for consistent comparison
+            if start_dt.tzinfo:
+                start_dt = start_dt.replace(tzinfo=None)
+            if end_dt.tzinfo:
+                end_dt = end_dt.replace(tzinfo=None)
+                
+            return (end_dt - start_dt).total_seconds() / 3600
+        except (ValueError, TypeError):
+            return 0
+    
+    # Register the functions with SQLite
+    db.create_function("current_iso_time", 0, get_current_iso_time)
+    db.create_function("time_diff_hours", 2, time_diff_hours)
+    
+    return db
+

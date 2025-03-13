@@ -27,7 +27,7 @@
         }
         .job-description {
             font-size: 0.9em;
-            color: #666;
+            color: black;
             margin-bottom: 10px;
         }
         .timer-btn {
@@ -44,12 +44,12 @@
         }
         .stop-timer {
             background: #f44336;
-            color: white;
+            color: black;
         }
         .hours {
             float: right;
             font-size: 0.9em;
-            color: #666;
+            color: black;
         }
         .refresh-btn {
             position: fixed;
@@ -93,21 +93,23 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.2);
             display: none;
         }
-
-        @media (min-width: 768px) {
-            body {
-                max-width: 600px;
-                margin: 0 auto;
-            }
-
+        .timer-duration {
+            margin-left: 5px;
+            font-weight: bold;
+            color: #000000;
+        }
         .button-container {
             display: flex;
             justify-content: center;
             gap: 10px;
             margin-top: 10px;
         }
-    } 
-        
+        @media (min-width: 768px) {
+            body {
+                max-width: 600px;
+                margin: 0 auto;
+            }
+        }
     </style>
 </head>
 <body>
@@ -120,7 +122,14 @@
         <div class="job-description">{{ job.description }}</div>
         <div class="button-container">   
             {% if job.active_timer_id is not none and job.active_timer_id > 0 %}
-                <button onclick="stopTimer({{ job.id }})" class="timer-btn stop-timer">Stop Timer</button>
+                <button onclick="stopTimer({{ job.id }})" class="timer-btn stop-timer">
+                    Stop Timer
+                    {% if job.timer_start %}
+                    <span class="timer-duration" data-start="{{ job.timer_start }}">
+                        <span class="timer-hours">00</span>:<span class="timer-minutes">00</span>:<span class="timer-seconds">00</span>
+                    </span>
+                    {% endif %}
+                </button>
                 <button onclick="takePhoto({{ job.id }})" class="photo-btn">📷</button>
             {% else %}
                 <button onclick="startTimer({{ job.id }})" class="timer-btn start-timer">Start Timer</button>
@@ -185,6 +194,50 @@
         } finally {
             document.getElementById('uploadProgress').style.display = 'none';
         }
+    }
+
+    // Update active timer duration
+    function updateTimerDuration() {
+        const timerElements = document.querySelectorAll('.timer-duration');
+        
+        timerElements.forEach(element => {
+            const startTimeStr = element.getAttribute('data-start');
+            if (!startTimeStr) return;
+            
+            // Parse the ISO timestamp from the start time
+            const startTime = new Date(startTimeStr);
+            const now = new Date();
+            
+            // Calculate the time difference in seconds
+            // Use getTime() which returns milliseconds since epoch for both dates
+            // This avoids any timezone issues as both dates are compared in the same context
+            const diffSeconds = Math.floor((now.getTime() - startTime.getTime()) / 1000);
+            
+            if (diffSeconds < 0) {
+                console.warn("Negative time difference detected:", diffSeconds, "seconds");
+                // If we somehow got a negative value, display 00:00:00
+                element.querySelector('.timer-hours').textContent = '00';
+                element.querySelector('.timer-minutes').textContent = '00';
+                element.querySelector('.timer-seconds').textContent = '00';
+                return;
+            }
+            
+            const hours = Math.floor(diffSeconds / 3600);
+            const minutes = Math.floor((diffSeconds % 3600) / 60);
+            const seconds = diffSeconds % 60;
+            
+            // Update the individual span elements
+            element.querySelector('.timer-hours').textContent = hours.toString().padStart(2, '0');
+            element.querySelector('.timer-minutes').textContent = minutes.toString().padStart(2, '0');
+            element.querySelector('.timer-seconds').textContent = seconds.toString().padStart(2, '0');
+        });
+    }
+
+    // Update timer every second if a timer is present on the page
+    if (document.querySelector('.timer-duration')) {
+        setInterval(updateTimerDuration, 1000);
+        // Initial update
+        updateTimerDuration();
     }
     </script>
 </body>

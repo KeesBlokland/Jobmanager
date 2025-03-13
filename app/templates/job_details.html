@@ -49,11 +49,7 @@
                 <div class="timer-info">
                     <strong>Timer running since:</strong> {{ active_timer.start_time[11:16] }} on {{ active_timer.start_time[8:10] }} {{ active_timer.start_time[5:7]|month_name }}
                     <span class="timer-duration" data-start="{{ active_timer.start_time }}">
-                        {% set seconds_running = (now().timestamp() - datetime.fromisoformat(active_timer.start_time).timestamp())|int %}
-                        {% set hours = (seconds_running // 3600)|int %}
-                        {% set minutes = ((seconds_running % 3600) // 60)|int %}
-                        {% set seconds = (seconds_running % 60)|int %}
-                        ({{ "%02d:%02d:%02d"|format(hours, minutes, seconds) }})
+                        <span class="timer-hours">00</span>:<span class="timer-minutes">00</span>:<span class="timer-seconds">00</span>
                     </span>
                 </div>
             </div>
@@ -169,7 +165,8 @@
 </style>
 
 <script>
-    // Update active timer duration
+
+// Update active timer duration
     function updateTimerDuration() {
         const timerElements = document.querySelectorAll('.timer-duration');
         
@@ -177,23 +174,41 @@
             const startTimeStr = element.getAttribute('data-start');
             if (!startTimeStr) return;
             
+            // Parse the ISO timestamp from the start time
             const startTime = new Date(startTimeStr);
             const now = new Date();
-            const diffSeconds = Math.floor((now - startTime) / 1000);
+            
+            // Calculate the time difference in seconds
+            // Use getTime() which returns milliseconds since epoch for both dates
+            // This avoids any timezone issues as both dates are compared in the same context
+            const diffSeconds = Math.floor((now.getTime() - startTime.getTime()) / 1000);
+            
+            if (diffSeconds < 0) {
+                console.warn("Negative time difference detected:", diffSeconds, "seconds");
+                // If we somehow got a negative value, display 00:00:00
+                element.querySelector('.timer-hours').textContent = '00';
+                element.querySelector('.timer-minutes').textContent = '00';
+                element.querySelector('.timer-seconds').textContent = '00';
+                return;
+            }
             
             const hours = Math.floor(diffSeconds / 3600);
             const minutes = Math.floor((diffSeconds % 3600) / 60);
             const seconds = diffSeconds % 60;
             
-            element.textContent = `(${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')})`;
+            // Update the individual span elements
+            element.querySelector('.timer-hours').textContent = hours.toString().padStart(2, '0');
+            element.querySelector('.timer-minutes').textContent = minutes.toString().padStart(2, '0');
+            element.querySelector('.timer-seconds').textContent = seconds.toString().padStart(2, '0');
         });
     }
-    
-    // Update timer every second
-    if (document.querySelector('.timer-duration')) {
-        setInterval(updateTimerDuration, 1000);
-        updateTimerDuration(); // Initial update
-    }
+
+// Update timer every second if a timer is present on the page
+if (document.querySelector('.timer-duration')) {
+    setInterval(updateTimerDuration, 1000);
+    // Initial update
+    updateTimerDuration();
+}
     
     function toggleWeek(week) {
         const entriesDiv = document.getElementById(`entries-${week}`);

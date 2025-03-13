@@ -2,6 +2,7 @@
 from datetime import datetime
 from ..db import get_active_timer, calculate_job_total_hours
 from .error_utils import TimerError, handle_errors
+from .time_utils import get_current_time
 import logging
 
 class TimerManager:
@@ -11,10 +12,15 @@ class TimerManager:
 
     @handle_errors
     def start(self, job_id):
+        """Start a timer for the specified job.
+        
+        Args:
+            job_id: ID of the job to start timer for
+        """
         self.logger.info(f"Starting timer for job {job_id}")
         
-        # Get current time as ISO format string
-        now_iso = datetime.now().isoformat()
+        # Get current time as consistent ISO format string
+        now_iso = get_current_time()
         
         # Stop any running timers first
         self.stop_all_active()
@@ -46,10 +52,15 @@ class TimerManager:
 
     @handle_errors
     def stop(self, job_id):
+        """Stop the timer for the specified job.
+        
+        Args:
+            job_id: ID of the job to stop timer for
+        """
         self.logger.info(f"Stopping timer for job {job_id}")
         
-        # Get current time as ISO format string
-        now_iso = datetime.now().isoformat()
+        # Get current time as consistent ISO format string
+        now_iso = get_current_time()
         
         active_timer = get_active_timer(self.db)
         if active_timer and active_timer['job_id'] == job_id:
@@ -61,10 +72,11 @@ class TimerManager:
 
     @handle_errors
     def stop_all_active(self):
+        """Stop all active timers in the system."""
         self.logger.info("Stopping all active timers")
         
-        # Get current time as ISO format string
-        now_iso = datetime.now().isoformat()
+        # Get current time as consistent ISO format string
+        now_iso = get_current_time()
         
         self.db.execute(
             'UPDATE time_entry SET end_time = ? WHERE end_time IS NULL',
@@ -74,16 +86,12 @@ class TimerManager:
 
     @handle_errors
     def calculate_total_hours(self, job_id):
-        """Calculate the total hours for a job."""
-        result = self.db.execute('''
-            SELECT SUM((julianday(COALESCE(end_time, datetime('now'))) - 
-                       julianday(start_time)) * 24) as total_hours
-            FROM time_entry
-            WHERE job_id = ? AND 
-                  ROUND((julianday(COALESCE(end_time, datetime('now'))) - 
-                        julianday(start_time)) * 24, 2) > 0.03
-        ''', (job_id,)).fetchone()
+        """Calculate the total hours for a job.
         
-        total_hours = result['total_hours'] if result['total_hours'] else 0
-        # Round to nearest 5 minutes (1/12 of an hour)
-        return round(total_hours * 12) / 12
+        Args:
+            job_id: ID of the job to calculate hours for
+            
+        Returns:
+            float: Total hours rounded to nearest 5 minutes
+        """
+        return calculate_job_total_hours(self.db, job_id)

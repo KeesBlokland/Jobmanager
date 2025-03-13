@@ -4,6 +4,7 @@ from ..db import with_db
 from datetime import datetime, timedelta, date
 import sqlite3
 import logging
+from ..utils.time_utils import iso_to_datetime, get_time_difference_seconds
 
 bp = Blueprint('report', __name__)
 logger = logging.getLogger('jobmanager')
@@ -49,10 +50,21 @@ def weekly_summary(db):
             week_set = set()  # Use a set to avoid duplicates
             for date_row in dates:
                 try:
-                    entry_date = datetime.fromisoformat(date_row['entry_date']).date()
-                    year, week, _ = entry_date.isocalendar()
-                    week_str = f"{year}-W{week:02d}"
-                    week_set.add(week_str)
+                    # Ensure consistent date parsing
+                    entry_date_str = date_row['entry_date']
+                    if entry_date_str:
+                        if isinstance(entry_date_str, str):
+                            if 'T' in entry_date_str:  # ISO format
+                                entry_date = datetime.fromisoformat(entry_date_str).date()
+                            else:  # SQLite date format
+                                entry_date = datetime.strptime(entry_date_str, '%Y-%m-%d').date()
+                        else:
+                            # If it's already a date object
+                            entry_date = entry_date_str
+                            
+                        year, week, _ = entry_date.isocalendar()
+                        week_str = f"{year}-W{week:02d}"
+                        week_set.add(week_str)
                 except (ValueError, TypeError) as e:
                     logger.warning(f"Error processing date {date_row['entry_date']}: {str(e)}")
                     continue
@@ -98,7 +110,14 @@ def weekly_summary(db):
                         SELECT 
                             job_id,
                             date(start_time) as entry_date,
-                            SUM((julianday(COALESCE(end_time, datetime('now'))) - julianday(start_time)) * 24) AS day_hours
+                            SUM(
+                                CASE 
+                                    WHEN end_time IS NULL THEN
+                                        (julianday(datetime('now', 'localtime')) - julianday(start_time)) * 24
+                                    ELSE
+                                        (julianday(end_time) - julianday(start_time)) * 24
+                                END
+                            ) AS day_hours
                         FROM time_entry
                         GROUP BY job_id, entry_date
                     )
@@ -121,8 +140,19 @@ def weekly_summary(db):
                 for entry in weekly_data:
                     try:
                         # Convert date to ISO week
-                        entry_date = datetime.fromisoformat(entry['entry_date']).date()
+                        entry_date_str = entry['entry_date']
+                        if isinstance(entry_date_str, str):
+                            if 'T' in entry_date_str:  # ISO format
+                                entry_date = datetime.fromisoformat(entry_date_str).date()
+                            else:  # SQLite date format
+                                entry_date = datetime.strptime(entry_date_str, '%Y-%m-%d').date()
+                        else:
+                            # If it's already a date object
+                            entry_date = entry_date_str
+                            
                         year, week, _ = entry_date.isocalendar()
+                        
+                        # Use zero-padded week number for consistent sorting
                         week_str = f"{year}-W{week:02d}"
                         
                         if week_str not in weeks_summary:
@@ -214,7 +244,12 @@ def weekly_summary(db):
                     job.description AS job_description,
                     job.base_rate,
                     customer.name AS customer_name,
-                    (julianday(COALESCE(end_time, datetime('now'))) - julianday(start_time)) * 24 AS hours
+                    CASE 
+                        WHEN end_time IS NULL THEN
+                            (julianday(datetime('now', 'localtime')) - julianday(start_time)) * 24
+                        ELSE
+                            (julianday(end_time) - julianday(start_time)) * 24
+                    END AS hours
                 FROM time_entry
                 JOIN job ON time_entry.job_id = job.id
                 JOIN customer ON job.customer_id = customer.id
@@ -239,7 +274,16 @@ def weekly_summary(db):
                 if entry['hours'] is None:
                     continue
                     
-                entry_date = datetime.fromisoformat(entry['start_time']).date()
+                # Get entry date safely
+                if isinstance(entry['start_time'], str):
+                    if 'T' in entry['start_time']:  # ISO format
+                        entry_date = datetime.fromisoformat(entry['start_time']).date()
+                    else:  # SQLite date format
+                        entry_date = datetime.strptime(entry['start_time'], '%Y-%m-%d').date()
+                else:
+                    # If it's already a date object
+                    entry_date = entry['start_time']
+                
                 day_str = entry_date.strftime('%Y-%m-%d')
                 
                 # Create a key for this job

@@ -364,12 +364,18 @@ def edit_time_entry(db, job_id, entry_id):
         start_time = request.form['start_time']
         end_time = request.form['end_time']
         
-        # Convert to ISO format strings
+        # Convert to ISO format strings with consistent formatting
         if start_time:
-            start_time = datetime.fromisoformat(start_time).isoformat()
+            # Parse the datetime-local input value
+            dt = datetime.fromisoformat(start_time)
+            # Format with consistent precision
+            start_time = dt.isoformat(timespec='seconds')
         
         if end_time:
-            end_time = datetime.fromisoformat(end_time).isoformat()
+            # Parse the datetime-local input value
+            dt = datetime.fromisoformat(end_time)
+            # Format with consistent precision
+            end_time = dt.isoformat(timespec='seconds')
         
         # Update the time entry
         db.execute('''
@@ -384,7 +390,6 @@ def edit_time_entry(db, job_id, entry_id):
     except Exception as e:
         current_app.logger.error(f"Error updating time entry: {str(e)}", exc_info=True)
         return redirect(url_for('job.job_details', id=job_id, error=f"Error updating time entry: {str(e)}"))
-
 
 # app/routes/job_routes.py
 
