@@ -75,7 +75,7 @@ def get_job_with_hours(db, job_id):
     return db.execute('''
         WITH job_hours AS (
             SELECT job_id,
-                SUM((julianday(COALESCE(end_time, datetime('now'))) - 
+                SUM((julianday(COALESCE(end_time, datetime('now', 'localtime'))) - 
                      julianday(start_time)) * 24) as hours
             FROM time_entry
             GROUP BY job_id

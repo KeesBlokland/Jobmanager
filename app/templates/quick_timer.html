@@ -197,12 +197,6 @@
     }
 
     // Update active timer duration
- 
-    function parseTimestamp(timeStr) {
-    // This will correctly parse ISO timestamps with timezone info
-    return new Date(timeStr);
-}
-    
     function updateTimerDuration() {
         const timerElements = document.querySelectorAll('.timer-duration');
         
@@ -211,34 +205,38 @@
             if (!startTimeStr) return;
             
             let startTime;
+            const now = new Date();
             
-            // Force interpretation as UTC time
-            // For timestamps like "2025-03-14T08:48:50" (without timezone)
+            // For timestamps without timezone info (like "2025-03-14T09:05:06")
+            // We need to parse them in local timezone context, not as UTC
             if (!startTimeStr.includes('Z') && !startTimeStr.includes('+')) {
-                // Explicitly treat as UTC by appending Z
-                startTime = new Date(startTimeStr + 'Z');
+                // Parse manually to ensure local timezone interpretation
+                const [datePart, timePart] = startTimeStr.split('T');
+                const [year, month, day] = datePart.split('-').map(Number);
+                const [hour, minute, second] = timePart.split(':').map(Number);
+                
+                // Create date in local timezone (months are 0-indexed in JS)
+                startTime = new Date(year, month-1, day, hour, minute, second);
             } else {
-                // Handle timestamps that might already have timezone info
+                // If it has timezone info, let JS handle it normally
                 startTime = new Date(startTimeStr);
             }
-            
-            const now = new Date();
             
             // Calculate time difference in seconds
             const diffSeconds = Math.floor((now - startTime) / 1000);
             
-            // Format the display
-            const hours = Math.floor(diffSeconds / 3600);
-            const minutes = Math.floor((diffSeconds % 3600) / 60);
-            const seconds = diffSeconds % 60;
+            // Handle negative values (shouldn't happen with above fix, but just in case)
+            const adjustedSeconds = diffSeconds < 0 ? 0 : diffSeconds;
             
-            // Format display with positive values
-            element.querySelector('.timer-hours').textContent = 
-                Math.abs(hours).toString().padStart(2, '0');
-            element.querySelector('.timer-minutes').textContent = 
-                Math.abs(minutes).toString().padStart(2, '0');
-            element.querySelector('.timer-seconds').textContent = 
-                Math.abs(seconds).toString().padStart(2, '0');
+            // Format and display the time
+            const hours = Math.floor(adjustedSeconds / 3600);
+            const minutes = Math.floor((adjustedSeconds % 3600) / 60);
+            const seconds = adjustedSeconds % 60;
+            
+            // Update display
+            element.querySelector('.timer-hours').textContent = hours.toString().padStart(2, '0');
+            element.querySelector('.timer-minutes').textContent = minutes.toString().padStart(2, '0');
+            element.querySelector('.timer-seconds').textContent = seconds.toString().padStart(2, '0');
         });
     }
 
