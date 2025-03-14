@@ -52,74 +52,87 @@
     </div>
 </div>
 <hr>
-{# Replace the time entries section in invoice.html with this code to match the job_details grouping logic #}
 
 <h3>Time Entries</h3>
 <table class="invoice-table">
     <tr>
-        <th>Date/Week</th>
+        <th>Date/Period</th>
         <th>Hours</th>
         <th>Rate</th>
         <th class="amount-column">Amount</th>
     </tr>
     
     {% set entry_groups = {} %}
-    {% set today_date = now().date().isoformat() %}
+    {% set unique_days = {} %}
     
-    {# First pass: Group entries by ISO calendar week #}
+    {# First pass: Group entries by date and ISO week #}
     {% for entry in time_entries %}
-        {% if entry.end_time %}  {# Only process completed entries here #}
+        {% if entry.end_time %}  {# Only process completed entries #}
             {% set entry_date = entry.start_time[0:10] %}
-            
-            {# Calculate standard ISO week number using the filter #}
             {% set week_number = entry_date|iso_week %}
             {% set week_year = entry_date|iso_week_year %}
-            
-            {# Use zero-padded week number for consistent sorting #}
             {% set current_week = week_year|string + "-W" + "%02d"|format(week_number) %}
+            
+            {# Track unique days #}
+            {% if entry_date not in unique_days %}
+                {% set _ = unique_days.update({entry_date: {'entries': [], 'total_hours': 0}}) %}
+            {% endif %}
+            {% set _ = unique_days[entry_date]['entries'].append(entry) %}
+            {% set _ = unique_days[entry_date].update({'total_hours': unique_days[entry_date]['total_hours'] + entry.hours}) %}
             
             {# Group all entries by week #}
             {% if current_week not in entry_groups %}
-                {% set _ = entry_groups.update({current_week: {'entries': [], 'total_hours': 0, 'is_current': false, 'year': week_year}}) %}
+                {% set _ = entry_groups.update({current_week: {'entries': [], 'total_hours': 0, 'dates': [], 'year': week_year}}) %}
             {% endif %}
             {% set _ = entry_groups[current_week]['entries'].append(entry) %}
-            {% set _ = entry_groups.update({current_week: {
+            {% if entry_date not in entry_groups[current_week]['dates'] %}
+                {% set _ = entry_groups[current_week]['dates'].append(entry_date) %}
+            {% endif %}
+            {% set _ = entry_groups[current_week].update({
                 'entries': entry_groups[current_week]['entries'],
                 'total_hours': entry_groups[current_week]['total_hours'] + entry.hours,
-                'is_current': today_date == entry_date,
                 'year': week_year
-            }}) %}
+            }) %}
         {% endif %}
     {% endfor %}
     
-    {# Display oldest weeks first, similar to job_details #}
-    {% for week, data in entry_groups|dictsort (reverse=true) %}
-        {% set rounded_hours = ((data.total_hours * 60 + 4) // 5 * 5) / 60 %}
-        
-        <tr>
-            <td>Week {{ week.split('-W')[1] }}, {{ data.year }}</td>
-            <td style="text-align: center;">{{ "%d:%02d"|format(rounded_hours|int, (rounded_hours % 1 * 60)|int) }}</td>
-            <td style="text-align: center;">{% if job.base_rate is not none %}€{{ "%.2f"|format(job.base_rate) }}{% else %}€0.00{% endif %}</td>
-            <td class="amount-column">{% if job.base_rate is not none %}€{{ "%.2f"|format(rounded_hours * job.base_rate) }}{% else %}€0.00{% endif %}</td>
-        </tr>
-        
-        {# Show individual entries for today #}
-        {% if data.is_current %}
-            {% for entry in data.entries %}
-                {% if entry.start_time[0:10] == today_date %}
-                    <tr>
-                        <td style="padding-left: 20px;">
-                            {{ entry.start_time[8:10] }} {{ entry.start_time[5:7]|month_name }} {{ entry.start_time[0:4] }} 
-                            {{ entry.start_time[11:16] }}-{{ entry.end_time[11:16] if entry.end_time else 'ongoing' }}
-                        </td>
-                        <td style="text-align: center;">{{ "%d:%02d"|format(entry.hours|int, (entry.hours % 1 * 60)|int) }}</td>
-                        <td style="text-align: center;">{% if job.base_rate is not none %}€{{ "%.2f"|format(job.base_rate) }}{% else %}€0.00{% endif %}</td>
-                        <td class="amount-column">{% if job.base_rate is not none %}€{{ "%.2f"|format(entry.hours * job.base_rate) }}{% else %}€0.00{% endif %}</td>
-                    </tr>
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-    {% endfor %}
+    {# Decide how to display entries based on date span #}
+    {% if entry_groups|length == 1 and unique_days|length == 1 %}
+        {# For single-day jobs, just show the day with total hours #}
+        {% for date, data in unique_days|dictsort %}
+            {% set day_rounded_hours = ((data.total_hours * 60 + 2.5) // 5 * 5) / 60 %}
+            {% set date_obj = date|iso_date_to_datetime %}
+            <tr>
+                <td>{{ date_obj.strftime('%-d %b %Y') }}</td>
+                <td style="text-align: center;">{{ "%d:%02d"|format(day_rounded_hours|int, (day_rounded_hours % 1 * 60)|int) }}</td>
+                <td style="text-align: center;">{% if job.base_rate is not none %}€{{ "%.2f"|format(job.base_rate) }}{% else %}€0.00{% endif %}</td>
+                <td class="amount-column">{% if job.base_rate is not none %}€{{ "%.2f"|format(day_rounded_hours * job.base_rate) }}{% else %}€0.00{% endif %}</td>
+            </tr>
+        {% endfor %}
+    {% elif entry_groups|length == 1 and unique_days|length <= 3 %}
+        {# For multi-day jobs within same week (up to 3 days), show each day #}
+        {% for date, data in unique_days|dictsort %}
+            {% set day_rounded_hours = ((data.total_hours * 60 + 2.5) // 5 * 5) / 60 %}
+            {% set date_obj = date|iso_date_to_datetime %}
+            <tr>
+                <td>{{ date_obj.strftime('%-d %b %Y') }}</td>
+                <td style="text-align: center;">{{ "%d:%02d"|format(day_rounded_hours|int, (day_rounded_hours % 1 * 60)|int) }}</td>
+                <td style="text-align: center;">{% if job.base_rate is not none %}€{{ "%.2f"|format(job.base_rate) }}{% else %}€0.00{% endif %}</td>
+                <td class="amount-column">{% if job.base_rate is not none %}€{{ "%.2f"|format(day_rounded_hours * job.base_rate) }}{% else %}€0.00{% endif %}</td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        {# For multi-week jobs, show weekly summaries #}
+        {% for week, data in entry_groups|dictsort %}
+            {% set week_rounded_hours = ((data.total_hours * 60 + 2.5) // 5 * 5) / 60 %}
+            <tr>
+                <td>Week {{ week.split('-W')[1]|int }}, {{ data.year }}</td>
+                <td style="text-align: center;">{{ "%d:%02d"|format(week_rounded_hours|int, (week_rounded_hours % 1 * 60)|int) }}</td>
+                <td style="text-align: center;">{% if job.base_rate is not none %}€{{ "%.2f"|format(job.base_rate) }}{% else %}€0.00{% endif %}</td>
+                <td class="amount-column">{% if job.base_rate is not none %}€{{ "%.2f"|format(week_rounded_hours * job.base_rate) }}{% else %}€0.00{% endif %}</td>
+            </tr>
+        {% endfor %}
+    {% endif %}
 </table>
 
 <hr>
@@ -135,8 +148,8 @@
     {% for material in materials %}
     <tr>
         <td>{{ material.material }}</td>
-        <td>{{ material.quantity }}</td>
-        <td>€{{ "%.2f"|format(material.price) }}</td>
+        <td style="text-align: center;">{{ material.quantity }}</td>
+        <td style="text-align: center;">€{{ "%.2f"|format(material.price) }}</td>
         <td class="amount-column">€{{ "%.2f"|format(material.quantity * material.price) }}</td>
     </tr>
     {% endfor %}
@@ -146,9 +159,11 @@
 <div class="invoice-total">
     {% set ns = namespace(total_hours=0, total_amount=0) %}
     {% for entry in time_entries %}
-        {% set rounded_hours = ((entry.hours * 60 + 4) // 5 * 5) / 60 %}
-        {% set ns.total_hours = ns.total_hours + rounded_hours %}
-        {% set ns.total_amount = ns.total_amount + (rounded_hours * (job.base_rate or 0)) %}
+        {% if entry.end_time %}
+            {% set rounded_hours = ((entry.hours * 60 + 2.5) // 5 * 5) / 60 %}
+            {% set ns.total_hours = ns.total_hours + rounded_hours %}
+            {% set ns.total_amount = ns.total_amount + (rounded_hours * (job.base_rate or 0)) %}
+        {% endif %}
     {% endfor %}
 
     {% set materials_total = namespace(value=0.0) %}

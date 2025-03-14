@@ -2,22 +2,17 @@
 from datetime import datetime, timezone
 
 def get_current_time():
-    """Get current time as ISO format string with a consistent format.
-    
-    Returns:
-        str: ISO 8601 formatted timestamp string with seconds precision
-    """
-    return datetime.now().isoformat(timespec='seconds')
+    """Get current time as UTC ISO format string."""
+    # Force UTC and include 'Z' suffix to mark as UTC
+    return datetime.now(timezone.utc).isoformat()
+
 
 def format_time(timestamp, format_str='%Y-%m-%d %H:%M:%S'):
     """Format timestamp as string using specified format.
-    
-    Handles both ISO format strings and Unix timestamps.
-    
+        Handles both ISO format strings and Unix timestamps.
     Args:
         timestamp: ISO format string or Unix timestamp
         format_str: Format string for output
-        
     Returns:
         str: Formatted time string
     """
@@ -38,10 +33,8 @@ def format_time(timestamp, format_str='%Y-%m-%d %H:%M:%S'):
 
 def format_duration(seconds):
     """Format duration in seconds to human-readable format.
-    
     Args:
         seconds: Duration in seconds
-        
     Returns:
         str: Formatted duration as "HH:MM:SS"
     """

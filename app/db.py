@@ -141,52 +141,49 @@ def get_job_time_entries(db, job_id):
 
 
 def init_db_time_functions(db):
-    """Initialize SQLite with custom functions for time handling.
+    """Initialize SQLite with custom functions for time handling."""
+    from datetime import datetime, timezone
     
-    This ensures consistent time handling across all database operations.
-    
-    Args:
-        db: SQLite database connection
-    """
-    from datetime import datetime
-    
-    # Register a custom function for getting current time in ISO format
+    # Use the same UTC format consistently
     def get_current_iso_time():
-        """Return current time in ISO format with seconds precision."""
-        return datetime.now().isoformat(timespec='seconds')
+        """Return current time in ISO format with UTC timezone."""
+        return datetime.now(timezone.utc).isoformat()
     
-    # Register a custom function for calculating time difference in hours
     def time_diff_hours(start_time, end_time=None):
-        """Calculate time difference in hours between two ISO timestamps.
-        
-        Args:
-            start_time: Start time as ISO string
-            end_time: End time as ISO string, or None for current time
-            
-        Returns:
-            float: Difference in hours
-        """
+        """Calculate time difference in hours between two timestamps."""
         try:
-            start_dt = datetime.fromisoformat(start_time)
+            # Parse timestamps, handling different possible formats
+            try:
+                start_dt = datetime.fromisoformat(start_time)
+            except ValueError:
+                # Handle timestamps with 'Z' suffix
+                if 'Z' in start_time:
+                    start_dt = datetime.fromisoformat(start_time.replace('Z', '+00:00'))
+                else:
+                    # Assume naive timestamps are in UTC
+                    start_dt = datetime.fromisoformat(start_time).replace(tzinfo=timezone.utc)
             
             if end_time:
-                end_dt = datetime.fromisoformat(end_time)
+                try:
+                    end_dt = datetime.fromisoformat(end_time)
+                except ValueError:
+                    if 'Z' in end_time:
+                        end_dt = datetime.fromisoformat(end_time.replace('Z', '+00:00'))
+                    else:
+                        end_dt = datetime.fromisoformat(end_time).replace(tzinfo=timezone.utc)
             else:
-                end_dt = datetime.now()
-                
-            # Ensure both datetimes are naive for consistent comparison
-            if start_dt.tzinfo:
-                start_dt = start_dt.replace(tzinfo=None)
-            if end_dt.tzinfo:
-                end_dt = end_dt.replace(tzinfo=None)
-                
+                end_dt = datetime.now(timezone.utc)
+            
+            # Normalize timezone info
+            if start_dt.tzinfo is None:
+                start_dt = start_dt.replace(tzinfo=timezone.utc)
+            if end_dt.tzinfo is None:
+                end_dt = end_dt.replace(tzinfo=timezone.utc)
+            
             return (end_dt - start_dt).total_seconds() / 3600
-        except (ValueError, TypeError):
+        except Exception:
             return 0
     
-    # Register the functions with SQLite
     db.create_function("current_iso_time", 0, get_current_iso_time)
     db.create_function("time_diff_hours", 2, time_diff_hours)
-    
     return db
-

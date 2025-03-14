@@ -1,11 +1,4 @@
-2025-03-13 15:05:36,359 [INFO] Weekly summary request - selected_week: None, show_all: False
-2025-03-13 15:05:36,359 [INFO] No week selected, using current week: 2025-W11
-2025-03-13 15:05:36,359 [INFO] Fetching available weeks
-2025-03-13 15:05:36,360 [INFO] Found 37 distinct dates with time entries
-2025-03-13 15:05:36,362 [INFO] Processed 6 unique weeks
-2025-03-13 15:05:36,362 [INFO] Final view settings - selected_week: 2025-W11, show_all: False
-2025-03-13 15:05:36,362 [INFO] Found 26 time entries for week 2025-W11
-2025-03-13 15:09:58,061 [ERROR] Exception on /job/50/invoice [GET]
+2025-03-13 15:39:35,347 [ERROR] Exception on /job/51/invoice [GET]
 Traceback (most recent call last):
   File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
     response = self.full_dispatch_request()
@@ -40,10 +33,412 @@ Traceback (most recent call last):
   File "/home/Jobmanager/app/templates/base.html", line 43, in top-level template code
     {% block content %}{% endblock %}
     ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/Jobmanager/app/templates/invoice.html", line 101, in block 'content'
-    {% set entry_date_obj = datetime.strptime(entry_date, '%Y-%m-%d').date() %}
+  File "/home/Jobmanager/app/templates/invoice.html", line 67, in block 'content'
+    {% set today_date = now().date().isoformat() %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/utils.py", line 86, in from_obj
+    if hasattr(obj, "jinja_pass_arg"):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'now' is undefined
+2025-03-13 15:39:39,195 [ERROR] Exception on /job/details/51 [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/db.py", line 35, in decorated_function
+    return f(db, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/routes/job_routes.py", line 349, in job_details
+    return render_template('job_details.html',
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 146, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1081, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1010, in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 969, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 768, in compile
+    self.handle_exception(source=source_hint)
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/job_details.html", line 94, in template
+    {{ week|format_week }}:
+jinja2.exceptions.TemplateAssertionError: No filter named 'format_week'.
+2025-03-13 15:39:40,329 [ERROR] Exception on /job/details/51 [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/db.py", line 35, in decorated_function
+    return f(db, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/routes/job_routes.py", line 349, in job_details
+    return render_template('job_details.html',
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 146, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1081, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1010, in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 969, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 768, in compile
+    self.handle_exception(source=source_hint)
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/job_details.html", line 94, in template
+    {{ week|format_week }}:
+jinja2.exceptions.TemplateAssertionError: No filter named 'format_week'.
+2025-03-13 15:57:28,872 [INFO] Root path: /home/Jobmanager
+2025-03-13 15:57:28,872 [INFO] Current working directory: /home/Jobmanager
+2025-03-13 15:57:28,872 [INFO] Instance path: /home/Jobmanager/instance
+2025-03-13 15:57:28,872 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250313_1557.zip
+2025-03-13 15:57:28,872 [INFO] Adding file: /home/Jobmanager/run.py
+2025-03-13 15:57:28,872 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-03-13 15:57:28,873 [INFO] Adding to zip: app/db.py
+2025-03-13 15:57:28,873 [INFO] Adding to zip: app/__init__.py
+2025-03-13 15:57:28,873 [INFO] Adding to zip: app/schema.sql
+2025-03-13 15:57:28,874 [INFO] Adding to zip: app/routes/image_routes.py
+2025-03-13 15:57:28,874 [INFO] Adding to zip: app/routes/system_routes.py
+2025-03-13 15:57:28,875 [INFO] Adding to zip: app/routes/__init__.py
+2025-03-13 15:57:28,875 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-03-13 15:57:28,875 [INFO] Adding to zip: app/routes/job_routes.py
+2025-03-13 15:57:28,876 [INFO] Adding to zip: app/routes/report_routes.py
+2025-03-13 15:57:28,877 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-03-13 15:57:28,877 [INFO] Adding to zip: app/utils/date_helper.py
+2025-03-13 15:57:28,877 [INFO] Adding to zip: app/utils/time_utils.py
+2025-03-13 15:57:28,878 [INFO] Adding to zip: app/utils/job_utils.py
+2025-03-13 15:57:28,878 [INFO] Adding to zip: app/utils/material_utils.py
+2025-03-13 15:57:28,878 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-03-13 15:57:28,878 [INFO] Adding to zip: app/utils/__init__.py
+2025-03-13 15:57:28,879 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-03-13 15:57:28,879 [INFO] Adding to zip: app/utils/error_utils.py
+2025-03-13 15:57:28,879 [INFO] Adding to zip: app/utils/profile_utils.py
+2025-03-13 15:57:28,879 [INFO] Adding to zip: app/utils/image_utils.py
+2025-03-13 15:57:28,880 [INFO] Adding to zip: app/templates/customer_form.html
+2025-03-13 15:57:28,880 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-03-13 15:57:28,880 [INFO] Adding to zip: app/templates/system_settings.html
+2025-03-13 15:57:28,881 [INFO] Adding to zip: app/templates/shared_images.html
+2025-03-13 15:57:28,881 [INFO] Adding to zip: app/templates/weekly_summary.html
+2025-03-13 15:57:28,881 [INFO] Adding to zip: app/templates/job_details.html
+2025-03-13 15:57:28,882 [INFO] Adding to zip: app/templates/invoice.html
+2025-03-13 15:57:28,883 [INFO] Adding to zip: app/templates/job_form.html
+2025-03-13 15:57:28,883 [INFO] Adding to zip: app/templates/customer_list.html
+2025-03-13 15:57:28,884 [INFO] Adding to zip: app/templates/500.html
+2025-03-13 15:57:28,884 [INFO] Adding to zip: app/templates/invoice.html.new
+2025-03-13 15:57:28,884 [INFO] Adding to zip: app/templates/base.html
+2025-03-13 15:57:28,885 [INFO] Adding to zip: app/templates/profile_settings.html
+2025-03-13 15:57:28,885 [INFO] Adding to zip: app/templates/job_list.html
+2025-03-13 15:57:28,885 [INFO] Adding to zip: app/templates/404.html
+2025-03-13 15:57:28,886 [INFO] Adding to zip: app/static/favicon.ico
+2025-03-13 15:57:28,886 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-03-13 15:57:28,886 [INFO] Adding to zip: app/static/js/file_upload.js
+2025-03-13 15:57:28,887 [INFO] Adding to zip: app/static/css/styles.css
+2025-03-13 15:57:28,888 [INFO] Adding to zip: app/static/css/file-upload.css
+2025-03-13 15:57:28,888 [INFO] Adding to zip: instance/user_profile.json
+2025-03-13 15:57:28,888 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250313_1557.zip
+2025-03-13 15:57:28,888 [INFO] Backup file exists: True
+2025-03-13 15:58:42,748 [INFO] Weekly summary request - selected_week: None, show_all: False
+2025-03-13 15:58:42,748 [INFO] No week selected, using current week: 2025-W11
+2025-03-13 15:58:42,748 [INFO] Fetching available weeks
+2025-03-13 15:58:42,749 [INFO] Found 37 distinct dates with time entries
+2025-03-13 15:58:42,750 [INFO] Processed 6 unique weeks
+2025-03-13 15:58:42,750 [INFO] Final view settings - selected_week: 2025-W11, show_all: False
+2025-03-13 15:58:42,751 [INFO] Found 26 time entries for week 2025-W11
+2025-03-13 15:59:14,193 [INFO] Stopping timer for job 4
+2025-03-13 16:01:47,597 [INFO] Starting timer for job 50
+2025-03-13 16:01:47,598 [INFO] Stopping all active timers
+2025-03-13 16:04:27,116 [INFO] Deleting image job50-2503131603.jpg (ID: 72) from job 50
+2025-03-13 16:04:27,116 [INFO] Deleted main image file: /home/Jobmanager/instance/images/job_50/job50-2503131603.jpg
+2025-03-13 16:04:27,116 [INFO] Deleted thumbnail file: /home/Jobmanager/instance/images/job_50/thumbnails/job50-2503131603.jpg
+2025-03-13 16:04:27,295 [INFO] Deleted image record from database: 72
+2025-03-13 16:04:27,361 [ERROR] Exception on /image/serve_image/50/job50-2503131603.jpg [GET]
+Traceback (most recent call last):
+  File "/home/Jobmanager/app/routes/image_routes.py", line 181, in serve_image
+    return send_file(
+           ^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/helpers.py", line 537, in send_file
+    return werkzeug.utils.send_file(  # type: ignore[return-value]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/werkzeug/utils.py", line 440, in send_file
+    stat = os.stat(path)
+           ^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/Jobmanager/instance/images/job_50/thumbnails/job50-2503131603.jpg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/routes/image_routes.py", line 186, in serve_image
+    abort(404)
+  File "/usr/lib/python3/dist-packages/flask/helpers.py", line 310, in abort
+    current_app.aborter(code, *args, **kwargs)
+  File "/usr/lib/python3/dist-packages/werkzeug/exceptions.py", line 864, in __call__
+    raise self.mapping[code](*args, **kwargs)
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1666, in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1606, in handle_http_exception
+    return self.ensure_sync(handler)(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/__init__.py", line 93, in page_not_found
+    return app.render_template('404.html'), 404
+           ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Flask' object has no attribute 'render_template'
+2025-03-13 16:04:31,813 [INFO] Deleting image job50-2503131603.jpg (ID: 73) from job 50
+2025-03-13 16:04:31,814 [WARNING] Main image file not found: /home/Jobmanager/instance/images/job_50/job50-2503131603.jpg
+2025-03-13 16:04:31,814 [WARNING] Thumbnail file not found: /home/Jobmanager/instance/images/job_50/thumbnails/job50-2503131603.jpg
+2025-03-13 16:04:31,940 [INFO] Deleted image record from database: 73
+2025-03-13 16:04:41,287 [INFO] Starting timer for job 54
+2025-03-13 16:04:41,287 [INFO] Stopping all active timers
+2025-03-13 16:05:49,174 [INFO] Stopping timer for job 54
+2025-03-13 16:56:09,132 [INFO] Stopping timer for job 54
+2025-03-13 16:56:17,951 [INFO] Starting timer for job 37
+2025-03-13 16:56:17,952 [INFO] Stopping all active timers
+2025-03-13 17:14:42,100 [INFO] Stopping timer for job 37
+2025-03-13 17:54:19,908 [INFO] Starting timer for job 37
+2025-03-13 17:54:19,909 [INFO] Stopping all active timers
+2025-03-13 17:57:04,825 [INFO] Stopping timer for job 37
+2025-03-13 18:26:52,733 [INFO] Starting timer for job 37
+2025-03-13 18:26:52,733 [INFO] Stopping all active timers
+2025-03-13 19:01:47,077 [INFO] Starting timer for job 4
+2025-03-13 19:01:47,077 [INFO] Stopping all active timers
+2025-03-13 19:15:26,747 [INFO] Starting timer for job 54
+2025-03-13 19:15:26,748 [INFO] Starting timer at: 2025-03-13T19:15:26
+2025-03-13 19:15:26,748 [INFO] Stopping all active timers
+2025-03-13 19:27:42,185 [INFO] Stopping timer for job 54
+2025-03-13 19:42:32,614 [INFO] Starting timer for job 55
+2025-03-13 19:42:32,614 [INFO] Starting timer at: 2025-03-13T19:42:32
+2025-03-13 19:42:32,615 [INFO] Stopping all active timers
+2025-03-13 19:44:36,479 [INFO] Stopping timer for job 55
+2025-03-13 19:45:13,990 [INFO] Starting timer for job 55
+2025-03-13 19:45:13,990 [INFO] Starting timer at: 2025-03-13T19:45:13
+2025-03-13 19:45:13,990 [INFO] Stopping all active timers
+2025-03-13 19:49:59,958 [INFO] Stopping timer for job 55
+2025-03-13 19:50:26,925 [INFO] Weekly summary request - selected_week: None, show_all: False
+2025-03-13 19:50:26,925 [INFO] No week selected, using current week: 2025-W11
+2025-03-13 19:50:26,925 [INFO] Fetching available weeks
+2025-03-13 19:50:26,925 [INFO] Found 37 distinct dates with time entries
+2025-03-13 19:50:26,927 [INFO] Processed 6 unique weeks
+2025-03-13 19:50:26,927 [INFO] Final view settings - selected_week: 2025-W11, show_all: False
+2025-03-13 19:50:26,928 [INFO] Found 34 time entries for week 2025-W11
+2025-03-13 21:08:40,738 [INFO] Weekly summary request - selected_week: None, show_all: False
+2025-03-13 21:08:40,738 [INFO] No week selected, using current week: 2025-W11
+2025-03-13 21:08:40,738 [INFO] Fetching available weeks
+2025-03-13 21:08:40,739 [INFO] Found 37 distinct dates with time entries
+2025-03-13 21:08:40,741 [INFO] Processed 6 unique weeks
+2025-03-13 21:08:40,741 [INFO] Final view settings - selected_week: 2025-W11, show_all: False
+2025-03-13 21:08:40,741 [INFO] Found 32 time entries for week 2025-W11
+2025-03-13 21:34:00,751 [INFO] Stopping timer for job 55
+2025-03-14 06:53:17,415 [INFO] Starting timer for job 41
+2025-03-14 06:53:17,415 [INFO] Starting timer at: 2025-03-14T06:53:17
+2025-03-14 06:53:17,415 [INFO] Stopping all active timers
+2025-03-14 06:53:25,039 [INFO] Stopping timer for job 41
+2025-03-14 06:53:38,982 [INFO] Starting timer for job 41
+2025-03-14 06:53:38,983 [INFO] Starting timer at: 2025-03-14T06:53:38
+2025-03-14 06:53:38,983 [INFO] Stopping all active timers
+2025-03-14 07:27:55,737 [INFO] Stopping timer for job 41
+2025-03-14 08:22:21,582 [INFO] Starting timer for job 56
+2025-03-14 08:22:21,582 [INFO] Starting timer at: 2025-03-14T08:22:21
+2025-03-14 08:22:21,582 [INFO] Stopping all active timers
+2025-03-14 08:22:28,229 [INFO] Stopping timer for job 56
+2025-03-14 08:22:34,127 [INFO] Starting timer for job 56
+2025-03-14 08:22:34,127 [INFO] Starting timer at: 2025-03-14T08:22:34
+2025-03-14 08:22:34,127 [INFO] Stopping all active timers
+2025-03-14 08:22:39,387 [INFO] Stopping timer for job 56
+2025-03-14 08:33:29,812 [INFO] Starting timer for job 56
+2025-03-14 08:33:29,812 [INFO] Starting timer at: 2025-03-14T08:33:29
+2025-03-14 08:33:29,812 [INFO] Stopping all active timers
+2025-03-14 08:33:32,316 [INFO] Stopping timer for job 56
+2025-03-14 08:37:48,423 [INFO] Starting timer for job 57
+2025-03-14 08:37:48,423 [INFO] Starting timer at: 2025-03-14T08:37:48
+2025-03-14 08:37:48,423 [INFO] Stopping all active timers
+2025-03-14 08:38:01,961 [INFO] Stopping timer for job 57
+2025-03-14 08:38:33,357 [INFO] Starting timer for job 57
+2025-03-14 08:38:33,357 [INFO] Starting timer at: 2025-03-14T08:38:33
+2025-03-14 08:38:33,357 [INFO] Stopping all active timers
+2025-03-14 08:45:12,775 [INFO] Stopping timer for job 57
+2025-03-14 08:45:36,781 [ERROR] Exception on /job/56/edit [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/db.py", line 35, in decorated_function
+    return f(db, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/routes/job_routes.py", line 244, in edit_job
+    return render_template('job_form.html', job=job)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 147, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 130, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/job_form.html", line 2, in top-level template code
+    {% extends "base.html" %}
+  File "/home/Jobmanager/app/templates/base.html", line 43, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/job_form.html", line 7, in block 'content'
+    <h2>{% if job %}Edit Job{% else %}Add Job for {{ customer.name }}{% endif %}</h2>
     ^^^^^^^^^^^^^^^^^^^^^^^^^
   File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 485, in getattr
     return getattr(obj, attribute)
            ^^^^^^^^^^^^^^^^^^^^^^^
-jinja2.exceptions.UndefinedError: 'datetime' is undefined
+jinja2.exceptions.UndefinedError: 'customer' is undefined
+2025-03-14 08:45:39,018 [ERROR] Exception on /job/56/edit [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/db.py", line 35, in decorated_function
+    return f(db, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/routes/job_routes.py", line 244, in edit_job
+    return render_template('job_form.html', job=job)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 147, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/templating.py", line 130, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 1301, in render
+    self.environment.handle_exception()
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/home/Jobmanager/app/templates/job_form.html", line 2, in top-level template code
+    {% extends "base.html" %}
+  File "/home/Jobmanager/app/templates/base.html", line 43, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/templates/job_form.html", line 7, in block 'content'
+    <h2>{% if job %}Edit Job{% else %}Add Job for {{ customer.name }}{% endif %}</h2>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/jinja2/environment.py", line 485, in getattr
+    return getattr(obj, attribute)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'customer' is undefined
+2025-03-14 08:45:43,915 [ERROR] Exception on /job/details/56 [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/db.py", line 35, in decorated_function
+    return f(db, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/routes/job_routes.py", line 326, in job_details
+    total_amount = total_hours * (job['base_rate'] or 0)
+                                  ~~~^^^^^^^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+2025-03-14 08:45:49,423 [INFO] Starting timer for job 57
+2025-03-14 08:45:49,423 [INFO] Starting timer at: 2025-03-14T08:45:49
+2025-03-14 08:45:49,424 [INFO] Stopping all active timers
+2025-03-14 08:45:51,464 [INFO] Stopping timer for job 57
+2025-03-14 08:48:32,396 [INFO] Starting timer for job 58
+2025-03-14 08:48:32,396 [INFO] Starting timer at: 2025-03-14T08:48:32
+2025-03-14 08:48:32,396 [INFO] Stopping all active timers
+2025-03-14 08:48:36,996 [INFO] Stopping timer for job 58
+2025-03-14 08:48:41,046 [INFO] Starting timer for job 58
+2025-03-14 08:48:41,046 [INFO] Starting timer at: 2025-03-14T08:48:41
+2025-03-14 08:48:41,046 [INFO] Stopping all active timers
+2025-03-14 08:48:43,839 [INFO] Stopping timer for job 58
+2025-03-14 08:48:47,062 [INFO] Starting timer for job 58
+2025-03-14 08:48:47,062 [INFO] Starting timer at: 2025-03-14T08:48:47
+2025-03-14 08:48:47,063 [INFO] Stopping all active timers
+2025-03-14 08:48:48,608 [INFO] Stopping timer for job 58
+2025-03-14 08:48:50,055 [INFO] Starting timer for job 58
+2025-03-14 08:48:50,055 [INFO] Starting timer at: 2025-03-14T08:48:50
+2025-03-14 08:48:50,055 [INFO] Stopping all active timers
+2025-03-14 08:48:50,759 [INFO] Stopping timer for job 58
+2025-03-14 09:01:32,009 [INFO] Starting timer for job 59
+2025-03-14 09:01:32,009 [INFO] Starting timer at: 2025-03-14T09:01:32
+2025-03-14 09:01:32,009 [INFO] Stopping all active timers
+2025-03-14 09:01:35,674 [INFO] Stopping timer for job 59
+2025-03-14 09:01:37,906 [INFO] Starting timer for job 59
+2025-03-14 09:01:37,907 [INFO] Starting timer at: 2025-03-14T09:01:37
+2025-03-14 09:01:37,907 [INFO] Stopping all active timers
+2025-03-14 09:01:38,921 [INFO] Stopping timer for job 59

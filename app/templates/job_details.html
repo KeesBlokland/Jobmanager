@@ -167,6 +167,7 @@
 <script>
 
 // Update active timer duration
+    // In job_details.html and quick_timer.html
     function updateTimerDuration() {
         const timerElements = document.querySelectorAll('.timer-duration');
         
@@ -174,29 +175,19 @@
             const startTimeStr = element.getAttribute('data-start');
             if (!startTimeStr) return;
             
-            // Parse the ISO timestamp from the start time
+            // Create date objects in local timezone context
             const startTime = new Date(startTimeStr);
             const now = new Date();
             
-            // Calculate the time difference in seconds
-            // Use getTime() which returns milliseconds since epoch for both dates
-            // This avoids any timezone issues as both dates are compared in the same context
-            const diffSeconds = Math.floor((now.getTime() - startTime.getTime()) / 1000);
+            // Simple time difference calculation using milliseconds
+            const diffSeconds = Math.floor((now - startTime) / 1000);
             
-            if (diffSeconds < 0) {
-                console.warn("Negative time difference detected:", diffSeconds, "seconds");
-                // If we somehow got a negative value, display 00:00:00
-                element.querySelector('.timer-hours').textContent = '00';
-                element.querySelector('.timer-minutes').textContent = '00';
-                element.querySelector('.timer-seconds').textContent = '00';
-                return;
-            }
-            
+            // Format and display the time
             const hours = Math.floor(diffSeconds / 3600);
             const minutes = Math.floor((diffSeconds % 3600) / 60);
             const seconds = diffSeconds % 60;
             
-            // Update the individual span elements
+            // Display time components
             element.querySelector('.timer-hours').textContent = hours.toString().padStart(2, '0');
             element.querySelector('.timer-minutes').textContent = minutes.toString().padStart(2, '0');
             element.querySelector('.timer-seconds').textContent = seconds.toString().padStart(2, '0');

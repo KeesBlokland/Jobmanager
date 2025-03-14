@@ -10,17 +10,16 @@ class TimerManager:
         self.db = db
         self.logger = logging.getLogger('jobmanager')
 
-    @handle_errors
     def start(self, job_id):
-        """Start a timer for the specified job.
-        
-        Args:
-            job_id: ID of the job to start timer for
-        """
         self.logger.info(f"Starting timer for job {job_id}")
         
-        # Get current time as consistent ISO format string
-        now_iso = get_current_time()
+        # Get current local time with timezone info removed
+        # This ensures consistent handling with SQLite
+        now = datetime.now().replace(microsecond=0)
+        now_iso = now.isoformat(timespec='seconds')
+        
+        # Log for debugging
+        self.logger.info(f"Starting timer at: {now_iso}")
         
         # Stop any running timers first
         self.stop_all_active()
@@ -30,7 +29,8 @@ class TimerManager:
             'INSERT INTO time_entry (job_id, start_time, entry_type) VALUES (?, ?, ?)',
             (job_id, now_iso, 'auto')
         )
-        
+    
+          
         # Get the current job status
         job = self.db.execute('SELECT status FROM job WHERE id = ?', (job_id,)).fetchone()
         

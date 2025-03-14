@@ -138,7 +138,7 @@ def job_list(db):
             SUM(
                 CASE 
                     WHEN end_time IS NULL THEN
-                        (julianday(datetime('now')) - julianday(start_time)) * 24
+                        (julianday(datetime('now', 'localtime')) - julianday(start_time)) * 24
                     ELSE
                         (julianday(end_time) - julianday(start_time)) * 24
                 END

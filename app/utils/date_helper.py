@@ -12,6 +12,28 @@ def iso_week_year(year, month, day):
     d = date(year, month, day)
     return d.isocalendar()[0]
 
+def format_week(week_data):
+    """Format a week string in format 'YYYY-WNN' to 'Week NN, YYYY'"""
+    try:
+        parts = week_data.split('-W')
+        year = parts[0]
+        week = parts[1]
+        # Remove leading zeros for display
+        week_num = int(week)
+        return f"Week {week_num}, {year}"
+    except (ValueError, IndexError):
+        return week_data
+
+def iso_date_to_datetime(date_str):
+    """Convert ISO date string (YYYY-MM-DD) to datetime object"""
+    try:
+        year = int(date_str[0:4])
+        month = int(date_str[5:7])
+        day = int(date_str[8:10])
+        return datetime(year, month, day)
+    except (ValueError, IndexError):
+        return datetime.now()
+
 def add_template_helpers(app):
     """Add custom template helpers to the Flask application"""
     
@@ -39,16 +61,13 @@ def add_template_helpers(app):
 
     @app.template_filter('format_week')
     def format_week_filter(week_data):
-        """Format a week string in format 'YYYY-WNN' to 'Week NN, YYYY'"""
-        try:
-            parts = week_data.split('-W')
-            year = parts[0]
-            week = parts[1]
-            # Remove leading zeros for display
-            week_num = int(week)
-            return f"Week {week_num}, {year}"
-        except (ValueError, IndexError):
-            return week_data
+        """Filter to format week string"""
+        return format_week(week_data)
+    
+    @app.template_filter('iso_date_to_datetime')
+    def iso_date_to_datetime_filter(date_str):
+        """Filter to convert ISO date to datetime"""
+        return iso_date_to_datetime(date_str)
     
     @app.template_filter('timestamp_to_datetime')
     def timestamp_to_datetime(timestamp):

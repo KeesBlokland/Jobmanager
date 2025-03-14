@@ -136,3 +136,27 @@ def profile_settings():
     # GET method - display profile form
     profile = profile_manager.get_profile()
     return render_template('profile_settings.html', profile=profile)
+
+@bp.route('/timer_diagnostics')
+@with_db
+def timer_diagnostics(db):
+    """Show timer diagnostic information"""
+    active_timer = db.execute('''
+        SELECT *, 
+            (julianday(datetime('now')) - julianday(start_time)) * 24 as hours_utc,
+            (julianday(datetime('now', 'localtime')) - julianday(start_time)) * 24 as hours_local,
+            start_time
+        FROM time_entry 
+        WHERE end_time IS NULL
+        ORDER BY id DESC LIMIT 1
+    ''').fetchone()
+    
+    if not active_timer:
+        return "No active timer"
+    
+    return f"""
+    Timer ID: {active_timer['id']}<br>
+    Start time: {active_timer['start_time']}<br>
+    Hours (UTC): {active_timer['hours_utc']}<br>
+    Hours (local): {active_timer['hours_local']}<br>
+    """

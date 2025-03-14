@@ -197,6 +197,12 @@
     }
 
     // Update active timer duration
+ 
+    function parseTimestamp(timeStr) {
+    // This will correctly parse ISO timestamps with timezone info
+    return new Date(timeStr);
+}
+    
     function updateTimerDuration() {
         const timerElements = document.querySelectorAll('.timer-duration');
         
@@ -204,32 +210,35 @@
             const startTimeStr = element.getAttribute('data-start');
             if (!startTimeStr) return;
             
-            // Parse the ISO timestamp from the start time
-            const startTime = new Date(startTimeStr);
-            const now = new Date();
+            let startTime;
             
-            // Calculate the time difference in seconds
-            // Use getTime() which returns milliseconds since epoch for both dates
-            // This avoids any timezone issues as both dates are compared in the same context
-            const diffSeconds = Math.floor((now.getTime() - startTime.getTime()) / 1000);
-            
-            if (diffSeconds < 0) {
-                console.warn("Negative time difference detected:", diffSeconds, "seconds");
-                // If we somehow got a negative value, display 00:00:00
-                element.querySelector('.timer-hours').textContent = '00';
-                element.querySelector('.timer-minutes').textContent = '00';
-                element.querySelector('.timer-seconds').textContent = '00';
-                return;
+            // Force interpretation as UTC time
+            // For timestamps like "2025-03-14T08:48:50" (without timezone)
+            if (!startTimeStr.includes('Z') && !startTimeStr.includes('+')) {
+                // Explicitly treat as UTC by appending Z
+                startTime = new Date(startTimeStr + 'Z');
+            } else {
+                // Handle timestamps that might already have timezone info
+                startTime = new Date(startTimeStr);
             }
             
+            const now = new Date();
+            
+            // Calculate time difference in seconds
+            const diffSeconds = Math.floor((now - startTime) / 1000);
+            
+            // Format the display
             const hours = Math.floor(diffSeconds / 3600);
             const minutes = Math.floor((diffSeconds % 3600) / 60);
             const seconds = diffSeconds % 60;
             
-            // Update the individual span elements
-            element.querySelector('.timer-hours').textContent = hours.toString().padStart(2, '0');
-            element.querySelector('.timer-minutes').textContent = minutes.toString().padStart(2, '0');
-            element.querySelector('.timer-seconds').textContent = seconds.toString().padStart(2, '0');
+            // Format display with positive values
+            element.querySelector('.timer-hours').textContent = 
+                Math.abs(hours).toString().padStart(2, '0');
+            element.querySelector('.timer-minutes').textContent = 
+                Math.abs(minutes).toString().padStart(2, '0');
+            element.querySelector('.timer-seconds').textContent = 
+                Math.abs(seconds).toString().padStart(2, '0');
         });
     }
 
