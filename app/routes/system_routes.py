@@ -1,11 +1,10 @@
 # app/routes/system_routes.py
 from flask import Blueprint, render_template, request, jsonify, current_app
-from datetime import datetime
-import pytz
+from datetime import datetime, timezone, timedelta
 import os
-import subprocess
 import logging
 from ..db import with_db
+from ..utils.profile_utils import profile_manager
 
 bp = Blueprint('system', __name__)
 logger = logging.getLogger('jobmanager')
@@ -17,83 +16,46 @@ def settings(db):
     # Get current system time info
     now = datetime.now()
     
-    # Get time zones with common ones first
-    common_timezones = ['Europe/Berlin', 'Europe/Amsterdam', 'Europe/London', 'America/New_York', 'America/Los_Angeles']
-    all_timezones = sorted([tz for tz in pytz.all_timezones if tz not in common_timezones])
-    timezones = common_timezones + all_timezones
-    
-    # Get current timezone
-    current_timezone = "Europe/Berlin"  # Default
-    try:
-        # Try to read timezone from system
-        with open('/etc/timezone', 'r') as f:
-            current_timezone = f.read().strip()
-    except Exception as e:
-        logger.warning(f"Could not read system timezone: {str(e)}")
-    
     return render_template('system_settings.html', 
                           current_time=now,
-                          timezones=timezones,
-                          current_timezone=current_timezone,
                           instance_path=current_app.instance_path)
 
-@bp.route('/set_timezone', methods=['POST'])
-def set_timezone():
-    """Set system timezone"""
+@bp.route('/set_time_offset', methods=['POST'])
+def set_time_offset():
+    """Set user time offset preference"""
     try:
-        timezone = request.form.get('timezone')
+        # Get the user's local time from form
+        user_time_str = request.form.get('user_time')
+        if not user_time_str:
+            return jsonify({'success': False, 'message': 'No time provided'})
         
-        if not timezone or timezone not in pytz.all_timezones:
-            return jsonify({'success': False, 'message': 'Invalid timezone'})
-            
-        # Use timedatectl to set timezone
-        result = subprocess.run(['sudo', 'timedatectl', 'set-timezone', timezone], 
-                              capture_output=True, text=True)
+        # Parse the user's time
+        user_time = datetime.fromisoformat(user_time_str.replace('T', ' '))
         
-        if result.returncode != 0:
-            logger.error(f"Failed to set timezone: {result.stderr}")
-            return jsonify({
-                'success': False, 
-                'message': f"Failed to set timezone. Error: {result.stderr}"
-            })
-            
-        logger.info(f"System timezone set to {timezone}")
-        return jsonify({'success': True, 'message': f"Timezone set to {timezone}"})
+        # Get current system time
+        system_time = datetime.now()
         
+        # Calculate offset in minutes
+        offset_minutes = int((user_time - system_time).total_seconds() / 60)
+        
+        # Update profile with new offset
+        profile = profile_manager.get_profile()
+        if 'preferences' not in profile:
+            profile['preferences'] = {}
+        profile['preferences']['time_offset_minutes'] = offset_minutes
+        
+        # Save the profile
+        success = profile_manager.save_profile(profile)
+        
+        message = f"Time settings saved. Your local time is set to {user_time.strftime('%Y-%m-%d %H:%M:%S')}."
+        return jsonify({'success': success, 'message': message, 'offset_minutes': offset_minutes})
     except Exception as e:
-        logger.error(f"Error setting timezone: {str(e)}", exc_info=True)
-        return jsonify({'success': False, 'message': str(e)})
-
-@bp.route('/sync_ntp', methods=['POST'])
-def sync_ntp():
-    """Sync time with NTP servers"""
-    try:
-        # Use systemctl to restart timesyncd service
-        result = subprocess.run(['sudo', 'systemctl', 'restart', 'systemd-timesyncd'], 
-                              capture_output=True, text=True)
-        
-        if result.returncode != 0:
-            logger.error(f"Failed to sync with NTP: {result.stderr}")
-            return jsonify({
-                'success': False, 
-                'message': "Failed to sync with NTP servers."
-            })
-        
-        logger.info("Time synchronized with NTP servers")
-        return jsonify({'success': True, 'message': "Time synchronized with NTP servers"})
-        
-    except Exception as e:
-        logger.error(f"Error syncing with NTP: {str(e)}", exc_info=True)
-        return jsonify({'success': False, 'message': str(e)})
-    
-
-# Add to app/routes/system_routes.py
+        logger.error(f"Error setting time offset: {str(e)}", exc_info=True)
+        return jsonify({'success': False, 'message': f"Error: {str(e)}"})
 
 @bp.route('/profile', methods=['GET', 'POST'])
 def profile_settings():
     """Render and handle user profile settings."""
-    from ..utils.profile_utils import profile_manager
-    
     if request.method == 'POST':
         # Build profile object from form data
         profile = {
@@ -118,6 +80,11 @@ def profile_settings():
                 "bic": request.form.get('bic', '')
             }
         }
+        
+        # Preserve existing preferences
+        current_profile = profile_manager.get_profile()
+        if 'preferences' in current_profile:
+            profile['preferences'] = current_profile['preferences']
         
         # Save the profile
         success = profile_manager.save_profile(profile)

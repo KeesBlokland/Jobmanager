@@ -1,13 +1,16 @@
 # app/__init__.py
-from flask import Flask
 import os
+import logging
+import sys
+
+from flask import Flask, render_template
 from .utils.error_utils import setup_logging
 from . import db
 from .utils.date_helper import add_template_helpers
-import logging
+from .utils.jinja_filters import register_jinja_filters
 from .utils import profile_utils
 from pathlib import Path
-import sys
+
 
 def create_app():
     app = Flask(__name__)
@@ -21,12 +24,13 @@ def create_app():
         return months.get(month, month)
     
     app.jinja_env.filters['month_name'] = month_name
-    
     # Add the date helper functions
     add_template_helpers(app)
-    
+    # Register custom Jinja filters for time display
+    register_jinja_filters(app)
     # Setup logging
     app.logger = setup_logging()
+
     
     # Ensure instance directory exists
     try:
@@ -90,10 +94,11 @@ def create_app():
     # Custom error handlers
     @app.errorhandler(404)
     def page_not_found(e):
-        return app.render_template('404.html'), 404
+        return render_template('404.html'), 404
+    
 
     @app.errorhandler(500)
     def internal_server_error(e):
-        return app.render_template('500.html'), 500
+        return render_template('500.html'), 500
     
     return app

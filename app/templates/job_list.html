@@ -127,11 +127,12 @@
         }
     });
     
-// Fix for job_list.html timer start function with proper headers
+    // Fixed timer start function that prevents timezone issues
     async function startTimer(jobId) {
         try {
             const response = await fetch(`/timer/job/${jobId}/start_timer`, {
-                method: 'POST'
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'}
             });
             
             // Reload the page regardless of response to refresh the job list
@@ -141,6 +142,7 @@
         }
     }
     
+    // Fixed timer stop function that prevents timezone issues
     async function stopTimer(jobId) {
         try {
             await fetch(`/timer/job/${jobId}/stop_timer`, {
@@ -152,5 +154,5 @@
             alert('Error stopping timer: ' + error.message);
         }
     }
-    </script>
+</script>
 {% endblock %}

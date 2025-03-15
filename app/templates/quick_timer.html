@@ -197,36 +197,32 @@
     }
 
     function updateTimerDuration() {
-    const timerElements = document.querySelectorAll('.timer-duration');
-    
-    timerElements.forEach(element => {
-        const startTimeStr = element.getAttribute('data-start');
-        if (!startTimeStr) return;
+        const timerElements = document.querySelectorAll('.timer-duration');
         
-        // Create date objects for comparison
-        const startTime = new Date(startTimeStr);
-        const now = new Date();
-        
-        // Force timezone adjustment if needed (if still negative)
-        let diffSeconds = Math.floor((now - startTime) / 1000);
-        if (diffSeconds < 0) {
-            // If negative, try adding timezone offset
-            diffSeconds += 3600; // Add 1 hour in seconds
-        }
-        
-        // Format and display time components
-        const hours = Math.floor(diffSeconds / 3600);
-        const minutes = Math.floor((diffSeconds % 3600) / 60);
-        const seconds = diffSeconds % 60;
-        
-        element.querySelector('.timer-hours').textContent = 
-            Math.max(0, hours).toString().padStart(2, '0');
-        element.querySelector('.timer-minutes').textContent = 
-            minutes.toString().padStart(2, '0');
-        element.querySelector('.timer-seconds').textContent = 
-            seconds.toString().padStart(2, '0');
-    });
-}
+        timerElements.forEach(element => {
+            const startTimeStr = element.getAttribute('data-start');
+            if (!startTimeStr) return;
+            
+            // Direct difference calculation without timezone considerations
+            const startTime = new Date(startTimeStr);
+            const now = new Date();
+            
+            // Calculate milliseconds difference and convert to seconds
+            let diffSeconds = Math.floor((now - startTime) / 1000);
+            diffSeconds = Math.max(0, diffSeconds);
+            
+            // Format time components
+            const hours = Math.floor(diffSeconds / 3600);
+            const minutes = Math.floor((diffSeconds % 3600) / 60);
+            const seconds = diffSeconds % 60;
+            
+            // Update display
+            element.querySelector('.timer-hours').textContent = hours.toString().padStart(2, '0');
+            element.querySelector('.timer-minutes').textContent = minutes.toString().padStart(2, '0');
+            element.querySelector('.timer-seconds').textContent = seconds.toString().padStart(2, '0');
+        });
+    }
+
     // Update timer every second if a timer is present on the page
     if (document.querySelector('.timer-duration')) {
         setInterval(updateTimerDuration, 1000);

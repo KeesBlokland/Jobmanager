@@ -1,19 +1,14 @@
-# time_diagnostic.py - Save this in the root directory
+# time_diagnostic.py - Place in project root directory
+#!/usr/bin/env python3
 
 import sqlite3
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 import os
 import sys
-import pytz
+import json
 
 def diagnose_time_issues():
-    """Diagnose time-related issues in the database.
-    
-    This script checks:
-    1. Server system time and timezone
-    2. Database time entries for potential issues
-    3. Active timer status
-    """
+    """Diagnose time-related issues in the database and user profile."""
     print("\n======= TIME DIAGNOSTIC TOOL =======\n")
     
     # Check system time
@@ -21,21 +16,36 @@ def diagnose_time_issues():
     now = datetime.now()
     utc_now = datetime.now(timezone.utc)
     
-    print(f"Local time: {now}")
-    print(f"UTC time:   {utc_now}")
+    print(f"Local time:      {now}")
+    print(f"UTC time:        {utc_now}")
     print(f"Time difference: {(now.replace(tzinfo=None) - utc_now.replace(tzinfo=None)).total_seconds() / 3600} hours")
     
-    # Try to get system timezone
+    # Check user profile
     try:
-        with open('/etc/timezone', 'r') as f:
-            system_tz = f.read().strip()
-        print(f"System timezone: {system_tz}")
+        print("\n=== User Profile Time Settings ===")
+        profile_path = os.path.join('instance', 'user_profile.json')
+        
+        if not os.path.exists(profile_path):
+            print(f"User profile not found at {profile_path}")
+        else:
+            with open(profile_path, 'r') as f:
+                profile = json.load(f)
+                
+            # Check for time offset setting
+            offset_minutes = profile.get('preferences', {}).get('time_offset_minutes', 0)
+            offset_hours = offset_minutes / 60
+            
+            print(f"Time offset: {offset_minutes} minutes ({offset_hours:.2f} hours)")
+            
+            # Calculate adjusted time
+            adjusted_time = utc_now + timedelta(minutes=offset_minutes)
+            print(f"Adjusted time: {adjusted_time}")
+            
+            # Show difference from local time
+            diff_from_local = (adjusted_time - now.replace(tzinfo=timezone.utc)).total_seconds() / 60
+            print(f"Difference from local: {diff_from_local:.2f} minutes")
     except Exception as e:
-        print(f"Could not read system timezone: {e}")
-    
-    # Check Python timezone
-    local_tz = datetime.now().astimezone().tzinfo
-    print(f"Python local timezone: {local_tz}")
+        print(f"Error reading user profile: {str(e)}")
     
     # Connect to database
     try:
@@ -44,22 +54,61 @@ def diagnose_time_issues():
         
         if not os.path.exists(db_path):
             print(f"Database not found at {db_path}")
-            sys.exit(1)
+            return
             
         conn = sqlite3.connect(db_path)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
         
-        # Check SQLite time
-        cursor.execute("SELECT datetime('now') as sqlite_time, datetime('now', 'localtime') as sqlite_local_time")
-        times = cursor.fetchone()
-        print(f"SQLite UTC time:        {times['sqlite_time']}")
-        print(f"SQLite 'localtime':     {times['sqlite_local_time']}")
+        # Check recent time entries
+        print("\n=== Recent Time Entries ===")
+        cursor.execute("""
+            SELECT time_entry.id, time_entry.start_time, time_entry.end_time,
+                   job.description as job_description
+            FROM time_entry
+            JOIN job ON time_entry.job_id = job.id
+            ORDER BY time_entry.start_time DESC
+            LIMIT 5
+        """)
+        entries = cursor.fetchall()
         
-        # Check for active timers
+        if not entries:
+            print("No time entries found.")
+        else:
+            print(f"Last {len(entries)} time entries:")
+            for entry in entries:
+                start_time = entry['start_time']
+                end_time = entry['end_time'] or "ongoing"
+                
+                print(f"ID: {entry['id']} - {entry['job_description']}")
+                print(f"  Start: {start_time}")
+                print(f"  End:   {end_time}")
+                
+                # Try to parse the timestamps
+                try:
+                    start_dt = datetime.fromisoformat(start_time)
+                    if start_dt.tzinfo is None:
+                        print("  WARNING: Start time has no timezone information")
+                    else:
+                        print(f"  Start time timezone: {start_dt.tzinfo}")
+                        
+                    if entry['end_time']:
+                        end_dt = datetime.fromisoformat(end_time)
+                        if end_dt.tzinfo is None:
+                            print("  WARNING: End time has no timezone information")
+                        
+                        # Calculate hours
+                        hours = (end_dt - start_dt).total_seconds() / 3600
+                        print(f"  Hours: {hours:.2f}")
+                except Exception as e:
+                    print(f"  Error parsing timestamps: {str(e)}")
+                
+                print()
+        
+        # Check active timer
         print("\n=== Active Timer Check ===")
         cursor.execute("""
-            SELECT time_entry.*, job.id as job_id, job.description
+            SELECT time_entry.*, job.description
             FROM time_entry 
             JOIN job ON time_entry.job_id = job.id
             WHERE time_entry.end_time IS NULL
@@ -78,74 +127,43 @@ def diagnose_time_issues():
                     start_dt = datetime.fromisoformat(start_time)
                     
                     # Calculate elapsed time
-                    elapsed_seconds = (now.replace(tzinfo=None) - start_dt.replace(tzinfo=None)).total_seconds()
+                    now_dt = datetime.now(timezone.utc)
+                    if start_dt.tzinfo is None:
+                        start_dt = start_dt.replace(tzinfo=timezone.utc)
+                        
+                    elapsed_seconds = (now_dt - start_dt).total_seconds()
                     hours = int(elapsed_seconds // 3600)
                     minutes = int((elapsed_seconds % 3600) // 60)
                     seconds = int(elapsed_seconds % 60)
                     
-                    print(f"  Job ID: {timer['job_id']} - {timer['description']}")
+                    print(f"  Job: {timer['description']}")
                     print(f"  Start time: {start_time}")
                     print(f"  Elapsed: {hours:02d}:{minutes:02d}:{seconds:02d}")
                     
-                    # Check for negative time or other issues
-                    if elapsed_seconds < 0:
-                        print(f"  WARNING: Negative elapsed time! Timer starts in the future.")
+                    # Apply user offset
+                    try:
+                        with open(profile_path, 'r') as f:
+                            profile = json.load(f)
+                        offset_minutes = profile.get('preferences', {}).get('time_offset_minutes', 0)
                         
-                        # Check for timezone issues
-                        for tz_name in ['UTC', 'Europe/Berlin', 'Europe/London', 'America/New_York']:
-                            tz = pytz.timezone(tz_name)
-                            tz_now = datetime.now(tz)
-                            tz_elapsed = (tz_now.replace(tzinfo=None) - start_dt.replace(tzinfo=None)).total_seconds()
-                            print(f"  - Compared to {tz_name}: {int(tz_elapsed // 3600):02d}:{int((tz_elapsed % 3600) // 60):02d}:{int(tz_elapsed % 60):02d}")
-                            
-                except ValueError as e:
-                    print(f"  Error parsing start time '{start_time}': {e}")
-                except Exception as e:
-                    print(f"  Error processing timer: {e}")
-                print()
-        
-        # Check recent time entries
-        print("\n=== Recent Time Entries ===")
-        cursor.execute("""
-            SELECT time_entry.*, job.description,
-                (julianday(COALESCE(end_time, datetime('now', 'localtime'))) - julianday(start_time)) * 24 as hours
-            FROM time_entry
-            JOIN job ON time_entry.job_id = job.id
-            ORDER BY time_entry.start_time DESC
-            LIMIT 5
-        """)
-        entries = cursor.fetchall()
-        
-        if not entries:
-            print("No time entries found.")
-        else:
-            print(f"Last {len(entries)} time entries:")
-            for entry in entries:
-                start_time = entry['start_time']
-                end_time = entry['end_time'] or "ongoing"
-                hours = entry['hours']
-                
-                print(f"  ID: {entry['id']} - {entry['description']}")
-                print(f"  Start: {start_time}")
-                print(f"  End: {end_time}")
-                print(f"  Hours: {hours}")
-                
-                # Try to recalculate hours
-                try:
-                    if entry['end_time']:
-                        start_dt = datetime.fromisoformat(start_time)
-                        end_dt = datetime.fromisoformat(end_time)
-                        calc_hours = (end_dt - start_dt).total_seconds() / 3600
-                        print(f"  Recalculated hours: {calc_hours}")
+                        adjusted_start = start_dt + timedelta(minutes=offset_minutes)
+                        adjusted_now = now_dt + timedelta(minutes=offset_minutes)
                         
-                        if abs(calc_hours - hours) > 0.01:
-                            print(f"  WARNING: Hour calculation discrepancy: DB={hours}, Calc={calc_hours}")
+                        adjusted_elapsed = (adjusted_now - adjusted_start).total_seconds()
+                        adj_hours = int(adjusted_elapsed // 3600)
+                        adj_minutes = int((adjusted_elapsed % 3600) // 60)
+                        adj_seconds = int(adjusted_elapsed % 60)
+                        
+                        print(f"  Adjusted start: {adjusted_start}")
+                        print(f"  Adjusted elapsed: {adj_hours:02d}:{adj_minutes:02d}:{adj_seconds:02d}")
+                    except Exception as e:
+                        print(f"  Error calculating adjusted time: {str(e)}")
                 except Exception as e:
-                    print(f"  Error recalculating hours: {e}")
+                    print(f"  Error processing timer: {str(e)}")
                 print()
-                
+            
     except Exception as e:
-        print(f"Error accessing database: {e}")
+        print(f"Error accessing database: {str(e)}")
     
     print("\n======= DIAGNOSTIC COMPLETE =======\n")
 

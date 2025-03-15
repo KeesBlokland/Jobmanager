@@ -1,5 +1,5 @@
 # app/utils/timer_utils.py
-from datetime import datetime
+from datetime import datetime, timezone
 from ..db import get_active_timer, calculate_job_total_hours
 from .error_utils import TimerError, handle_errors
 from .time_utils import get_current_time
@@ -13,11 +13,10 @@ class TimerManager:
     def start(self, job_id):
         self.logger.info(f"Starting timer for job {job_id}")
         
-        # Get current time in UTC with ISO format
-        now = datetime.now().replace(microsecond=0)
-        now_iso = now.isoformat(timespec='seconds')
+        # Always use UTC time with timezone info for consistent calculations
+        now_iso = get_current_time()
         
-        # Log for debugging
+        # Log timestamp for debugging
         self.logger.info(f"Starting timer at: {now_iso}")
         
         # Stop any running timers first
@@ -50,18 +49,21 @@ class TimerManager:
 
     @handle_errors
     def stop(self, job_id):
-        """Stop the timer for the specified job.
-        
-        Args:
-            job_id: ID of the job to stop timer for
-        """
+        """Stop the timer for the specified job."""
         self.logger.info(f"Stopping timer for job {job_id}")
         
-        # Get current time as consistent ISO format string
+        # Always use UTC time with timezone info
         now_iso = get_current_time()
+        
+        # Log timestamp for debugging
+        self.logger.info(f"Stopping timer at: {now_iso}")
         
         active_timer = get_active_timer(self.db)
         if active_timer and active_timer['job_id'] == job_id:
+            # Log the timer details for debugging
+            start_time = active_timer['start_time']
+            self.logger.info(f"Active timer found: id={active_timer['id']}, start={start_time}")
+            
             self.db.execute(
                 'UPDATE time_entry SET end_time = ? WHERE id = ?',
                 (now_iso, active_timer['id'])
@@ -73,7 +75,7 @@ class TimerManager:
         """Stop all active timers in the system."""
         self.logger.info("Stopping all active timers")
         
-        # Get current time as consistent ISO format string
+        # Always use UTC time with timezone info
         now_iso = get_current_time()
         
         self.db.execute(
@@ -84,12 +86,5 @@ class TimerManager:
 
     @handle_errors
     def calculate_total_hours(self, job_id):
-        """Calculate the total hours for a job.
-        
-        Args:
-            job_id: ID of the job to calculate hours for
-            
-        Returns:
-            float: Total hours rounded to nearest 5 minutes
-        """
+        """Calculate the total hours for a job."""
         return calculate_job_total_hours(self.db, job_id)

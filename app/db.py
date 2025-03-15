@@ -3,7 +3,7 @@ import sqlite3
 from functools import wraps
 from flask import g, current_app
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 
 logger = logging.getLogger('jobmanager')
 
@@ -75,8 +75,7 @@ def get_job_with_hours(db, job_id):
     return db.execute('''
         WITH job_hours AS (
             SELECT job_id,
-                SUM((julianday(COALESCE(end_time, datetime('now', 'localtime'))) - 
-                     julianday(start_time)) * 24) as hours
+                SUM(time_diff_hours(start_time, COALESCE(end_time, current_iso_time()))) as hours
             FROM time_entry
             GROUP BY job_id
         )
@@ -90,14 +89,7 @@ def get_job_with_hours(db, job_id):
     ''', [job_id]).fetchone()
 
 def get_active_timer(db):
-    """Get currently active timer if any exists.
-    
-    Args:
-        db: Database connection
-        
-    Returns:
-        dict: Active timer entry or None
-    """
+    """Get currently active timer if any exists."""
     return db.execute('''
         SELECT time_entry.*, job.id as job_id
         FROM time_entry 
@@ -127,7 +119,6 @@ def get_job_materials(db, job_id):
         ORDER BY timestamp DESC
     ''', [job_id]).fetchall()
 
-# Use the custom functions in queries
 def get_job_time_entries(db, job_id):
     """Get all time entries for a specific job using custom time functions."""
     return db.execute('''
@@ -174,14 +165,17 @@ def init_db_time_functions(db):
             else:
                 end_dt = datetime.now(timezone.utc)
             
-            # Normalize timezone info
+            # Normalize timezone info - always use UTC for consistent calculations
             if start_dt.tzinfo is None:
                 start_dt = start_dt.replace(tzinfo=timezone.utc)
             if end_dt.tzinfo is None:
                 end_dt = end_dt.replace(tzinfo=timezone.utc)
             
-            return (end_dt - start_dt).total_seconds() / 3600
-        except Exception:
+            # Direct time difference calculation - no timezone adjustments
+            diff_seconds = (end_dt - start_dt).total_seconds()
+            return diff_seconds / 3600
+        except Exception as e:
+            logger.error(f"Error calculating time difference: {str(e)}")
             return 0
     
     db.create_function("current_iso_time", 0, get_current_iso_time)

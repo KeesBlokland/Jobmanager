@@ -127,22 +127,16 @@ def create_backup(db, type):
             'message': f'Backup failed: {str(e)}'
         })    
 
-# app/routes/job_routes.py
+
 @bp.route('/')
 @with_db
 def job_list(db):
+    """Display all jobs with proper time calculations."""
     jobs = db.execute('''
     WITH job_hours AS (
         SELECT 
             job_id,
-            SUM(
-                CASE 
-                    WHEN end_time IS NULL THEN
-                        (julianday('now', 'localtime') - julianday(start_time)) * 24
-                    ELSE
-                        (julianday(end_time) - julianday(start_time)) * 24
-                END
-            ) as hours
+            SUM(time_diff_hours(start_time, COALESCE(end_time, current_iso_time()))) as hours
         FROM time_entry
         GROUP BY job_id
     )
@@ -167,9 +161,14 @@ def job_list(db):
         job.last_active DESC NULLS LAST,
         job.creation_date DESC
     ''').fetchall()
+    
+    # We can log information for debugging
+    logger = current_app.logger
+    for job in jobs:
+        if job['active_timer_id']:
+            logger.info(f"Job {job['id']} has active timer. Hours: {job['accumulated_hours']}")
+    
     return render_template('job_list.html', jobs=jobs)
-
-# app/routes/job_routes.py
 
 @bp.route('/add/<int:customer_id>', methods=['GET', 'POST'])
 @with_db
@@ -269,7 +268,7 @@ def add_note(db, id):
         
     return jsonify({"success": True})
 
-# Updated job_details route in app/routes/job_routes.py
+
 
 @bp.route('/details/<int:id>', methods=['GET', 'POST'])
 @with_db
@@ -283,7 +282,7 @@ def job_details(db, id):
             db.execute('DELETE FROM job_note WHERE job_id = ?', [id])
             
             # Add the new note
-            now = datetime.now().isoformat()
+            now = get_current_time()  # Use centralized time function
             db.execute(
                 'INSERT INTO job_note (job_id, note, timestamp) VALUES (?, ?, ?)',
                 (id, new_notes, now)
@@ -296,10 +295,11 @@ def job_details(db, id):
         
         return redirect(url_for('job.job_details', id=id))
     
+    # Use consistent time_diff_hours function for calculations
     job = db.execute('''
     WITH job_hours AS (
         SELECT job_id,
-            SUM((julianday(COALESCE(end_time, datetime('now', 'localtime'))) - julianday(start_time)) * 24) as hours
+            SUM(time_diff_hours(start_time, COALESCE(end_time, current_iso_time()))) as hours
         FROM time_entry
         GROUP BY job_id
     )
@@ -312,13 +312,13 @@ def job_details(db, id):
     WHERE job.id = ?
 ''', [id]).fetchone()
 
-    # Modified to include time entries with null end_time
+    # Also use time_diff_hours for time entries
     time_entries = db.execute('''
         SELECT *,
-            (julianday(COALESCE(end_time, datetime('now'))) - julianday(start_time)) * 24 as hours
+            time_diff_hours(start_time, COALESCE(end_time, current_iso_time())) as hours
         FROM time_entry
         WHERE job_id = ? AND 
-            (julianday(COALESCE(end_time, datetime('now'))) - julianday(start_time)) * 24 > 0
+            time_diff_hours(start_time, COALESCE(end_time, current_iso_time())) > 0
         ORDER BY start_time DESC
     ''', [id]).fetchall()
         
@@ -391,7 +391,7 @@ def edit_time_entry(db, job_id, entry_id):
         current_app.logger.error(f"Error updating time entry: {str(e)}", exc_info=True)
         return redirect(url_for('job.job_details', id=job_id, error=f"Error updating time entry: {str(e)}"))
 
-# app/routes/job_routes.py
+
 
 @bp.route('/<int:id>/add_material', methods=['POST'])
 @with_db
@@ -432,7 +432,7 @@ def delete_material(db, id, material_id):
     db.commit()
     return redirect(url_for('job.job_details', id=id))
 
-# app/routes/job_routes.py
+
 
 @bp.route('/<int:id>/edit_material/<int:material_id>', methods=['POST'])
 @with_db
@@ -472,9 +472,6 @@ def delete_time_entry(db, id, entry_id):
     db.commit()
     return redirect(url_for('job.job_details', id=id))
 
-# Update this function in app/routes/job_routes.py
-
-# app/routes/job_routes.py - Update the invoice route
 
 @bp.route('/<int:id>/invoice')
 @with_db
@@ -503,15 +500,13 @@ def invoice(db, id):
         WHERE job.id = ?
     ''', [id]).fetchone()
     
-    # Modified query to work with ISO format timestamps
+    # Use consistent time_diff_hours function for calculations
     time_entries = db.execute('''
         SELECT *,
-        (julianday(COALESCE(end_time, datetime('now'))) - 
-         julianday(start_time)) * 24 as hours
+        time_diff_hours(start_time, COALESCE(end_time, current_iso_time())) as hours
         FROM time_entry
         WHERE job_id = ? AND 
-              (julianday(COALESCE(end_time, datetime('now'))) - 
-               julianday(start_time)) * 24 > 0
+              time_diff_hours(start_time, COALESCE(end_time, current_iso_time())) > 0
         ORDER BY start_time
     ''', [id]).fetchall()
     
@@ -558,17 +553,16 @@ def get_template(db, template_id):
         } for m in materials]
     })
     
-    
-# Mobile phone route to app/routes/job_routes.py
 @bp.route('/quick_timer')
 @with_db
 def quick_timer(db):
+    """Mobile-friendly timer interface with consistent time handling."""
     jobs = db.execute('''
         WITH job_hours AS (
             SELECT 
-            job_id,
-            SUM((julianday(COALESCE(end_time, datetime('now', 'localtime'))) - julianday(start_time)) * 24) as hours
-        FROM time_entry
+                job_id,
+                SUM(time_diff_hours(start_time, COALESCE(end_time, current_iso_time()))) as hours
+            FROM time_entry
             GROUP BY job_id
         )
         SELECT 
@@ -585,15 +579,17 @@ def quick_timer(db):
         WHERE job.status = 'Active'
         ORDER BY 
             te_active.id IS NOT NULL DESC,
-            CASE job.status
-                WHEN 'Active' THEN 1
-                WHEN 'Pending' THEN 2
-            END,
             job.last_active DESC NULLS LAST,
             job.creation_date DESC
     ''').fetchall()
+    
+    # We can log timestamps for debugging
+    logger = current_app.logger
+    for job in jobs:
+        if job['timer_start']:
+            logger.info(f"Job {job['id']} timer_start: {job['timer_start']}")
+    
     return render_template('quick_timer.html', jobs=jobs)
-
 
 @bp.route('/qr_code')
 def generate_qr():

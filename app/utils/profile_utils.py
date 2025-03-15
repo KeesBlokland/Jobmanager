@@ -3,6 +3,7 @@ import os
 import json
 import logging
 from flask import current_app
+from datetime import datetime
 
 logger = logging.getLogger('jobmanager')
 
@@ -26,6 +27,9 @@ DEFAULT_PROFILE = {
         "account_holder": "Your Name",
         "iban": "DE...",
         "bic": "..."
+    },
+    "preferences": {
+        "time_offset_minutes": 0  # Added field to store time offset
     }
 }
 
@@ -58,34 +62,36 @@ class ProfileManager:
             
             with open(self.profile_path, 'r') as f:
                 profile = json.load(f)
+            
+            # Ensure preferences exist
+            if 'preferences' not in profile:
+                profile['preferences'] = {'time_offset_minutes': 0}
+            elif 'time_offset_minutes' not in profile['preferences']:
+                profile['preferences']['time_offset_minutes'] = 0
+                
             return profile
         except Exception as e:
             logger.error(f"Error loading user profile: {str(e)}")
             return DEFAULT_PROFILE
     
-    # Functions related to time in profile_utils.py
-    def get_last_modified_time():
-        """Get the last modification time of the profile.
-        
-        Returns:
-            str: ISO format timestamp of last modification
-        """
-        from datetime import datetime
-        return datetime.now().isoformat(timespec='seconds')
-
-    # When saving the profile
-    def save_profile(self, profile):
-        """Save the user profile with last modified timestamp.
-        
-        Args:
-            profile: Profile data dictionary
+    def get_time_offset_minutes(self):
+        """Get the user's time offset in minutes."""
+        try:
+            profile = self.get_profile()
+            return profile.get('preferences', {}).get('time_offset_minutes', 0)
+        except Exception as e:
+            logger.error(f"Error getting time offset: {str(e)}")
+            return 0
             
-        Returns:
-            bool: True if save was successful
-        """
+    def save_profile(self, profile):
+        """Save the user profile with last modified timestamp."""
         try:
             # Add last modified timestamp
-            profile['last_modified'] = get_last_modified_time()
+            profile['last_modified'] = datetime.now().isoformat()
+            
+            # Ensure preferences exist
+            if 'preferences' not in profile:
+                profile['preferences'] = {'time_offset_minutes': 0}
             
             # Ensure instance directory exists
             os.makedirs(os.path.dirname(self.profile_path), exist_ok=True)

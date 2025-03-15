@@ -7,32 +7,24 @@
     <div class="settings-section">
         <h3>System Information</h3>
         <div id="system-info">
-            <p><strong>Current Time:</strong> <span id="current-time">{{ current_time.strftime('%Y-%m-%d %H:%M:%S') }}</span></p>
-            <p><strong>Current Timezone:</strong> {{ current_timezone }}</p>
+            <p><strong>Current System Time:</strong> <span id="current-time">{{ current_time.strftime('%Y-%m-%d %H:%M:%S') }}</span></p>
             <p><strong>App Instance Path:</strong> {{ instance_path }}</p>
         </div>
     </div>
 
     <div class="settings-section">
-        <h3>Timezone Settings</h3>
+        <h3>Time Settings</h3>
         <div class="form-group">
-            <label>System Timezone</label>
-            <select id="timezone-select" class="form-control">
-                {% for tz in timezones %}
-                <option value="{{ tz }}" {% if tz == current_timezone %}selected{% endif %}>{{ tz }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="form-group">
-            <button id="set-timezone-btn" class="action-btn save-btn">Apply Timezone</button>
-        </div>
-    </div>
-
-    <div class="settings-section">
-        <h3>Time Synchronization</h3>
-        <div class="form-group">
-            <p>Synchronize system time with internet time servers (requires internet connection)</p>
-            <button id="sync-ntp-btn" class="action-btn">Sync with NTP Servers</button>
+            <p>If the current system time shown above is incorrect for your location, please set your correct local time:</p>
+            
+            <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 20px;">
+                <input type="datetime-local" id="user-time-input" class="form-control" style="width: 250px;">
+                <button id="set-time-btn" class="action-btn save-btn">Set My Local Time</button>
+            </div>
+            
+            <p class="time-hint" style="font-size: 0.9em; color: #666;">
+                This helps the application display times correctly for your location without changing your system settings.
+            </p>
         </div>
     </div>
 
@@ -49,56 +41,49 @@
 
 <script>
     // Update current time display
-    function updateTime() {
+    function updateCurrentTime() {
         const now = new Date();
         document.getElementById('current-time').textContent = 
-            now.toLocaleString();
+            now.toISOString().replace('T', ' ').substring(0, 19);
     }
     
     // Update time every second
-    setInterval(updateTime, 1000);
+    setInterval(updateCurrentTime, 1000);
     
-    // Set timezone
-    document.getElementById('set-timezone-btn').addEventListener('click', async function() {
-        const timezone = document.getElementById('timezone-select').value;
+    // Set current time in the datetime-local input
+    function setCurrentTimeInInput() {
+        const now = new Date();
+        // Format for datetime-local input: YYYY-MM-DDThh:mm
+        const formattedDate = now.getFullYear() + '-' + 
+                             String(now.getMonth() + 1).padStart(2, '0') + '-' + 
+                             String(now.getDate()).padStart(2, '0') + 'T' + 
+                             String(now.getHours()).padStart(2, '0') + ':' + 
+                             String(now.getMinutes()).padStart(2, '0');
+        
+        document.getElementById('user-time-input').value = formattedDate;
+    }
+    
+    // Set user's time offset
+    document.getElementById('set-time-btn').addEventListener('click', async function() {
+        const userTimeInput = document.getElementById('user-time-input').value;
+        if (!userTimeInput) {
+            showMessage('Please select your current time', 'error');
+            return;
+        }
         
         try {
-            const response = await fetch('{{ url_for("system.set_timezone") }}', {
+            const response = await fetch('{{ url_for("system.set_time_offset") }}', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
                 body: new URLSearchParams({
-                    'timezone': timezone
+                    'user_time': userTimeInput
                 })
             });
             
             const result = await response.json();
             showMessage(result.message, result.success ? 'success' : 'error');
-            
-            if (result.success) {
-                // Full page reload
-                window.location.href = window.location.href;
-            }
-        } catch (error) {
-            showMessage('Error: ' + error.message, 'error');
-        }
-    });
-    
-    // Sync with NTP
-    document.getElementById('sync-ntp-btn').addEventListener('click', async function() {
-        try {
-            const response = await fetch('{{ url_for("system.sync_ntp") }}', {
-                method: 'POST'
-            });
-            
-            const result = await response.json();
-            showMessage(result.message, result.success ? 'success' : 'error');
-            
-            if (result.success) {
-                // Full page reload
-                window.location.href = window.location.href;
-            }
         } catch (error) {
             showMessage('Error: ' + error.message, 'error');
         }
@@ -116,7 +101,12 @@
             statusEl.style.display = 'none';
         }, 5000);
     }
+    
+    // Initialize when document is ready
+    document.addEventListener('DOMContentLoaded', function() {
+        setCurrentTimeInInput();
+        updateCurrentTime();
+    });
 </script>
-
 
 {% endblock %}
