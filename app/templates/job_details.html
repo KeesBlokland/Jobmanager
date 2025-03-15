@@ -166,7 +166,9 @@
 
 <script>
 
-// Update active timer duration
+
+// Function to update active timer duration
+// Final fix for updateTimerDuration function
 function updateTimerDuration() {
     const timerElements = document.querySelectorAll('.timer-duration');
     
@@ -174,34 +176,17 @@ function updateTimerDuration() {
         const startTimeStr = element.getAttribute('data-start');
         if (!startTimeStr) return;
         
-        let startTime;
+        // Just parse the timestamp as is - no timezone modifications
+        const startTime = new Date(startTimeStr);
         const now = new Date();
-        
-        // For timestamps without timezone info (like "2025-03-14T09:05:06")
-        // We need to parse them in local timezone context, not as UTC
-        if (!startTimeStr.includes('Z') && !startTimeStr.includes('+')) {
-            // Parse manually to ensure local timezone interpretation
-            const [datePart, timePart] = startTimeStr.split('T');
-            const [year, month, day] = datePart.split('-').map(Number);
-            const [hour, minute, second] = timePart.split(':').map(Number);
-            
-            // Create date in local timezone (months are 0-indexed in JS)
-            startTime = new Date(year, month-1, day, hour, minute, second);
-        } else {
-            // If it has timezone info, let JS handle it normally
-            startTime = new Date(startTimeStr);
-        }
         
         // Calculate time difference in seconds
         const diffSeconds = Math.floor((now - startTime) / 1000);
         
-        // Handle negative values (shouldn't happen with above fix, but just in case)
-        const adjustedSeconds = diffSeconds < 0 ? 0 : diffSeconds;
-        
-        // Format and display the time
-        const hours = Math.floor(adjustedSeconds / 3600);
-        const minutes = Math.floor((adjustedSeconds % 3600) / 60);
-        const seconds = adjustedSeconds % 60;
+        // Format time components
+        const hours = Math.floor(diffSeconds / 3600);
+        const minutes = Math.floor((diffSeconds % 3600) / 60);
+        const seconds = diffSeconds % 60;
         
         // Update display
         element.querySelector('.timer-hours').textContent = hours.toString().padStart(2, '0');

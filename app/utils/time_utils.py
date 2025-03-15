@@ -2,9 +2,10 @@
 from datetime import datetime, timezone
 
 def get_current_time():
-    """Get current time as UTC ISO format string."""
-    # Force UTC and include 'Z' suffix to mark as UTC
-    return datetime.now(timezone.utc).isoformat()
+    
+    """Get current time as ISO format string."""
+    # Using local time consistently across the application
+    return datetime.now().replace(microsecond=0).isoformat(timespec='seconds')
 
 
 def format_time(timestamp, format_str='%Y-%m-%d %H:%M:%S'):

@@ -299,7 +299,7 @@ def job_details(db, id):
     job = db.execute('''
     WITH job_hours AS (
         SELECT job_id,
-            SUM((julianday(COALESCE(end_time, datetime('now'))) - julianday(start_time)) * 24) as hours
+            SUM((julianday(COALESCE(end_time, datetime('now', 'localtime'))) - julianday(start_time)) * 24) as hours
         FROM time_entry
         GROUP BY job_id
     )
@@ -567,7 +567,7 @@ def quick_timer(db):
         WITH job_hours AS (
             SELECT 
             job_id,
-            SUM((julianday(COALESCE(end_time, datetime('now'))) - julianday(start_time)) * 24) as hours
+            SUM((julianday(COALESCE(end_time, datetime('now', 'localtime'))) - julianday(start_time)) * 24) as hours
         FROM time_entry
             GROUP BY job_id
         )

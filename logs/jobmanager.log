@@ -530,3 +530,863 @@ TypeError: 'NoneType' object is not subscriptable
 2025-03-14 09:42:35,633 [INFO] Starting timer at: 2025-03-14T09:42:35
 2025-03-14 09:42:35,633 [INFO] Stopping all active timers
 2025-03-14 10:57:08,913 [INFO] Stopping timer for job 50
+2025-03-14 11:52:12,832 [INFO] Starting timer for job 64
+2025-03-14 11:52:12,832 [INFO] Starting timer at: 2025-03-14T11:52:12
+2025-03-14 11:52:12,832 [INFO] Stopping all active timers
+2025-03-14 11:52:18,887 [INFO] Stopping timer for job 64
+2025-03-14 11:52:20,128 [INFO] Starting timer for job 64
+2025-03-14 11:52:20,128 [INFO] Starting timer at: 2025-03-14T11:52:20
+2025-03-14 11:52:20,128 [INFO] Stopping all active timers
+2025-03-14 11:52:22,927 [INFO] Stopping timer for job 64
+2025-03-14 13:17:45,451 [ERROR] Exception on /timer/job/65/start_timer [POST]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/db.py", line 35, in decorated_function
+    return f(db, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/routes/timer_routes.py", line 13, in start_timer
+    timer.start(id)
+    ^^^^^^^^^^^
+AttributeError: 'TimerManager' object has no attribute 'start'
+2025-03-14 13:17:48,199 [ERROR] Exception on /timer/job/65/start_timer [POST]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/db.py", line 35, in decorated_function
+    return f(db, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/routes/timer_routes.py", line 13, in start_timer
+    timer.start(id)
+    ^^^^^^^^^^^
+AttributeError: 'TimerManager' object has no attribute 'start'
+2025-03-14 13:17:52,052 [ERROR] Exception on /timer/job/65/start_timer [POST]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/db.py", line 35, in decorated_function
+    return f(db, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/routes/timer_routes.py", line 13, in start_timer
+    timer.start(id)
+    ^^^^^^^^^^^
+AttributeError: 'TimerManager' object has no attribute 'start'
+2025-03-14 13:18:13,498 [ERROR] Exception on /timer/job/65/start_timer [POST]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/db.py", line 35, in decorated_function
+    return f(db, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/routes/timer_routes.py", line 13, in start_timer
+    timer.start(id)
+    ^^^^^^^^^^^
+AttributeError: 'TimerManager' object has no attribute 'start'
+2025-03-14 13:19:19,272 [ERROR] Exception on /timer/job/65/start_timer [POST]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/db.py", line 35, in decorated_function
+    return f(db, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/routes/timer_routes.py", line 13, in start_timer
+    timer.start(id)
+    ^^^^^^^^^^^
+AttributeError: 'TimerManager' object has no attribute 'start'
+2025-03-14 13:19:21,528 [ERROR] Exception on /timer/job/65/start_timer [POST]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/db.py", line 35, in decorated_function
+    return f(db, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/routes/timer_routes.py", line 13, in start_timer
+    timer.start(id)
+    ^^^^^^^^^^^
+AttributeError: 'TimerManager' object has no attribute 'start'
+2025-03-14 13:19:23,372 [ERROR] Exception on /timer/job/65/start_timer [POST]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/db.py", line 35, in decorated_function
+    return f(db, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/routes/timer_routes.py", line 13, in start_timer
+    timer.start(id)
+    ^^^^^^^^^^^
+AttributeError: 'TimerManager' object has no attribute 'start'
+2025-03-14 13:24:10,431 [ERROR] Exception on /timer/job/65/start_timer [POST]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/db.py", line 35, in decorated_function
+    return f(db, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/routes/timer_routes.py", line 13, in start_timer
+    timer.start(id)
+    ^^^^^^^^^^^
+AttributeError: 'TimerManager' object has no attribute 'start'
+2025-03-14 13:24:13,525 [ERROR] Exception on /timer/job/65/start_timer [POST]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/db.py", line 35, in decorated_function
+    return f(db, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/routes/timer_routes.py", line 13, in start_timer
+    timer.start(id)
+    ^^^^^^^^^^^
+AttributeError: 'TimerManager' object has no attribute 'start'
+2025-03-14 13:26:03,490 [ERROR] Exception on /timer/job/65/start_timer [POST]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/db.py", line 35, in decorated_function
+    return f(db, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/routes/timer_routes.py", line 13, in start_timer
+    timer.start(id)
+    ^^^^^^^^^^^
+AttributeError: 'TimerManager' object has no attribute 'start'
+2025-03-14 13:26:05,033 [ERROR] Exception on /timer/job/65/start_timer [POST]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/db.py", line 35, in decorated_function
+    return f(db, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/routes/timer_routes.py", line 13, in start_timer
+    timer.start(id)
+    ^^^^^^^^^^^
+AttributeError: 'TimerManager' object has no attribute 'start'
+2025-03-14 13:26:06,391 [ERROR] Exception on /timer/job/65/start_timer [POST]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/db.py", line 35, in decorated_function
+    return f(db, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/routes/timer_routes.py", line 13, in start_timer
+    timer.start(id)
+    ^^^^^^^^^^^
+AttributeError: 'TimerManager' object has no attribute 'start'
+2025-03-14 13:28:15,135 [INFO] Starting timer for job 65
+2025-03-14 13:28:15,135 [INFO] Starting timer at: 2025-03-14T12:28:15.135472+00:00
+2025-03-14 13:28:15,135 [INFO] Stopping all active timers
+2025-03-14 13:29:52,375 [INFO] Stopping timer for job 65
+2025-03-14 13:29:57,529 [INFO] Starting timer for job 65
+2025-03-14 13:29:57,542 [INFO] Starting timer at: 2025-03-14T12:29:57.542880+00:00
+2025-03-14 13:29:57,543 [INFO] Stopping all active timers
+2025-03-14 13:30:06,481 [INFO] Stopping timer for job 65
+2025-03-14 13:32:55,490 [INFO] Starting timer for job 66
+2025-03-14 13:32:55,490 [INFO] Starting timer at: 2025-03-14T13:32:55
+2025-03-14 13:32:55,490 [INFO] Stopping all active timers
+2025-03-14 13:33:02,791 [INFO] Stopping timer for job 66
+2025-03-14 13:33:20,517 [INFO] Starting timer for job 66
+2025-03-14 13:33:20,517 [INFO] Starting timer at: 2025-03-14T13:33:20
+2025-03-14 13:33:20,517 [INFO] Stopping all active timers
+2025-03-14 13:33:38,055 [INFO] Starting timer for job 66
+2025-03-14 13:33:38,055 [INFO] Starting timer at: 2025-03-14T13:33:38
+2025-03-14 13:33:38,055 [INFO] Stopping all active timers
+2025-03-14 13:41:04,288 [INFO] Stopping timer for job 66
+2025-03-14 13:41:49,408 [INFO] Starting timer for job 66
+2025-03-14 13:41:49,408 [INFO] Starting timer at: 2025-03-14T13:41:49
+2025-03-14 13:41:49,408 [INFO] Stopping all active timers
+2025-03-14 13:42:24,245 [INFO] Stopping timer for job 66
+2025-03-14 13:42:26,567 [INFO] Starting timer for job 66
+2025-03-14 13:42:26,567 [INFO] Starting timer at: 2025-03-14T13:42:26
+2025-03-14 13:42:26,567 [INFO] Stopping all active timers
+2025-03-14 13:43:03,486 [INFO] Starting timer for job 48
+2025-03-14 13:43:03,486 [INFO] Starting timer at: 2025-03-14T13:43:03
+2025-03-14 13:43:03,486 [INFO] Stopping all active timers
+2025-03-14 13:43:03,590 [INFO] Updating job 48 status from 'Pending' to 'Active'
+2025-03-14 14:37:06,798 [INFO] Stopping timer for job 48
+2025-03-14 14:37:36,479 [INFO] Starting timer for job 67
+2025-03-14 14:37:36,479 [INFO] Starting timer at: 2025-03-14T14:37:36
+2025-03-14 14:37:36,479 [INFO] Stopping all active timers
+2025-03-14 14:42:17,768 [INFO] Stopping timer for job 67
+2025-03-14 14:42:23,322 [INFO] Stopping timer for job 67
+2025-03-14 14:42:59,043 [INFO] Starting timer for job 68
+2025-03-14 14:42:59,043 [INFO] Starting timer at: 2025-03-14T14:42:59
+2025-03-14 14:42:59,043 [INFO] Stopping all active timers
+2025-03-14 14:48:19,881 [INFO] Stopping timer for job 68
+2025-03-14 14:48:42,180 [INFO] Starting timer for job 68
+2025-03-14 14:48:42,180 [INFO] Starting timer at: 2025-03-14T14:48:42
+2025-03-14 14:48:42,180 [INFO] Stopping all active timers
+2025-03-14 14:50:15,793 [INFO] Root path: /home/Jobmanager
+2025-03-14 14:50:15,793 [INFO] Current working directory: /home/Jobmanager
+2025-03-14 14:50:15,793 [INFO] Instance path: /home/Jobmanager/instance
+2025-03-14 14:50:15,793 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250314_1450.zip
+2025-03-14 14:50:15,793 [INFO] Adding file: /home/Jobmanager/run.py
+2025-03-14 14:50:15,794 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-03-14 14:50:15,794 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-03-14 14:50:15,794 [INFO] Adding to zip: app/db.py
+2025-03-14 14:50:15,795 [INFO] Adding to zip: app/__init__.py
+2025-03-14 14:50:15,795 [INFO] Adding to zip: app/schema.sql
+2025-03-14 14:50:15,795 [INFO] Adding to zip: app/routes/image_routes.py
+2025-03-14 14:50:15,796 [INFO] Adding to zip: app/routes/system_routes.py
+2025-03-14 14:50:15,796 [INFO] Adding to zip: app/routes/__init__.py
+2025-03-14 14:50:15,796 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-03-14 14:50:15,797 [INFO] Adding to zip: app/routes/job_routes.py
+2025-03-14 14:50:15,798 [INFO] Adding to zip: app/routes/report_routes.py
+2025-03-14 14:50:15,798 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-03-14 14:50:15,798 [INFO] Adding to zip: app/utils/date_helper.py
+2025-03-14 14:50:15,799 [INFO] Adding to zip: app/utils/time_utils.py
+2025-03-14 14:50:15,799 [INFO] Adding to zip: app/utils/job_utils.py
+2025-03-14 14:50:15,799 [INFO] Adding to zip: app/utils/material_utils.py
+2025-03-14 14:50:15,800 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-03-14 14:50:15,800 [INFO] Adding to zip: app/utils/__init__.py
+2025-03-14 14:50:15,800 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-03-14 14:50:15,800 [INFO] Adding to zip: app/utils/error_utils.py
+2025-03-14 14:50:15,801 [INFO] Adding to zip: app/utils/profile_utils.py
+2025-03-14 14:50:15,801 [INFO] Adding to zip: app/utils/image_utils.py
+2025-03-14 14:50:15,801 [INFO] Adding to zip: app/templates/customer_form.html
+2025-03-14 14:50:15,801 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-03-14 14:50:15,802 [INFO] Adding to zip: app/templates/system_settings.html
+2025-03-14 14:50:15,802 [INFO] Adding to zip: app/templates/shared_images.html
+2025-03-14 14:50:15,802 [INFO] Adding to zip: app/templates/weekly_summary.html
+2025-03-14 14:50:15,803 [INFO] Adding to zip: app/templates/job_details.html
+2025-03-14 14:50:15,804 [INFO] Adding to zip: app/templates/invoice.html
+2025-03-14 14:50:15,804 [INFO] Adding to zip: app/templates/job_form.html
+2025-03-14 14:50:15,805 [INFO] Adding to zip: app/templates/customer_list.html
+2025-03-14 14:50:15,805 [INFO] Adding to zip: app/templates/500.html
+2025-03-14 14:50:15,805 [INFO] Adding to zip: app/templates/invoice.html.new
+2025-03-14 14:50:15,806 [INFO] Adding to zip: app/templates/base.html
+2025-03-14 14:50:15,806 [INFO] Adding to zip: app/templates/profile_settings.html
+2025-03-14 14:50:15,806 [INFO] Adding to zip: app/templates/job_list.html
+2025-03-14 14:50:15,807 [INFO] Adding to zip: app/templates/404.html
+2025-03-14 14:50:15,807 [INFO] Adding to zip: app/static/favicon.ico
+2025-03-14 14:50:15,807 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-03-14 14:50:15,808 [INFO] Adding to zip: app/static/js/file_upload.js
+2025-03-14 14:50:15,808 [INFO] Adding to zip: app/static/css/styles.css
+2025-03-14 14:50:15,809 [INFO] Adding to zip: app/static/css/file-upload.css
+2025-03-14 14:50:15,809 [INFO] Adding to zip: instance/user_profile.json
+2025-03-14 14:50:15,810 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250314_1450.zip
+2025-03-14 14:50:15,810 [INFO] Backup file exists: True
+2025-03-14 15:02:43,176 [INFO] Starting timer for job 69
+2025-03-14 15:02:43,176 [INFO] Starting timer at: 2025-03-14T15:02:43
+2025-03-14 15:02:43,176 [INFO] Stopping all active timers
+2025-03-14 15:06:26,169 [INFO] Stopping timer for job 69
+2025-03-14 15:07:03,589 [INFO] Starting timer for job 69
+2025-03-14 15:07:03,590 [INFO] Starting timer at: 2025-03-14T15:07:03
+2025-03-14 15:07:03,590 [INFO] Stopping all active timers
+2025-03-14 15:07:13,807 [INFO] Stopping timer for job 69
+2025-03-14 15:07:18,059 [INFO] Starting timer for job 4
+2025-03-14 15:07:18,059 [INFO] Starting timer at: 2025-03-14T15:07:18
+2025-03-14 15:07:18,060 [INFO] Stopping all active timers
+2025-03-14 16:31:18,054 [INFO] Stopping timer for job 4
+2025-03-14 18:04:59,312 [INFO] Starting timer for job 69
+2025-03-14 18:04:59,312 [INFO] Starting timer at: 2025-03-14T18:04:59
+2025-03-14 18:04:59,312 [INFO] Stopping all active timers
+2025-03-14 18:10:53,127 [ERROR] Exception on /favicon.ico [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1785, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1767, in raise_routing_exception
+    raise request.routing_exception  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/ctx.py", line 351, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/werkzeug/routing/map.py", line 624, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1666, in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1606, in handle_http_exception
+    return self.ensure_sync(handler)(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/__init__.py", line 93, in page_not_found
+    return app.render_template('404.html'), 404
+           ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Flask' object has no attribute 'render_template'
+2025-03-14 18:11:01,867 [INFO] Stopping timer for job 69
+2025-03-14 18:11:02,033 [ERROR] Exception on /favicon.ico [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1785, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1767, in raise_routing_exception
+    raise request.routing_exception  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/ctx.py", line 351, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/werkzeug/routing/map.py", line 624, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1666, in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1606, in handle_http_exception
+    return self.ensure_sync(handler)(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/__init__.py", line 93, in page_not_found
+    return app.render_template('404.html'), 404
+           ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Flask' object has no attribute 'render_template'
+2025-03-14 18:11:04,010 [INFO] Starting timer for job 69
+2025-03-14 18:11:04,010 [INFO] Starting timer at: 2025-03-14T18:11:04
+2025-03-14 18:11:04,010 [INFO] Stopping all active timers
+2025-03-14 18:11:04,256 [ERROR] Exception on /favicon.ico [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1785, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1767, in raise_routing_exception
+    raise request.routing_exception  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/ctx.py", line 351, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/werkzeug/routing/map.py", line 624, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1666, in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1606, in handle_http_exception
+    return self.ensure_sync(handler)(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/__init__.py", line 93, in page_not_found
+    return app.render_template('404.html'), 404
+           ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Flask' object has no attribute 'render_template'
+2025-03-14 18:11:06,249 [INFO] Stopping timer for job 69
+2025-03-14 18:11:06,409 [ERROR] Exception on /favicon.ico [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1785, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1767, in raise_routing_exception
+    raise request.routing_exception  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/ctx.py", line 351, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/werkzeug/routing/map.py", line 624, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1666, in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1606, in handle_http_exception
+    return self.ensure_sync(handler)(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/__init__.py", line 93, in page_not_found
+    return app.render_template('404.html'), 404
+           ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Flask' object has no attribute 'render_template'
+2025-03-14 18:11:55,601 [INFO] Starting timer for job 70
+2025-03-14 18:11:55,601 [INFO] Starting timer at: 2025-03-14T18:11:55
+2025-03-14 18:11:55,602 [INFO] Stopping all active timers
+2025-03-14 18:12:00,545 [ERROR] Exception on /favicon.ico [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1785, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1767, in raise_routing_exception
+    raise request.routing_exception  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/ctx.py", line 351, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/werkzeug/routing/map.py", line 624, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1666, in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1606, in handle_http_exception
+    return self.ensure_sync(handler)(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/__init__.py", line 93, in page_not_found
+    return app.render_template('404.html'), 404
+           ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Flask' object has no attribute 'render_template'
+2025-03-14 18:12:13,083 [INFO] Root path: /home/Jobmanager
+2025-03-14 18:12:13,083 [INFO] Current working directory: /home/Jobmanager
+2025-03-14 18:12:13,083 [INFO] Instance path: /home/Jobmanager/instance
+2025-03-14 18:12:13,083 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250314_1812.zip
+2025-03-14 18:12:13,083 [INFO] Adding file: /home/Jobmanager/run.py
+2025-03-14 18:12:13,084 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-03-14 18:12:13,084 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-03-14 18:12:13,084 [INFO] Adding to zip: app/db.py
+2025-03-14 18:12:13,084 [INFO] Adding to zip: app/__init__.py
+2025-03-14 18:12:13,085 [INFO] Adding to zip: app/schema.sql
+2025-03-14 18:12:13,085 [INFO] Adding to zip: app/routes/image_routes.py
+2025-03-14 18:12:13,086 [INFO] Adding to zip: app/routes/system_routes.py
+2025-03-14 18:12:13,086 [INFO] Adding to zip: app/routes/__init__.py
+2025-03-14 18:12:13,086 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-03-14 18:12:13,087 [INFO] Adding to zip: app/routes/job_routes.py
+2025-03-14 18:12:13,087 [INFO] Adding to zip: app/routes/report_routes.py
+2025-03-14 18:12:13,088 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-03-14 18:12:13,088 [INFO] Adding to zip: app/utils/date_helper.py
+2025-03-14 18:12:13,089 [INFO] Adding to zip: app/utils/time_utils.py
+2025-03-14 18:12:13,089 [INFO] Adding to zip: app/utils/job_utils.py
+2025-03-14 18:12:13,089 [INFO] Adding to zip: app/utils/material_utils.py
+2025-03-14 18:12:13,089 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-03-14 18:12:13,090 [INFO] Adding to zip: app/utils/__init__.py
+2025-03-14 18:12:13,090 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-03-14 18:12:13,090 [INFO] Adding to zip: app/utils/error_utils.py
+2025-03-14 18:12:13,090 [INFO] Adding to zip: app/utils/profile_utils.py
+2025-03-14 18:12:13,091 [INFO] Adding to zip: app/utils/image_utils.py
+2025-03-14 18:12:13,091 [INFO] Adding to zip: app/templates/customer_form.html
+2025-03-14 18:12:13,091 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-03-14 18:12:13,092 [INFO] Adding to zip: app/templates/system_settings.html
+2025-03-14 18:12:13,092 [INFO] Adding to zip: app/templates/shared_images.html
+2025-03-14 18:12:13,092 [INFO] Adding to zip: app/templates/weekly_summary.html
+2025-03-14 18:12:13,093 [INFO] Adding to zip: app/templates/job_details.html
+2025-03-14 18:12:13,094 [INFO] Adding to zip: app/templates/invoice.html
+2025-03-14 18:12:13,094 [INFO] Adding to zip: app/templates/job_form.html
+2025-03-14 18:12:13,095 [INFO] Adding to zip: app/templates/customer_list.html
+2025-03-14 18:12:13,095 [INFO] Adding to zip: app/templates/500.html
+2025-03-14 18:12:13,095 [INFO] Adding to zip: app/templates/invoice.html.new
+2025-03-14 18:12:13,096 [INFO] Adding to zip: app/templates/base.html
+2025-03-14 18:12:13,096 [INFO] Adding to zip: app/templates/profile_settings.html
+2025-03-14 18:12:13,096 [INFO] Adding to zip: app/templates/job_list.html
+2025-03-14 18:12:13,097 [INFO] Adding to zip: app/templates/404.html
+2025-03-14 18:12:13,097 [INFO] Adding to zip: app/static/favicon.ico
+2025-03-14 18:12:13,097 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-03-14 18:12:13,098 [INFO] Adding to zip: app/static/js/file_upload.js
+2025-03-14 18:12:13,098 [INFO] Adding to zip: app/static/css/styles.css
+2025-03-14 18:12:13,099 [INFO] Adding to zip: app/static/css/file-upload.css
+2025-03-14 18:12:13,099 [INFO] Adding to zip: instance/user_profile.json
+2025-03-14 18:12:13,099 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250314_1812.zip
+2025-03-14 18:12:13,099 [INFO] Backup file exists: True
+2025-03-14 18:30:39,011 [ERROR] Exception on /favicon.ico [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1785, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1767, in raise_routing_exception
+    raise request.routing_exception  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/ctx.py", line 351, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/werkzeug/routing/map.py", line 624, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1666, in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1606, in handle_http_exception
+    return self.ensure_sync(handler)(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/__init__.py", line 93, in page_not_found
+    return app.render_template('404.html'), 404
+           ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Flask' object has no attribute 'render_template'
+2025-03-14 18:30:44,621 [INFO] Stopping timer for job 70
+2025-03-14 18:30:44,912 [ERROR] Exception on /favicon.ico [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1785, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1767, in raise_routing_exception
+    raise request.routing_exception  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/ctx.py", line 351, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/werkzeug/routing/map.py", line 624, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1666, in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1606, in handle_http_exception
+    return self.ensure_sync(handler)(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/__init__.py", line 93, in page_not_found
+    return app.render_template('404.html'), 404
+           ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Flask' object has no attribute 'render_template'
+2025-03-14 19:15:47,551 [INFO] Weekly summary request - selected_week: None, show_all: False
+2025-03-14 19:15:47,551 [INFO] No week selected, using current week: 2025-W11
+2025-03-14 19:15:47,551 [INFO] Fetching available weeks
+2025-03-14 19:15:47,552 [INFO] Found 38 distinct dates with time entries
+2025-03-14 19:15:47,554 [INFO] Processed 6 unique weeks
+2025-03-14 19:15:47,554 [INFO] Final view settings - selected_week: 2025-W11, show_all: False
+2025-03-14 19:15:47,554 [INFO] Found 35 time entries for week 2025-W11
+2025-03-14 19:15:52,183 [INFO] Weekly summary request - selected_week: None, show_all: False
+2025-03-14 19:15:52,183 [INFO] No week selected, using current week: 2025-W11
+2025-03-14 19:15:52,183 [INFO] Fetching available weeks
+2025-03-14 19:15:52,184 [INFO] Found 38 distinct dates with time entries
+2025-03-14 19:15:52,185 [INFO] Processed 6 unique weeks
+2025-03-14 19:15:52,186 [INFO] Final view settings - selected_week: 2025-W11, show_all: False
+2025-03-14 19:15:52,186 [INFO] Found 35 time entries for week 2025-W11
+2025-03-14 19:15:54,879 [INFO] Weekly summary request - selected_week: 2025-W11, show_all: True
+2025-03-14 19:15:54,879 [INFO] Fetching available weeks
+2025-03-14 19:15:54,880 [INFO] Found 38 distinct dates with time entries
+2025-03-14 19:15:54,881 [INFO] Processed 6 unique weeks
+2025-03-14 19:15:54,882 [INFO] Final view settings - selected_week: 2025-W11, show_all: True
+2025-03-14 19:15:54,884 [INFO] Generated summary for 6 weeks
+2025-03-14 19:15:57,525 [INFO] Weekly summary request - selected_week: 2025-W10, show_all: False
+2025-03-14 19:15:57,525 [INFO] Fetching available weeks
+2025-03-14 19:15:57,526 [INFO] Found 38 distinct dates with time entries
+2025-03-14 19:15:57,526 [INFO] Processed 6 unique weeks
+2025-03-14 19:15:57,526 [INFO] Week selected from dropdown: 2025-W10, setting show_all=False
+2025-03-14 19:15:57,526 [INFO] Final view settings - selected_week: 2025-W10, show_all: False
+2025-03-14 19:15:57,527 [INFO] Found 23 time entries for week 2025-W10
+2025-03-14 19:16:06,284 [INFO] Weekly summary request - selected_week: 2025-W11, show_all: False
+2025-03-14 19:16:06,284 [INFO] Fetching available weeks
+2025-03-14 19:16:06,285 [INFO] Found 38 distinct dates with time entries
+2025-03-14 19:16:06,285 [INFO] Processed 6 unique weeks
+2025-03-14 19:16:06,285 [INFO] Final view settings - selected_week: 2025-W11, show_all: False
+2025-03-14 19:16:06,286 [INFO] Found 35 time entries for week 2025-W11
+2025-03-14 20:29:44,535 [INFO] Weekly summary request - selected_week: None, show_all: False
+2025-03-14 20:29:44,535 [INFO] No week selected, using current week: 2025-W11
+2025-03-14 20:29:44,535 [INFO] Fetching available weeks
+2025-03-14 20:29:44,536 [INFO] Found 38 distinct dates with time entries
+2025-03-14 20:29:44,536 [INFO] Processed 6 unique weeks
+2025-03-14 20:29:44,536 [INFO] Final view settings - selected_week: 2025-W11, show_all: False
+2025-03-14 20:29:44,537 [INFO] Found 35 time entries for week 2025-W11
+2025-03-14 20:32:07,950 [INFO] Starting timer for job 71
+2025-03-14 20:32:07,950 [INFO] Starting timer at: 2025-03-14T20:32:07
+2025-03-14 20:32:07,950 [INFO] Stopping all active timers
+2025-03-14 20:32:14,822 [INFO] Stopping timer for job 71
+2025-03-14 20:33:16,475 [INFO] Weekly summary request - selected_week: None, show_all: False
+2025-03-14 20:33:16,475 [INFO] No week selected, using current week: 2025-W11
+2025-03-14 20:33:16,475 [INFO] Fetching available weeks
+2025-03-14 20:33:16,475 [INFO] Found 38 distinct dates with time entries
+2025-03-14 20:33:16,476 [INFO] Processed 6 unique weeks
+2025-03-14 20:33:16,476 [INFO] Final view settings - selected_week: 2025-W11, show_all: False
+2025-03-14 20:33:16,476 [INFO] Found 36 time entries for week 2025-W11
+2025-03-14 20:35:34,139 [INFO] Weekly summary request - selected_week: None, show_all: False
+2025-03-14 20:35:34,139 [INFO] No week selected, using current week: 2025-W11
+2025-03-14 20:35:34,139 [INFO] Fetching available weeks
+2025-03-14 20:35:34,139 [INFO] Found 38 distinct dates with time entries
+2025-03-14 20:35:34,141 [INFO] Processed 6 unique weeks
+2025-03-14 20:35:34,141 [INFO] Final view settings - selected_week: 2025-W11, show_all: False
+2025-03-14 20:35:34,142 [INFO] Found 36 time entries for week 2025-W11
+2025-03-14 20:41:40,585 [INFO] Weekly summary request - selected_week: None, show_all: False
+2025-03-14 20:41:40,585 [INFO] No week selected, using current week: 2025-W11
+2025-03-14 20:41:40,585 [INFO] Fetching available weeks
+2025-03-14 20:41:40,585 [INFO] Found 38 distinct dates with time entries
+2025-03-14 20:41:40,586 [INFO] Processed 6 unique weeks
+2025-03-14 20:41:40,586 [INFO] Final view settings - selected_week: 2025-W11, show_all: False
+2025-03-14 20:41:40,586 [INFO] Found 36 time entries for week 2025-W11
+2025-03-14 20:47:58,516 [ERROR] Exception on /image/shared/28e04b8e-bcc5-4f26-bc4f-1b637d9f7ec0 [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/routes/image_routes.py", line 311, in shared_images
+    abort(404)
+  File "/usr/lib/python3/dist-packages/flask/helpers.py", line 310, in abort
+    current_app.aborter(code, *args, **kwargs)
+  File "/usr/lib/python3/dist-packages/werkzeug/exceptions.py", line 864, in __call__
+    raise self.mapping[code](*args, **kwargs)
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1666, in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1606, in handle_http_exception
+    return self.ensure_sync(handler)(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Jobmanager/app/__init__.py", line 93, in page_not_found
+    return app.render_template('404.html'), 404
+           ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Flask' object has no attribute 'render_template'
+2025-03-14 20:49:44,340 [INFO] Weekly summary request - selected_week: None, show_all: False
+2025-03-14 20:49:44,340 [INFO] No week selected, using current week: 2025-W11
+2025-03-14 20:49:44,340 [INFO] Fetching available weeks
+2025-03-14 20:49:44,340 [INFO] Found 38 distinct dates with time entries
+2025-03-14 20:49:44,341 [INFO] Processed 6 unique weeks
+2025-03-14 20:49:44,341 [INFO] Final view settings - selected_week: 2025-W11, show_all: False
+2025-03-14 20:49:44,341 [INFO] Found 36 time entries for week 2025-W11
+2025-03-14 20:49:52,451 [INFO] Root path: /home/Jobmanager
+2025-03-14 20:49:52,451 [INFO] Current working directory: /home/Jobmanager
+2025-03-14 20:49:52,451 [INFO] Instance path: /home/Jobmanager/instance
+2025-03-14 20:49:52,451 [INFO] Creating full backup at: /home/Jobmanager/backups/jobmanager_backup_20250314_2049.zip
+2025-03-14 20:49:52,452 [INFO] Adding file: /home/Jobmanager/run.py
+2025-03-14 20:49:52,452 [INFO] Adding file: /home/Jobmanager/init_db.py
+2025-03-14 20:49:52,452 [INFO] Adding file: /home/Jobmanager/gitback.sh
+2025-03-14 20:49:52,453 [INFO] Adding to zip: app/db.py
+2025-03-14 20:49:52,453 [INFO] Adding to zip: app/__init__.py
+2025-03-14 20:49:52,454 [INFO] Adding to zip: app/schema.sql
+2025-03-14 20:49:52,454 [INFO] Adding to zip: app/routes/image_routes.py
+2025-03-14 20:49:52,455 [INFO] Adding to zip: app/routes/system_routes.py
+2025-03-14 20:49:52,455 [INFO] Adding to zip: app/routes/__init__.py
+2025-03-14 20:49:52,456 [INFO] Adding to zip: app/routes/customer_routes.py
+2025-03-14 20:49:52,456 [INFO] Adding to zip: app/routes/job_routes.py
+2025-03-14 20:49:52,457 [INFO] Adding to zip: app/routes/report_routes.py
+2025-03-14 20:49:52,457 [INFO] Adding to zip: app/routes/timer_routes.py
+2025-03-14 20:49:52,458 [INFO] Adding to zip: app/utils/date_helper.py
+2025-03-14 20:49:52,458 [INFO] Adding to zip: app/utils/time_utils.py
+2025-03-14 20:49:52,459 [INFO] Adding to zip: app/utils/job_utils.py
+2025-03-14 20:49:52,459 [INFO] Adding to zip: app/utils/material_utils.py
+2025-03-14 20:49:52,459 [INFO] Adding to zip: app/utils/timer_utils.py
+2025-03-14 20:49:52,460 [INFO] Adding to zip: app/utils/__init__.py
+2025-03-14 20:49:52,460 [INFO] Adding to zip: app/utils/invoice_utils.py
+2025-03-14 20:49:52,460 [INFO] Adding to zip: app/utils/error_utils.py
+2025-03-14 20:49:52,460 [INFO] Adding to zip: app/utils/profile_utils.py
+2025-03-14 20:49:52,461 [INFO] Adding to zip: app/utils/image_utils.py
+2025-03-14 20:49:52,461 [INFO] Adding to zip: app/templates/customer_form.html
+2025-03-14 20:49:52,462 [INFO] Adding to zip: app/templates/quick_timer.html
+2025-03-14 20:49:52,462 [INFO] Adding to zip: app/templates/system_settings.html
+2025-03-14 20:49:52,462 [INFO] Adding to zip: app/templates/shared_images.html
+2025-03-14 20:49:52,463 [INFO] Adding to zip: app/templates/weekly_summary.html
+2025-03-14 20:49:52,463 [INFO] Adding to zip: app/templates/job_details.html
+2025-03-14 20:49:52,464 [INFO] Adding to zip: app/templates/invoice.html
+2025-03-14 20:49:52,465 [INFO] Adding to zip: app/templates/job_form.html
+2025-03-14 20:49:52,465 [INFO] Adding to zip: app/templates/customer_list.html
+2025-03-14 20:49:52,466 [INFO] Adding to zip: app/templates/500.html
+2025-03-14 20:49:52,466 [INFO] Adding to zip: app/templates/invoice.html.new
+2025-03-14 20:49:52,467 [INFO] Adding to zip: app/templates/base.html
+2025-03-14 20:49:52,467 [INFO] Adding to zip: app/templates/profile_settings.html
+2025-03-14 20:49:52,467 [INFO] Adding to zip: app/templates/job_list.html
+2025-03-14 20:49:52,468 [INFO] Adding to zip: app/templates/404.html
+2025-03-14 20:49:52,468 [INFO] Adding to zip: app/static/favicon.ico
+2025-03-14 20:49:52,469 [INFO] Adding to zip: app/static/qr-quick_timer.svg
+2025-03-14 20:49:52,469 [INFO] Adding to zip: app/static/js/file_upload.js
+2025-03-14 20:49:52,469 [INFO] Adding to zip: app/static/css/styles.css
+2025-03-14 20:49:52,470 [INFO] Adding to zip: app/static/css/file-upload.css
+2025-03-14 20:49:52,471 [INFO] Adding to zip: instance/user_profile.json
+2025-03-14 20:49:52,471 [INFO] Full backup created at: /home/Jobmanager/backups/jobmanager_backup_20250314_2049.zip
+2025-03-14 20:49:52,471 [INFO] Backup file exists: True
+2025-03-14 20:49:55,332 [INFO] Root path: /home/Jobmanager
+2025-03-14 20:49:55,333 [INFO] Current working directory: /home/Jobmanager
+2025-03-14 20:49:55,333 [INFO] Instance path: /home/Jobmanager/instance
+2025-03-14 20:49:55,333 [INFO] DB Path: /home/Jobmanager/instance/jobmanager.db
+2025-03-14 20:49:55,333 [INFO] Backup Path: /home/Jobmanager/backups/db_backup_20250314_2049.db
+2025-03-14 20:49:55,333 [INFO] Database backup created at: /home/Jobmanager/backups/db_backup_20250314_2049.db
+2025-03-14 20:49:55,333 [INFO] Backup file exists: True
+2025-03-15 07:04:38,720 [INFO] Time synchronized with NTP servers
+2025-03-15 07:04:45,353 [INFO] System timezone set to Europe/Berlin
+2025-03-15 07:41:31,849 [INFO] Starting timer for job 4
+2025-03-15 07:41:31,849 [INFO] Starting timer at: 2025-03-15T07:41:31
+2025-03-15 07:41:31,849 [INFO] Stopping all active timers
+2025-03-15 07:46:37,672 [INFO] Weekly summary request - selected_week: None, show_all: False
+2025-03-15 07:46:37,672 [INFO] No week selected, using current week: 2025-W11
+2025-03-15 07:46:37,672 [INFO] Fetching available weeks
+2025-03-15 07:46:37,673 [INFO] Found 39 distinct dates with time entries
+2025-03-15 07:46:37,673 [INFO] Processed 6 unique weeks
+2025-03-15 07:46:37,673 [INFO] Final view settings - selected_week: 2025-W11, show_all: False
+2025-03-15 07:46:37,674 [INFO] Found 37 time entries for week 2025-W11
+2025-03-15 08:21:54,184 [INFO] Stopping timer for job 4
+2025-03-15 08:22:34,633 [INFO] Starting timer for job 72
+2025-03-15 08:22:34,633 [INFO] Starting timer at: 2025-03-15T08:22:34
+2025-03-15 08:22:34,633 [INFO] Stopping all active timers
+2025-03-15 09:32:04,834 [INFO] Stopping timer for job 72

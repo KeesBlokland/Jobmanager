@@ -13,8 +13,7 @@ class TimerManager:
     def start(self, job_id):
         self.logger.info(f"Starting timer for job {job_id}")
         
-        # Get current local time with timezone info removed
-        # This ensures consistent handling with SQLite
+        # Get current time in UTC with ISO format
         now = datetime.now().replace(microsecond=0)
         now_iso = now.isoformat(timespec='seconds')
         
@@ -29,7 +28,6 @@ class TimerManager:
             'INSERT INTO time_entry (job_id, start_time, entry_type) VALUES (?, ?, ?)',
             (job_id, now_iso, 'auto')
         )
-    
           
         # Get the current job status
         job = self.db.execute('SELECT status FROM job WHERE id = ?', (job_id,)).fetchone()

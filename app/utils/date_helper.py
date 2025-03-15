@@ -65,9 +65,16 @@ def add_template_helpers(app):
         return format_week(week_data)
     
     @app.template_filter('iso_date_to_datetime')
-    def iso_date_to_datetime_filter(date_str):
-        """Filter to convert ISO date to datetime"""
-        return iso_date_to_datetime(date_str)
+    def iso_to_datetime(iso_str):
+    
+        if not iso_str:
+            raise ValueError("Empty string passed to iso_to_datetime()")
+        
+        try:
+            return datetime.fromisoformat(iso_str)
+        except ValueError:
+            raise ValueError(f"Invalid ISO datetime string: {iso_str}")
+
     
     @app.template_filter('timestamp_to_datetime')
     def timestamp_to_datetime(timestamp):
