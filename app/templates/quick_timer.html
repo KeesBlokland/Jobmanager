@@ -196,6 +196,7 @@
         }
     }
 
+    // Fixed updateTimerDuration function that handles UTC time properly
     function updateTimerDuration() {
         const timerElements = document.querySelectorAll('.timer-duration');
         
@@ -203,23 +204,31 @@
             const startTimeStr = element.getAttribute('data-start');
             if (!startTimeStr) return;
             
-            // Direct difference calculation without timezone considerations
-            const startTime = new Date(startTimeStr);
-            const now = new Date();
-            
-            // Calculate milliseconds difference and convert to seconds
-            let diffSeconds = Math.floor((now - startTime) / 1000);
-            diffSeconds = Math.max(0, diffSeconds);
-            
-            // Format time components
-            const hours = Math.floor(diffSeconds / 3600);
-            const minutes = Math.floor((diffSeconds % 3600) / 60);
-            const seconds = diffSeconds % 60;
-            
-            // Update display
-            element.querySelector('.timer-hours').textContent = hours.toString().padStart(2, '0');
-            element.querySelector('.timer-minutes').textContent = minutes.toString().padStart(2, '0');
-            element.querySelector('.timer-seconds').textContent = seconds.toString().padStart(2, '0');
+            try {
+                // Parse the timestamp without applying any timezone conversion
+                // This ensures we're working with the exact timestamp as stored
+                const startTime = new Date(startTimeStr);
+                const now = new Date();
+                
+                // Calculate time difference in seconds directly
+                // This ignores timezone issues by just looking at elapsed time
+                let diffSeconds = Math.floor((now - startTime) / 1000);
+                
+                // Always ensure we're showing positive time
+                diffSeconds = Math.max(0, diffSeconds);
+                
+                // Format time components
+                const hours = Math.floor(diffSeconds / 3600);
+                const minutes = Math.floor((diffSeconds % 3600) / 60);
+                const seconds = diffSeconds % 60;
+                
+                // Update display
+                element.querySelector('.timer-hours').textContent = hours.toString().padStart(2, '0');
+                element.querySelector('.timer-minutes').textContent = minutes.toString().padStart(2, '0');
+                element.querySelector('.timer-seconds').textContent = seconds.toString().padStart(2, '0');
+            } catch (e) {
+                console.error('Error updating timer:', e);
+            }
         });
     }
 

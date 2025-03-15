@@ -4,57 +4,65 @@ import sys
 import os
 import sqlite3
 from datetime import datetime, timedelta
-from app import create_app
 
 # Add the parent directory to the path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
+# Mock profile manager before importing app
+import app.utils.profile_utils
+app.utils.profile_utils.profile_manager = type('MockProfileManager', (), {
+    'get_time_offset_minutes': lambda: 0,
+    'init_app': lambda app: None,
+    'get_profile': lambda: {}
+})
+
+from app import create_app
 class TestDatabaseTimeCalculations(unittest.TestCase):
     """Tests for database time calculations"""
     
     def setUp(self):
-    # Set up Flask app context
-    self.app = create_app()
-    self.app_context = self.app.app_context()
-    self.app_context.push()
-    
-    # Set up database
-    self.db = sqlite3.connect(':memory:')
-    self.db.row_factory = sqlite3.Row
-    
-    # Create the necessary tables
-    self.db.executescript('''
-        CREATE TABLE job (
-            id INTEGER PRIMARY KEY,
-            customer_id INTEGER,
-            description TEXT,
-            status TEXT,
-            creation_date TEXT,
-            last_active TEXT
-        );
+        # Set up Flask app context
+        self.app = create_app()
+        self.app_context = self.app.app_context()
+        self.app_context.push()
         
-        CREATE TABLE time_entry (
-            id INTEGER PRIMARY KEY,
-            job_id INTEGER,
-            start_time TEXT,
-            end_time TEXT,
-            entry_type TEXT
-        );
+        # Set up database
+        self.db = sqlite3.connect(':memory:')
+        self.db.row_factory = sqlite3.Row
         
-        CREATE TABLE customer (
-            id INTEGER PRIMARY KEY,
-            name TEXT
-        );
-    ''')
-    
-    # Add test data
-    self.db.execute('INSERT INTO customer (id, name) VALUES (1, "Test Customer")')
-    now = datetime.now().isoformat()
-    self.db.execute(
-        'INSERT INTO job (id, customer_id, description, status, creation_date) VALUES (1, 1, "Test Job", "Active", ?)',
-        (now,)
-    )
-    self.db.commit()
+        # Create the necessary tables
+        self.db.executescript('''
+            CREATE TABLE job (
+                id INTEGER PRIMARY KEY,
+                customer_id INTEGER,
+                description TEXT,
+                status TEXT,
+                creation_date TEXT,
+                last_active TEXT
+            );
+            
+            CREATE TABLE time_entry (
+                id INTEGER PRIMARY KEY,
+                job_id INTEGER,
+                start_time TEXT,
+                end_time TEXT,
+                entry_type TEXT
+            );
+            
+            CREATE TABLE customer (
+                id INTEGER PRIMARY KEY,
+                name TEXT
+            );
+        ''')
+        
+        # Add test data
+        self.db.execute('INSERT INTO customer (id, name) VALUES (1, "Test Customer")')
+        now = datetime.now().isoformat()
+        self.db.execute(
+            'INSERT INTO job (id, customer_id, description, status, creation_date) VALUES (1, 1, "Test Job", "Active", ?)',
+            (now,)
+        )
+        self.db.commit()
     
     def tearDown(self):
         """Clean up after tests"""
