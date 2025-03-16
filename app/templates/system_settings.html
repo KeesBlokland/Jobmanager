@@ -15,18 +15,24 @@
     <div class="settings-section">
         <h3>Time Settings</h3>
         <div class="form-group">
-            <p>If the current system time shown above is incorrect for your location, please set your correct local time:</p>
+            <p>Please set your correct local time to ensure dates and times display correctly:</p>
             
             <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 20px;">
                 <input type="datetime-local" id="user-time-input" class="form-control" style="width: 250px;">
                 <button id="set-time-btn" class="action-btn save-btn">Set My Local Time</button>
             </div>
             
-            <p class="time-hint" style="font-size: 0.9em; color: #666;">
+            <div id="current-offset-display" style="margin-top: 10px; padding: 8px; background: #f5f5f5; border-radius: 4px;">
+                Current time offset: <span id="offset-value">{{ user_profile.preferences.time_offset_minutes|default(0) }} minutes</span>
+                from UTC
+            </div>
+            
+            <p class="time-hint" style="font-size: 0.9em; color: #666; margin-top: 10px;">
                 This helps the application display times correctly for your location without changing your system settings.
             </p>
         </div>
     </div>
+    
 
     <div class="settings-section">
         <h3>User Profile</h3>
@@ -83,6 +89,7 @@
             });
             
             const result = await response.json();
+            document.getElementById('offset-value').textContent = result.offset_minutes + ' minutes';
             showMessage(result.message, result.success ? 'success' : 'error');
         } catch (error) {
             showMessage('Error: ' + error.message, 'error');
@@ -108,5 +115,4 @@
         updateCurrentTime();
     });
 </script>
-
 {% endblock %}

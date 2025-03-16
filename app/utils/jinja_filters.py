@@ -1,8 +1,9 @@
 # app/utils/jinja_filters.py
-from flask import Flask
+from flask import Flask, current_app
 from datetime import datetime, timezone, timedelta
-from .profile_utils import profile_manager
-from .time_utils import format_time
+import logging
+
+logger = logging.getLogger('jobmanager')
 
 def register_jinja_filters(app):
     """Register custom Jinja2 filters related to time handling."""
@@ -14,23 +15,48 @@ def register_jinja_filters(app):
             return ""
             
         try:
+            logger.info(f"format_datetime input: {value}, format: {format}")
+            
             # Parse timestamp
             if isinstance(value, str):
                 if 'Z' in value:
                     dt = datetime.fromisoformat(value.replace('Z', '+00:00'))
+                    logger.info(f"Parsed Z timestamp: {dt}")
                 elif '+' in value or '-' in value and 'T' in value:
                     dt = datetime.fromisoformat(value)
+                    logger.info(f"Parsed ISO timestamp with TZ: {dt}")
                 else:
                     dt = datetime.fromisoformat(value).replace(tzinfo=timezone.utc)
+                    logger.info(f"Parsed timestamp without TZ: {dt}")
             else:
                 dt = datetime.fromtimestamp(value, tz=timezone.utc)
+                logger.info(f"Parsed non-string timestamp: {dt}")
                 
-            # Apply user offset
+            # Get offset directly from profile_manager to avoid circular import
+            from app.utils.profile_utils import profile_manager
             offset_minutes = profile_manager.get_time_offset_minutes()
+            logger.info(f"User time offset: {offset_minutes} minutes")
+            
             adjusted_dt = dt + timedelta(minutes=offset_minutes)
-            return adjusted_dt.strftime(format)
+            logger.info(f"Adjusted timestamp: {adjusted_dt}")
+            
+            result = adjusted_dt.strftime(format)
+            logger.info(f"Final formatted result: {result}")
+            return result
+            
         except Exception as e:
-            return format_time(value, format)
+            logger.error(f"Error formatting datetime: {str(e)}", exc_info=True)
+            # Fall back to direct formatting without timezone handling
+            try:
+                if isinstance(value, str):
+                    if 'T' in value:
+                        # Remove timezone info for direct formatting
+                        value = value.split('T')[0] + 'T' + value.split('T')[1].split('+')[0].split('Z')[0]
+                    return datetime.fromisoformat(value).strftime(format)
+                else:
+                    return datetime.fromtimestamp(value).strftime(format)
+            except:
+                return value
     
     @app.template_filter('format_time')
     def format_time_filter(value, format='%H:%M'):
@@ -62,6 +88,8 @@ def register_jinja_filters(app):
         def get_adjusted_now():
             """Get current time with user's offset applied."""
             now = datetime.now(timezone.utc)
+            # Import on demand to avoid circular import
+            from app.utils.profile_utils import profile_manager
             offset_minutes = profile_manager.get_time_offset_minutes()
             return now + timedelta(minutes=offset_minutes)
             

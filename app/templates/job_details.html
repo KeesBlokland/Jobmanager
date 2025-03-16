@@ -120,8 +120,18 @@
                             </div>
                             <div class="edit-view" style="display: none; width: 50%;">
                                 <form action="{{ url_for('job.edit_time_entry', job_id=job.id, entry_id=entry.id) }}" method="post" style="display: flex; gap: 10px; align-items: center;">
-                                    <input type="datetime-local" name="start_time" value="{{ entry.start_time[:16] }}" required>
-                                    <input type="datetime-local" name="end_time" value="{{ entry.end_time[:16] if entry.end_time else '' }}" required>
+                                    <!-- Debug info to see what's happening -->
+                                    <div style="display: none;">
+                                        Raw start: {{ entry.start_time }}<br>
+                                        Raw end: {{ entry.end_time }}<br>
+                                        Formatted start: {{ entry.start_time|format_datetime('%Y-%m-%dT%H:%M') }}<br>
+                                        Formatted end: {{ entry.end_time|format_datetime('%Y-%m-%dT%H:%M') if entry.end_time else '' }}
+                                    </div>
+                                    
+                                    {% set start_local = entry.start_time|format_datetime('%Y-%m-%dT%H:%M') if entry.start_time else '' %}
+                                    {% set end_local = entry.end_time|format_datetime('%Y-%m-%dT%H:%M') if entry.end_time else '' %}
+                                    <input type="datetime-local" name="start_time" value="{{ start_local }}" required>
+                                    <input type="datetime-local" name="end_time" value="{{ end_local }}" required>
                                     <button type="submit" class="action-btn save-btn">Save</button>
                                     <button type="button" onclick="hideTimeEdit({{ entry.id }})" class="action-btn cancel-btn">Cancel</button>
                                 </form>

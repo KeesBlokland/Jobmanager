@@ -1,6 +1,6 @@
 # app/routes/job_routes.py
 import shutil
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 import os
 import zipfile
 from flask import Blueprint, render_template, request, redirect, url_for, jsonify, current_app
@@ -364,18 +364,47 @@ def edit_time_entry(db, job_id, entry_id):
         start_time = request.form['start_time']
         end_time = request.form['end_time']
         
-        # Convert to ISO format strings with consistent formatting
+        # Log the input values
+        current_app.logger.info(f"Edit time entry - received values: start={start_time}, end={end_time}")
+        
+        # Get user's time offset from profile
+        from ..utils.profile_utils import profile_manager
+        time_offset_minutes = profile_manager.get_time_offset_minutes()
+        current_app.logger.info(f"User time offset: {time_offset_minutes} minutes")
+        
+        # Get the existing time entry
+        original = db.execute('SELECT start_time, end_time FROM time_entry WHERE id = ?', [entry_id]).fetchone()
+        if original:
+            current_app.logger.info(f"Original values: start={original['start_time']}, end={original['end_time']}")
+            
+        # Convert to ISO format strings with consistent formatting and timezone
         if start_time:
-            # Parse the datetime-local input value
+            # Parse the datetime-local input value (local time)
             dt = datetime.fromisoformat(start_time)
+            current_app.logger.info(f"Parsed start time: {dt}")
+            
+            # If there's a time offset, adjust back to UTC by subtracting the offset
+            if time_offset_minutes != 0:
+                dt = dt - timedelta(minutes=time_offset_minutes)
+                current_app.logger.info(f"Start time adjusted to UTC: {dt}")
+            
             # Format with consistent precision
-            start_time = dt.isoformat(timespec='seconds')
+            start_time = dt.replace(tzinfo=timezone.utc).isoformat(timespec='seconds')
         
         if end_time:
-            # Parse the datetime-local input value
+            # Parse the datetime-local input value (local time)
             dt = datetime.fromisoformat(end_time)
+            current_app.logger.info(f"Parsed end time: {dt}")
+            
+            # If there's a time offset, adjust back to UTC by subtracting the offset
+            if time_offset_minutes != 0:
+                dt = dt - timedelta(minutes=time_offset_minutes)
+                current_app.logger.info(f"End time adjusted to UTC: {dt}")
+            
             # Format with consistent precision
-            end_time = dt.isoformat(timespec='seconds')
+            end_time = dt.replace(tzinfo=timezone.utc).isoformat(timespec='seconds')
+        
+        current_app.logger.info(f"Final values to save: start={start_time}, end={end_time}")
         
         # Update the time entry
         db.execute('''
@@ -386,11 +415,15 @@ def edit_time_entry(db, job_id, entry_id):
         
         db.commit()
         
+        # Verify the update worked
+        updated = db.execute('SELECT start_time, end_time FROM time_entry WHERE id = ?', [entry_id]).fetchone()
+        if updated:
+            current_app.logger.info(f"Updated values in DB: start={updated['start_time']}, end={updated['end_time']}")
+        
         return redirect(url_for('job.job_details', id=job_id))
     except Exception as e:
         current_app.logger.error(f"Error updating time entry: {str(e)}", exc_info=True)
         return redirect(url_for('job.job_details', id=job_id, error=f"Error updating time entry: {str(e)}"))
-
 
 
 @bp.route('/<int:id>/add_material', methods=['POST'])

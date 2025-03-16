@@ -2,8 +2,7 @@
 import os
 import json
 import logging
-from flask import current_app
-from datetime import datetime
+from datetime import datetime, timezone
 
 logger = logging.getLogger('jobmanager')
 
@@ -29,7 +28,7 @@ DEFAULT_PROFILE = {
         "bic": "..."
     },
     "preferences": {
-        "time_offset_minutes": 0  # Added field to store time offset
+        "time_offset_minutes": 0  # Default to UTC
     }
 }
 
@@ -37,6 +36,7 @@ class ProfileManager:
     def __init__(self, app=None):
         self.app = app
         self.profile_path = None
+        self._profile_cache = None
         
         if app:
             self.init_app(app)
@@ -55,6 +55,9 @@ class ProfileManager:
     
     def get_profile(self):
         """Get the user profile."""
+        # Always read fresh from disk to avoid caching issues
+        self._profile_cache = None
+            
         try:
             if not os.path.exists(self.profile_path):
                 self.save_profile(DEFAULT_PROFILE)
@@ -69,6 +72,8 @@ class ProfileManager:
             elif 'time_offset_minutes' not in profile['preferences']:
                 profile['preferences']['time_offset_minutes'] = 0
                 
+            # Cache profile
+            self._profile_cache = profile
             return profile
         except Exception as e:
             logger.error(f"Error loading user profile: {str(e)}")
@@ -78,7 +83,10 @@ class ProfileManager:
         """Get the user's time offset in minutes."""
         try:
             profile = self.get_profile()
-            return profile.get('preferences', {}).get('time_offset_minutes', 0)
+            offset = profile.get('preferences', {}).get('time_offset_minutes', 0)
+            
+            logger.info(f"Using time offset: {offset} minutes")
+            return offset
         except Exception as e:
             logger.error(f"Error getting time offset: {str(e)}")
             return 0
@@ -94,12 +102,20 @@ class ProfileManager:
                 profile['preferences'] = {'time_offset_minutes': 0}
             
             # Ensure instance directory exists
-            os.makedirs(os.path.dirname(self.profile_path), exist_ok=True)
-            
-            with open(self.profile_path, 'w') as f:
-                json.dump(profile, f, indent=2)
-            logger.info("User profile saved successfully")
-            return True
+            if self.profile_path:
+                os.makedirs(os.path.dirname(self.profile_path), exist_ok=True)
+                
+                with open(self.profile_path, 'w') as f:
+                    json.dump(profile, f, indent=2)
+                logger.info(f"User profile saved with time offset: {profile['preferences']['time_offset_minutes']}")
+                
+                # Update cache
+                self._profile_cache = profile
+                
+                return True
+            else:
+                logger.error("Profile path not set")
+                return False
         except Exception as e:
             logger.error(f"Error saving user profile: {str(e)}")
             return False
@@ -120,9 +136,10 @@ class ProfileManager:
         
         return self.save_profile(current_profile)
 
-# Initialize the profile manager
+# Create a singleton instance
 profile_manager = ProfileManager()
 
 def init_app(app):
     """Initialize the profile manager with the Flask app."""
+    global profile_manager
     profile_manager.init_app(app)

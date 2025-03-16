@@ -120,6 +120,7 @@ def iso_to_datetime(iso_str):
     except ValueError as e:
         logger.error(f"Error parsing ISO datetime: {e}")
         return None
+
 def format_display_time(timestamp, format_str='%Y-%m-%d %H:%M:%S'):
     """Format time with user's timezone offset applied."""
     dt = iso_to_datetime(timestamp) if isinstance(timestamp, str) else timestamp
@@ -127,6 +128,7 @@ def format_display_time(timestamp, format_str='%Y-%m-%d %H:%M:%S'):
         return ""
         
     try:
+        from .profile_utils import profile_manager
         # Apply user's time offset if needed
         offset_minutes = profile_manager.get_time_offset_minutes()
         if offset_minutes and dt.tzinfo:  # Only apply if timestamp has timezone info

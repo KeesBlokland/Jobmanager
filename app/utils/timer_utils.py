@@ -1,6 +1,5 @@
 # app/utils/timer_utils.py
 from datetime import datetime, timezone
-from ..db import get_active_timer, calculate_job_total_hours
 from .error_utils import TimerError, handle_errors
 from .time_utils import get_current_time
 import logging
@@ -58,7 +57,7 @@ class TimerManager:
         # Log timestamp for debugging
         self.logger.info(f"Stopping timer at: {now_iso}")
         
-        active_timer = get_active_timer(self.db)
+        active_timer = self.get_active_timer()
         if active_timer and active_timer['job_id'] == job_id:
             # Log the timer details for debugging
             start_time = active_timer['start_time']
@@ -69,6 +68,15 @@ class TimerManager:
                 (now_iso, active_timer['id'])
             )
             self.db.commit()
+
+    def get_active_timer(self):
+        """Get currently active timer if any exists."""
+        return self.db.execute('''
+            SELECT time_entry.*, job.id as job_id
+            FROM time_entry 
+            JOIN job ON time_entry.job_id = job.id
+            WHERE time_entry.end_time IS NULL
+        ''').fetchone()
 
     @handle_errors
     def stop_all_active(self):
@@ -87,4 +95,13 @@ class TimerManager:
     @handle_errors
     def calculate_total_hours(self, job_id):
         """Calculate the total hours for a job."""
-        return calculate_job_total_hours(self.db, job_id)
+        result = self.db.execute('''
+            SELECT 
+                SUM(time_diff_hours(start_time, COALESCE(end_time, current_iso_time()))) as total_hours
+            FROM time_entry
+            WHERE job_id = ? AND 
+                  time_diff_hours(start_time, COALESCE(end_time, current_iso_time())) > 0.03
+        ''', (job_id,)).fetchone()
+        
+        total_hours = result['total_hours'] if result['total_hours'] else 0
+        return round(total_hours * 12) / 12  # Round to nearest 5 minutes
