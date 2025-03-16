@@ -1,7 +1,6 @@
 # app/utils/time_utils.py
 from datetime import datetime, timezone
 import logging
-from .profile_utils import profile_manager
 
 logger = logging.getLogger('jobmanager')
 
@@ -62,10 +61,7 @@ def parse_time(time_str, format_str='%Y-%m-%d %H:%M:%S'):
         return None
 
 def get_time_difference_seconds(start_time_str, end_time_str=None):
-    """Calculate the difference in seconds between two ISO format times.
-    
-    Returns a negative value if start_time is in the future relative to end_time.
-    """
+    """Calculate the difference in seconds between two ISO format times."""
     if not start_time_str:
         return 0
     
@@ -103,7 +99,6 @@ def get_time_difference_seconds(start_time_str, end_time_str=None):
         
         # Return the raw time difference including negative values
         diff_seconds = (end_time - start_time).total_seconds()
-        logger.info(f"Time difference: {diff_seconds}s (start: {start_time}, end: {end_time})")
         return diff_seconds
         
     except Exception as e:
@@ -125,7 +120,6 @@ def iso_to_datetime(iso_str):
     except ValueError as e:
         logger.error(f"Error parsing ISO datetime: {e}")
         return None
-
 def format_display_time(timestamp, format_str='%Y-%m-%d %H:%M:%S'):
     """Format time with user's timezone offset applied."""
     dt = iso_to_datetime(timestamp) if isinstance(timestamp, str) else timestamp

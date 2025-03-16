@@ -14,7 +14,7 @@ class TimerManager:
         self.logger.info(f"Starting timer for job {job_id}")
         
         # Always use UTC time with timezone info for consistent calculations
-        now_iso = get_current_time()
+        now_iso = datetime.now(timezone.utc).isoformat()
         
         # Log timestamp for debugging
         self.logger.info(f"Starting timer at: {now_iso}")
@@ -53,7 +53,7 @@ class TimerManager:
         self.logger.info(f"Stopping timer for job {job_id}")
         
         # Always use UTC time with timezone info
-        now_iso = get_current_time()
+        now_iso = datetime.now(timezone.utc).isoformat()
         
         # Log timestamp for debugging
         self.logger.info(f"Stopping timer at: {now_iso}")
@@ -76,7 +76,7 @@ class TimerManager:
         self.logger.info("Stopping all active timers")
         
         # Always use UTC time with timezone info
-        now_iso = get_current_time()
+        now_iso = datetime.now(timezone.utc).isoformat()
         
         self.db.execute(
             'UPDATE time_entry SET end_time = ? WHERE end_time IS NULL',

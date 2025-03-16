@@ -1,5 +1,5 @@
 # app/routes/timer_routes.py
-from flask import Blueprint, jsonify,redirect, url_for, request
+from flask import Blueprint, jsonify, redirect, url_for, request
 from ..db import with_db  # Changed from ..utils.db_utils
 from ..utils.timer_utils import TimerManager
 from datetime import datetime
@@ -32,7 +32,6 @@ def stop_timer(db, id):
 @with_db
 def pause_timer(db, id):
     timer = TimerManager(db)
-    now = datetime.now().isoformat()
     timer.stop(id)
     return jsonify({'success': True})
 

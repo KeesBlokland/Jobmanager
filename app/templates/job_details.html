@@ -1,9 +1,11 @@
+# app/templates/job_details.html
 {% extends "base.html" %}
 
 {% block head %}
 <!-- Add this inside the head block -->
 <link rel="stylesheet" href="{{ url_for('static', filename='css/file-upload.css') }}">
 <script src="{{ url_for('static', filename='js/file_upload.js') }}" defer></script>
+<script src="{{ url_for('static', filename='js/time_formatter.js') }}" defer></script>
 {% endblock %}
 
 {% block content %}
@@ -47,7 +49,10 @@
                     </form>
                 </div>
                 <div class="timer-info">
-                    <strong>Timer running since:</strong> {{ active_timer.start_time[11:16] }} on {{ active_timer.start_time[8:10] }} {{ active_timer.start_time[5:7]|month_name }}
+                    <strong>Timer running since:</strong> 
+                    <span class="format-time" data-time="{{ active_timer.start_time }}" data-format="time"></span>
+                    on
+                    <span class="format-time" data-time="{{ active_timer.start_time }}" data-format="date"></span>
                     <span class="timer-duration" data-start="{{ active_timer.start_time }}">
                         <span class="timer-hours">00</span>:<span class="timer-minutes">00</span>:<span class="timer-seconds">00</span>
                     </span>
@@ -107,8 +112,9 @@
                             </div>
                             <div class="display-view" style="flex-grow: 1;">
                                 <span>
-                                    {{ entry.start_time[8:10] }} {{ entry.start_time[5:7]|month_name }}:
-                                    {{ entry.start_time[11:16] }} - {{ entry.end_time[11:16] if entry.end_time else 'Ongoing' }}
+                                    <span class="format-time" data-time="{{ entry.start_time }}" data-format="date-short"></span>:
+                                    <span class="format-time" data-time="{{ entry.start_time }}" data-format="time"></span> - 
+                                    <span class="format-time" data-time="{{ entry.end_time }}" data-format="time"></span>
                                     ({{ "%d:%02d"|format(entry.hours|int, ((entry.hours % 1) * 60)|round|int) }})
                                 </span>
                             </div>
@@ -165,10 +171,7 @@
 </style>
 
 <script>
-
-
 // Function to update active timer duration
-// Final fix for updateTimerDuration function
 function updateTimerDuration() {
     const timerElements = document.querySelectorAll('.timer-duration');
     
@@ -176,7 +179,7 @@ function updateTimerDuration() {
         const startTimeStr = element.getAttribute('data-start');
         if (!startTimeStr) return;
         
-        // Just parse the timestamp as is - no timezone modifications
+        // Just parse the timestamp as is - browser handles timezone
         const startTime = new Date(startTimeStr);
         const now = new Date();
         
@@ -201,44 +204,47 @@ if (document.querySelector('.timer-duration')) {
     // Initial update
     updateTimerDuration();
 }
-
-
     
-    function toggleWeek(week) {
-        const entriesDiv = document.getElementById(`entries-${week}`);
-        const toggleIcon = document.querySelector(`#week-${week} .toggle-icon`);
-        if (entriesDiv.style.display === 'none') {
-            entriesDiv.style.display = 'block';
-            toggleIcon.textContent = '▼';
-        } else {
-            entriesDiv.style.display = 'none';
-            toggleIcon.textContent = '▶';
-        }
+function toggleWeek(week) {
+    const entriesDiv = document.getElementById(`entries-${week}`);
+    const toggleIcon = document.querySelector(`#week-${week} .toggle-icon`);
+    if (entriesDiv.style.display === 'none') {
+        entriesDiv.style.display = 'block';
+        toggleIcon.textContent = '▼';
+    } else {
+        entriesDiv.style.display = 'none';
+        toggleIcon.textContent = '▶';
     }
-    
-    function showTimeEdit(id) {
-        const row = document.getElementById(`time-entry-${id}`);
-        row.querySelector('.display-view').style.display = 'none';
-        row.querySelector('.edit-view').style.display = 'block';
-    }
+}
 
-    function hideTimeEdit(id) {
-        const row = document.getElementById(`time-entry-${id}`);
-        row.querySelector('.display-view').style.display = 'flex';
-        row.querySelector('.edit-view').style.display = 'none';
-    }
+function showTimeEdit(id) {
+    const row = document.getElementById(`time-entry-${id}`);
+    row.querySelector('.display-view').style.display = 'none';
+    row.querySelector('.edit-view').style.display = 'block';
+}
 
-    // Initialize when document is ready
-    document.addEventListener('DOMContentLoaded', function() {
-        // Make week headers look clickable
-        document.querySelectorAll('.week-header').forEach(header => {
-            header.style.cursor = 'pointer';
-            header.addEventListener('mouseover', () => header.style.backgroundColor = '#f5f5f5');
-            header.addEventListener('mouseout', () => header.style.backgroundColor = '');
-        });
+function hideTimeEdit(id) {
+    const row = document.getElementById(`time-entry-${id}`);
+    row.querySelector('.display-view').style.display = 'flex';
+    row.querySelector('.edit-view').style.display = 'none';
+}
+
+// Initialize when document is ready
+document.addEventListener('DOMContentLoaded', function() {
+    // Make week headers look clickable
+    document.querySelectorAll('.week-header').forEach(header => {
+        header.style.cursor = 'pointer';
+        header.addEventListener('mouseover', () => header.style.backgroundColor = '#f5f5f5');
+        header.addEventListener('mouseout', () => header.style.backgroundColor = '');
     });
+});
 </script>
 <hr>
+<!-- Rest of the template remains the same -->
+</div>
+</div>
+    </div>
+    <hr>
     <div class="detail-section">
         <h3>Materials Used</h3>
         <div class="new-material-form form-section">
@@ -334,13 +340,14 @@ if (document.querySelector('.timer-duration')) {
                             <div class="pdf-icon">PDF</div>
                         </div>
                     {% else %}
-                        <img src="{{ url_for('image.serve_image', job_id=job.id, filename=image.filename, thumbnail=true) }}?t={{ image.timestamp }}" 
+                        <img src="{{ url_for('image.serve_image', job_id=job.id, filename=image.filename, thumbnail=true) }}?v={{ image.id }}" 
                             alt="Job file"
-                            onclick="handleFileClick(event, '{{ url_for('image.serve_image', job_id=job.id, filename=image.filename) }}?t={{ image.timestamp }}', {{ image.id }})">
+                            onclick="handleFileClick(event, '{{ url_for('image.serve_image', job_id=job.id, filename=image.filename) }}?v={{ image.id }}', {{ image.id }})">
                     {% endif %}
                     <div class="file-info">
                         {{ image.filename|truncate(20) }}
-                        <br>{{ image.timestamp[0:16] }}
+                        <br>
+                        <span class="format-time" data-time="{{ image.timestamp }}" data-format="datetime"></span>
                         {% if image.description %}
                             <br>{{ image.description }}
                         {% endif %}
