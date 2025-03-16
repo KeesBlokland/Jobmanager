@@ -334,9 +334,9 @@ if (document.querySelector('.timer-duration')) {
                             <div class="pdf-icon">PDF</div>
                         </div>
                     {% else %}
-                        <img src="{{ url_for('image.serve_image', job_id=job.id, filename=image.filename, thumbnail=true) }}" 
+                        <img src="{{ url_for('image.serve_image', job_id=job.id, filename=image.filename, thumbnail=true) }}?t={{ image.timestamp }}" 
                             alt="Job file"
-                            onclick="handleFileClick(event, '{{ url_for('image.serve_image', job_id=job.id, filename=image.filename) }}', {{ image.id }})">
+                            onclick="handleFileClick(event, '{{ url_for('image.serve_image', job_id=job.id, filename=image.filename) }}?t={{ image.timestamp }}', {{ image.id }})">
                     {% endif %}
                     <div class="file-info">
                         {{ image.filename|truncate(20) }}

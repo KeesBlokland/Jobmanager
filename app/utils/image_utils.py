@@ -25,7 +25,8 @@ class ImageManager:
             return result['invoice_number'].split('-')[1]
         return f"job{job_id}"
 
-    def process_image(self, job_id, image_file, db=None):
+    def process_image(self, job_id, image_file, db=None, custom_timestamp=None):
+        """Process an image file and save it to the job directory."""
         # Get the file extension
         original_filename = image_file.filename
         ext = original_filename.rsplit('.', 1)[1].lower() if '.' in original_filename else 'jpg'
@@ -37,8 +38,7 @@ class ImageManager:
         os.makedirs(thumb_path, exist_ok=True)
 
         # Generate filename with job identifier and current time
-        current_time = datetime.now()
-        timestamp = current_time.strftime('%y%m%d%H%M')
+        timestamp = custom_timestamp or datetime.now().strftime('%y%m%d%H%M%S')
         job_identifier = self.get_job_identifier(db, job_id) if db else f"job{job_id}"
         
         # PDF files get a different prefix
@@ -94,7 +94,7 @@ class ImageManager:
                         quality=70,
                         optimize=True)
 
-        return filename
+            return filename
 
     def get_image_path(self, job_id, filename, thumbnail=False):
         base = os.path.join(self.base_path, f'job_{job_id}')

@@ -27,6 +27,7 @@ def allowed_file(filename):
 def is_pdf(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() == 'pdf'
 
+# app/routes/image_routes.py
 @bp.route('/upload/direct/<int:job_id>', methods=['POST'])
 @with_db
 def upload_direct(db, job_id):
@@ -35,13 +36,19 @@ def upload_direct(db, job_id):
         return jsonify({'error': 'No file part'}), 400
         
     file = request.files['file']
-    if not file or not allowed_file(file.filename):
+    if not file or file.filename == '':
+        return jsonify({'error': 'No selected file'}), 400
+    
+    if not allowed_file(file.filename):
         return jsonify({'error': 'Invalid file type'}), 400
 
     try:
-        # Generate a secure filename
+        # Generate a secure filename with a unique timestamp
         original_filename = secure_filename(file.filename)
         file_ext = original_filename.rsplit('.', 1)[1].lower() if '.' in original_filename else ''
+        
+        # Add microseconds to timestamp for uniqueness
+        timestamp = datetime.now().strftime('%y%m%d%H%M%S%f')[:16]
         
         # Handle PDFs and images differently
         if file_ext == 'pdf':
@@ -50,8 +57,7 @@ def upload_direct(db, job_id):
             job_path = os.path.join(current_app.instance_path, 'images', f'job_{job_id}')
             os.makedirs(job_path, exist_ok=True)
             
-            # Generate filename with timestamp
-            timestamp = datetime.now().strftime('%y%m%d%H%M')
+            # Generate filename with unique timestamp
             filename = f'doc_{timestamp}.pdf'
             
             # Save the file
@@ -60,7 +66,11 @@ def upload_direct(db, job_id):
         else:
             # For images, use the image manager
             image_mgr = ImageManager(os.path.join(current_app.instance_path, 'images'))
-            filename = image_mgr.process_image(job_id, file, db)
+            filename = image_mgr.process_image(job_id, file, db, timestamp)
+            
+            # Verify filename is not None
+            if not filename:
+                raise ValueError("Failed to process image: filename is None")
         
         # Store in database
         db.execute(
@@ -77,7 +87,7 @@ def upload_direct(db, job_id):
     except Exception as e:
         logger.error(f"Upload failed: {str(e)}", exc_info=True)
         return jsonify({'error': str(e)}), 500
-
+    
 @bp.route('/upload/watch/<int:job_id>', methods=['POST'])
 @with_db
 def process_watch_folder(db, job_id):
